@@ -1,0 +1,57 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  year: 1
+  make_id: 1
+  model_id: 1
+  subtitle: MyString
+  ebay: MyString
+  stock_number: MyString
+  vin: MyString
+  warranty_id: 1
+  title_id: 1
+  engine: MyString
+  trans_id: 1
+  miles: 1
+  ext_color_id: 1
+  int_color_id: 1
+  status_id: 1
+  price: 1
+  damage_id: 1
+  paint_id: 1
+  interior_id: 1
+  drivable_id: 1
+  engine_id: 1
+  suspension_id: 1
+  stains: false
+  burns: false
+  tears: false
+  description: MyText
+
+two:
+  year: 1
+  make_id: 1
+  model_id: 1
+  subtitle: MyString
+  ebay: MyString
+  stock_number: MyString
+  vin: MyString
+  warranty_id: 1
+  title_id: 1
+  engine: MyString
+  trans_id: 1
+  miles: 1
+  ext_color_id: 1
+  int_color_id: 1
+  status_id: 1
+  price: 1
+  damage_id: 1
+  paint_id: 1
+  interior_id: 1
+  drivable_id: 1
+  engine_id: 1
+  suspension_id: 1
+  stains: false
+  burns: false
+  tears: false
+  description: MyText

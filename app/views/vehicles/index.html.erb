@@ -1,0 +1,73 @@
+<h1>Listing vehicles</h1>
+
+<table>
+  <tr>
+    <th>Year</th>
+    <th>Make</th>
+    <th>Model</th>
+    <th>Subtitle</th>
+    <th>Ebay</th>
+    <th>Stock number</th>
+    <th>Vin</th>
+    <th>Warranty</th>
+    <th>Title</th>
+    <th>Engine</th>
+    <th>Trans</th>
+    <th>Miles</th>
+    <th>Ext color</th>
+    <th>Int color</th>
+    <th>Status</th>
+    <th>Price</th>
+    <th>Damage</th>
+    <th>Paint</th>
+    <th>Interior</th>
+    <th>Drivable</th>
+    <th>Engine</th>
+    <th>Suspension</th>
+    <th>Stains</th>
+    <th>Burns</th>
+    <th>Tears</th>
+    <th>Description</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @vehicles.each do |vehicle| %>
+  <tr>
+    <td><%= vehicle.year %></td>
+    <td><%= vehicle.make_id %></td>
+    <td><%= vehicle.model_id %></td>
+    <td><%= vehicle.subtitle %></td>
+    <td><%= vehicle.ebay %></td>
+    <td><%= vehicle.stock_number %></td>
+    <td><%= vehicle.vin %></td>
+    <td><%= vehicle.warranty_id %></td>
+    <td><%= vehicle.title_id %></td>
+    <td><%= vehicle.engine %></td>
+    <td><%= vehicle.trans_id %></td>
+    <td><%= vehicle.miles %></td>
+    <td><%= vehicle.ext_color_id %></td>
+    <td><%= vehicle.int_color_id %></td>
+    <td><%= vehicle.status_id %></td>
+    <td><%= vehicle.price %></td>
+    <td><%= vehicle.damage_id %></td>
+    <td><%= vehicle.paint_id %></td>
+    <td><%= vehicle.interior_id %></td>
+    <td><%= vehicle.drivable_id %></td>
+    <td><%= vehicle.engine_id %></td>
+    <td><%= vehicle.suspension_id %></td>
+    <td><%= vehicle.stains %></td>
+    <td><%= vehicle.burns %></td>
+    <td><%= vehicle.tears %></td>
+    <td><%= vehicle.description %></td>
+    <td><%= link_to 'Show', vehicle %></td>
+    <td><%= link_to 'Edit', edit_vehicle_path(vehicle) %></td>
+    <td><%= link_to 'Destroy', vehicle, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Vehicle', new_vehicle_path %>
