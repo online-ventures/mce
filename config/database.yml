@@ -51,7 +51,9 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: html-v2-ruby_production
+  database: dbcbgbs1vkb33o
   pool: 5
-  username: html-v2-ruby
-  password:
+  username: nkpsodlogfzygb
+  password: 'pklHfHPl0kTa-ootWA_ASoz2S3'
+  host: ec2-23-21-105-133.compute-1.amazonaws.com
+  port: 5432
