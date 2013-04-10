@@ -99,7 +99,7 @@
   </div>
   <div class="field">
     <%= f.label :suspension_id %><br />
-    <%= f.collection_select :suspension_id, Engine.all, :id, :name %>
+    <%= f.collection_select :suspension_id, Suspension.all, :id, :name %>
   </div>
   <div class="field">
     <%= f.label :stains %><br />
