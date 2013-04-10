@@ -2,7 +2,7 @@ class VehiclesController < ApplicationController
   # GET /vehicles
   # GET /vehicles.json
   def index
-    @vehicles = Vehicle.all
+    @vehicles = Vehicle.active.all
 
     respond_to do |format|
       format.html # index.html.erb

@@ -1,4 +1,4 @@
-HtmlV2Ruby::Application.routes.draw do
+MotorCarExport::Application.routes.draw do
   resources :vehicles
 
   root to: 'vehicles#index'
