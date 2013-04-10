@@ -13,15 +13,17 @@
 
   <div class="field">
     <%= f.label :year %><br />
-    <%= f.number_field :year %>
+    <%= f.select :year, (Time.now.year+2).downto(Time.now.year-50).to_a, selected: Time.now.year %>
   </div>
   <div class="field">
     <%= f.label :make_id %><br />
-    <%= f.number_field :make_id %>
+    <%= f.collection_select :make_id, Make.all, :id, :name %><br/>
+    <%= f.text_field :make_id %>
   </div>
   <div class="field">
     <%= f.label :model_id %><br />
-    <%= f.number_field :model_id %>
+    <%= f.collection_select :model_id, Model.all, :id, :name %><br/>
+    <%= f.text_field :model_id %>
   </div>
   <div class="field">
     <%= f.label :subtitle %><br />
@@ -41,11 +43,11 @@
   </div>
   <div class="field">
     <%= f.label :warranty_id %><br />
-    <%= f.number_field :warranty_id %>
+    <%= f.collection_select :warranty_id, Warranty.all, :id, :name %>
   </div>
   <div class="field">
     <%= f.label :title_id %><br />
-    <%= f.number_field :title_id %>
+    <%= f.collection_select :title_id, Title.all, :id, :name %>
   </div>
   <div class="field">
     <%= f.label :engine %><br />
@@ -53,7 +55,7 @@
   </div>
   <div class="field">
     <%= f.label :trans_id %><br />
-    <%= f.number_field :trans_id %>
+    <%= f.collection_select :trans_id, Transmission.all, :id, :name %>
   </div>
   <div class="field">
     <%= f.label :miles %><br />
@@ -61,15 +63,15 @@
   </div>
   <div class="field">
     <%= f.label :ext_color_id %><br />
-    <%= f.number_field :ext_color_id %>
+    <%= f.collection_select :ext_color_id, Color.all, :id, :name %>
   </div>
   <div class="field">
     <%= f.label :int_color_id %><br />
-    <%= f.number_field :int_color_id %>
+    <%= f.collection_select :int_color_id, Color.all, :id, :name %>
   </div>
   <div class="field">
     <%= f.label :status_id %><br />
-    <%= f.number_field :status_id %>
+    <%= f.collection_select :status_id, Status.all, :id, :name %>
   </div>
   <div class="field">
     <%= f.label :price %><br />
@@ -77,27 +79,27 @@
   </div>
   <div class="field">
     <%= f.label :damage_id %><br />
-    <%= f.number_field :damage_id %>
+    <%= f.collection_select :damage_id, Damage.all, :id, :name %>
   </div>
   <div class="field">
     <%= f.label :paint_id %><br />
-    <%= f.number_field :paint_id %>
+    <%= f.collection_select :paint_id, Condition.all, :id, :title %>
   </div>
   <div class="field">
     <%= f.label :interior_id %><br />
-    <%= f.number_field :interior_id %>
+    <%= f.collection_select :interior_id, Condition.all, :id, :title %>
   </div>
   <div class="field">
     <%= f.label :drivable_id %><br />
-    <%= f.number_field :drivable_id %>
+    <%= f.collection_select :drivable_id, Drivable.all, :id, :name %>
   </div>
   <div class="field">
     <%= f.label :engine_id %><br />
-    <%= f.number_field :engine_id %>
+    <%= f.collection_select :engine_id, Engine.all, :id, :name %>
   </div>
   <div class="field">
     <%= f.label :suspension_id %><br />
-    <%= f.number_field :suspension_id %>
+    <%= f.collection_select :suspension_id, Suspension.all, :id, :name %>
   </div>
   <div class="field">
     <%= f.label :stains %><br />

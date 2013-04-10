@@ -58,8 +58,8 @@ MotorCarExport::Application.configure do
   # the I18n.default_locale when a translation can not be found)
   config.i18n.fallbacks = true
 
-  # Send deprecation notices to registered listeners
-  config.active_support.deprecation = :notify
+  # Silence Deprecation Notices by Heroku (Not A Real Problem)
+  config.active_support.deprecation = :silence
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
