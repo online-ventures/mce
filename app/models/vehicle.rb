@@ -1,5 +1,7 @@
 class Vehicle < ActiveRecord::Base
-  attr_accessible :burns, :description, :ebay, :engine_type, :miles, :price, :stains, :stock_number, :subtitle, :tears, :vin, :year
+  attr_accessible :burns, :description, :ebay, :engine_type, :miles, :price, :stains, :stock_number, :subtitle, :tears, :vin, :year,
+                  :make_id, :model_id, :warranty_id, :title_id, :engine, :trans_id, :ext_color_id, :int_color_id, :status_id,
+                  :damage_id, :paint_id, :interior_id, :drivable_id, :engine_id, :suspension_id
   has_one :make
   has_one :model
   has_one :damage
