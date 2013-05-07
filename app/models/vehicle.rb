@@ -11,7 +11,6 @@ class Vehicle < ActiveRecord::Base
   has_one :interior, :class_name => 'condition'
   has_one :ext_color, :class_name => 'color'
   has_one :int_color, :class_name => 'color'
-  has_one :interior_condition
   has_one :status
   has_one :suspension
   has_one :title

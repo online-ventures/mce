@@ -1,7 +1,7 @@
 HtmlV2Ruby::Application.routes.draw do
   resources :vehicles
 
-  root to: 'vehicles#index'
+  root to: 'vehicles#new'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

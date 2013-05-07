@@ -1,0 +1,10 @@
+@import "mixins.css.scss";
+
+body{
+  @include linear-gradient(7px, #faf9cf, #faf7e0 80%, #dceb86 80%, #dceb86);
+}
+
+#container {
+  background: #fff;
+  padding-bottom: 2em;
+}

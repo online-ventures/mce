@@ -1,14 +1,53 @@
 <!DOCTYPE html>
-<html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7 ]> <html class="ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
 <head>
-  <title>HtmlV2Ruby</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+	<meta charset="utf-8" />
+	<!-- Set the viewport width to device width for mobile -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title><%= content_for?(:title) ? yield(:title) : 'Motor Car Export' %></title>
+	<%= stylesheet_link_tag    "application", media: 'all' %>
+	<%= javascript_include_tag "vendor/custom.modernizr.dev" if Rails.env == 'development' %>
+	<%= csrf_meta_tags %>
 </head>
 <body>
+	<div class="top-bar">
+	  <span class="right">
+	    Sales: (586) 854 - 8781 <br/>
+	    Office: (248) 446 - 8281
+	  </span>
+	</div>
+	<div id="container" class="row">
+	  <div class="side-nav large-3 small-12 columns">
+	    <%= link_to image_tag('logo.png'), '/' %>
+	    <h1><%= link_to 'Motor Car Export', '/' %></h1>
 
-<%= yield %>
+	    <nav>
+	        <ul>
+	          <li><%= link_to 'About', '/about' %></li>
+	          <li><%= link_to 'Buyer Information', '/buyer-info' %></li>
+	          <li><%= link_to 'Frequently Asked Questions', '/faq' %></li>
+	        </ul>
 
+	        <ul>
+	          <li><h2>Inventory</h2></li>
+	          <li><%= link_to 'New Arrivals', '/new' %></li>
+	          <li><%= link_to 'Repairables', '/repairable' %></li>
+	          <li><%= link_to 'Ready To Go', '/ready' %></li>
+	        </ul>
+	    </nav>
+
+	    <footer>
+	      &copy; <%= Time.new.year %> Motor Car Export
+	    </footer>
+	  </div>
+	  <article id="content" class="large-9 small-12 columns">
+	    <%= yield %>
+	  </article>
+	</div>
+	<%= javascript_include_tag "application" %>
 </body>
 </html>

@@ -11,110 +11,118 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :year %><br />
+<div class="row">
+  <div class="field large-4 small-4 columns">
+    <%= f.label :year %>
     <%= f.select :year, (Time.now.year+2).downto(Time.now.year-50).to_a, selected: Time.now.year %>
   </div>
-  <div class="field">
-    <%= f.label :make_id %><br />
-    <%= f.collection_select :make_id, Make.all, :id, :name %><br/>
+  <div class="field large-4 small-4 columns">
+    <%= f.label :make_id %>
+    <%= f.collection_select :make_id, Make.all, :id, :name %>
     <%= f.text_field :make_id %>
   </div>
-  <div class="field">
-    <%= f.label :model_id %><br />
+  <div class="field large-4 small-4 columns">
+    <%= f.label :model_id %>
     <%= f.collection_select :model_id, Model.all, :id, :name %><br/>
     <%= f.text_field :model_id %>
   </div>
+</div>
   <div class="field">
-    <%= f.label :subtitle %><br />
+    <%= f.label :subtitle %>
     <%= f.text_field :subtitle %>
   </div>
   <div class="field">
-    <%= f.label :ebay %><br />
+    <%= f.label :ebay %>
     <%= f.text_field :ebay %>
   </div>
   <div class="field">
-    <%= f.label :stock_number %><br />
+    <%= f.label :stock_number %>
     <%= f.text_field :stock_number %>
   </div>
   <div class="field">
-    <%= f.label :vin %><br />
+    <%= f.label :vin %>
     <%= f.text_field :vin %>
   </div>
   <div class="field">
-    <%= f.label :warranty_id %><br />
+    <%= f.label :warranty_id %>
     <%= f.collection_select :warranty_id, Warranty.all, :id, :name %>
   </div>
   <div class="field">
-    <%= f.label :title_id %><br />
+    <%= f.label :title_id %>
     <%= f.collection_select :title_id, Title.all, :id, :name %>
   </div>
   <div class="field">
-    <%= f.label :engine %><br />
+    <%= f.label :engine %>
     <%= f.text_field :engine %>
   </div>
   <div class="field">
-    <%= f.label :trans_id %><br />
+    <%= f.label :trans_id %>
     <%= f.collection_select :trans_id, Transmission.all, :id, :name %>
   </div>
   <div class="field">
-    <%= f.label :miles %><br />
+    <%= f.label :miles %>
     <%= f.number_field :miles %>
   </div>
   <div class="field">
-    <%= f.label :ext_color_id %><br />
+    <%= f.label :ext_color_id %>
     <%= f.collection_select :ext_color_id, Color.all, :id, :name %>
   </div>
   <div class="field">
-    <%= f.label :int_color_id %><br />
+    <%= f.label :int_color_id %>
     <%= f.collection_select :int_color_id, Color.all, :id, :name %>
   </div>
   <div class="field">
-    <%= f.label :status_id %><br />
+    <%= f.label :status_id %>
     <%= f.collection_select :status_id, Status.all, :id, :name %>
   </div>
   <div class="field">
-    <%= f.label :price %><br />
+    <%= f.label :price %>
     <%= f.number_field :price %>
   </div>
+<div class="row">
+  <div class="large-6 small-12 columns">
   <div class="field">
-    <%= f.label :damage_id %><br />
+    <%= f.label :damage_id %>
     <%= f.collection_select :damage_id, Damage.all, :id, :name %>
   </div>
   <div class="field">
-    <%= f.label :paint_id %><br />
+    <%= f.label :paint_id %>
     <%= f.collection_select :paint_id, Condition.all, :id, :title %>
   </div>
   <div class="field">
-    <%= f.label :interior_id %><br />
-    <%= f.collection_select :interior_id, Condition.all, :id, :title %>
-  </div>
-  <div class="field">
-    <%= f.label :drivable_id %><br />
+    <%= f.label :drivable_id %>
     <%= f.collection_select :drivable_id, Drivable.all, :id, :name %>
   </div>
   <div class="field">
-    <%= f.label :engine_id %><br />
+    <%= f.label :engine_id %>
     <%= f.collection_select :engine_id, Engine.all, :id, :name %>
   </div>
   <div class="field">
-    <%= f.label :suspension_id %><br />
+    <%= f.label :suspension_id %>
     <%= f.collection_select :suspension_id, Suspension.all, :id, :name %>
   </div>
+  </div>
+  <div class="large-6 small-12 columns">
   <div class="field">
-    <%= f.label :stains %><br />
+    <%= f.label :interior_id %>
+    <%= f.collection_select :interior_id, Condition.all, :id, :title %>
+  </div>
+  <div class="field">
     <%= f.check_box :stains %>
+    <%= f.label :stains %>
   </div>
   <div class="field">
-    <%= f.label :burns %><br />
     <%= f.check_box :burns %>
+    <%= f.label :burns %>
   </div>
   <div class="field">
-    <%= f.label :tears %><br />
     <%= f.check_box :tears %>
+    <%= f.label :tears %>
   </div>
+  </div>
+</div>
   <div class="field">
-    <%= f.label :description %><br />
+    <%= f.label :description %>
     <%= f.text_area :description %>
   </div>
   <div class="actions">
