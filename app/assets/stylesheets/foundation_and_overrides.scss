@@ -85,22 +85,22 @@
 //
 
 // We use these to control header font styles
-// $header-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$header-font-family: "League Gothic", "Helvetica", Helvetica, Arial, sans-serif;
 // $header-font-weight: bold;
-// $header-font-style: normal;
-// $header-font-color: #222;
+$header-font-style: italic;
+$header-font-color: #276030;
 // $header-line-height: 1.4;
-// $header-top-margin: .2em;
-// $header-bottom-margin: .5em;
+$header-top-margin: .1em;
+$header-bottom-margin: .3em;
 // $header-text-rendering: optimizeLegibility;
 
 // We use these to control header font sizes
-// $h1-font-size: emCalc(44px);
-// $h2-font-size: emCalc(37px);
-// $h3-font-size: emCalc(27px);
-// $h4-font-size: emCalc(23px);
-// $h5-font-size: emCalc(18px);
-// $h6-font-size: 1em;
+$h1-font-size: emCalc(90px);
+$h2-font-size: emCalc(60px);
+$h3-font-size: emCalc(40px);
+$h4-font-size: emCalc(30px);
+$h5-font-size: emCalc(18px);
+$h6-font-size: 1em;
 
 // These control how subheaders are styled.
 // $subheader-line-height: 1.4;

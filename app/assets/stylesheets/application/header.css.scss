@@ -1,3 +1,6 @@
+@import "mixins.css.scss";
+@import "foundation/_foundation-global";
+
 /* Top Bar */
 
 div.top-bar {
@@ -15,45 +18,58 @@ div.top-bar {
 /* End Top Bar, Begin Side Nav */
 
 .side-nav {
-  background: #ededd4;
+  background: #F9F9e8;
+
+  >div.row {
+    margin-bottom: 3em;
+    >a {
+      display: block;
+    }
+  }
   h1 {
     font-size: 1.2em;
     font-family: Baskerville;
     text-align: center;
     text-transform: uppercase;
-    margin-bottom: 3em;
 
     a, a:hover {
       color: #276030;
     }
   }
-  ul {
-    list-style-type: none;
-    text-align: center;
-    margin-bottom: 3em;
+  nav {
+    ul.row {
+        list-style-type: none;
+        text-align: center;
+        margin-bottom: 3em;
 
-    li {
-      line-height: 2em;
-    }
-    a {
-      color: #337c3d;
-      &:hover {
-        color: #3e9a48;
-        text-decoration: underline;
+        li {
+          line-height: 2em;
+        }
+        a {
+          color: #337c3d;
+          &:hover {
+            color: #3e9a48;
+            text-decoration: underline;
+          }
+        }
+
+        h4 {
+          width: 75%;
+          margin: 0 auto;
+          border-bottom: 1px solid #337c3d;
+        }
       }
-    }
-
-    h2 {
-      font-size: 1.1em;
-      text-transform: uppercase;
-      color: #276030;
-      border-bottom: 1px solid #276030;
-    }
   }
-  footer {
-    font-size: 0.75em;
-    color: #222;
-    text-align: center;
+}
+
+@media #{$screen} and (max-width: #{$small-screen}) {
+  .side-nav {
+    >div.row {
+      margin-bottom: 1em;
+    }
+    nav ul.row {
+      margin-bottom: 1em;
+    }
   }
 }
 /* End Side Nav */

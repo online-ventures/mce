@@ -1,10 +1,31 @@
+// This file is for styles that pertain to the shell
+// of the application, exept the sidenav, and topbar
+// because they are slightly more complex
+
 @import "mixins.css.scss";
+@import "foundation/_foundation-global";
 
 body{
   @include linear-gradient(7px, #faf9cf, #faf7e0 80%, #dceb86 80%, #dceb86);
+  box-sizing: border-box;
 }
 
 #container {
   background: #fff;
   padding-bottom: 2em;
+}
+
+footer {
+    font-size: 0.75em;
+    color: #222;
+    text-align: center;
+}
+
+@media #{$screen} and (max-width: #{$small-screen}) {
+  #container-footer { display: inherit; }
+  #nav-footer { display: none; }
+}
+@media #{$small} {
+  #container-footer { display: none; }
+  #nav-footer { display: inherit; }
 }

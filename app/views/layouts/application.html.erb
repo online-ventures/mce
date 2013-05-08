@@ -10,7 +10,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title><%= content_for?(:title) ? yield(:title) : 'Motor Car Export' %></title>
 	<%= stylesheet_link_tag    "application", media: 'all' %>
-	<%= javascript_include_tag "vendor/custom.modernizr.dev" if Rails.env == 'development' %>
+	<%= javascript_include_tag "custom.modernizr.dev" if Rails.env == 'development' %>
 	<%= csrf_meta_tags %>
 </head>
 <body>
@@ -22,31 +22,35 @@
 	</div>
 	<div id="container" class="row">
 	  <div class="side-nav large-3 small-12 columns">
-	    <%= link_to image_tag('logo.png'), '/' %>
-	    <h1><%= link_to 'Motor Car Export', '/' %></h1>
+	    <div class="row">
+	        <%= link_to image_tag('logo.png'), '/', class: 'large-12 small-4 small-centered large-uncentered columns' %>
+	        <h1 class="twelve columns"><%= link_to 'Motor Car Export', '/' %></h1>
+	    </div>
 
 	    <nav>
-	        <ul>
-	          <li><%= link_to 'About', '/about' %></li>
-	          <li><%= link_to 'Buyer Information', '/buyer-info' %></li>
-	          <li><%= link_to 'Frequently Asked Questions', '/faq' %></li>
+	        <ul class="row">
+	          <li class="large-12 small-4 columns"><%= link_to 'About', '/about' %></li>
+	          <li class="large-12 small-4 columns"><%= link_to 'Buyer Information', '/buyer-info' , {'small-text' => 'Buyer Info'}%></li>
+	          <li class="large-12 small-4 columns"><%= link_to 'Frequently Asked Questions', '/faq', {'small-text' => 'FAQ'} %></li>
 	        </ul>
 
-	        <ul>
-	          <li><h2>Inventory</h2></li>
-	          <li><%= link_to 'New Arrivals', '/new' %></li>
-	          <li><%= link_to 'Repairables', '/repairable' %></li>
-	          <li><%= link_to 'Ready To Go', '/ready' %></li>
+	        <ul class="row">
+	          <li class="large-12 small-0 columns"><h4>Inventory</h4></li>
+	          <li class="large-12 small-4 columns"><%= link_to 'New Arrivals', '/new' %></li>
+	          <li class="large-12 small-4 columns"><%= link_to 'Repairables', '/repairable' %></li>
+	          <li class="large-12 small-4 columns"><%= link_to 'Ready To Go', '/ready', {'small-text' => 'Ready'} %></li>
 	        </ul>
 	    </nav>
 
-	    <footer>
-	      &copy; <%= Time.new.year %> Motor Car Export
-	    </footer>
+	    <footer id="nav-footer">&copy; <%= Time.new.year %> Motor Car Export</footer>
 	  </div>
 	  <article id="content" class="large-9 small-12 columns">
 	    <%= yield %>
+	    <div class="row">
+	      <footer id="container-footer" class="twelve columns">&copy; <%= Time.new.year %> Motor Car Export</footer>
+	    </div>
 	  </article>
+
 	</div>
 	<%= javascript_include_tag "application" %>
 </body>
