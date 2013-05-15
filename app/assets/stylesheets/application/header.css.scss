@@ -1,24 +1,10 @@
 @import "mixins.css.scss";
 @import "foundation/_foundation-global";
 
-/* Top Bar */
-
-div.top-bar {
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  margin:0;
-  z-index: 1000;
-  span {
-    color: #fff;
-    font-size: 0.75em;
-    line-height: 1.5em;
-    padding: 0.5em;
-  }
-}
-
-/* End Top Bar, Begin Side Nav */
-
 .side-nav {
   background: #F9F9e8;
+  box-shadow: 0 0 1px rgba(0,0,0,0.4);
+  position: relative;
 
   >div.row {
     margin-bottom: 3em;
@@ -72,4 +58,3 @@ div.top-bar {
     }
   }
 }
-/* End Side Nav */

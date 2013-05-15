@@ -1,0 +1,9 @@
+<% content_for :title, @page.name + ' - Motor Car Export' %>
+<% content_for :featured, true %>
+
+<% if notice %>
+<p id="notice"><%= notice %></p>
+<% end %>
+
+<%= @page.body %>
+

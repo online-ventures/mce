@@ -8,6 +8,7 @@
 /* Regular */
 @font-face {
     font-family: 'League Gothic';
+    src: local('League Gothic'), local('LeagueGothic');
     src: font-url('league-gothic/leaguegothic-italic-webfont.eot');
     src: font-url('league-gothic/leaguegothic-italic-webfont.eot?#iefix') format('embedded-opentype'),
          font-url('league-gothic/leaguegothic-italic-webfont.woff') format('woff'),
@@ -20,6 +21,7 @@
 /* Italic */
 @font-face {
     font-family: 'League Gothic';
+  src: local('League Gothic'), local('LeagueGothic');
     src: font-url('league-gothic/leaguegothic-regular-webfont.eot');
     src: font-url('league-gothic/leaguegothic-regular-webfont.eot?#iefix') format('embedded-opentype'),
          font-url('league-gothic/leaguegothic-regular-webfont.woff') format('woff'),

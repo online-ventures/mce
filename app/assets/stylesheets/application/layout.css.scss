@@ -1,20 +1,56 @@
 // This file is for styles that pertain to the shell
-// of the application, exept the sidenav, and topbar
-// because they are slightly more complex
+// of the application, exept the sidenav because
+// it's slightly more complex.
 
 @import "mixins.css.scss";
 @import "foundation/_foundation-global";
 
 body{
-  @include linear-gradient(7px, #faf9cf, #faf7e0 80%, #dceb86 80%, #dceb86);
+  @include linear-gradient(to top, #faf9cf 0%, #faf7e0 70%, #dceb86 70%, #dceb86 100%);
+  background-size: 9px;
   box-sizing: border-box;
+}
+
+div.top-bar {
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  margin:0;
+  z-index: 1000;
+  span {
+    color: #fff;
+    font-size: 0.75em;
+    line-height: 1.5em;
+    padding: 0.5em;
+  }
 }
 
 #container {
   background: #fff;
   padding-bottom: 2em;
+  position: relative;
 }
 
+.side-nav {
+  z-index: 900;
+}
+$featured-height: emCalc(275px);
+
+#featured-box {
+  z-index: 800;
+  padding: 0;
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  height: $featured-height;
+  img {
+    width: 150%;
+  }
+}
+
+article#content {
+  &.pushed-down {
+    margin-top: $featured-height;
+  }
+}
 footer {
     font-size: 0.75em;
     color: #222;

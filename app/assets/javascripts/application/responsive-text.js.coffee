@@ -1,20 +1,30 @@
 toggle = 768
 previous = 'large'
 
+$.extend $.fn.grow_text = ->
+  this.each ->
+    $(this).attr('large-text', $(this).html())
+    $(this).html($(this).attr('small-text'))
+    $(this).removeAttr('small-text')
+
+$.extend $.fn.shrink_text = ->
+  this.each ->
+    $(this).attr('small-text', $(this).html())
+    $(this).html($(this).attr('large-text'))
+    $(this).removeAttr('large-text')
+
 $(window).resize ->
   width = $(document).width()
-  console.log(width)
-  console.log(previous)
-  if(previous is 'large' and width <= toggle)
-    previous = 'small'
-    $('[small-text]').each ->
-      $(this).attr('large-text', $(this).html())
-      $(this).html($(this).attr('small-text'))
-      $(this).attr('small-text', '')
+  if(previous is 'large')
+    if(width <= toggle)
+      previous = 'small'
+      $('[small-text]').grow_text()
+    else
+      $('[small-text]').each ->
+        if($(this).height() > ($(this).css('line-height').substring(0,2) * 1))
+          $(this).grow_text()
   else if(previous is 'small' and width > toggle)
     previous = 'large'
-    $('[large-text]').each ->
-      $(this).attr('small-text', $(this).html())
-      $(this).html($(this).attr('large-text'))
-      $(this).attr('large-text', '')
+    $('[large-text]').shrink_text()
+
 $(window).resize();

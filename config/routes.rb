@@ -1,7 +1,18 @@
 HtmlV2Ruby::Application.routes.draw do
+  resources :pages
   resources :vehicles
+  resources :users
+  resources :user_sessions
 
-  root to: 'vehicles#new'
+  get '/login', to: 'user_sessions#new'
+  post '/login', to: 'user_sessions#create'
+  get '/logout', to: 'user_sessions#destroy'
+
+  root to: 'pages#show', slug: 'home'
+
+  # CMS pages
+  # Should be last rule because it's a catch-all
+  match '/:slug', to: 'pages#show', as: 'slug'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

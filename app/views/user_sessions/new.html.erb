@@ -1,0 +1,31 @@
+<h1>Login</h1>
+
+<fieldset class="twelve columns">
+  <%= form_for @user_session do |f| %>
+	<% if @user_session.errors.any? %>
+        <div id="error_explanation">
+          <h2>You Couldn't Log In Because of <%= pluralize(@user_session.errors.count, "error") %></h2>
+          <ul>
+          <% @user_session.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+	<% end %>
+
+	<div class="field">
+	  <%= f.label :login, 'Username' %>
+	  <%= f.text_field :login %>
+	</div>
+
+	<div class="field">
+	  <%= f.label :password, 'Password' %>
+	  <%= f.text_field :password, type: 'password' %>
+	</div>
+
+	<div class="field">
+	  <%= f.submit 'Log In', class: 'button' %>
+	</div>
+
+  <% end %>
+</fieldset>
