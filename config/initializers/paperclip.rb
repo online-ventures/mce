@@ -11,4 +11,4 @@ Paperclip.interpolates(:vehicle_id)    {|a,s| a.instance.vehicle.id }
 Paperclip.interpolates(:vehicle_year)  {|a,s| a.instance.vehicle.year }
 Paperclip.interpolates(:vehicle_make)  {|a,s| a.instance.vehicle.make.name }
 Paperclip.interpolates(:vehicle_model) {|a,s| a.instance.vehicle.model.name }
-Paperclip.interpolates(:count)         {|a,s| a.instance.vehicle.photos.count }
+Paperclip.interpolates(:count)         {|a,s| a.instance.vehicles_photo_id }

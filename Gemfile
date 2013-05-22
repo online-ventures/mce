@@ -23,7 +23,6 @@ end
 gem 'authlogic'
 
 # File Uploads
-gem 'jquery-fileupload-rails'
 gem 'paperclip'
 gem 'aws-sdk'
 

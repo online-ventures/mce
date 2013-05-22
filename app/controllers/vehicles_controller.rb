@@ -74,9 +74,6 @@ class VehiclesController < ApplicationController
   # PUT /vehicles/1.json
   def update
     @vehicle = Vehicle.find(params[:id])
-    params[:photo][:image].each do |x|
-      @vehicle.photos.new(image: x).save
-    end
 
     respond_to do |format|
       if @vehicle.update_attributes(params[:vehicle])
@@ -99,5 +96,14 @@ class VehiclesController < ApplicationController
       format.html { redirect_to vehicles_url }
       format.json { head :no_content }
     end
+  end
+
+  def upload_photos
+    @vehicle = Vehicle.find(params[:id])
+    params[:photo][:image].each do |x|
+      @vehicle.photos.new(image: x).save
+    end
+
+    redirect_to @vehicle
   end
 end

@@ -6,6 +6,7 @@ HtmlV2Ruby::Application.routes.draw do
   resources :vehicles do
     member do
       get 'images'
+      match 'upload_photos', as:'upload_photos'
     end
   end
   resources :users
