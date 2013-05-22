@@ -1,9 +1,7 @@
 class Photo < ActiveRecord::Base
   attr_accessible :image, :vehicle_id, :vehicles_photo_id
   belongs_to :vehicle
-  has_attached_file :image, styles: {
-      thumb: '150x150#',
-  }
+  has_attached_file :image
 
   before_create :set_vehicles_photo_id
 
