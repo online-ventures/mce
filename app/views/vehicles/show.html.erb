@@ -1,4 +1,6 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+<p id="notice" class="alert-box"><%= notice %></p>
+<% end %>
 
 <p>
   <b>Year:</b>
@@ -7,12 +9,12 @@
 
 <p>
   <b>Make:</b>
-  <%= @vehicle.make_id %>
+  <%= @vehicle.make.name %>
 </p>
 
 <p>
   <b>Model:</b>
-  <%= @vehicle.model_id %>
+  <%= @vehicle.model.name %>
 </p>
 
 <p>
@@ -37,22 +39,22 @@
 
 <p>
   <b>Warranty:</b>
-  <%= @vehicle.warranty_id %>
+  <%= @vehicle.warranty %>
 </p>
 
 <p>
   <b>Title:</b>
-  <%= @vehicle.title_id %>
+  <%= @vehicle.title %>
 </p>
 
 <p>
   <b>Engine:</b>
-  <%= @vehicle.engine %>
+  <%= @vehicle.engine_type %>
 </p>
 
 <p>
   <b>Trans:</b>
-  <%= @vehicle.trans_id %>
+  <%= @vehicle.transmission %>
 </p>
 
 <p>
@@ -62,17 +64,17 @@
 
 <p>
   <b>Ext color:</b>
-  <%= @vehicle.ext_color_id %>
+  <%= @vehicle.ext_color %>
 </p>
 
 <p>
   <b>Int color:</b>
-  <%= @vehicle.int_color_id %>
+  <%= @vehicle.int_color %>
 </p>
 
 <p>
   <b>Status:</b>
-  <%= @vehicle.status_id %>
+  <%= @vehicle.status.name %>
 </p>
 
 <p>
@@ -82,32 +84,32 @@
 
 <p>
   <b>Damage:</b>
-  <%= @vehicle.damage_id %>
+  <%= @vehicle.damage.name %>
 </p>
 
 <p>
   <b>Paint:</b>
-  <%= @vehicle.paint_id %>
+  <%= @vehicle.paint.name %>
 </p>
 
 <p>
   <b>Interior:</b>
-  <%= @vehicle.interior_id %>
+  <%= @vehicle.interior %>
 </p>
 
 <p>
   <b>Drivable:</b>
-  <%= @vehicle.drivable_id %>
+  <%= @vehicle.drivable %>
 </p>
 
 <p>
   <b>Engine:</b>
-  <%= @vehicle.engine_id %>
+  <%= @vehicle.engine %>
 </p>
 
 <p>
   <b>Suspension:</b>
-  <%= @vehicle.suspension_id %>
+  <%= @vehicle.suspension %>
 </p>
 
 <p>

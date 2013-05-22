@@ -22,14 +22,14 @@
       color: #276030;
     }
   }
-  nav {
-    ul.row {
+  nav.row {
+    ul {
         list-style-type: none;
         text-align: center;
-        margin-bottom: 3em;
 
         li {
-          line-height: 2em;
+          line-height: 1.5em;
+          margin: 0.5em 0;
         }
         a {
           color: #337c3d;
@@ -50,11 +50,12 @@
 
 @media #{$screen} and (max-width: #{$small-screen}) {
   .side-nav {
+    padding: 0.875em 0 0 0;
     >div.row {
       margin-bottom: 1em;
     }
-    nav ul.row {
-      margin-bottom: 1em;
+    nav ul {
+      margin-bottom: 0;
     }
   }
 }

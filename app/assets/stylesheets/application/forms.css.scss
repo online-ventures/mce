@@ -10,10 +10,22 @@
   .button {
     margin: 0;
   }
+  textarea{
+    height: inherit;
+  }
 }
+input[type=submit] {
+    @extend .button;
+  }
 form {
   margin:0;
   .field:last-child {
     margin: 0;
+  }
+}
+#error_explanation {
+  h2 {
+    font-size: 2em;
+    color: $alert-color;
   }
 }

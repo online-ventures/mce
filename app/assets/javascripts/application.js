@@ -13,7 +13,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require foundation
-//= require application/
+//= require jquery-fileupload
+//= require_self
+//= require_directory ./application/
 //= require_tree .
 
 $(document).foundation();

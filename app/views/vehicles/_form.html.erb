@@ -20,14 +20,14 @@
     <%= f.select :year, (Time.now.year+2).downto(Time.now.year-50).to_a, selected: Time.now.year %>
   </div>
   <div class="field large-4 small-4 columns">
-    <%= f.label :make_id %>
-    <%= f.collection_select :make_id, Make.all, :id, :name %>
-    <%= f.text_field :make_id %>
+    <%= f.label :make %>
+    <%= f.collection_select :make_id, Make.all, :id, :name, {prompt: 'Create New Make'} %>
+    <%= f.sub_text_field :make %>
   </div>
   <div class="field large-4 small-4 columns">
-    <%= f.label :model_id %>
-    <%= f.collection_select :model_id, Model.all, :id, :name %><br/>
-    <%= f.text_field :model_id %>
+    <%= f.label :model %>
+    <%= f.collection_select :model_id, Model.all, :id, :name, {prompt: 'Create New Model'} %>
+	<%= f.sub_text_field :model %>
   </div>
 </div>
 <div class="row">
@@ -62,12 +62,12 @@
     <%= f.collection_select :title_id, Title.all, :id, :name %>
   </div>
   <div class="field">
-    <%= f.label :engine %>
-    <%= f.text_field :engine %>
+    <%= f.label :engine_type %>
+    <%= f.text_field :engine_type %>
   </div>
   <div class="field">
-    <%= f.label :trans_id %>
-    <%= f.collection_select :trans_id, Transmission.all, :id, :name %>
+    <%= f.label :transmission_id %>
+    <%= f.collection_select :transmission_id, Transmission.all, :id, :name %>
   </div>
   <div class="field">
     <%= f.label :miles %>
@@ -96,7 +96,7 @@
   </div>
   <div class="field">
     <%= f.label :paint_id %>
-    <%= f.collection_select :paint_id, Condition.all, :id, :title %>
+    <%= f.collection_select :paint_id, Condition.all, :id, :name %>
   </div>
   <div class="field">
     <%= f.label :drivable_id %>
@@ -114,7 +114,7 @@
   <div class="large-6 small-12 columns">
   <div class="field">
     <%= f.label :interior_id %>
-    <%= f.collection_select :interior_id, Condition.all, :id, :title %>
+    <%= f.collection_select :interior_id, Condition.all, :id, :name %>
   </div>
   <div class="field">
     <%= f.check_box :stains %>

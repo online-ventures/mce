@@ -1,0 +1,12 @@
+<% content_for :featured, true %>
+
+<% if notice %>
+<p id="notice"><%= notice %></p>
+<% end %>
+
+<% @vehicles.each do |vehicle| %>
+	<pre>
+		<%= vehicle.to_yaml %>
+	</pre>
+
+<% end %>

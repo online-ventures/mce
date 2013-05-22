@@ -22,6 +22,10 @@ end
 # User Authentication
 gem 'authlogic'
 
+# File Uploads
+gem 'jquery-fileupload-rails'
+gem 'paperclip'
+gem 'aws-sdk'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

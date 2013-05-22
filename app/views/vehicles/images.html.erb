@@ -1,0 +1,16 @@
+<%= form_tag vehicle_path(@vehicle), {multipart: true, method: 'put'} do %>
+
+	<div id="progress">
+	  <div class="bar"></div>
+	</div>
+
+    <%= file_field :photo, 'image', { multiple: 'multiple'} %>
+
+	<%= submit_tag 'Start Upload', { class: 'start'} %>
+
+<% end %>
+
+<% @vehicle.photos.each do |photo| %>
+	<%= photo.inspect %>
+	<%= image_tag photo.image.url(:thumb) %>
+<% end %>

@@ -15,10 +15,12 @@
 </head>
 <body>
 	<div class="top-bar">
-	  <span class="right">
+	  <div class="row">
+	    <span class="right">
 	    Sales: (586) 854 - 8781 <br/>
 	    Office: (248) 446 - 8281
 	  </span>
+	  </div>
 	</div>
 	<div id="container" class="row">
 
@@ -29,19 +31,25 @@
 	          <h1 class="twelve columns"><%= link_to 'Motor Car Export', '/' %></h1>
 	      </div>
 
-	      <nav>
-	          <ul class="row">
-	            <li class="twelve columns"><%= link_to 'About', '/about' %></li>
-	            <li class="twelve columns"><%= link_to 'Buyer Information', '/buyer-info' , {'small-text' => 'Buyer Info'}%></li>
-	            <li class="twelve columns"><%= link_to 'Frequently Asked Questions', '/faq', {'small-text' => 'FAQ'} %></li>
+	      <nav class="row">
+	          <span class="large-0 small-1 columns">&nbsp;</span>
+	          <ul class="large-12 small-5 columns">
+	            <li class=""><%= link_to 'About', '/about' %></li>
+	            <li class=""><%= link_to 'Buyer Information', '/buyer-info' , {'small-text' => 'Buyer Info'}%></li>
+	            <li class=""><%= link_to 'Frequently Asked Questions', '/faq', {'small-text' => 'FAQ'} %></li>
+	            <li class=""><%= link_to 'Contact', '/contact' %></li>
+	            <% if current_user %>
+	                <li class=""><%= link_to 'Logged In As ' + current_user.login, '/vehicles'%></li>
+		        <% end %>
 	          </ul>
 
-	          <ul class="row">
+	          <ul class="large-12 small-5 columns">
 	            <li class="large-12 small-0 columns"><h4>Inventory</h4></li>
-	            <li class="twelve columns"><%= link_to 'New Arrivals', '/new' %></li>
-	            <li class="twelve columns"><%= link_to 'Repairables', '/repairable' %></li>
-	            <li class="twelve columns"><%= link_to 'Ready To Go', '/ready', {'small-text' => 'Ready'} %></li>
+	            <li class=""><%= link_to 'New Arrivals', '/arrived' %></li>
+	            <li class=""><%= link_to 'Repairables', '/repairable' %></li>
+	            <li class=""><%= link_to 'Ready To Go', '/ready', {'small-text' => 'Ready'} %></li>
 	          </ul>
+	            <span class="large-0 small-1 columns">&nbsp;</span>
 	      </nav>
 
 	      <footer id="nav-footer">&copy; <%= Time.new.year %> Motor Car Export</footer>

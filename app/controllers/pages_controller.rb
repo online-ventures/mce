@@ -2,7 +2,7 @@ class PagesController < ApplicationController
   # GET /pages
   # GET /pages.json
   def index
-    @pages = Page.all
+    @pages = Page.order(:id).all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,9 +14,9 @@ class PagesController < ApplicationController
   # GET /pages/1.json
   def show
     if params[:id]
-      @page = Page.find(params[:id])
+      @page = Page.where(active: true).find(params[:id])
     elsif params[:slug]
-      @page = Page.find_by_slug(params[:slug])
+      @page = Page.where(active: true).find_by_slug(params[:slug])
     end
 
     respond_to do |format|
@@ -64,7 +64,7 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       if @page.update_attributes(params[:page])
-        format.html { redirect_to @page, notice: 'Page was successfully updated.' }
+        format.html { redirect_to slug_path(@page.slug), notice: 'Page was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

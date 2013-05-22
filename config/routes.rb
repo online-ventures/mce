@@ -1,6 +1,13 @@
 HtmlV2Ruby::Application.routes.draw do
+  resources :users
+
+
   resources :pages
-  resources :vehicles
+  resources :vehicles do
+    member do
+      get 'images'
+    end
+  end
   resources :users
   resources :user_sessions
 
@@ -9,6 +16,8 @@ HtmlV2Ruby::Application.routes.draw do
   get '/logout', to: 'user_sessions#destroy'
 
   root to: 'pages#show', slug: 'home'
+
+  match '/:status', status: /([aA]rrived|[rR]epairable|[rR]eady)/, to: 'vehicles#list', as: 'list'
 
   # CMS pages
   # Should be last rule because it's a catch-all

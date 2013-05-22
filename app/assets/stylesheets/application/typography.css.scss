@@ -56,9 +56,47 @@
 }
 /* END LEAGUE GOTHIC */
 
+article {
+  color: #222;
+
+  ul,ol {
+    margin-left: 2em;
+  }
+}
+
 h1,h2,h3,h4,h5,h6 {
   text-transform: uppercase;
 }
 p,span {
-  font-family: 'Droid Sans', 'Georgia';
+  //font-family: 'Droid Sans', 'Georgia';
+}
+
+
+
+.big {
+  font-size: 1.5em;
+}
+.small {
+  font-size: 0.9em;
+}
+
+.centered {
+  text-align: center;
+}
+
+.blue {
+  color: $primary-color;
+}
+.red {
+  color: $alert-color;
+}
+.green {
+  color: $success-color;
+}
+.grey, .gray {
+  color: darken($secondary-color, 30%);
+}
+
+@media #{$screen} and (max-width: #{$small-screen}) {
+  h1{ font-size: 4em; }
 }

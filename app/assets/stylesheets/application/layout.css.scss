@@ -6,8 +6,8 @@
 @import "foundation/_foundation-global";
 
 body{
-  @include linear-gradient(to top, #faf9cf 0%, #faf7e0 70%, #dceb86 70%, #dceb86 100%);
-  background-size: 9px;
+  @include linear-gradient(to top, #faf9cf 0%, #faf7e0 80%, #dceb86 80%, #dceb86 100%);
+  background-size: 3px;
   box-sizing: border-box;
 }
 
@@ -47,6 +47,7 @@ $featured-height: emCalc(275px);
 }
 
 article#content {
+  padding: 15px;
   &.pushed-down {
     margin-top: $featured-height;
   }
@@ -60,8 +61,17 @@ footer {
 @media #{$screen} and (max-width: #{$small-screen}) {
   #container-footer { display: inherit; }
   #nav-footer { display: none; }
+  .small-0 {
+    display: none !important;
+  }
+  // Removing featured cars from mobile for now
+  #featured-box { display: none; }
+  article#content.pushed-down { margin-top: inherit; }
 }
 @media #{$small} {
   #container-footer { display: none; }
   #nav-footer { display: inherit; }
+  .large-0 {
+    display: none !important;
+  }
 }

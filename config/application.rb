@@ -9,6 +9,10 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+DEV = Rails.env == 'development'
+TEST = Rails.env == 'test'
+PROD = Rails.env == 'production'
+
 module HtmlV2Ruby
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -61,10 +65,15 @@ module HtmlV2Ruby
 
     # Add the fonts path
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'javascripts')
 
     # Precompile additional assets
     config.assets.precompile += %w( .svg .eot .woff .ttf )
 
+    #initialize logger
     config.logger = Logger.new(STDOUT)
+
+    # Autoload core extensions
+		config.autoload_paths += Dir[File.join(Rails.root, "lib", "core_ext", "*.rb")].each {|l| require l }
   end
 end
