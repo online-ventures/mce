@@ -1,7 +1,6 @@
 <%= form_tag vehicle_path(@vehicle)+'/upload_photos', {multipart: true, method: 'put', action: 'upload_photos'} do %>
 
 	<div class="progress success round"><span class="meter" style="width:0%;"></span></div>
-	<span class="percent"></span>
 	<span class="status"></span>
     <ul class="button-group round buttons">
 	    <li class="file-upload button">

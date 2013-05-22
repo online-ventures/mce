@@ -100,10 +100,13 @@ class VehiclesController < ApplicationController
 
   def upload_photos
     @vehicle = Vehicle.find(params[:id])
+    submitted = params[:photo][:image].count
     params[:photo][:image].each do |x|
       @vehicle.photos.new(image: x).save
     end
 
-    redirect_to @vehicle
+    respond_to do |format|
+      format.json { render json: @vehicle.photos.order('id desc').limit(submitted) }
+    end
   end
 end
