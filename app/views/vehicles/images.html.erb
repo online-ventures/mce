@@ -14,7 +14,8 @@
 <% end %>
 
 <div class="existing-photos row">
-	<% @vehicle.photos.each do |photo| %>
+    <% photos = @vehicle.photos %>
+	<% photos.each do |photo| %>
         <%= image_tag photo.image.url(:thumb), { class: 'large-3 columns' } %>
 	<% end %>
 </div>

@@ -3,7 +3,6 @@ class Photo < ActiveRecord::Base
   belongs_to :vehicle
   has_attached_file :image, styles: {
       thumb: '150x150#',
-      normal: '640x480#'
   }
 
   before_create :set_vehicles_photo_id

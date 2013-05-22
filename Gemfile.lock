@@ -67,6 +67,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.22)
     multi_json (1.7.2)
+    newrelic_rpm (3.5.4.33)
     nokogiri (1.5.9)
     paperclip (3.4.1)
       activemodel (>= 3.0.0)
@@ -133,6 +134,7 @@ DEPENDENCIES
   bourbon
   coffee-rails (~> 3.2.1)
   jquery-rails
+  newrelic_rpm
   paperclip
   pg
   rails (= 3.2.13)
