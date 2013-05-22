@@ -68,7 +68,10 @@ module HtmlV2Ruby
     config.assets.paths << Rails.root.join('vendor', 'assets', 'javascripts')
 
     # Precompile additional assets
-    config.assets.precompile += %w( .scss .svg .eot .woff .ttf )
+    config.assets.precompile += %w( .css .scss .svg .eot .woff .ttf )
+
+    # Don't ping the database when precompiling
+    config.assets.initialize_on_precompile=false
 
     #initialize logger
     config.logger = Logger.new(STDOUT)

@@ -19,5 +19,6 @@ db/schema.rb
 
 # Also ignore JetBrains garbage
 /.idea/*
-files/*
-public/uploads/*
+/files
+public/uploads
+public/assets

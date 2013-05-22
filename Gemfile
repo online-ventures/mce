@@ -16,9 +16,8 @@ group :assets do
   gem 'jquery-rails'
   gem 'uglifier', '>= 1.0.3'
   gem 'bourbon'
+  gem 'zurb-foundation'
 end
-
-gem 'zurb-foundation'
 
 # User Authentication
 gem 'authlogic'
