@@ -1,32 +1,28 @@
 <h1>Listing vehicles</h1>
 
-<%= link_to 'New Vehicle', new_vehicle_path %>
 
+<%= link_to 'New Vehicle', new_vehicle_path, class: 'button' %>
 <table>
   <tr>
+    <th>Vehicle</th>
     <th>Stock number</th>
-    <th>Year</th>
-    <th>Make</th>
-    <th>Model</th>
-    <th>Miles</th>
     <th>Status</th>
-    <th></th>
+    <th>Price</th>
     <th></th>
     <th></th>
   </tr>
 
 <% @vehicles.each do |vehicle| %>
   <tr>
+    <td>
+      <%= link_to "#{vehicle.year} #{vehicle.make.name} #{vehicle.model.name}", vehicle %><br>
+      <small><%= vehicle.subtitle %></small>
+    </td>
     <td><%= vehicle.stock_number %></td>
-    <td><%= vehicle.year %></td>
-    <td><%= vehicle.make %></td>
-    <td><%= vehicle.model %></td>
-    <td><%= vehicle.miles %></td>
-    <td><%= vehicle.status %></td>
-    <td><%= link_to 'Show', vehicle %></td>
-    <td><%= link_to 'Edit', edit_vehicle_path(vehicle) %></td>
-    <td><%= link_to 'Destroy', vehicle, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= vehicle.status.name %></td>
+    <td><%= number_to_currency(vehicle.price, precision: 0) %></td>
+    <td><%= link_to 'Edit', edit_vehicle_path(vehicle), class: 'secondary button' %></td>
+    <td><%= link_to 'Destroy', vehicle, method: :delete, data: { confirm: 'Are you sure?' }, class: 'alert button' %></td>
   </tr>
 <% end %>
 </table>
-

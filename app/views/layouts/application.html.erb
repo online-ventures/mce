@@ -1,14 +1,73 @@
 <!DOCTYPE html>
-<html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7 ]> <html class="ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
 <head>
-  <title>MotorCarExport</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+	<meta charset="utf-8" />
+	<!-- Set the viewport width to device width for mobile -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title><%= content_for?(:title) ? yield(:title) : 'Motor Car Export' %></title>
+	<%= stylesheet_link_tag    "application", media: 'all' %>
+	<%= javascript_include_tag "custom.modernizr.dev" if Rails.env == 'development' %>
+	<%= csrf_meta_tags %>
 </head>
 <body>
+	<div class="top-bar">
+	  <div class="row">
+	    <span class="right">
+	    Sales: (586) 854 - 8781 <br/>
+	    Office: (248) 446 - 8281
+	  </span>
+	  </div>
+	</div>
+	<div id="container" class="row">
 
-<%= yield %>
+	  <div class="large-3 small-12 columns">
+	    <div class="side-nav">
+	      <div class="row">
+	          <%= link_to image_tag('logo.png'), '/', class: 'large-12 small-4 small-centered large-uncentered columns' %>
+	          <h1 class="twelve columns"><%= link_to 'Motor Car Export', '/' %></h1>
+	      </div>
 
+	      <nav class="row">
+	          <span class="large-0 small-1 columns">&nbsp;</span>
+	          <ul class="large-12 small-5 columns">
+	            <li class=""><%= link_to 'About', '/about' %></li>
+	            <li class=""><%= link_to 'Buyer Information', '/buyer-info' , {'small-text' => 'Buyer Info'}%></li>
+	            <li class=""><%= link_to 'Frequently Asked Questions', '/faq', {'small-text' => 'FAQ'} %></li>
+	            <li class=""><%= link_to 'Contact', '/contact' %></li>
+	            <% if current_user %>
+	                <li class=""><%= link_to 'Logged In As ' + current_user.login, '/vehicles'%></li>
+		        <% end %>
+	          </ul>
+
+	          <ul class="large-12 small-5 columns">
+	            <li class="large-12 small-0 columns"><h4>Inventory</h4></li>
+	            <li class=""><%= link_to 'New Arrivals', '/arrived' %></li>
+	            <li class=""><%= link_to 'Repairables', '/repairable' %></li>
+	            <li class=""><%= link_to 'Ready To Go', '/ready', {'small-text' => 'Ready'} %></li>
+	          </ul>
+	            <span class="large-0 small-1 columns">&nbsp;</span>
+	      </nav>
+
+	      <footer id="nav-footer">&copy; <%= Time.new.year %> Motor Car Export</footer>
+	    </div>
+	  </div>
+	  <% if content_for? :featured %>
+	  <div id="featured-box" class="twelve columns">
+	    <%= render 'vehicles/featured' %>
+	  </div>
+	  <% end %>
+	  <article id="content" class="large-9 small-12 columns <%= 'pushed-down' if content_for? :featured %>">
+	    <%= yield %>
+	    <div class="row">
+	      <footer id="container-footer" class="twelve columns">&copy; <%= Time.new.year %> Motor Car Export</footer>
+	    </div>
+	  </article>
+
+	</div>
+	<%= javascript_include_tag "application" %>
 </body>
 </html>

@@ -1,0 +1,61 @@
+@import "mixins.css.scss";
+@import "foundation/_foundation-global";
+
+.side-nav {
+  background: #F9F9e8;
+  box-shadow: 0 0 1px rgba(0,0,0,0.4);
+  position: relative;
+
+  >div.row {
+    margin-bottom: 3em;
+    >a {
+      display: block;
+    }
+  }
+  h1 {
+    font-size: 1.2em;
+    font-family: Baskerville;
+    text-align: center;
+    text-transform: uppercase;
+
+    a, a:hover {
+      color: #276030;
+    }
+  }
+  nav.row {
+    ul {
+        list-style-type: none;
+        text-align: center;
+
+        li {
+          line-height: 1.5em;
+          margin: 0.5em 0;
+        }
+        a {
+          color: #337c3d;
+          &:hover {
+            color: #3e9a48;
+            text-decoration: underline;
+          }
+        }
+
+        h4 {
+          width: 75%;
+          margin: 0 auto;
+          border-bottom: 1px solid #337c3d;
+        }
+      }
+  }
+}
+
+@media #{$screen} and (max-width: #{$small-screen}) {
+  .side-nav {
+    padding: 0.875em 0 0 0;
+    >div.row {
+      margin-bottom: 1em;
+    }
+    nav ul {
+      margin-bottom: 0;
+    }
+  }
+}

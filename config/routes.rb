@@ -1,7 +1,28 @@
 MotorCarExport::Application.routes.draw do
-  resources :vehicles
+  resources :users
 
-  root to: 'vehicles#index'
+
+  resources :pages
+  resources :vehicles do
+    member do
+      get 'images'
+      match 'upload_photos', as:'upload_photos'
+    end
+  end
+  resources :users
+  resources :user_sessions
+
+  get '/login', to: 'user_sessions#new'
+  post '/login', to: 'user_sessions#create'
+  get '/logout', to: 'user_sessions#destroy'
+
+  root to: 'pages#show', slug: 'home'
+
+  match '/:status', status: /([aA]rrived|[rR]epairable|[rR]eady)/, to: 'vehicles#list', as: 'list'
+
+  # CMS pages
+  # Should be last rule because it's a catch-all
+  match '/:slug', to: 'pages#show', as: 'slug'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

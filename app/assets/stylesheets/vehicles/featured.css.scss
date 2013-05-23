@@ -1,0 +1,54 @@
+#featured-content{
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background-image: url(asset-path('featured-bg.jpg', image));
+  background-size: cover;
+  .featured-column{
+    height: 100%;
+    >.row{
+      height: 100%;
+    }
+  }
+  .car {
+    //white-space: nowrap;
+    height: auto;
+    top: 10%;
+    background: rgba(255,255,255,0.4);
+    box-shadow: 0 0 3px rgba(255,255,255,0.4);
+    border-radius: 3px;
+    box-sizing: content-box;
+    padding: 0.5em;
+    >.row{
+      // Sorry for the hacky fix
+      margin: 0;
+    }
+    .picture {
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+      background-image: url('/lingenfelter-2010.jpg');
+    }
+    .info {
+      font-size: 90%;
+      h2,h3,h4 {
+        margin:0;
+        line-height: 1.1em;
+        font-weight: normal;
+      }
+      h2, .price {
+        color: darken(#276030, 5%);
+      }
+      .price {
+        margin: 0.3em 1em 0 0;
+        display: inline-block;
+        vertical-align: bottom;
+      }
+      .more-info.button {
+        display: inline-block;
+        vertical-align: bottom;
+        margin:0;
+      }
+    }
+  }
+}

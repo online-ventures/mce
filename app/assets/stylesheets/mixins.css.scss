@@ -1,0 +1,9 @@
+@mixin linear-gradient($size, $default-color, $color-stops...)
+{
+  background-image: -webkit-linear-gradient($color-stops);
+  background-image:    -moz-linear-gradient($color-stops);
+  background-image:      -o-linear-gradient($color-stops);
+  background-image:         linear-gradient($color-stops);
+  background-size: $size $size;
+  background-color: $default-color;
+}

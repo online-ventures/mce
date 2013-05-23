@@ -1,13 +1,20 @@
 class VehiclesController < ApplicationController
+  before_filter :require_user, except: [:show, :list]
+
   # GET /vehicles
   # GET /vehicles.json
   def index
-    @vehicles = Vehicle.active.all
+    @vehicles = Vehicle.order('updated_at desc').all
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @vehicles }
     end
+  end
+
+  def list
+    status = params[:status].capitalize
+    @vehicles = Vehicle.where("status_id = #{Status.find_by_name(status).id}").order('updated_at desc')
   end
 
   # GET /vehicles/1
@@ -25,6 +32,8 @@ class VehiclesController < ApplicationController
   # GET /vehicles/new.json
   def new
     @vehicle = Vehicle.new
+    @make = Make.new
+    @model = Model.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -37,11 +46,19 @@ class VehiclesController < ApplicationController
     @vehicle = Vehicle.find(params[:id])
   end
 
+  def images
+    @vehicle = Vehicle.find(params[:id])
+  end
+
   # POST /vehicles
   # POST /vehicles.json
   def create
-    @vehicle = Vehicle.new(params[:vehicle])
-
+    @vehicle = Vehicle.new params[:vehicle]
+    @vehicle.make = Make.find_or_create_by_name params[:make][:name] if params[:make][:name] unless params[:vehicle][:make_id]
+    if params[:model][:name] and params[:vehicle][:model_id].empty?
+      @vehicle.model = Model.find_or_create_by_name params[:model][:name]
+      @vehicle.model.make_id ||= @vehicle.make_id
+    end
     respond_to do |format|
       if @vehicle.save
         format.html { redirect_to @vehicle, notice: 'Vehicle was successfully created.' }
@@ -78,6 +95,18 @@ class VehiclesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to vehicles_url }
       format.json { head :no_content }
+    end
+  end
+
+  def upload_photos
+    @vehicle = Vehicle.find(params[:id])
+    submitted = params[:photo][:image].count
+    params[:photo][:image].each do |x|
+      @vehicle.photos.new(image: x).save
+    end
+
+    respond_to do |format|
+      format.json { render json: @vehicle.photos.order('id desc').limit(submitted) }
     end
   end
 end

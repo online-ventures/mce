@@ -9,6 +9,10 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+DEV = Rails.env == 'development'
+TEST = Rails.env == 'test'
+PROD = Rails.env == 'production'
+
 module MotorCarExport
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -58,5 +62,21 @@ module MotorCarExport
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Add the fonts path
+    config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'javascripts')
+
+    # Precompile additional assets
+    config.assets.precompile += %w( .css .scss .svg .eot .woff .ttf )
+
+    # Don't ping the database when precompiling
+    config.assets.initialize_on_precompile=false
+
+    #initialize logger
+    config.logger = Logger.new(STDOUT)
+
+    # Autoload core extensions
+		config.autoload_paths += Dir[File.join(Rails.root, "lib", "core_ext", "*.rb")].each {|l| require l }
   end
 end

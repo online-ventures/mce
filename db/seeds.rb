@@ -208,11 +208,11 @@ damages = [
 ]
 
 conditions = [
-    { title: 'Excellent' },
-    { title: 'Above Average' },
-    { title: 'Average' },
-    { title: 'Below Average' },
-    { title: 'Poor' }
+    { name: 'Excellent' },
+    { name: 'Above Average' },
+    { name: 'Average' },
+    { name: 'Below Average' },
+    { name: 'Poor' }
 ]
 
 drivables = [
@@ -269,7 +269,7 @@ damages.each do |damage|
 end
 
 conditions.each do |condition|
-    Condition.find_or_create_by_title(condition)
+    Condition.find_or_create_by_name(condition)
 end
 
 drivables.each do |drivable|

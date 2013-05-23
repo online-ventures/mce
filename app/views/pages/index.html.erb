@@ -1,0 +1,25 @@
+<h1>Listing pages</h1>
+
+
+<%= link_to 'New Page', new_page_path, class: 'button' %>
+<table>
+  <tr>
+    <th>Page</th>
+    <th>Active</th>
+    <th>Featured Visible?</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @pages.each do |page| %>
+  <tr>
+    <td><%= link_to page.name, edit_page_path(page), class: 'big' %><br>
+      <%= link_to "#{request.host}#{slug_path(page.slug)}", slug_url(page.slug), {class: 'small gray', 'small-text' => slug_path(page.slug)}%>
+    </td>
+    <td <%= raw page.active ? 'class= "centered green">✓' : 'class= "centered red">✗' %></td>
+    <td <%= raw page.featured ? 'class= "centered green">✓' : 'class= "centered red">✗' %></td>
+    <td><%= link_to 'Edit', edit_page_path(page), class: 'secondary button' %></td>
+    <td><%= link_to 'Destroy', page, method: :delete, data: { confirm: 'Are you sure?' }, class: 'alert button' %></td>
+  </tr>
+<% end %>
+</table>

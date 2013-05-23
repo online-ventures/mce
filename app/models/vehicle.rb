@@ -1,38 +1,30 @@
 class Vehicle < ActiveRecord::Base
-  attr_accessible :burns, :description, :ebay, :engine_type, :miles, :price, :stains, :stock_number, :subtitle, :tears, :vin, :year, :active
-  attr_readonly :deleted_at
-  has_one :make
-  has_one :model
-  has_one :damage
-  has_one :drivable
-  has_one :engine
-  has_one :paint, class_name: 'condition'
-  has_one :interior, class_name: 'condition'
-  has_one :ext_color, class_name: 'color'
-  has_one :int_color, class_name: 'color'
-  has_one :interior_condition
-  has_one :status
-  has_one :suspension
-  has_one :title
-  has_one :trans
-  has_one :warranty
+  attr_accessible :burns, :description, :ebay, :engine_type, :miles, :price, :photos, :stains, :stock_number, :subtitle, :tears, :vin, :year,
+                  :make_id, :make, :model, :model_id, :warranty_id, :title_id, :engine_id, :transmission_id, :ext_color_id, :int_color_id, :status_id,
+                  :damage_id, :paint_id, :interior_id, :drivable_id, :suspension_id
 
-  has_and_belongs_to_many :features
+  belongs_to :make, :autosave => true
+  belongs_to :model, :autosave => true
+  belongs_to :damage
+  belongs_to :drivable
+  belongs_to :engine
+  belongs_to :paint, :class_name => 'Condition'
+  belongs_to :interior, :class_name => 'Condition'
+  belongs_to :ext_color, :class_name => 'Color'
+  belongs_to :int_color, :class_name => 'Color'
+  belongs_to :status
+  belongs_to :suspension
+  belongs_to :title
+  belongs_to :transmission
+  belongs_to :warranty
+  has_many :photos, dependent: :destroy
+  accepts_nested_attributes_for :photos
+  has_and_belongs_to_many :features, join_table: 'vehicles_features'
 
-  scope :active, where(active: true)
-  scope :by_stock, order('stock_number asc')
+  validates :year, :presence => true, :numericality => true
+  validates :make_id, :presence => true
+  validates :model_id, :presence => true
+  validates :stock_number, :presence => true, :length => {:minimum => 2, :maximum => 10}
+  validates :status_id, :presence => true
 
-  before_destroy :set_inactive
-
-  def set_inactive
-    self.active = false
-    self.deleted_at = Time.now
-    false
-  end
-
-  validates :year, presence: true, numericality: true
-  validates :make_id, presence: true
-  validates :model_id, presence: true
-  validates :stock_number, presence: true, length: {minimum: 2, maximum: 10}
-  validates :status_id, presence: true
 end
