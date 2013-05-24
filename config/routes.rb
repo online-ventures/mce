@@ -4,10 +4,7 @@ MotorCarExport::Application.routes.draw do
 
   resources :pages
   resources :vehicles do
-    member do
-      get 'images'
-      post 'upload', as:'upload'
-    end
+    resources :photos
   end
   resources :users
   resources :user_sessions

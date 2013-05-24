@@ -19,6 +19,9 @@ group :assets do
   gem 'zurb-foundation'
 end
 
+# Silences Asset Pipeline Messages
+gem 'quiet_assets', :group => :development
+
 # User Authentication
 gem 'authlogic'
 

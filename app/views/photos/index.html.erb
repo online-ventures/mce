@@ -1,0 +1,37 @@
+<h2><%= @vehicle %></h2>
+<%= form_for(@photo, url: "/vehicles/#{@vehicle.id}/photos/create") do |f| %>
+	<% if @photo.errors.any? %>
+		<div id="error_explanation">
+			<h2><%= pluralize(@photo.errors.count, "error") %> prohibited this vehicle photo from being saved:</h2>
+
+			<ul>
+				<% @photo.errors.full_messages.each do |msg| %>
+					<li><%= msg %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>
+
+	<h4>Add Pictures</h4>
+	<div class="field">
+		<%= f.file_field :image %>
+	</div>
+	<div class="actions">
+		<%= f.submit 'Upload Photos' %>
+	</div>
+<% end %>
+
+<br/><br/>
+<h4>Existing Pictures</h4>
+<div class="existing-photos row">
+	<% @vehicle.photos.each do |photo| %>
+	  <div class="photo large-3 columns" data-id="<%= photo.id %>">
+	    <%= link_to '✔', "/vehicles/#{@vehicle.id}/photos/#{photo.id}/featured", data: { remote: true, confirm: 'Make this Photo the Featured Image?' }, class: 'round secondary button featured' %>
+	    <%= link_to '', '#', data: { 'reveal-id' => 'view-image-modal', 'big-url' => photo.image.url() }, class: 'round primary button view'%>
+	    <%= link_to 'X', "/vehicles/#{@vehicle.id}/photos/#{photo.id}", method: :delete, data: {remote: true, confirm: 'Delete This Picture?'}, class: 'round alert button delete' %>
+		<%= image_tag photo.image.url(:thumb) %>
+      </div>
+	<% end %>
+</div>
+
+<% content_for :modal, 'modals/view_image' %>

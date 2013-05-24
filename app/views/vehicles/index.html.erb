@@ -8,6 +8,7 @@
     <th>Stock number</th>
     <th>Status</th>
     <th>Price</th>
+    <th>Photos</th>
     <th></th>
     <th></th>
   </tr>
@@ -21,6 +22,7 @@
     <td><%= vehicle.stock_number %></td>
     <td><%= vehicle.status.name %></td>
     <td><%= number_to_currency(vehicle.price, precision: 0) %></td>
+    <td><%= link_to vehicle.photos.count, photos_vehicle_path(vehicle) %></td>
     <td><%= link_to 'Edit', edit_vehicle_path(vehicle), class: 'secondary button' %></td>
     <td><%= link_to 'Destroy', vehicle, method: :delete, data: { confirm: 'Are you sure?' }, class: 'alert button' %></td>
   </tr>

@@ -94,19 +94,7 @@ class VehiclesController < ApplicationController
     end
   end
 
-	def images
-		@vehicle = Vehicle.find(params[:id])
-		@photo = Photo.new
-	end
-
 	def upload
-    @vehicle = Vehicle.find(params[:id])
-		@photo = @vehicle.photos.new(params[:photo])
-		if @photo.valid?
-			@photo.save
-			redirect_to "/vehicles/#{@vehicle.id}/images", notice: 'Successfully uploaded'
-		else
-			render action: "images"
-    end
+
   end
 end

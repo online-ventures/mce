@@ -14,7 +14,7 @@ body{
 div.top-bar {
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
   margin:0;
-  z-index: 1000;
+  z-index: 90;
   span {
     color: #fff;
     font-size: 0.75em;
@@ -30,12 +30,12 @@ div.top-bar {
 }
 
 .side-nav {
-  z-index: 900;
+  z-index: 80;
 }
 $featured-height: emCalc(275px);
 
 #featured-box {
-  z-index: 800;
+  z-index: 70;
   padding: 0;
   position: absolute;
   overflow: hidden;

@@ -69,5 +69,6 @@
 
 	</div>
 	<%= javascript_include_tag "application" %>
+	<%= render yield(:modal) if content_for?(:modal) %>
 </body>
 </html>
