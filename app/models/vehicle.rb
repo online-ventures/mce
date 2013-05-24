@@ -27,4 +27,8 @@ class Vehicle < ActiveRecord::Base
   validates :stock_number, :presence => true, :length => {:minimum => 2, :maximum => 10}
   validates :status_id, :presence => true
 
+	def to_s
+		year.to_s+' '+make.name+' '+model.name
+	end
+
 end

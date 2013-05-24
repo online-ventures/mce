@@ -6,7 +6,7 @@ MotorCarExport::Application.routes.draw do
   resources :vehicles do
     member do
       get 'images'
-      match 'upload_photos', as:'upload_photos'
+      post 'upload', as:'upload'
     end
   end
   resources :users

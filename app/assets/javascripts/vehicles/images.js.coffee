@@ -1,7 +1,7 @@
 bar = $('.meter')
 status = $('.status')
 
-$('form').ajaxForm {
+$('#image-upload-form').ajaxForm {
   beforeSend: ->
     status.html('')
     percentVal = '0%'

@@ -46,10 +46,6 @@ class VehiclesController < ApplicationController
     @vehicle = Vehicle.find(params[:id])
   end
 
-  def images
-    @vehicle = Vehicle.find(params[:id])
-  end
-
   # POST /vehicles
   # POST /vehicles.json
   def create
@@ -98,15 +94,19 @@ class VehiclesController < ApplicationController
     end
   end
 
-  def upload_photos
-    @vehicle = Vehicle.find(params[:id])
-    submitted = params[:photo][:image].count
-    params[:photo][:image].each do |x|
-      @vehicle.photos.new(image: x).save
-    end
+	def images
+		@vehicle = Vehicle.find(params[:id])
+		@photo = Photo.new
+	end
 
-    respond_to do |format|
-      format.json { render json: @vehicle.photos.order('id desc').limit(submitted) }
+	def upload
+    @vehicle = Vehicle.find(params[:id])
+		@photo = @vehicle.photos.new(params[:photo])
+		if @photo.valid?
+			@photo.save
+			redirect_to "/vehicles/#{@vehicle.id}/images", notice: 'Successfully uploaded'
+		else
+			render action: "images"
     end
   end
 end

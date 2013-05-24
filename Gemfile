@@ -25,6 +25,7 @@ gem 'authlogic'
 # File Uploads
 gem 'paperclip'
 gem 'aws-sdk'
+gem 'rubyzip'
 
 # Application Monitoring
 gem 'newrelic_rpm'
