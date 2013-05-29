@@ -1,8 +1,22 @@
 <div id="view-image-modal" class="reveal-modal">
   <section class="row">
-    <div class="large-2 columns">&nbsp;</div>
     <img class="large-8 columns" id="view-image-modal-image" src="" />
-    <div class="large-2 columns">&nbsp;</div>
+    <div class="large-4 columns">
+      <ul>
+        <% if params[:deleted] != 'true' %>
+        <li class="featured">
+           <%= link_to '✔ Make Featured', "", method: :put, data: { remote: true, confirm: 'Make this Photo the Featured Image?' }, class: 'round secondary button featured' %>
+        </li>
+        <li class="delete">
+          <%= link_to 'X Delete Photo', "", method: :delete, data: {remote: true, confirm: 'Delete This Picture?'}, class: 'round alert button delete' %>
+        </li>
+	    <% else %>
+        <li class="reactivate">
+          <%= link_to '✔ Reactivate Photo', "", method: :put, data: {remote: true, confirm: 'Reactivate This Picture?'}, class: 'round secondary button reactivate' %>
+        </li>
+        <% end %>
+      </ul>
+    </div>
   </section>
   <a class="close-reveal-modal">&#215;</a>
 </div>

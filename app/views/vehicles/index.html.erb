@@ -16,13 +16,13 @@
 <% @vehicles.each do |vehicle| %>
   <tr>
     <td>
-      <%= link_to "#{vehicle.year} #{vehicle.make.name} #{vehicle.model.name}", vehicle %><br>
+      <%= link_to vehicle.to_s, vehicle %><br>
       <small><%= vehicle.subtitle %></small>
     </td>
     <td><%= vehicle.stock_number %></td>
     <td><%= vehicle.status.name %></td>
     <td><%= number_to_currency(vehicle.price, precision: 0) %></td>
-    <td><%= link_to vehicle.photos.count, photos_vehicle_path(vehicle) %></td>
+    <td><%= link_to vehicle.photos.count, vehicle_photos_path(vehicle) %></td>
     <td><%= link_to 'Edit', edit_vehicle_path(vehicle), class: 'secondary button' %></td>
     <td><%= link_to 'Destroy', vehicle, method: :delete, data: { confirm: 'Are you sure?' }, class: 'alert button' %></td>
   </tr>

@@ -1,7 +1,12 @@
 class Vehicle < ActiveRecord::Base
+  # populates deleted_at, and prevents deletion
+  acts_as_paranoid
+  scope :active, where(deleted_at: nil)
+  scope :inactive, where('deleted_at IS NOT NULL')
+
   attr_accessible :burns, :description, :ebay, :engine_type, :miles, :price, :photos, :stains, :stock_number, :subtitle, :tears, :vin, :year,
                   :make_id, :make, :model, :model_id, :warranty_id, :title_id, :engine_id, :transmission_id, :ext_color_id, :int_color_id, :status_id,
-                  :damage_id, :paint_id, :interior_id, :drivable_id, :suspension_id
+                  :damage_id, :paint_id, :interior_id, :drivable_id, :suspension_id, :featured_id
 
   belongs_to :make, :autosave => true
   belongs_to :model, :autosave => true
@@ -27,8 +32,25 @@ class Vehicle < ActiveRecord::Base
   validates :stock_number, :presence => true, :length => {:minimum => 2, :maximum => 10}
   validates :status_id, :presence => true
 
-	def to_s
-		year.to_s+' '+make.name+' '+model.name
+	def to_s(join=' ')
+    bits = [year.to_s, make.name, model.name]
+		bits.join(join)
 	end
 
+  def feature(photo)
+    if photo.is_a? Integer
+      self.featured_id = photo
+    elsif photo.is_a? Photo
+      self.featured_id = photo.id
+    end
+    save
+  end
+
+  def featured
+    if featured_id
+      Photo.find(featured_id).image
+    else
+      false
+    end
+  end
 end

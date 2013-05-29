@@ -21,6 +21,9 @@ class VehiclesController < ApplicationController
   # GET /vehicles/1.json
   def show
     @vehicle = Vehicle.find(params[:id])
+    unless params[:name]
+      redirect_to seo_vehicle_path(id: @vehicle.id, name: @vehicle.to_s('-')) and return
+    end
 
     respond_to do |format|
       format.html # show.html.erb

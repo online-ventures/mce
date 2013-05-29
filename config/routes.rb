@@ -5,6 +5,7 @@ MotorCarExport::Application.routes.draw do
   resources :pages
   resources :vehicles do
     resources :photos
+    match '/:name', on: :member, to: 'vehicles#show', as: 'seo'
   end
   resources :users
   resources :user_sessions

@@ -33,6 +33,9 @@ gem 'rubyzip'
 # Application Monitoring
 gem 'newrelic_rpm'
 
+# File permanence
+gem 'paranoia'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

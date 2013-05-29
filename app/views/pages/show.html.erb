@@ -1,13 +1,12 @@
 <% content_for :title, @page.name + ' - Motor Car Export' %>
 <% content_for :featured, @page.featured %>
 
+<% if current_user %>
+<%= link_to 'Edit This Page', edit_page_path(@page), class: 'secondary button' %>
+<% end %>
+
 <% if notice %>
 <p id="notice" class="alert-box radius"><%= notice %></p>
 <% end %>
 
 <%= raw @page.body %>
-
-<% if current_user %>
-<%= link_to 'Edit', edit_page_path(@page), class: 'secondary button' %>
-<% end %>
-

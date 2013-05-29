@@ -8,12 +8,15 @@
 	<meta charset="utf-8" />
 	<!-- Set the viewport width to device width for mobile -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <% if content_for?(:canonical) %>
+	  <link rel="canonical" href="<%= request.protocol + request.host + yield(:canonical) %>" />
+    <% end %>
 	<title><%= content_for?(:title) ? yield(:title) : 'Motor Car Export' %></title>
 	<%= stylesheet_link_tag    "application", media: 'all' %>
 	<%= javascript_include_tag "custom.modernizr.dev" if Rails.env == 'development' %>
 	<%= csrf_meta_tags %>
 </head>
-<body>
+<body class="<%= params[:action] %> <%= params[:controller] %>">
 	<div class="top-bar">
 	  <div class="row">
 	    <span class="right">
@@ -68,7 +71,7 @@
 	  </article>
 
 	</div>
-	<%= javascript_include_tag "application" %>
 	<%= render yield(:modal) if content_for?(:modal) %>
+	<%= javascript_include_tag "application" %>
 </body>
 </html>

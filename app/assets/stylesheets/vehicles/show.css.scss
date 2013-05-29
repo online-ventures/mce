@@ -1,0 +1,41 @@
+.show.vehicles{
+  .photo-box {
+    .photo {
+      padding-right: 0em;
+      height: emCalc(288px);
+      background-size: cover;
+      background-position: center;
+    }
+    .photos {
+      padding-left: 0.25em;
+      img {
+        width: 24%;
+      }
+    }
+  }
+  header {
+    h1 {
+      margin: 0;
+    }
+    h2.subtitle {
+      line-height: 0.9;
+      font-size: 2.5em;
+      color: #999;
+    }
+  }
+  .description {
+    font-size: 1.2em;
+    line-height: 1.5em;
+  }
+}
+
+@media #{$screen} and (max-width: #{$small-screen}) {
+  .show.vehicles {
+    .photo-box .photos img {
+      width: 19%;
+    }
+    .description {
+      font-size: 1em;
+    }
+  }
+}

@@ -1,25 +1,35 @@
+<% content_for :canonical, seo_vehicle_path(id: @vehicle.id, name: @vehicle.to_s('-')) %>
+<% content_for :modal, 'modals/vehicle_gallery' %>
+
 <% if notice %>
 <p id="notice" class="alert-box"><%= notice %></p>
 <% end %>
 
-<p>
-  <b>Year:</b>
-  <%= @vehicle.year %>
-</p>
+<% if current_user %>
+	<%= link_to '&laquo; View All Vehicles'.html_safe, vehicles_path, class: 'secondary button' %>
+	<%= link_to 'Edit Vehicle', edit_vehicle_path(@vehicle), class: 'secondary button' %>
+	<%= link_to 'Edit Photos', vehicle_photos_path(@vehicle), class: 'secondary button' %>
+<% end %>
 
-<p>
-  <b>Make:</b>
-  <%= @vehicle.make.name %>
-</p>
 
-<p>
-  <b>Model:</b>
-  <%= @vehicle.model.name %>
-</p>
+<div class="row photo-box">
+  <div class="large-7 small-12 columns photo" data-src="<%= @vehicle.featured.url(:original) %>" data-reveal-id="gallery-modal">
+  </div>
+  <div class="large-5 small-12 columns photos">
+    <% @vehicle.photos.order(:vehicles_photo_id).limit(16).each do |photo| %>
+		<%= image_tag photo.image.url(:thumb), {alt: @vehicle.to_s, data: { src: photo.image.url(:original), 'reveal-id' => 'gallery-modal', id: photo.id}} %>
+    <% end %>
+  </div>
+</div>
 
-<p>
-  <b>Subtitle:</b>
-  <%= @vehicle.subtitle %>
+<header>
+  <h1><%= @vehicle.to_s %></h1>
+  <h2 class="subtitle"><%= number_to_currency(@vehicle.price, {precision:0}) %> &mdash; <%= @vehicle.subtitle %></h2>
+</header>
+
+
+<p class="description">
+  <%= @vehicle.description %>
 </p>
 
 <p>
@@ -127,11 +137,8 @@
   <%= @vehicle.tears %>
 </p>
 
-<p>
-  <b>Description:</b>
-  <%= @vehicle.description %>
-</p>
 
+<p class="small">Vehicle last updated <%= time_ago_in_words(@vehicle.updated_at) %> ago.</p>
 
 <%= link_to 'Edit', edit_vehicle_path(@vehicle) %> |
 <%= link_to 'Back', vehicles_path %>

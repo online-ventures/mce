@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130524185935) do
+ActiveRecord::Schema.define(:version => 20130528193931) do
 
   create_table "colors", :force => true do |t|
     t.string "name"
@@ -63,11 +63,10 @@ ActiveRecord::Schema.define(:version => 20130524185935) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.integer  "vehicle_id"
     t.integer  "vehicles_photo_id"
-    t.boolean  "active",             :default => true
     t.datetime "deleted_at"
   end
 
@@ -134,8 +133,8 @@ ActiveRecord::Schema.define(:version => 20130524185935) do
     t.text     "description"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
-    t.boolean  "active"
     t.datetime "deleted_at"
+    t.integer  "featured_id"
   end
 
   add_index "vehicles", ["damage_id"], :name => "index_vehicles_on_damage_id"

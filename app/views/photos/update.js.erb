@@ -1,0 +1,10 @@
+$photo_div = $('div[data-id=<%= @photo.id %>]');
+<% if params[:featured] == 'true' %>
+$('.existing-photos .featured').removeClass('featured');
+$photo_div.addClass('featured').find('a').addClass('featured');
+$('#view-image-modal a.featured').addClass('is_featured').html('✔ Featured').attr('href','');
+<% end %>
+<% if params[:activate] == 'true' %>
+$photo_div.hide();
+$('#view-image-modal a.reactivate').addClass('is_featured').html('✔ Reactivated').attr('href','');
+<% end %>

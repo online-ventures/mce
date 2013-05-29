@@ -1,9 +1,9 @@
 require 'zip/zip'
 class Photo < ActiveRecord::Base
-  attr_accessible :image, :vehicle_id, :vehicles_photo_id, :active, :deleted_at
+  # populates deleted_at, and prevents deletion
+  acts_as_paranoid
+  attr_accessible :image, :vehicle_id, :vehicles_photo_id, :deleted_at, :featured?
   belongs_to :vehicle
-
-  before_destroy :deactivate
 
   has_attached_file :image, styles: { thumb: '150x150#' }
   validates_attachment :image, presence: {message: 'must be chosen before saving'}
@@ -13,22 +13,28 @@ class Photo < ActiveRecord::Base
 	before_save :detect_zipped_file
   after_save :remove_zipped_file
 
-  def activate
-    update_attributes active: true, deleted_at: nil
-  end
+  scope :active, where(deleted_at: nil)
+  scope :inactive, where('deleted_at IS NOT NULL')
 
   def image?
     image_content_type != 'application/zip'
   end
 
+  def featured?
+    self.id == self.vehicle.featured_id
+  end
+
+  def activate
+    update_attribute :deleted_at, nil
+  end
+
   private
   def set_vehicles_photo_id
-    self.vehicles_photo_id = (vehicle.photos.maximum(:vehicles_photo_id)|| 0) + 1
-	end
+    self.vehicles_photo_id = (vehicle.photos.unscoped.maximum(:vehicles_photo_id)|| 0) + 1
+  end
 
 	def detect_zipped_file
 		if image_content_type == 'application/zip'
-			puts 'Inspect tempfiles...'
 			Zip::ZipFile.open(image.queued_for_write[:original].path) do |zipfile|
 				zipfile.each do |entry|
 					tempfile = Tempfile.new([File.basename(entry.name, File.extname(entry.name)),File.extname(entry.name)], '/tmp')
@@ -46,18 +52,15 @@ class Photo < ActiveRecord::Base
   end
 
   def remove_zipped_file
-    unless image?
-      puts "\n\n destroying zipped file: #{image_file_name}\n\n\n"
-      destroy
-    end
+    Photo.delete_all(image_content_type: 'application/zip')
   end
 
-  def deactivate
-    if image?
-      update_attributes({ active: false, deleted_at: Time.now })
-      false
-    else
-      true
-    end
+  # Overrides Paperclip methods which delete images, and image data
+  def destroy_attached_files
+    true
+  end
+
+  def prepare_for_destroy
+    true
   end
 end

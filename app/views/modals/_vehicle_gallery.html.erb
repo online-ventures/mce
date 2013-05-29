@@ -1,0 +1,12 @@
+<div id="gallery-modal" class="reveal-modal">
+  <a class="close-reveal-modal">&#215;</a>
+  <div class="row">
+    <div class="theme-light slider-wrapper large-10 small-12 columns small-centered">
+        <div id="slider" class="nivoSlider">
+          <% @vehicle.photos.find_each do |photo| %>
+            <%= image_tag photo.image.url(:original) %>
+          <% end %>
+        </div>
+    </div>
+  </div>
+</div>

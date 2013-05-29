@@ -1,5 +1,5 @@
 <h2><%= @vehicle %></h2>
-<%= form_for(@photo, url: "/vehicles/#{@vehicle.id}/photos/create") do |f| %>
+<%= form_for(@photo, url: vehicle_photos_path(@vehicle)) do |f| %>
 	<% if @photo.errors.any? %>
 		<div id="error_explanation">
 			<h2><%= pluralize(@photo.errors.count, "error") %> prohibited this vehicle photo from being saved:</h2>
@@ -18,18 +18,29 @@
 	</div>
 	<div class="actions">
 		<%= f.submit 'Upload Photos' %>
+
+	    <%= link_to 'Edit Vehicle', edit_vehicle_path(@vehicle), class: 'secondary button' %>
+
+	    <%= link_to 'View Vehicle', @vehicle, class: 'secondary button' %>
 	</div>
 <% end %>
 
 <br/><br/>
 <h4>Existing Pictures</h4>
+<% if params[:deleted] == 'true' %>
+<p>Viewing Deactivated Photos. <%= link_to 'Show Active.', vehicle_photos_path(@vehicle), class: 'italic' %></p>
+<% else %>
+<p>Viewing Active Photos. <%= link_to 'Show Deactivated.', '?deleted=true', class: 'italic' %></p>
+<% end %>
 <div class="existing-photos row">
-	<% @vehicle.photos.each do |photo| %>
-	  <div class="photo large-3 columns" data-id="<%= photo.id %>">
-	    <%= link_to '✔', "/vehicles/#{@vehicle.id}/photos/#{photo.id}/featured", data: { remote: true, confirm: 'Make this Photo the Featured Image?' }, class: 'round secondary button featured' %>
-	    <%= link_to '', '#', data: { 'reveal-id' => 'view-image-modal', 'big-url' => photo.image.url() }, class: 'round primary button view'%>
-	    <%= link_to 'X', "/vehicles/#{@vehicle.id}/photos/#{photo.id}", method: :delete, data: {remote: true, confirm: 'Delete This Picture?'}, class: 'round alert button delete' %>
-		<%= image_tag photo.image.url(:thumb) %>
+	<% @photos.each do |photo| %>
+	  <div class="photo large-3 columns <%= 'featured' if photo.featured? %>" data-id="<%= photo.id %>">
+	    <%= link_to image_tag(photo.image.url(:thumb)), '#', data: {
+			    'active' => photo.deleted_at == nil,
+			    'reveal-id' => 'view-image-modal',
+			    'big-url' => photo.image.url(),
+	            'path' => vehicle_photo_path(vehicle_id: @vehicle.id, id: photo.id)
+	    }, class: "#{'featured' if photo.featured? }" %>
       </div>
 	<% end %>
 </div>

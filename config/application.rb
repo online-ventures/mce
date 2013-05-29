@@ -66,6 +66,8 @@ module MotorCarExport
     # Add the fonts path
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
     config.assets.paths << Rails.root.join('vendor', 'assets', 'javascripts')
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'stylesheets')
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'images')
 
     # Precompile additional assets
     config.assets.precompile += %w( .css .scss .svg .eot .woff .ttf )

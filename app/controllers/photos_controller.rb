@@ -3,16 +3,34 @@ class PhotosController < ApplicationController
   def index
     @vehicle = Vehicle.find(params[:vehicle_id])
     @photo = Photo.new
+    if params[:deleted] == 'true'
+      @photos = @vehicle.photos.unscoped.inactive
+    else
+      @photos = @vehicle.photos
+    end
+  end
+
+  def update
+    @photo = Photo.unscoped.find(params[:id])
+    if params[:featured] == 'true'
+      Vehicle.find(params[:vehicle_id]).feature @photo
+    end
+    if params[:activate] == 'true'
+      @photo.activate
+    end
+    if @photo.save
+      respond_to do |format|
+        format.js
+      end
+    end
   end
 
   def create
-    @start = Time.now
-    @vehicle = Vehicle.find(params[:id])
+    @vehicle = Vehicle.find(params[:vehicle_id])
 		@photo = @vehicle.photos.new(params[:photo])
 		if @photo.valid?
 			@photo.save
-      puts "\n\nTime Elapsed: #{(Time.now - @start)} seconds\n\n\n"
-			redirect_to :show, notice: 'Successfully uploaded'
+			redirect_to vehicle_photos_path(@vehicle), notice: 'Successfully uploaded'
 		else
 			render action: :index
     end
@@ -20,13 +38,12 @@ class PhotosController < ApplicationController
 
   def destroy
     @photo = Photo.find(params[:id])
-    @photo.destroy
-
-    if @photo.active
-      # Error
+    if @photo.featured?
+      @photo.vehicle.update_attribute(:featured_id, nil)
     end
+    @photo.destroy
     respond_to do |format|
-      format.js { }
+      format.js
     end
   end
 end
