@@ -1,0 +1,1 @@
+<div data-id="<%= feature.id %>" class="large-10 small-centered columns feature <%= addable ? 'addable' : 'subable' %>"><%= link_to content_tag(:i, '', class:"foundicon-#{addable ? 'plus' : 'minus'}")+content_tag(:span, feature.name), vehicle_feature_path(@vehicle, feature), data: {remote:true, method: :put }, class: 'secondary button left' %></div>

@@ -1,15 +1,22 @@
 .show.vehicles{
   .photo-box {
     .photo {
-      padding-right: 0em;
-      height: emCalc(288px);
+      height: emCalc(320px);
       background-size: cover;
       background-position: center;
     }
     .photos {
-      padding-left: 0.25em;
+      padding-top: 0.5em;
+      padding-bottom: 0.5em;
       img {
-        width: 24%;
+        display: block;
+        float: left;
+        width: 10%;
+        margin:0;
+        padding: 0;
+        &:hover {
+          padding: 2px;
+        }
       }
     }
   }
@@ -26,6 +33,11 @@
   .description {
     font-size: 1.2em;
     line-height: 1.5em;
+  }
+  .features .list {
+    .feature {
+      padding: 0.5em;
+    }
   }
 }
 

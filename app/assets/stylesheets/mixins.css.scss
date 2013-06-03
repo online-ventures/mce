@@ -7,3 +7,16 @@
   background-size: $size $size;
   background-color: $default-color;
 }
+
+$classPrefix: "foundicon-";
+@mixin i-class($name,$pua) {
+  .#{$classPrefix}#{$name}:before {
+    content: "\f#{$pua}";
+  }
+}
+
+@mixin ie-class($name,$pua) {
+  .#{$classPrefix}#{$name} {
+    *zoom: expression(this.runtimeStyle['zoom'] = "1", this.innerHTML = "&#xf#{$pua};");
+  }
+}

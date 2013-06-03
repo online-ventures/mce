@@ -1,0 +1,14 @@
+<%= form_for(@vehicle, url: vehicle_features_path(@vehicle), method: :post, remote: true) do |f| %>
+
+	<div class="row collapse">
+	    <div class="large-8 columns">
+	        <%= fields_for :feature do |features| %>
+				<%= features.text_field :name %>
+			<% end %>
+	    </div>
+	    <div class="large-4 columns">
+			<%= f.submit 'Add Feature', class: 'button postfix' %>
+	    </div>
+	</div>
+
+<% end %>

@@ -1,0 +1,66 @@
+$features-line-height: 0.75em;
+
+.list.row {
+  padding-top: $features-line-height;
+  margin:0 0 1em 0;
+  @extend table;
+  .feature {
+    a.button {
+      padding: $features-line-height 0.5em;
+      width: 100%;
+      font-size: 0.8em;
+      margin-bottom: $features-line-height;
+      i,span{
+        display: inline-block;
+        vertical-align: middle;
+      }
+      span{
+        max-width: 90%;
+      }
+      [class*="foundicon-"]:before {
+        font-size: 1.2em;
+        padding: 0 0.5em;
+        vertical-align: middle;
+      }
+      &:active [class*="foundicon-"]:before {
+        @include animation(rotate-spinny 0.5s infinite);
+      }
+    }
+    &.addable:hover [class*="foundicon-"]:before {
+      color: saturate(darken($success-color,5%),20%);
+    }
+    &.subable:hover [class*="foundicon-"]:before {
+      color: $alert-color;
+    }
+  }
+}
+
+span[role="status"] {
+  position: absolute;
+}
+ul.ui-autocomplete {
+  position: absolute;
+  list-style-type: none;
+  background: white;
+  z-index: 100;
+  li {
+    padding: 0.25em 0.5em;
+    border: 1px solid #999;
+    a {
+      color: rgba(0,0,0,0.75);
+    }
+    &:hover, &:active {
+      background: #ddd;
+    }
+  }
+}
+
+
+@include keyframes(rotate-spinny) {
+  0% {
+    @include transform(rotate(0deg));
+  }
+  100% {
+    @include transform(rotate(360deg));
+  }
+}

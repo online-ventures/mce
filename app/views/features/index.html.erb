@@ -1,0 +1,37 @@
+<h1>Listing features</h1>
+
+
+  <% if @vehicle %>
+	<%= render 'vehicles/nav', page: :features %>
+	  <%= render 'features/vehicle_form' %>
+  <% else %>
+      <%= render 'features/form' %>
+  <% end %>
+
+<div class="row">
+  <div class="large-6 columns vehicle">
+    <h3 class="centered">Vehicle Features</h3>
+    <div class="list row">
+		<% @vehicle_features.each do |feature| %>
+            <%= render partial: 'features/vehicles_feature', locals: {feature: feature, addable: false}%>
+        <% end %>
+    </div>
+  </div>
+  <div class="large-6 columns system">
+    <h3 class="centered">Existing Features</h3>
+    <div class="list row">
+        <% @features.each do |feature| %>
+			<%= render partial: 'features/vehicles_feature', locals: {feature: feature,addable: true} unless feature.in? @vehicle_features %>
+	    <% end %>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $features = [
+    <% @features.each do |f| %>
+		<%= "'#{f.name}',".html_safe %>
+	<% end %>
+  ];
+</script>
+

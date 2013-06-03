@@ -1,14 +1,17 @@
 MotorCarExport::Application.routes.draw do
   resources :users
-
-
   resources :pages
+  resources :features do
+    get '', on: :collection, to: 'features#manage'
+    post '/to/:to', on: :member, to: 'features#move'
+  end
+  resources :user_sessions
+
   resources :vehicles do
     resources :photos
-    match '/:name', on: :member, to: 'vehicles#show', as: 'seo'
+    resources :features
+    match '/:name', on: :member, to: 'vehicles#show', as: 'seo', name: /\d{4}\-.*/
   end
-  resources :users
-  resources :user_sessions
 
   get '/login', to: 'user_sessions#new'
   post '/login', to: 'user_sessions#create'

@@ -1,0 +1,8 @@
+<% page ||= :show %>
+<ul class="button-group">
+	<%= content_tag :li, link_to('&laquo; View All Vehicles'.html_safe, vehicles_path, class: 'secondary button') %>
+	<%= content_tag :li, link_to('Show Vehicle', vehicle_path(@vehicle), class: 'secondary button') unless page == :show %>
+	<%= content_tag :li, link_to('Edit Vehicle', edit_vehicle_path(@vehicle), class: 'secondary button') unless page == :edit %>
+	<%= content_tag :li, link_to('Edit Photos', vehicle_photos_path(@vehicle), class: 'secondary button') unless page == :photos %>
+	<%= content_tag :li, link_to('Edit Features', vehicle_features_path(@vehicle), class: 'secondary button') unless page == :features %>
+</ul>

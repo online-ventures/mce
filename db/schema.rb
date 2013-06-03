@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130528193931) do
+ActiveRecord::Schema.define(:version => 20130603184438) do
 
   create_table "colors", :force => true do |t|
     t.string "name"
@@ -34,7 +34,8 @@ ActiveRecord::Schema.define(:version => 20130528193931) do
   end
 
   create_table "features", :force => true do |t|
-    t.string "name"
+    t.string  "name"
+    t.integer "order"
   end
 
   create_table "makes", :force => true do |t|

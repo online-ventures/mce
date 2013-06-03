@@ -10,6 +10,29 @@ body{
   background-size: 3px;
   box-sizing: border-box;
 }
+body,html{
+  &.full{
+    height: 100%;
+    overflow: hidden;
+
+    #gallery-modal {
+      background-size: 100% 100% !important;
+      background-repeat: no-repeat !important;
+      height: 100% !important;
+      width: 100%;
+      top: 0px !important;
+      left: 0px !important;
+      margin: 0px 0px 0px 0px !important;
+
+      .close-full-modal {
+        position: fixed;
+        top: 5px;
+        right: 5px;
+        z-index: 1000;
+      }
+    }
+  }
+}
 
 div.top-bar {
   box-shadow: 0 0 10px rgba(0,0,0,0.5);

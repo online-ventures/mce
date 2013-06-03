@@ -6,6 +6,8 @@
     font-weight: $weight;
     font-style: $style;
 
+    src: local('#{$font-family}');
+
     @if $asset-pipeline == true {
       src: font-url('#{$file-path}.eot');
       src: font-url('#{$file-path}.eot?#iefix')          format('embedded-opentype'),

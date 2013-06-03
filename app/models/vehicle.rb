@@ -35,7 +35,19 @@ class Vehicle < ActiveRecord::Base
 	def to_s(join=' ')
     bits = [year.to_s, make.name, model.name]
 		bits.join(join)
-	end
+  end
+
+  def toggle_feature(feature)
+    if feature.in? features
+      features.delete(feature)
+      save
+      :removed
+    else
+      features << feature
+      save
+      :added
+    end
+  end
 
   def feature(photo)
     if photo.is_a? Integer

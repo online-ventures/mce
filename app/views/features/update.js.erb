@@ -1,0 +1,17 @@
+<%
+if @method == :added
+	list = '.vehicle'
+	icon = 'foundicon-minus'
+	aos = 'subable'
+else
+	list = '.system'
+	icon = 'foundicon-plus'
+	aos = 'addable'
+end
+%>
+
+$feature = $('.feature[data-id=<%= @feature.id %>]');
+$feature.find('i').attr('class', '<%= icon %>');
+$feature.removeClass('addable subable').addClass('<%= aos %>');
+
+$('<%= list %> .list').prepend($feature);

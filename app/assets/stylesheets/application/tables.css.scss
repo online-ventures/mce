@@ -1,0 +1,6 @@
+table {
+  &.full-width { width: 100%; }
+
+  &.heading-right th { text-align: right; }
+  &.heading-left  th { text-align: left;  }
+}
