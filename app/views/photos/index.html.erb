@@ -19,9 +19,7 @@
 	<div class="actions">
 		<%= f.submit 'Upload Photos' %>
 
-	    <%= link_to 'Edit Vehicle', edit_vehicle_path(@vehicle), class: 'secondary button' %>
-
-	    <%= link_to 'View Vehicle', @vehicle, class: 'secondary button' %>
+	    <%= render partial: 'vehicles/nav', locals: {page: :photos} %>
 	</div>
 <% end %>
 

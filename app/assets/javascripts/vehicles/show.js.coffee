@@ -16,10 +16,10 @@ $images.hover ->
 
 $images.click ->
   $.slideTo($(this).attr('data-slide-id'))
-  $body.addClass('full');
+  $body.addClass('full').scrollTop(0);
 
 $photo.click ->
-  $body.addClass('full');
+  $body.addClass('full').scrollTop(0);
 
 $close.click ->
   $body.removeClass('full');

@@ -44,10 +44,25 @@
 @media #{$screen} and (max-width: #{$small-screen}) {
   .show.vehicles {
     .photo-box .photos img {
-      width: 19%;
+      width: 10%;
     }
     .description {
       font-size: 1em;
+    }
+    .reveal-modal {
+      padding: 0;
+    }
+    a.close-reveal-modal {
+      z-index: 10000;
+      font-size: 1.5em;
+      color: #222;
+      background: #FFF;
+      height: 30px;
+      width: 30px;
+      text-align: center;
+      border-radius: 15px;
+      top:0;
+      right: 0;
     }
   }
 }
