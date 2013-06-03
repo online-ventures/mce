@@ -23,7 +23,6 @@ class FeaturesController < ApplicationController
       @vehicle = Vehicle.find(params[:vehicle_id])
       @vehicle.features << @feature unless @feature.in? @vehicle.features
     end
-
     respond_to do |format|
       if @feature.save
         format.json { render json: @feature, status: :created, location: @feature }

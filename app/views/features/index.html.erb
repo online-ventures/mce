@@ -10,7 +10,7 @@
 
 <div class="row">
   <div class="large-6 columns vehicle">
-    <h3 class="centered">Vehicle Features</h3>
+    <h3 class="centered">Available</h3>
     <div class="list row">
 		<% @vehicle_features.each do |feature| %>
             <%= render partial: 'features/vehicles_feature', locals: {feature: feature, addable: false}%>
@@ -18,7 +18,7 @@
     </div>
   </div>
   <div class="large-6 columns system">
-    <h3 class="centered">Existing Features</h3>
+    <h3 class="centered">Added</h3>
     <div class="list row">
         <% @features.each do |feature| %>
 			<%= render partial: 'features/vehicles_feature', locals: {feature: feature,addable: true} unless feature.in? @vehicle_features %>

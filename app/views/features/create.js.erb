@@ -1,2 +1,2 @@
 $('#feature_name').val('');
-$('.vehicle .list').prepend('<%= render(@feature, {addable: false}) %>');
+$('.vehicle .list').prepend('<%= render partial: 'features/vehicles_feature', locals: {feature: @feature, addable: false} %>');

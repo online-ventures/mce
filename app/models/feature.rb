@@ -1,5 +1,5 @@
 class Feature < ActiveRecord::Base
-  attr_accessible :name
+  attr_accessible :name, :order
   has_and_belongs_to_many :vehicles, join_table: 'vehicles_features'
   before_create :set_order
   before_destroy :bump_orders
