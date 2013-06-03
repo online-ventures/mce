@@ -10,8 +10,10 @@
 <% end %>
 
 
+<% unless @vehicle.photos.empty? %>
 <div class="row photo-box">
-  <div class="large-12 columns photo" data-src="<%= @vehicle.featured.url(:original) %>" data-reveal-id="gallery-modal">
+  <% src = @vehicle.featured ? @vehicle.featured.url(:original) : @vehicle.photos.first.url(:original) %>
+  <div class="large-12 columns photo" data-src="<%= src %>" data-reveal-id="gallery-modal">
   </div>
   <div class="large-12 columns photos">
     <% i = 0 %>
@@ -21,6 +23,7 @@
     <% end %>
   </div>
 </div>
+<% end %>
 
 <header>
   <h1><%= @vehicle.to_s %></h1>
