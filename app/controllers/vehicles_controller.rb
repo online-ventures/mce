@@ -74,8 +74,8 @@ class VehiclesController < ApplicationController
   # PUT /vehicles/1.json
   def update
     @vehicle = Vehicle.find(params[:id])
-    @vehicle.make = Make.find_or_initialize_by_name params[:make][:name]
-    @vehicle.model = Model.find_or_initialize_by_name params[:model][:name]
+    @vehicle.make = Make.find_or_initialize_by_name params[:make][:name] if params[:make]
+    @vehicle.model = Model.find_or_initialize_by_name params[:model][:name] if params[:make]
 
     params[:vehicle].each do |k,v|
       params[:vehicle][k] = true if v == 'true'
