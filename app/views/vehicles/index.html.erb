@@ -2,29 +2,35 @@
 
 
 <%= link_to 'New Vehicle', new_vehicle_path, class: 'button' %>
-<table>
+<table class="full-width">
   <tr>
     <th>Vehicle</th>
     <th>Stock number</th>
     <th>Status</th>
     <th>Price</th>
     <th>Photos</th>
-    <th></th>
-    <th></th>
+    <th>Ebay View</th>
+    <th>Sold / <br>Featured</th>
+    <th>Manage</th>
   </tr>
 
 <% @vehicles.each do |vehicle| %>
-  <tr>
+  <tr class="vehicle-<%= vehicle.id %>">
     <td>
       <%= link_to vehicle.to_s, vehicle %><br>
       <small><%= vehicle.subtitle %></small>
     </td>
     <td><%= vehicle.stock_number %></td>
     <td><%= vehicle.status.name %></td>
-    <td><%= number_to_currency(vehicle.price, precision: 0) %></td>
+    <td><%= vehicle.word_price %></td>
     <td><%= link_to vehicle.photos.count, vehicle_photos_path(vehicle) %></td>
-    <td><%= link_to 'Edit', edit_vehicle_path(vehicle), class: 'secondary button' %></td>
-    <td><%= link_to 'Destroy', vehicle, method: :delete, data: { confirm: 'Are you sure?' }, class: 'alert button' %></td>
+    <td><%= link_to 'Ebay', seo_vehicle_path(id:vehicle.id, name: vehicle.to_s('-'), format: :ebay), class: 'small secondary button', title: 'Ebay View' %></td>
+
+    <td><%= link_to '$', vehicle_path(vehicle, vehicle: {sold: !vehicle.sold }), class: 'sold small button '+(vehicle.sold ? 'success' : 'secondary'), title: (vehicle.sold ? 'Vehicle Sold' : 'Mark Sold'), data: { remote: true, method: :put }%>
+        <%= link_to '<i class="foundicon-star"></i>'.html_safe, vehicle_path(vehicle, vehicle: {featured: !vehicle.featured }), class: 'featured small button '+(vehicle.featured ? 'success' : 'secondary'), title: (vehicle.featured ? 'Vehicle Featured' : 'Mark Featured'), data: {remote:true, method: :put }%></td>
+
+    <td><%= link_to 'Edit', edit_vehicle_path(vehicle), class: 'small secondary button' %>
+        <%= link_to 'Destroy', vehicle, method: :delete, data: { confirm: 'Are you sure?' }, class: 'small alert button' %></td>
   </tr>
 <% end %>
 </table>

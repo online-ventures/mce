@@ -1,9 +1,6 @@
-@import "mixins.css.scss";
-@import "foundation/_foundation-global";
-
 .side-nav {
-  background: #F9F9e8;
-  box-shadow: 0 0 1px rgba(0,0,0,0.4);
+  background: #f9f9f9;
+  box-shadow: 0 0 2px rgba(0,0,0,0.3);
   position: relative;
 
   >div.row {
@@ -42,7 +39,10 @@
         h4 {
           width: 75%;
           margin: 0 auto;
-          border-bottom: 1px solid #337c3d;
+          font-family: Helvetica;
+          text-transform: none;
+          font-size: 1.5em;
+          line-height: 1.75em;
         }
       }
   }
@@ -56,6 +56,10 @@
     }
     nav ul {
       margin-bottom: 0;
+      li {
+        display: inline-block;
+        min-width: 30%;
+      }
     }
   }
 }

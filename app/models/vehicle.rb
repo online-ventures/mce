@@ -3,13 +3,14 @@ class Vehicle < ActiveRecord::Base
   acts_as_paranoid
   scope :active, where(deleted_at: nil)
   scope :inactive, where('deleted_at IS NOT NULL')
+  scope :random_featured, where(featured: true).order('RANDOM()').limit(1)
 
   attr_accessible :burns, :description, :ebay, :engine_type, :miles, :price, :photos, :stains, :stock_number, :subtitle, :tears, :vin, :year,
                   :make_id, :make, :model, :model_id, :warranty_id, :title_id, :engine_id, :transmission_id, :ext_color_id, :int_color_id, :status_id,
-                  :damage_id, :paint_id, :interior_id, :drivable_id, :suspension_id, :featured_id
+                  :damage_id, :paint_id, :interior_id, :drivable_id, :suspension_id, :featured_id, :featured, :sold
 
-  belongs_to :make, :autosave => true
-  belongs_to :model, :autosave => true
+  belongs_to :make
+  belongs_to :model
   belongs_to :damage
   belongs_to :drivable
   belongs_to :engine
@@ -37,6 +38,10 @@ class Vehicle < ActiveRecord::Base
 		bits.join(join)
   end
 
+  def new
+    created_at > 5.days.ago
+  end
+
   def toggle_feature(feature)
     if feature.in? features
       features.delete(feature)
@@ -58,11 +63,46 @@ class Vehicle < ActiveRecord::Base
     save
   end
 
-  def featured
+  def featured_photo
     if featured_id
-      Photo.find(featured_id).image
+      photo = Photo.find(featured_id)
+      if photo
+        photo.image
+      else
+        false
+      end
     else
       false
+    end
+  end
+
+  def featured_url(size = :original)
+    if photos.any?
+      featured_photo ? featured_photo.url(size) : photos.first.image.url(size)
+    else
+      false
+    end
+  end
+
+  def word_price
+    if sold?
+      'Sold'
+    elsif !ebay.blank?
+      "<a href=\"#{ebay}\">Bid On Ebay</a>".html_safe
+    else
+      ActionController::Base.helpers.number_to_currency(price, precision: 0)
+    end
+  end
+
+  def word_miles
+    ActionController::Base.helpers.number_to_human(miles, units: {unit: 'mi', thousand: 'k'}, precision: 0).delete ' '
+  end
+
+  def word_status
+    if new
+      'new'
+    else
+      status.to_s
     end
   end
 end

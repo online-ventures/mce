@@ -2,7 +2,7 @@
 
 
 <%= link_to 'New Page', new_page_path, class: 'button' %>
-<table>
+<table class="full-width">
   <tr>
     <th>Page</th>
     <th>Active</th>
@@ -14,7 +14,7 @@
 <% @pages.each do |page| %>
   <tr>
     <td><%= link_to page.name, edit_page_path(page), class: 'big' %><br>
-      <%= link_to "#{request.host}#{slug_path(page.slug)}", slug_url(page.slug), {class: 'small gray', 'small-text' => slug_path(page.slug)}%>
+      <%= link_to "#{request.host}#{slug_path(page.slug)}", slug_url(page.slug), {class: 'small gray', 'small-text' => slug_path(page.slug)} if page.active%>
     </td>
     <td <%= raw page.active ? 'class= "centered green">✓' : 'class= "centered red">✗' %></td>
     <td <%= raw page.featured ? 'class= "centered green">✓' : 'class= "centered red">✗' %></td>

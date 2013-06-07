@@ -16,6 +16,7 @@
 }
 input[type=submit] {
     @extend .button;
+    text-shadow: 0 0 2px #222;
   }
 form {
   margin:0;
@@ -27,5 +28,12 @@ form {
   h2 {
     font-size: 2em;
     color: $alert-color;
+  }
+}
+
+.button, .alert-box {
+  text-shadow: 0 0 2px #000;
+  &.secondary {
+    text-shadow: none;
   }
 }

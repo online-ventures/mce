@@ -1,3 +1,8 @@
+<% if current_user %>
+	<%= render 'vehicles/nav', page: :edit %>
+<% end %>
+
+
 <%= form_for(@vehicle) do |f| %>
   <% if @vehicle.errors.any? %>
     <div id="error_explanation">
@@ -11,6 +16,9 @@
     </div>
   <% end %>
 
+<div class="actions">
+	<%= f.submit %>
+</div>
 <div class="row">
   <h3 class="large-12 small-12 columns">Vehicle Information</h3>
 </div>
@@ -21,12 +29,13 @@
   </div>
   <div class="field large-4 small-4 columns">
     <%= f.label :make %>
-    <%= f.collection_select :make_id, Make.all, :id, :name, {prompt: 'Create New Make'} %>
+    <%= f.collection_select :make_id, Make.all, :id, :name, {include_blank: 'Create New Make'} %>
     <%= f.sub_text_field :make %>
   </div>
   <div class="field large-4 small-4 columns">
     <%= f.label :model %>
-    <%= f.collection_select :model_id, Model.all, :id, :name, {prompt: 'Create New Model'} %>
+    <% models = @vehicle.make_id ? @vehicle.make.models : Model.all %>
+    <%= f.collection_select :model_id, models, :id, :name, {include_blank: 'Create New Model'} %>
 	<%= f.sub_text_field :model %>
   </div>
 </div>
@@ -52,19 +61,20 @@
     <%= f.label :ebay %>
     <%= f.text_field :ebay %>
   </div>
-
-  <div class="field">
+<div class="row">
+  <div class="large-4 columns field">
     <%= f.label :warranty_id %>
     <%= f.collection_select :warranty_id, Warranty.all, :id, :name %>
   </div>
-  <div class="field">
+  <div class="large-4 columns field">
     <%= f.label :title_id %>
     <%= f.collection_select :title_id, Title.all, :id, :name %>
   </div>
-  <div class="field">
+  <div class="large-4 columns field">
     <%= f.label :engine_type %>
     <%= f.text_field :engine_type %>
   </div>
+</div>
   <div class="field">
     <%= f.label :transmission_id %>
     <%= f.collection_select :transmission_id, Transmission.all, :id, :name %>
@@ -138,3 +148,17 @@
     <%= f.submit %>
   </div>
 <% end %>
+
+
+<script type="text/javascript">
+  $makes = {
+	<% @makes ||= Make.all %>
+    <% @makes.each do |make| %>
+	<%= "#{make.id}: [" %>
+		<% make.models.each do |model| %>
+	    <%= "[#{model.id}, '#{model.name}'],".html_safe %>
+	    <% end %>
+	<%= "]," %>
+	<% end %>
+  }
+</script>

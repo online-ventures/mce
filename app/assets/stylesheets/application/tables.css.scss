@@ -1,4 +1,6 @@
 table {
+  min-width: 50%;
+
   &.full-width { width: 100%; }
 
   &.heading-right th { text-align: right; }

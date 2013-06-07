@@ -5,18 +5,12 @@
 @import url(http://fonts.googleapis.com/css?family=Droid+Serif);
 
 /* LEAGUE GOTHIC */
-/* Italic */
-@include font-face('League Gothic','league-gothic/leaguegothic-italic-webfont', normal, italic, true);
-/* Regular */
-@include font-face('League Gothic','league-gothic/leaguegothic-regular-webfont', normal, normal, true);
-/* Condensed */
-@include font-face('League Gothic Condensed','league-gothic/leaguegothic-condensed-regular-webfont', normal, normal, true);
-/* Condensed Italic */
-@include font-face('League Gothic Condensed','league-gothic/leaguegothic-condensed-italic-webfont', normal, italic, true);
-/* END LEAGUE GOTHIC */
+@include font-face('League Gothic','leaguegothic-italic-webfont', normal, italic, true);
+@include font-face('League Gothic','leaguegothic-regular-webfont', normal, normal, true);
 
 /* GENERAL ENCLOSED FOUNDICONS */
-@include font-face('GeneralEnclosedFoundicons', 'foundicons/general_enclosed_foundicons', normal, normal, true);
+@include font-face('GeneralFoundicons', 'general_foundicons', normal, normal, true);
+@include font-face('GeneralEnclosedFoundicons', 'general_enclosed_foundicons', normal, normal, true);
 
 [class*="foundicon-"] {
   display: inline;
@@ -29,13 +23,25 @@
   background-repeat: repeat;
 }
 [class*="foundicon-"]:before {
-  font-family: 'GeneralEnclosedFoundicons';
+  font-family: 'GeneralFoundicons';
   font-weight: normal;
   font-style: normal;
   text-decoration: inherit;
 }
+[class*="foundicon-enclosed-"]:before {
+  font-family: 'GeneralEnclosedFoundicons';
+}
 
 /* Foundicon Styles */
+$classPrefix: "foundicon-";
+@mixin i-class($name,$pua) {
+  .#{$classPrefix}#{$name}:before {
+    content: "\f#{$pua}";
+  }
+  .#{$classPrefix}enclosed-#{$name}:before {
+    content: "\f#{$pua}";
+  }
+}
 @include i-class(settings,"000");
 @include i-class(heart,"001");
 @include i-class(star,"002");
@@ -93,6 +99,7 @@ article {
 }
 
 h1,h2,h3,h4,h5,h6 {
+  letter-spacing: -0.05em;
   text-transform: uppercase;
 }
 h4,h5,h4 {
@@ -116,6 +123,10 @@ p,span,a {
 
 .italic {
   font-style: italic;
+}
+
+.no-wrap {
+  white-space: nowrap;
 }
 
 .blue {

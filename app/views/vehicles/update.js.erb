@@ -1,0 +1,21 @@
+$vehicle = $('tr.vehicle-<%= params[:id] %>');
+<% unless params[:vehicle][:sold].nil? %>
+$sold = $vehicle.find('a.sold');
+	<% if params[:vehicle][:sold] %>
+	$sold.attr('href', $sold.attr('href').replace('true', 'false'));
+	$sold.addClass('success').removeClass('secondary');
+	<% else %>
+	$sold.attr('href', $sold.attr('href').replace('false', 'true'));
+	$sold.addClass('secondary').removeClass('success');
+	<% end %>
+<% end %>
+<% unless params[:vehicle][:featured].nil? %>
+$featured = $vehicle.find('a.featured');
+	<% if params[:vehicle][:featured] %>
+	$featured.attr('href', $featured.attr('href').replace('true','false'));
+	$featured.addClass('success').removeClass('secondary');
+	<% else %>
+	$featured.attr('href', $featured.attr('href').replace('false','true'));
+	$featured.addClass('secondary').removeClass('success');
+	<% end %>
+<% end %>

@@ -1,5 +1,6 @@
 <% content_for :canonical, seo_vehicle_path(id: @vehicle.id, name: @vehicle.to_s('-')) %>
 <% content_for :modal, 'modals/vehicle_gallery' %>
+<% content_for :title, @vehicle.to_s + ' at Motor Car Export' %>
 
 <% if notice %>
 <p id="notice" class="alert-box"><%= notice %></p>
@@ -12,12 +13,11 @@
 
 <% unless @vehicle.photos.empty? %>
 <div class="row photo-box">
-  <% src = @vehicle.featured ? @vehicle.featured.url(:original) : @vehicle.photos.first.url(:original) %>
-  <div class="large-12 columns photo" data-src="<%= src %>" data-reveal-id="gallery-modal">
+  <div class="large-8 columns photo" data-src="<%= @vehicle.featured_url %>" data-reveal-id="gallery-modal">
   </div>
-  <div class="large-12 columns photos">
+  <div class="large-4 columns photos">
     <% i = 0 %>
-    <% @vehicle.photos.order(:vehicles_photo_id).limit(16).each do |photo| %>
+    <% @vehicle.photos.order(:vehicles_photo_id).find_each do |photo| %>
 	    <% i += 1 %>
 		<%= image_tag photo.image.url(:thumb), {alt: @vehicle.to_s, data: { src: photo.image.url(:original), 'reveal-id' => 'gallery-modal', id: photo.id, slide_id: i }} %>
     <% end %>
@@ -27,9 +27,7 @@
 
 <header>
   <h1><%= @vehicle.to_s %></h1>
-  <% price = link_to 'Bid On Ebay', @vehicle.ebay unless @vehicle.ebay.empty? %>
-  <% price ||= number_to_currency(@vehicle.price, {precision:0}) %>
-  <h2 class="subtitle"><%= price %> &mdash; <%= @vehicle.subtitle %></h2>
+  <h2 class="subtitle"><%= @vehicle.word_price %><%=' — ' + @vehicle.subtitle unless @vehicle.subtitle.blank? %></h2>
 </header>
 
 
@@ -133,6 +131,7 @@
       </tr>
     </table>
   </div>
+  <% if @vehicle.features.any? %>
   <div class="features large-12 columns">
 	<h4 class="centered">Features</h4>
     <div class="list row">
@@ -143,6 +142,7 @@
       <% end %>
     </div>
   </div>
+  <% end %>
 </div>
 
 <p class="small">Vehicle last updated <%= time_ago_in_words(@vehicle.updated_at) %> ago.</p>

@@ -1,0 +1,60 @@
+<h2 class="centered" small-text="Welcome to the <br/> Member's Area, <%= current_user.login %>">Welcome to the Member's Area, <%= current_user.login.capitalize %></h2>
+
+<div class="row">
+  <div class="large-3 columns">
+    <a href="/vehicles" class="expand button">Manage Vehicles</a>
+    <table class="full-width">
+      <tr>
+        <th>Vehicles</th>
+        <td><%= Vehicle.active.count %></td>
+      </tr>
+      <tr>
+        <th>Featured</th>
+        <td><%= Vehicle.where(featured:true).count %></td>
+      </tr>
+    </table>
+  </div>
+  <div class="large-3 columns">
+    <a href="/pages" class="expand button">Manage Pages</a>
+    <table class="full-width">
+      <tr>
+        <th>Pages</th>
+        <td><%= Page.count %></td>
+      </tr>
+      <tr>
+        <th>Public</th>
+        <td><%= Page.public.count %></td>
+      </tr>
+    </table>
+  </div>
+  <div class="large-3 columns">
+    <a href="/pages" class="expand button">Manage Pages</a>
+    <table class="full-width">
+      <tr>
+        <th>Pages</th>
+        <td><%= Page.count %></td>
+      </tr>
+      <tr>
+        <th>Public</th>
+        <td><%= Page.public.count %></td>
+      </tr>
+    </table>
+  </div>
+  <div class="large-3 columns">
+    <a href="/users" class="expand button">Manage Users</a>
+    <table class="full-width">
+      <tr>
+        <th>Users</th>
+        <td><%= User.count %></td>
+      </tr>
+      <tr>
+        <th>Online</th>
+        <td><%= User.online.count %></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-4 small-centered columns"><a href="/logout" class="alert button expand">Log Out</a></div>
+</div>

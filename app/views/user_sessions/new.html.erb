@@ -12,6 +12,9 @@
           </ul>
         </div>
 	<% end %>
+	<% if notice %>
+	<p id="notice"><%= notice %></p>
+	<% end %>
 
 	<div class="field">
 	  <%= f.label :login, 'Username' %>

@@ -1,3 +1,4 @@
+# vars
 $photo = $('.photo-box .photo')
 $photos = $('.photo-box .photos')
 $images = $photos.find('img')
@@ -5,40 +6,57 @@ $slider = $('#slider')
 $body = $('body')
 $close = $('.reveal-modal-bg, .close-reveal-modal')
 
-# define function
+# functions
 switchimg = (src) ->
   $photo.css('background-image', 'url('+src+')')
 
+slideTo = (slideId) ->
+  $slider.data('nivo:vars').currentSlide = slideId - 2
+
+$close.click ->
+  $body.removeClass('full');
+  $body.unbind('click')
+
+close = ->
+  $close.click()
+
+open = ->
+  $body.addClass('full').scrollTop(0);
+  $body.click (e)->
+    if e.clientX > $body.width() / 2
+      next()
+    else
+      prev()
+
+next = ->
+  $slider.find('a.nivo-nextNav').click()
+
+prev = ->
+  $slider.find('a.nivo-prevNav').click()
+
+
+
+# doing stuff
 switchimg($photo.attr('data-src'))
 
 $images.hover ->
   switchimg($(this).attr('data-src'))
 
 $images.click ->
-  $.slideTo($(this).attr('data-slide-id'))
-  $body.addClass('full').scrollTop(0);
+  slideTo($(this).attr('data-slide-id'))
+  open()
 
 $photo.click ->
-  $body.addClass('full').scrollTop(0);
+  open()
 
-$close.click ->
-  $body.removeClass('full');
 
 $body.keydown (e)->
-  if e.which in [13, 27]
-    console.log('closed')
-    $close.click()
-  if e.which == 39
-    $slider.find('a.nivo-nextNav').click()
-  if e.which == 37
-    $slider.find('a.nivo-prevNav').click()
-
-
-
-
-$.slideTo = (idx) ->
-  $slider.data('nivo:vars').currentSlide = idx - 2
-  #$('#slider a.nivo-nextNav').click
+  if e.which in [13, 27] # Esc
+    close()
+  if e.which == 39 # right arrow
+    next()
+  if e.which == 37 # left arrow
+    prev()
 
 $(document).ready ->
   $nivo = $slider.nivoSlider({

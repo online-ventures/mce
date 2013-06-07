@@ -8,19 +8,21 @@ MotorCarExport::Application.routes.draw do
   resources :user_sessions
 
   resources :vehicles do
+    get '/inventory', on: :collection, to: 'vehicles#inventory', as: 'inventory'
     resources :photos
     resources :features
-    match '/:name', on: :member, to: 'vehicles#show', as: 'seo', name: /\d{4}\-.*/
+    get '/:name', on: :member, to: 'vehicles#show', as: 'seo', name: /\d{4}\-[^\.]*/
   end
 
   get '/login', to: 'user_sessions#new'
   post '/login', to: 'user_sessions#create'
   get '/logout', to: 'user_sessions#destroy'
 
-  root to: 'pages#show', slug: 'home'
+  root to: 'pages#home'
 
-  match '/:status', status: /([aA]rrived|[rR]epairable|[rR]eady)/, to: 'vehicles#list', as: 'list'
-
+  # Special Pages
+  get '/home', to: 'pages#home'
+  get '/members', to: 'pages#members'
   # CMS pages
   # Should be last rule because it's a catch-all
   match '/:slug', to: 'pages#show', as: 'slug'

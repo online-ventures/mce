@@ -1,4 +1,22 @@
 # Get Everything
+
+pages = [
+    {id: 1, name: 'Home', slug:'home', active: true, featured: true },
+    {id: 2, name: 'About Us', slug:'about', active: true, featured: false },
+    {id: 3, name: 'Buyer Information', slug:'buyer-info', active: true, featured: false },
+    {id: 4, name: 'Frequently Asked Questions', slug:'faq', active: true, featured: false },
+    {id: 5, name: 'Contact Us', slug:'contact', active: true, featured: false },
+    {id: 6, name: 'Disclosure - Intro', slug:'disclosure-intro', active: false, featured: false },
+    {id: 7, name: 'Disclosure - Conclusion', slug:'disclosure-conclusion', active: false, featured: false },
+    {id: 8, name: 'Disclosure - Repairable', slug:'disclosure-repairable', active: false, featured: false },
+    {id: 9, name: 'Disclosure - 30-Day Limited Warranty', slug:'disclosure-30-day-limited', active: false, featured: false },
+    {id: 10, name: 'Disclosure - Lot Drives', slug:'disclosure-lot-drives', active: false, featured: false },
+    {id: 11, name: 'Title - Clear', slug:'title-clear', active: false, featured: false },
+    {id: 12, name: 'Title - Salvage', slug:'title-salvage', active: false, featured: false },
+    {id: 13, name: 'Title - Rebuilt', slug:'title-rebuilt', active: false, featured: false },
+    {id: 14, name: 'Title - Reconstructed', slug:'title-reconstructed', active: false, featured: false },
+    {id: 15, name: 'Title - Bill Of Sale', slug:'title-bill-of-sale', active: false, featured: false },
+]
 makes = [
 		{name: 'Acura'},
 		{name: 'Alfa Romeo'},
@@ -188,7 +206,7 @@ damages = [
 		{ name: 'None' },
 		{ name: 'Scratches' },
 		{ name: 'Dents' },
-		{ name: 'Scratches &amp; Dents' },
+		{ name: 'Scratches & Dents' },
 		{ name: 'Theft' },
 		{ name: 'Vandalism' },
 		{ name: 'Front' },
@@ -236,6 +254,10 @@ suspensions = [
 ]
 
 # Seed Everything
+pages.each do |page|
+  Page.find_or_create_by_name(page)
+end
+
 makes.each do |make|
 		Make.find_or_create_by_name(make)
 end

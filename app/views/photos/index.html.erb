@@ -24,6 +24,7 @@
 <% end %>
 
 <br/><br/>
+<% unless @photos.nil? %>
 <h4>Existing Pictures</h4>
 <% if params[:deleted] == 'true' %>
 <p>Viewing Deactivated Photos. <%= link_to 'Show Active.', vehicle_photos_path(@vehicle), class: 'italic' %></p>
@@ -42,5 +43,6 @@
       </div>
 	<% end %>
 </div>
+<% end %>
 
 <% content_for :modal, 'modals/view_image' %>

@@ -30,7 +30,7 @@ class Photo < ActiveRecord::Base
 
   private
   def set_vehicles_photo_id
-    self.vehicles_photo_id = (vehicle.photos.unscoped.maximum(:vehicles_photo_id)|| 0) + 1
+    self.vehicles_photo_id = (vehicle.photos.maximum(:vehicles_photo_id)|| 0) + 1
   end
 
 	def detect_zipped_file
@@ -56,11 +56,10 @@ class Photo < ActiveRecord::Base
   end
 
   # Overrides Paperclip methods which delete images, and image data
-  def destroy_attached_files
-    true
-  end
-
-  def prepare_for_destroy
-    true
-  end
+  #def destroy_attached_files
+  #  true
+  #end
+  #def prepare_for_destroy
+  #  true
+  #end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130603184438) do
+ActiveRecord::Schema.define(:version => 20130605175059) do
 
   create_table "colors", :force => true do |t|
     t.string "name"
@@ -128,14 +128,16 @@ ActiveRecord::Schema.define(:version => 20130603184438) do
     t.integer  "drivable_id"
     t.integer  "engine_id"
     t.integer  "suspension_id"
-    t.boolean  "stains"
-    t.boolean  "burns"
-    t.boolean  "tears"
+    t.boolean  "stains",          :default => false
+    t.boolean  "burns",           :default => false
+    t.boolean  "tears",           :default => false
     t.text     "description"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.datetime "deleted_at"
     t.integer  "featured_id"
+    t.boolean  "featured",        :default => false
+    t.boolean  "sold",            :default => false
   end
 
   add_index "vehicles", ["damage_id"], :name => "index_vehicles_on_damage_id"

@@ -1,6 +1,11 @@
 <% content_for :title, @page.name + ' - Motor Car Export' %>
 <% content_for :featured, @page.featured %>
 
+<div class="row">
+  <span class="large-8 small-12 columns"><h1 class="text-right small-left" small-text="Buy Used,<br/> Save Huge">Buy Used, Save Huge</h1></span>
+  <span class="large-4 small-12 columns"><a href="<%= inventory_vehicles_path %>" class="large radius success button">Show Me Cars &raquo;</a></span>
+</div>
+
 <% if current_user %>
 <%= link_to '« All Pages', pages_path, class: 'secondary button' %>
 <%= link_to 'Edit This Page', edit_page_path(@page), class: 'secondary button' %>
@@ -8,10 +13,6 @@
 
 <% if notice %>
 <p id="notice" class="alert-box radius"><%= notice %></p>
-<% end %>
-
-<% unless @page.active? %>
-	<p class="alert-box alert radius">This page is not publicly viewable.</p>
 <% end %>
 
 <%= raw @page.body %>

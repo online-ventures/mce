@@ -4,23 +4,17 @@
   width: 100%;
   background-image: url(asset-path('featured-bg.jpg', image));
   background-size: cover;
-  .featured-column{
-    height: 100%;
-    >.row{
-      height: 100%;
-    }
-  }
+
   .car {
     //white-space: nowrap;
     height: auto;
-    top: 10%;
     background: rgba(255,255,255,0.4);
     box-shadow: 0 0 3px rgba(255,255,255,0.4);
     border-radius: 3px;
-    box-sizing: content-box;
     padding: 0.5em;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
     >.row{
-      // Sorry for the hacky fix
       margin: 0;
     }
     .picture {
@@ -30,7 +24,7 @@
       background-image: url('/lingenfelter-2010.jpg');
     }
     .info {
-      font-size: 90%;
+      font-size: 110%;
       h2,h3,h4 {
         margin:0;
         line-height: 1.1em;
@@ -50,5 +44,11 @@
         margin:0;
       }
     }
+  }
+}
+
+@media #{$screen} and (max-width: #{$small-screen}) {
+  #featured-content .car {
+    margin:0;
   }
 }

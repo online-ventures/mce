@@ -1,0 +1,51 @@
+.inventory.vehicles {
+  .filter-box {
+    margin-bottom: 1em;
+  }
+  #filter_status {
+    width: 25%;
+  }
+  label[for="filter_status"] {
+    display: inline-block;
+  }
+
+  .vehicle {
+    border-top: 1px solid #ddd;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    &.featured {
+      background: #fffad7;
+    }
+    >a>.row{
+      margin:0;
+    }
+    .image {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      min-height: emCalc(180px);
+      @include transition(background, 3s, ease);
+    }
+    i.new {
+      color: $alert-color;
+      &:before {
+        font-size: 1.5em;
+        margin-right: 0.5em;
+        vertical-align: middle;
+      }
+    }
+    table {
+      margin:0;
+    }
+  }
+}
+
+@media #{$screen} and (max-width: #{$small-screen}) {
+  .inventory.vehicles {
+    .vehicle {
+      .image {
+        margin-bottom: 1em;
+      }
+    }
+  }
+}

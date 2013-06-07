@@ -1,0 +1,20 @@
+<% content_for :featured, true %>
+
+<% if notice %>
+<p id="notice"><%= notice %></p>
+<% end %>
+
+<dl class="sub-nav">
+  <dt>Filter:</dt>
+  <dd class="active"><a href="#">All</a></dd>
+  <dd><a href="#">New</a></dd>
+  <% Status.all.each do |status| %>
+  <dd><a href="#"><%= status.name.capitalize %></a></dd>
+  <% end %>
+</dl>
+
+<% if @vehicles.any? %>
+	<%= render @vehicles %>
+<% end %>
+
+<p class="alert-box" style="display: none;">There aren't currently any <span></span> vehicles on our lot.</p>

@@ -1,5 +1,5 @@
 class VehiclesController < ApplicationController
-  before_filter :require_user, except: [:show, :list]
+  before_filter :require_user, except: [:show, :inventory]
 
   # GET /vehicles
   # GET /vehicles.json
@@ -12,9 +12,8 @@ class VehiclesController < ApplicationController
     end
   end
 
-  def list
-    status = params[:status].capitalize
-    @vehicles = Vehicle.where("status_id = #{Status.find_by_name(status).id}").order('updated_at desc')
+  def inventory
+    @vehicles = Vehicle.order("featured DESC, ebay DESC, id DESC").all
   end
 
   # GET /vehicles/1
@@ -22,12 +21,13 @@ class VehiclesController < ApplicationController
   def show
     @vehicle = Vehicle.find(params[:id])
     unless params[:name]
-      redirect_to seo_vehicle_path(id: @vehicle.id, name: @vehicle.to_s('-')) and return
+      redirect_to seo_vehicle_path(id: @vehicle.id, name: @vehicle.to_s('-')), status: 301 and return
     end
 
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @vehicle }
+      format.ebay { render 'vehicles/ebay.html.erb' }
     end
   end
 
@@ -35,8 +35,9 @@ class VehiclesController < ApplicationController
   # GET /vehicles/new.json
   def new
     @vehicle = Vehicle.new
-    @make = Make.new
-    @model = Model.new
+    @vehicle.build_model
+    @vehicle.build_make
+    @makes = Make.all
 
     respond_to do |format|
       format.html # new.html.erb
@@ -47,17 +48,19 @@ class VehiclesController < ApplicationController
   # GET /vehicles/1/edit
   def edit
     @vehicle = Vehicle.find(params[:id])
+    @vehicle.build_make
+    @vehicle.build_model
+    @makes = Make.all
   end
 
   # POST /vehicles
   # POST /vehicles.json
   def create
     @vehicle = Vehicle.new params[:vehicle]
-    @vehicle.make = Make.find_or_create_by_name params[:make][:name] if params[:make][:name] unless params[:vehicle][:make_id]
-    if params[:model][:name] and params[:vehicle][:model_id].empty?
-      @vehicle.model = Model.find_or_create_by_name params[:model][:name]
-      @vehicle.model.make_id ||= @vehicle.make_id
-    end
+    @vehicle.build_make
+    @vehicle.build_model
+    abort @vehicle.to_yaml
+
     respond_to do |format|
       if @vehicle.save
         format.html { redirect_to @vehicle, notice: 'Vehicle was successfully created.' }
@@ -74,13 +77,20 @@ class VehiclesController < ApplicationController
   def update
     @vehicle = Vehicle.find(params[:id])
 
+    params[:vehicle].each do |k,v|
+      params[:vehicle][k] = true if v == 'true'
+      params[:vehicle][k] = false if v == 'false'
+    end
+
     respond_to do |format|
       if @vehicle.update_attributes(params[:vehicle])
         format.html { redirect_to @vehicle, notice: 'Vehicle was successfully updated.' }
         format.json { head :no_content }
+        format.js   {  }
       else
         format.html { render action: "edit" }
         format.json { render json: @vehicle.errors, status: :unprocessable_entity }
+        format.js   { render json: @vehicle.errors }
       end
     end
   end
@@ -95,9 +105,5 @@ class VehiclesController < ApplicationController
       format.html { redirect_to vehicles_url }
       format.json { head :no_content }
     end
-  end
-
-	def upload
-
   end
 end

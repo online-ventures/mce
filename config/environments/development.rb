@@ -37,4 +37,12 @@ MotorCarExport::Application.configure do
 
   # Silences asset lines in logs
   config.quiet_assets = true
+
+  ActionController::Base.asset_host = Proc.new { |source|
+    if source =~ /.*\.(jp[e]?g|gif|png|ico)/
+      'http://images.motor-car-export.dev'
+    else
+      'http://assets.motor-car-export.dev'
+    end
+  }
 end

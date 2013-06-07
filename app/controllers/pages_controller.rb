@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  before_filter :require_user, except: [:show, :home]
+
   # GET /pages
   # GET /pages.json
   def index
@@ -16,13 +18,21 @@ class PagesController < ApplicationController
     if params[:id]
       @page = Page.where(active: true).find(params[:id])
     elsif params[:slug]
-      @page = Page.where(active: true).find_by_slug(params[:slug])
+      conds = current_user ? true : {active: true}
+      @page = Page.where(conds).find_by_slug(params[:slug])
     end
+    if @page.nil?
+      redirect_to root_url, notice: "That Page Doesn't Exist"
+    else
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @page }
+      end
+    end
+  end
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @page }
-    end
+  def home
+    @page = Page.where(slug: 'home').first
   end
 
   # GET /pages/new
@@ -83,5 +93,9 @@ class PagesController < ApplicationController
       format.html { redirect_to pages_url }
       format.json { head :no_content }
     end
+  end
+
+  def members
+
   end
 end
