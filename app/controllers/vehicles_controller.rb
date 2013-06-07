@@ -76,6 +76,11 @@ class VehiclesController < ApplicationController
     @vehicle = Vehicle.find(params[:id])
     @vehicle.make = Make.find_or_initialize_by_name params[:make][:name]
     @vehicle.model = Model.find_or_initialize_by_name params[:model][:name]
+
+    params[:vehicle].each do |k,v|
+      params[:vehicle][k] = true if v == 'true'
+      params[:vehicle][k] = false if v == 'false'
+    end
     respond_to do |format|
       if @vehicle.valid? && @vehicle.make.valid? && @vehicle.model.valid?
         @vehicle.update_attributes(params[:vehicle])
