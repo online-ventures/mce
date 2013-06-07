@@ -31,7 +31,7 @@
 	        <li class=""><%= link_to 'FAQ', '/faq' %></li>
 	        <li class=""><%= link_to 'Contact', '/contact' %></li>
 	        <% if current_user %>
-	            <li class="right"><span class="a">Hello, <%= current_user.login %></span> &bull; <%= link_to 'Member\'s Area', '/vehicles'%></li>
+	            <li class="right"><span class="a">Hello, <%= current_user.login.capitalize %></span> &bull; <%= link_to 'Member\'s Area', '/members'%></li>
 		    <% end %>
 		  </ul>
 		</nav>
