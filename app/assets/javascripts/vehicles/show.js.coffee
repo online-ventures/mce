@@ -60,7 +60,7 @@ $body.keydown (e)->
 
 $(document).ready ->
   $nivo = $slider.nivoSlider({
-    effect: 'fade'
+    effect: 'none'
     startSlide: 0
     randomStart: false
     animSpeed: 100
