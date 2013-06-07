@@ -48,8 +48,6 @@ class VehiclesController < ApplicationController
   # GET /vehicles/1/edit
   def edit
     @vehicle = Vehicle.find(params[:id])
-    @vehicle.build_make
-    @vehicle.build_model
     @makes = Make.all
   end
 
@@ -57,12 +55,12 @@ class VehiclesController < ApplicationController
   # POST /vehicles.json
   def create
     @vehicle = Vehicle.new params[:vehicle]
-    @vehicle.build_make
-    @vehicle.build_model
-    abort @vehicle.to_yaml
-
+    @vehicle.make = Make.find_or_initialize_by_name params[:make][:name]
+    @vehicle.model = Model.find_or_initialize_by_name params[:model][:name]
     respond_to do |format|
-      if @vehicle.save
+      if @vehicle.valid? && @vehicle.make.valid? && @vehicle.model.valid?
+        @vehicle.save
+        @vehicle.model.update_attributes({make_id: @vehicle.make_id })
         format.html { redirect_to @vehicle, notice: 'Vehicle was successfully created.' }
         format.json { render json: @vehicle, status: :created, location: @vehicle }
       else
@@ -76,14 +74,11 @@ class VehiclesController < ApplicationController
   # PUT /vehicles/1.json
   def update
     @vehicle = Vehicle.find(params[:id])
-
-    params[:vehicle].each do |k,v|
-      params[:vehicle][k] = true if v == 'true'
-      params[:vehicle][k] = false if v == 'false'
-    end
-
+    @vehicle.make = Make.find_or_initialize_by_name params[:make][:name]
+    @vehicle.model = Model.find_or_initialize_by_name params[:model][:name]
     respond_to do |format|
-      if @vehicle.update_attributes(params[:vehicle])
+      if @vehicle.valid? && @vehicle.make.valid? && @vehicle.model.valid?
+        @vehicle.update_attributes(params[:vehicle])
         format.html { redirect_to @vehicle, notice: 'Vehicle was successfully updated.' }
         format.json { head :no_content }
         format.js   {  }

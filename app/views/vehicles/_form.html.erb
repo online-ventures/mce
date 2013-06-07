@@ -2,6 +2,9 @@
 	<%= render 'vehicles/nav', page: :edit %>
 <% end %>
 
+<pre>
+<%= @vehicle.to_yaml %>
+</pre>
 
 <%= form_for(@vehicle) do |f| %>
   <% if @vehicle.errors.any? %>

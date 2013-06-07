@@ -28,8 +28,8 @@ class Vehicle < ActiveRecord::Base
   has_and_belongs_to_many :features, join_table: 'vehicles_features'
 
   validates :year, :presence => true, :numericality => true
-  validates :make_id, :presence => true
-  validates :model_id, :presence => true
+  #validates :make_id, :presence => true
+  #validates :model_id, :presence => true
   validates :stock_number, :presence => true, :length => {:minimum => 2, :maximum => 10}
   validates :status_id, :presence => true
 

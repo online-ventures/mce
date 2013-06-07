@@ -10,9 +10,11 @@ for select in selects
   $(select).change {textbox: textboxes[_i]}, (event)->
     textbox = event.data.textbox
     if $(this).val() == '' and $(textbox).is(':hidden')
-      $(textbox).slideDown(100)
-    else if $(this).val() != '' and $(textbox).is(':visible')
-      $(textbox).slideUp(100)
+      $(textbox).slideDown(100).val('')
+    else if $(this).val() != ''
+      $(textbox).val($(this).find('option:selected').text())
+      if $(textbox).is(':visible')
+        $(textbox).slideUp(100)
   .change()
 
 
