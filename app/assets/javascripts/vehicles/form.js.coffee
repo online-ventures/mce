@@ -1,6 +1,7 @@
 #console.log $makes
 
-make_select = $('#vehicle_make_id')
+$make_select = $('#vehicle_make_id')
+$model_select = $('#vehicle_model_id')
 selects = $('#vehicle_make_id, #vehicle_model_id')
 textboxes = $('#make_name, #model_name')
 
@@ -29,5 +30,9 @@ put_into_select = (select, options, preface=[])->
   select.change()
 
 
-make_select.change ->
+$make_select.change ->
+  current = $model_select.find('option:selected').text()
   put_into_select($('#vehicle_model_id'), $makes[$(this).val()], ['', 'Create New Model'])
+  old_current = $model_select.find('option:contains('+current+')')
+  if old_current.length() > 0
+    $model_select.val(old_current.attr('value'))

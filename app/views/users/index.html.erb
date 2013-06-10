@@ -1,12 +1,12 @@
 <h1>Listing users</h1>
 
+<%= link_to 'New User', new_user_path, class:'button' %>
+
 <table  class="full-width">
   <tr>
     <th>Username</th>
     <th>Email</th>
     <th>Last Login</th>
-    <th></th>
-    <th></th>
     <th></th>
   </tr>
 
@@ -15,13 +15,9 @@
     <td><%= link_to user.login, user %></td>
     <td><%= mail_to user.email %></td>
     <td><%= user.last_login_at %></td>
-    <td><%= link_to 'Show', user %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Show', user, class:'small secondary button' %>
+    <%= link_to 'Edit', edit_user_path(user), class:'small secondary button' %>
+    <%= link_to 'Destroy', user, class: 'small alert button', method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New User', new_user_path %>

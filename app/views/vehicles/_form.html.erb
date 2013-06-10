@@ -2,10 +2,6 @@
 	<%= render 'vehicles/nav', page: :edit %>
 <% end %>
 
-<pre>
-<%= @vehicle.to_yaml %>
-</pre>
-
 <%= form_for(@vehicle) do |f| %>
   <% if @vehicle.errors.any? %>
     <div id="error_explanation">
@@ -38,7 +34,7 @@
   <div class="field large-4 small-4 columns">
     <%= f.label :model %>
     <% models = @vehicle.make_id ? @vehicle.make.models : Model.all %>
-    <%= f.collection_select :model_id, models, :id, :name, {include_blank: 'Create New Model'} %>
+    <%= f.collection_select :model_id, models, :id, :name, {include_blank: 'Create New Model', selected: @vehicle.model_id} %>
 	<%= f.sub_text_field :model %>
   </div>
 </div>

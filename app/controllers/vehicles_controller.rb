@@ -27,7 +27,7 @@ class VehiclesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @vehicle }
-      format.ebay { render 'vehicles/ebay.html.erb' }
+      format.ebay { render 'vehicles/ebay.html' }
     end
   end
 
