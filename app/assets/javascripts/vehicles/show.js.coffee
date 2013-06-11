@@ -5,6 +5,29 @@ $images = $photos.find('img')
 $slider = $('#slider')
 $body = $('body')
 $close = $('.reveal-modal-bg, .close-reveal-modal')
+$settings = {
+    effect: 'none'
+    startSlide: 0
+    randomStart: false
+    animSpeed: 100
+    pauseTime: 3000
+    manualAdvance: true
+
+    slices: 15
+    boxCols: 8
+    boxRows: 4
+    directionNav: true
+    controlNav: true
+    controlNavThumbs: false
+    pauseOnHover: true
+    prevText: 'Prev'
+    nextText: 'Next'
+    beforeChange: ->
+    afterChange: ->
+    slideshowEnd: ->
+    lastSlide: ->
+    afterLoad: ->
+  }
 
 # functions
 switchimg = (src) ->
@@ -29,10 +52,11 @@ open = ->
       prev()
 
 next = ->
-  $slider.find('a.nivo-nextNav').click()
+  $slider.data('nivoslider').nivo_run($slider, $slider.children(), $settings, 'next');
 
 prev = ->
-  $slider.find('a.nivo-prevNav').click()
+  $slider.data('nivo:vars').currentSlide -= 2
+  $slider.data('nivoslider').nivo_run($slider, $slider.children(), $settings, 'prev');
 
 
 
@@ -59,11 +83,4 @@ $body.keydown (e)->
     prev()
 
 $(document).ready ->
-  $nivo = $slider.nivoSlider({
-    effect: 'none'
-    startSlide: 0
-    randomStart: false
-    animSpeed: 100
-    pauseOnHover: true
-    pauseTime: 2000
-  })
+  $slider.nivoSlider($settings).stop()

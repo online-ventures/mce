@@ -37,15 +37,17 @@ class Photo < ActiveRecord::Base
 		if image_content_type == 'application/zip'
 			Zip::ZipFile.open(image.queued_for_write[:original].path) do |zipfile|
 				zipfile.each do |entry|
-					tempfile = Tempfile.new([File.basename(entry.name, File.extname(entry.name)),File.extname(entry.name)], '/tmp')
-					tempfile.binmode
-					tempfile.write entry.get_input_stream.read
-          File.rename(tempfile.path , '/tmp/'+entry.name)
+          unless entry.name.match(/^(\.||\_||\.\.||\_\_)+(MACOSX)?(DS_Store)?\/?(\._.*)?$/)
+					  tempfile = Tempfile.new([File.basename(entry.name, File.extname(entry.name)),File.extname(entry.name)], '/tmp')
+					  tempfile.binmode
+					  tempfile.write entry.get_input_stream.read
+            File.rename(tempfile.path , '/tmp/'+entry.name)
 
-          photo = Photo.new
-					photo.vehicle_id = vehicle_id
-					photo.image = File.open('/tmp/'+entry.name)
-					photo.save!
+            photo = Photo.new
+					  photo.vehicle_id = vehicle_id
+					  photo.image = File.open('/tmp/'+entry.name)
+					  photo.save!
+          end
 				end
       end
 		end

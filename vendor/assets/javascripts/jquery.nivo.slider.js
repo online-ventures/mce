@@ -285,6 +285,11 @@
             }, settings.animSpeed);
         };
 
+
+        this.nivo_run = function(slider,kids,settings,nudge)
+        {
+            nivoRun(slider,kids,settings,nudge)
+        }
         // Private run method
         var nivoRun = function(slider, kids, settings, nudge){
             // Get our vars
@@ -299,7 +304,7 @@
             if((!vars || vars.stop) && !nudge) { return false; }
 
             // Trigger the beforeChange callback
-            settings.beforeChange.call(this);
+            //settings.beforeChange.call(this);
 
             // Set current background before change
             if(!nudge){
@@ -587,6 +592,7 @@
                     timeBuff += 100;
                 }
             }
+            console.log('End of nivoRun!'+nudge);
         };
 
         // Shuffle an array
