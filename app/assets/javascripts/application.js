@@ -15,7 +15,7 @@
 //= require jquery.ui.all
 //= require foundation
 //= require jquery.form
-//= require jquery.nivo.slider.pack
+//= require jquery.nivo.slider
 //= require_self
 //= require_directory ./application/
 //= require_tree .
