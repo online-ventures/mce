@@ -326,11 +326,13 @@
             }
             if(vars.currentSlide < 0) { vars.currentSlide = (vars.totalSlides - 1); }
             // Set vars.currentImage
+            console.log(vars.currentSlide);
             if($(kids[vars.currentSlide]).is('img')){
                 vars.currentImage = $(kids[vars.currentSlide]);
             } else {
                 vars.currentImage = $(kids[vars.currentSlide]).find('img:first');
             }
+            sliderImg.attr('src', vars.currentImage.attr('src'));
 
             // Set active links
             if(settings.controlNav){
@@ -592,7 +594,6 @@
                     timeBuff += 100;
                 }
             }
-            console.log('End of nivoRun!'+nudge);
         };
 
         // Shuffle an array

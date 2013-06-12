@@ -12,11 +12,11 @@ $settings = {
     animSpeed: 100
     pauseTime: 3000
     manualAdvance: true
+    directionNav: false
 
     slices: 15
     boxCols: 8
     boxRows: 4
-    directionNav: true
     controlNav: true
     controlNavThumbs: false
     pauseOnHover: true
@@ -34,10 +34,13 @@ switchimg = (src) ->
   $photo.css('background-image', 'url('+src+')')
 
 slideTo = (slideId) ->
-  $slider.data('nivo:vars').currentSlide = slideId - 2
+  $slider.data('nivo:vars').currentSlide = (slideId - 2)
+  if $slider.data('nivo:vars').currentSlide < 0
+    $slider.data('nivo:vars').currentSlide = 0
+  next()
 
 $close.click ->
-  $body.removeClass('full');
+  $body.removeClass('full')
   $body.unbind('click')
 
 close = ->
@@ -46,19 +49,31 @@ close = ->
 open = ->
   $body.addClass('full').scrollTop(0);
   $body.click (e)->
-    if e.clientX > $body.width() / 2
-      next()
-    else
-      prev()
+    # Don't change for thumbnail clicks, or nav button clicks
+    unless $(e.target).is('.photos img') or $(e.target).is('.photo') or $(e.target).is('a.nivo-nextNav') or $(e.target).is('a.nivo-prevNav')
+      if e.clientX > $body.width() / 2
+        next()
+      else
+        prev()
+  setTimeout(->
+    $('.information-caption').height($slider.height())
+    $('.information-caption').width($slider.width())
+  , 500);
 
 next = ->
+  console.log 'next()'
   $slider.data('nivoslider').nivo_run($slider, $slider.children(), $settings, 'next');
 
 prev = ->
+  console.log 'prev()'
   $slider.data('nivo:vars').currentSlide -= 2
   $slider.data('nivoslider').nivo_run($slider, $slider.children(), $settings, 'prev');
 
+$('.nivo-nextNav').click ->
+  console.log 'clicker'
 
+$('.nivo-prevNav').click ->
+  console.log 'clicker'
 
 # doing stuff
 switchimg($photo.attr('data-src'))
@@ -83,4 +98,5 @@ $body.keydown (e)->
     prev()
 
 $(document).ready ->
-  $slider.nivoSlider($settings).stop()
+  $slider.nivoSlider($settings)
+  $('#gallery-modal *').disableSelection()

@@ -1,8 +1,17 @@
 table {
   min-width: 50%;
 
+  &.inline { display: inline-table; vertical-align: top; }
+
   &.full-width { width: 100%; }
+  &.half { width: 50%; }
 
   &.heading-right th { text-align: right; }
   &.heading-left  th { text-align: left;  }
+}
+
+@media #{$screen} and (max-width: #{$small-screen}) {
+  table {
+    &.half { width: 100%; }
+  }
 }
