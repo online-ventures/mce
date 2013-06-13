@@ -326,7 +326,6 @@
             }
             if(vars.currentSlide < 0) { vars.currentSlide = (vars.totalSlides - 1); }
             // Set vars.currentImage
-            console.log(vars.currentSlide);
             if($(kids[vars.currentSlide]).is('img')){
                 vars.currentImage = $(kids[vars.currentSlide]);
             } else {

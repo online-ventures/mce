@@ -20,6 +20,7 @@ class PagesController < ApplicationController
     elsif params[:slug]
       conds = current_user ? true : {active: true}
       @page = Page.where(conds).find_by_slug(params[:slug])
+
     end
     if @page.nil?
       redirect_to root_url, notice: "That Page Doesn't Exist"

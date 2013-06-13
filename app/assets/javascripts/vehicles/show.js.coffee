@@ -3,8 +3,11 @@ $photo = $('.photo-box .photo')
 $photos = $('.photo-box .photos')
 $images = $photos.find('img')
 $slider = $('#slider')
+$html = $('html')
 $body = $('body')
 $close = $('.reveal-modal-bg, .close-reveal-modal')
+$infoCap = $('.information-caption')
+
 $settings = {
     effect: 'none'
     startSlide: 0
@@ -56,24 +59,16 @@ open = ->
       else
         prev()
   setTimeout(->
-    $('.information-caption').height($slider.height())
-    $('.information-caption').width($slider.width())
+    $infoCap.height($slider.height())
+    $infoCap.width($slider.width())
   , 500);
 
 next = ->
-  console.log 'next()'
   $slider.data('nivoslider').nivo_run($slider, $slider.children(), $settings, 'next');
 
 prev = ->
-  console.log 'prev()'
   $slider.data('nivo:vars').currentSlide -= 2
   $slider.data('nivoslider').nivo_run($slider, $slider.children(), $settings, 'prev');
-
-$('.nivo-nextNav').click ->
-  console.log 'clicker'
-
-$('.nivo-prevNav').click ->
-  console.log 'clicker'
 
 # doing stuff
 switchimg($photo.attr('data-src'))
@@ -100,3 +95,9 @@ $body.keydown (e)->
 $(document).ready ->
   $slider.nivoSlider($settings)
   $('#gallery-modal *').disableSelection()
+
+  if $html.hasClass('ie8') || $html.hasClass('ie7') || $html.hasClass('ie6')
+    $('.slider-wrapper').hover ->
+      $infoCap.css('filter','alpha(opacity=100)')
+    ,->
+      $infoCap.css('filter','alpha(opacity=0)')

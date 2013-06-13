@@ -1,0 +1,62 @@
+.ie8, .ie7, .ie6 {
+  .row {
+    .columns {
+      display: block;
+    }
+  }
+  .show.vehicles {
+    .photos {
+      img {
+        &:hover {
+          padding:0;
+          filter: alpha(opacity=75);
+        }
+      }
+    }
+    .information-caption {
+      span {
+        background: #444;
+        width: 80%;
+        left: 0;
+      }
+      .nivo-arrow {
+        background: #444;
+        float: none !important;
+        position: absolute;
+        &.left {
+          left:0;
+        }
+        &.right {
+          right: 0;
+        }
+      }
+    }
+  }
+
+  #featured-box {
+    .car {
+      background: #fff;
+      filter: alpha(opacity=75);
+      height: 80%;
+    }
+  }
+}
+
+.no-backgroundsize {
+  #featured-content {
+
+    .picture {
+      -ms-behavior: url(asset-path('backgroundsize.min.htc', stylesheet));
+    }
+  }
+  .inventory.vehicles {
+    .image {
+      -ms-behavior: url(asset-path('backgroundsize.min.htc', stylesheet));
+    }
+  }
+  .show.vehicles {
+    .photo-box .photo {
+      -ms-behavior: url(asset-path('backgroundsize.min.htc', stylesheet));
+    }
+  }
+}

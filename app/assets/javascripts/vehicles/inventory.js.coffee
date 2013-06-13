@@ -8,7 +8,6 @@ if $list.length > 0
     e.preventDefault()
     $('.active').removeClass('active')
     $(this).parent().addClass('active')
-    console.log $(this).parent()
     if $alert.is(':visible')
       $alert.hide()
     value = $(this).html().toLowerCase()

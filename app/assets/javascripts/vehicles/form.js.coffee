@@ -1,5 +1,3 @@
-#console.log $makes
-
 $make_select = $('#vehicle_make_id')
 $model_select = $('#vehicle_model_id')
 selects = $('#vehicle_make_id, #vehicle_model_id')
@@ -23,9 +21,7 @@ put_into_select = (select, options, preface=[])->
   select.html('');
   if preface.length > 0
     select.append('<option value="'+preface[0]+'">'+preface[1]+'</option>')
-  console.log options
   for option in options
-    console.log option
     select.append("<option value='"+option[0]+"'>"+option[1]+"</option>")
   select.change()
 
