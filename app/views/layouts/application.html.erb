@@ -14,6 +14,9 @@
     <% end %>
 	<title><%= content_for?(:title) ? yield(:title) : 'Motor Car Export' %></title>
     <link rel="icon" type="image/png" href="<%= image_path('favicon.ico') %>"/>
+  <!--[if lt IE 9]>
+	<%= javascript_include_tag "html5shiv" %>
+  <![endif]-->
   <script type='text/javascript'
         src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>
 
@@ -27,7 +30,7 @@
 		<h1 class="right" small-text="586.854.8781">Call: 586.854.8781</h1>
 		<a href="/"><h1>Motor Car Export</h1></a>
 	</div>
-	<div class="topbar subnav">
+	<div class="topbar" id="subnav">
 		<nav>
 		  <ul>
 	        <li class="inventory"><%= link_to 'Vehicles', inventory_vehicles_path %></li>
