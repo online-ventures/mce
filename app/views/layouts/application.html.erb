@@ -17,13 +17,11 @@
   <!--[if lt IE 9]>
 	<%= javascript_include_tag "html5shiv" %>
   <![endif]-->
-  <script type='text/javascript'
-        src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>
-
 	<%= stylesheet_link_tag    "application", media: 'all' %>
     <%= javascript_include_tag "respond.min" %>
 	<%= javascript_include_tag "custom.modernizr.dev" if Rails.env == 'development' %>
 	<%= csrf_meta_tags %>
+
 </head>
 <body class="<%= params[:action] %> <%= params[:controller] %>">
 	<div class="topbar">
