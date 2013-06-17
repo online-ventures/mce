@@ -1,4 +1,6 @@
 MotorCarExport::Application.routes.draw do
+  root to: 'pages#home'
+
   resources :users
   resources :pages
   resources :features do
@@ -18,11 +20,11 @@ MotorCarExport::Application.routes.draw do
   post '/login', to: 'user_sessions#create'
   get '/logout', to: 'user_sessions#destroy'
 
-  root to: 'pages#home'
-
   # Special Pages
   get '/home', to: 'pages#home'
   get '/members', to: 'pages#members'
+  get '/new-relic-ping', to: 'pages#newrelic'
+
   # CMS pages
   # Should be last rule because it's a catch-all
   match '/:slug', to: 'pages#show', as: 'slug'

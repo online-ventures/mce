@@ -1,4 +1,6 @@
-<h2><%= @vehicle %></h2>
+<%= render partial: 'vehicles/breadcrumbs' if current_user %>
+
+<h2>Add Photos</h2>
 <%= form_for(@photo, url: vehicle_photos_path(@vehicle)) do |f| %>
 	<% if @photo.errors.any? %>
 		<div id="error_explanation">
@@ -11,21 +13,17 @@
 			</ul>
 		</div>
 	<% end %>
-
-	<h4>Add Pictures</h4>
 	<div class="field">
 		<%= f.file_field :image %>
 	</div>
 	<div class="actions">
 		<%= f.submit 'Upload Photos' %>
-
-	    <%= render partial: 'vehicles/nav', locals: {page: :photos} %>
 	</div>
 <% end %>
 
 <br/><br/>
 <% unless @photos.nil? %>
-<h4>Existing Pictures</h4>
+<h4>Existing Photos</h4>
 <% if params[:deleted] == 'true' %>
 <p>Viewing Deactivated Photos. <%= link_to 'Show Active.', vehicle_photos_path(@vehicle), class: 'italic' %></p>
 <% else %>

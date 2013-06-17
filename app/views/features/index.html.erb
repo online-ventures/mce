@@ -1,8 +1,9 @@
+<%= render partial: 'vehicles/breadcrumbs' if current_user %>
+
 <h1>Listing features</h1>
 
 
   <% if @vehicle %>
-	<%= render 'vehicles/nav', page: :features %>
 	  <%= render 'features/vehicle_form' %>
   <% else %>
       <%= render 'features/form' %>

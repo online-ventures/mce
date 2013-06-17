@@ -1,9 +1,12 @@
+<%= render partial: 'users/breadcrumbs' if current_user %>
+
 <% if notice %>
 <p id="notice" class="alert-box radius"><%= notice %></p>
 <% end %>
 
 <h1><%= @user.login %></h1>
 
+<%= link_to 'Edit User', edit_user_path(@user), class: 'secondary button' %>
 <table>
   <%
   user_vars = [:login, :email, :login_count, :failed_login_count, :last_request_at, :current_login_at,  :last_login_at, :current_login_ip, :last_login_ip]
@@ -14,6 +17,3 @@
   </tr>
   <% end %>
 </table>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>

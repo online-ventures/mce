@@ -1,0 +1,15 @@
+<ul class="breadcrumbs">
+  <li><a href="/members">Member's Area</a></li>
+  <li class="<%= 'current' if params[:action] == 'index' %>"><a href="/users">Users</a></li>
+  <% if @user %>
+    <% if @user.new_record? %>
+	  <li class="current"><a href="<%= new_user_path %>">New</a></li>
+	<% else %>
+	  <li class="<%= 'current' if params[:action] == 'show'%>"><a href="<%= user_path(@user) %>"><%= @user.login %></a></li>
+
+	  <% if params[:action] == 'edit' %>
+		<li class="current"><a href="<%= edit_user_path(@user) %>">Edit</a></li>
+	  <% end %>
+	<% end %>
+  <% end %>
+</ul>

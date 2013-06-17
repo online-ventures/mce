@@ -1,0 +1,17 @@
+<ul class="breadcrumbs">
+  <li><a href="/members">Member's Area</a></li>
+  <li class="<%= 'current' if params[:action] == 'index' and params[:controller] == 'pages'%>"><a href="/pages">Pages</a></li>
+
+  <% if @page %>
+    <% if @page.new_record? %>
+	  <li class="current"><a href="<%= new_page_path %>">New</a></li>
+	<% else %>
+      <li class="<%= 'current' if params[:action] == 'show' %>"><a href="<%= page_path(@page) %>"><%= @page.name %></a></li>
+
+	  <% if params[:action] == 'edit' %>
+	      <li class="current"><a href="<%= edit_page_path(@page) %>">Edit</a></li>
+	  <% end %>
+
+	<% end %>
+  <% end %>
+</ul>

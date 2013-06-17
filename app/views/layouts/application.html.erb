@@ -21,7 +21,6 @@
     <%= javascript_include_tag "respond.min" %>
 	<%= javascript_include_tag "custom.modernizr.dev" if Rails.env == 'development' %>
 	<%= csrf_meta_tags %>
-
 </head>
 <body class="<%= params[:action] %> <%= params[:controller] %>">
 	<div class="topbar">

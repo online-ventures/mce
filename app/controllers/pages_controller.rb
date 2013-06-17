@@ -96,7 +96,11 @@ class PagesController < ApplicationController
     end
   end
 
-  def members
-
+  def newrelic
+    if Page.find(1)
+      render text: 'Application Awake'
+    else
+      render text: 'Error: Application Asleep'
+    end
   end
 end
