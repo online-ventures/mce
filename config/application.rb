@@ -70,7 +70,7 @@ module MotorCarExport
     config.assets.paths << Rails.root.join('vendor', 'assets', 'images')
 
     # Precompile additional assets
-    config.assets.precompile += %w( .css .scss .svg .eot .woff .ttf nivo-slider.css light.css vehicles/ebay.css backgroundsize.min.htc html5shiv.js)
+    config.assets.precompile += %w( .css .scss .svg .eot .woff .ttf nivo-slider.css light.css vehicles/ebay.css backgroundsize.min.htc html5shiv.js respond.min.js)
 
     #initialize logger
     config.logger = Logger.new(STDOUT)

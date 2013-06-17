@@ -17,6 +17,7 @@
 //= require jquery.form
 //= require jquery.nivo.slider
 //= require html5shiv
+//= require respond.min
 //= require_self
 //= require_directory ./application/
 //= require_tree .
