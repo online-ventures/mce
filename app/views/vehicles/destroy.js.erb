@@ -1,0 +1,3 @@
+alert('Successfully <%= @vehicle.deleted_at ? 'A' : 'Una' %>rchived Vehicle.');
+<% parameters = @vehicle.deleted_at ? {deleted: true} : {} %>
+window.location = '<%= vehicles_path(parameters)%>';

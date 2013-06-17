@@ -16,6 +16,7 @@
 	<% if current_user %>
 		<%= render 'vehicles/nav', page: :edit %>
 	<% end %>
+    <li><%= link_to "#{@vehicle.deleted_at ? 'Una' : 'A'}rchive Vehicle", vehicle_path(@vehicle), data: {remote: true, method: :delete }, class: 'alert button' %></li>
 </ul>
 <div class="row">
   <h3 class="large-12 small-12 columns">Vehicle Information</h3>
@@ -143,10 +144,11 @@
     <%= f.text_area :description %>
   </div>
   <ul class="button-group actions">
-    <%= f.submit %>
+    <li><%= f.submit %></li>
     <% if current_user %>
 		<%= render 'vehicles/nav', page: :edit %>
 	<% end %>
+    <li><%= link_to "#{@vehicle.deleted_at ? 'Una' : 'A'}rchive Vehicle", vehicle_path(@vehicle), data: {remote: true, method: :delete }, class: 'alert button' %></li>
   </ul>
 <% end %>
 

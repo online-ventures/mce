@@ -23,7 +23,7 @@ class Vehicle < ActiveRecord::Base
   belongs_to :title
   belongs_to :transmission
   belongs_to :warranty
-  has_many :photos, dependent: :destroy
+  has_many :photos
   accepts_nested_attributes_for :photos
   has_and_belongs_to_many :features, join_table: 'vehicles_features'
 

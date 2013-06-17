@@ -29,7 +29,7 @@
 
 <header>
   <h1><%= @vehicle.to_s %></h1>
-  <h2 class="subtitle"><%= @vehicle.word_price %><%=' — ' + @vehicle.subtitle unless @vehicle.subtitle.blank? %></h2>
+  <h2 class="subtitle"><%= @vehicle.word_price %><%=' — ' + @vehicle.subtitle unless @vehicle.subtitle.blank? %><%= '<br>Inactive — Not Publicly Visible'.html_safe if @vehicle.deleted_at %></h2>
 </header>
 
 

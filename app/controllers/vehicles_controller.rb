@@ -4,7 +4,11 @@ class VehiclesController < ApplicationController
   # GET /vehicles
   # GET /vehicles.json
   def index
-    @vehicles = Vehicle.order('updated_at desc').all
+    if params[:deleted] and params[:deleted] == 'true'
+      @vehicles = Vehicle.unscoped.inactive.order('updated_at desc').all
+    else
+      @vehicles = Vehicle.unscoped.active.order('updated_at desc').all
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -19,7 +23,10 @@ class VehiclesController < ApplicationController
   # GET /vehicles/1
   # GET /vehicles/1.json
   def show
-    @vehicle = Vehicle.find(params[:id])
+    @vehicle = Vehicle.unscoped.find(params[:id])
+    if @vehicle.deleted_at and !current_user
+      redirect_to '/vehicles/inventory', notice: 'That vehicle cannot be found' and return
+    end
     unless params[:name]
       redirect_to seo_vehicle_path(id: @vehicle.id, name: @vehicle.to_s('-')), status: 301 and return
     end
@@ -47,7 +54,7 @@ class VehiclesController < ApplicationController
 
   # GET /vehicles/1/edit
   def edit
-    @vehicle = Vehicle.find(params[:id])
+    @vehicle = Vehicle.unscoped.find(params[:id])
     @makes = Make.all
   end
 
@@ -73,7 +80,7 @@ class VehiclesController < ApplicationController
   # PUT /vehicles/1
   # PUT /vehicles/1.json
   def update
-    @vehicle = Vehicle.find(params[:id])
+    @vehicle = Vehicle.unscoped.find(params[:id])
     @vehicle.make = Make.find_or_initialize_by_name params[:make][:name] if params[:make]
     @vehicle.model = Model.find_or_initialize_by_name params[:model][:name] if params[:make]
 
@@ -98,12 +105,19 @@ class VehiclesController < ApplicationController
   # DELETE /vehicles/1
   # DELETE /vehicles/1.json
   def destroy
-    @vehicle = Vehicle.find(params[:id])
-    @vehicle.destroy
+    @vehicle = Vehicle.unscoped.find(params[:id])
+    if @vehicle.deleted_at
+      @vehicle.deleted_at = nil
+      @vehicle.photos.update_all(deleted_at: nil)
+      @vehicle.save
+    else
+      @vehicle.destroy
+    end
 
     respond_to do |format|
       format.html { redirect_to vehicles_url }
       format.json { head :no_content }
+      format.js   { }
     end
   end
 end

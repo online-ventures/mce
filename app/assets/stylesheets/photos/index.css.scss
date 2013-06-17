@@ -1,22 +1,24 @@
-[class*="column"] + [class*="column"]:last-child {
-  float: left;
-}
-
-#view-image-modal {
-  .is_featured {
-    @extend .button.success;
+.photos.index {
+  [class*="column"] + [class*="column"]:last-child {
+    float: left;
   }
-}
-.existing-photos {
-  div.photo {
-    position: relative;
-    img {
-      width: 100%;
-      margin:0px;
-      margin-bottom: 30px;
+
+  #view-image-modal {
+    .is_featured {
+      @extend .button.success;
     }
-    &.featured img {
-      box-shadow: 0 0 30px $success-color;
+  }
+  .existing-photos {
+    div.photo {
+      position: relative;
+      img {
+        width: 100%;
+        margin:0px;
+        margin-bottom: 30px;
+      }
+      &.featured img {
+        box-shadow: 0 0 30px $success-color;
+      }
     }
   }
 }

@@ -20,8 +20,16 @@ class Photo < ActiveRecord::Base
     image_content_type != 'application/zip'
   end
 
+  def vehicle
+    Vehicle.unscoped{ super }
+  end
+
   def featured?
-    self.id == self.vehicle.featured_id
+    if self.vehicle
+      self.id == self.vehicle.featured_id
+    else
+      false
+    end
   end
 
   def activate
@@ -58,10 +66,10 @@ class Photo < ActiveRecord::Base
   end
 
   # Overrides Paperclip methods which delete images, and image data
-  #def destroy_attached_files
-  #  true
-  #end
-  #def prepare_for_destroy
-  #  true
-  #end
+  def destroy_attached_files
+    true
+  end
+  def prepare_for_destroy
+    true
+  end
 end

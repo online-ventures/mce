@@ -1,7 +1,7 @@
 class PhotosController < ApplicationController
 
   def index
-    @vehicle = Vehicle.find(params[:vehicle_id])
+    @vehicle = Vehicle.unscoped.find(params[:vehicle_id])
     @photo = Photo.new
     if params[:deleted] == 'true'
       @photos = @vehicle.photos.unscoped.inactive

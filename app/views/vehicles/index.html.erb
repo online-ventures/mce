@@ -1,8 +1,21 @@
 <%= render partial: 'vehicles/breadcrumbs' %>
 
-<h1>Listing vehicles</h1>
+<h1>Listing <%= 'Deleted ' if params[:deleted] and params[:deleted] == 'true' %>vehicles</h1>
 
-<%= link_to 'New Vehicle', new_vehicle_path, class: 'button' %>
+<div class="row">
+  <div class="large-3 columns">
+    <%= link_to 'New Vehicle', new_vehicle_path, class: 'button' %>
+  </div>
+
+  <div class="large-4 columns">
+    <% if params[:deleted] and params[:deleted] == 'true' %>
+        <%= link_to 'Show Active Vehicles', vehicles_path, class:'button right' %>
+	<% else %>
+        <%= link_to 'Show Deleted Vehicles', '?deleted=true', class:'button right' %>
+    <% end %>
+  </div>
+</div>
+
 <table class="full-width">
   <tr>
     <th>Vehicle</th>
