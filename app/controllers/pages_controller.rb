@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_filter :require_user, except: [:show, :home]
+  before_filter :require_user, except: [:show, :home, :newrelic]
 
   # GET /pages
   # GET /pages.json
@@ -98,9 +98,9 @@ class PagesController < ApplicationController
 
   def newrelic
     if Page.find(1)
-      render text: 'Application Awake'
+      @status = 'Application Awake'
     else
-      render text: 'Error: Application Asleep'
+      @status = 'Error: Application Asleep'
     end
   end
 end
