@@ -13,6 +13,9 @@ if $list.length > 0
     value = $(this).html().toLowerCase()
     if value == 'all'
       $vehicles.show()
+      if $vehicles.length <= 0
+        $alert.find('span').html('')
+        $alert.show()
     else
       $vehicles.hide()
       selected = $('.vehicle.'+value)
@@ -21,3 +24,4 @@ if $list.length > 0
       else
         $alert.find('span').html(value)
         $alert.show()
+$options.first().click();

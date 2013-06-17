@@ -20,7 +20,12 @@
       </tr>
       <tr>
         <th>Avg Photo Count</th>
-        <td><%= (Photo.count.to_f / vehicles_count).round(2) %></td>
+        <td><%= (Photo.unscoped.count.to_f / Vehicle.unscoped.count).round(2) %></td>
+      </tr>
+      <tr>
+        <th>Avg Turnaround</th>
+        <% turnaround = Vehicle.unscoped.average('extract(\'epoch\' from deleted_at) - extract(\'epoch\' from created_at)') %>
+        <td><%= time_ago_in_words(turnaround.seconds.from_now) %></td>
       </tr>
     </table>
   </div>
