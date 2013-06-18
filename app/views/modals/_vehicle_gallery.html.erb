@@ -9,9 +9,11 @@
           <div class="right nivo-arrow">></div>
         </div>
         <div id="slider" class="nivoSlider">
+        <% cache [@vehicle, @vehicle.photos.count] do %>
           <% @vehicle.photos.find_each do |photo| %>
             <%= image_tag photo.image.url(:original) %>
           <% end %>
+	    <% end %>
         </div>
     </div>
   </div>

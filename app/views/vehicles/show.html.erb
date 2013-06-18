@@ -1,5 +1,4 @@
 <% content_for :canonical, seo_vehicle_path(id: @vehicle.id, name: @vehicle.to_s('-')) %>
-<% content_for :modal, 'modals/vehicle_gallery' %>
 <% content_for :title, @vehicle.to_s + ' at Motor Car Export' %>
 
 <% if notice %>
@@ -148,3 +147,5 @@
 </div>
 
 <p class="small">Vehicle last updated <%= time_ago_in_words(@vehicle.updated_at) %> ago.</p>
+
+<%= render partial: 'modals/vehicle_gallery' %>

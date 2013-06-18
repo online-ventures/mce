@@ -54,9 +54,10 @@
 	      <footer id="container-footer" class="twelve columns">&copy; <%= Time.new.year %> Motor Car Export</footer>
 	    </div>
 	  </article>
-
 	</div>
-	<%= render yield(:modal) if content_for? :modal %>
+
+	<%= render partial: yield(:modal) if content_for? :modal %>
+
 	<%= javascript_include_tag "application" %>
 </body>
 </html>

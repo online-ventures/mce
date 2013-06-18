@@ -93,6 +93,8 @@ $body.keydown (e)->
     prev()
 
 $(document).ready ->
+  $body.append($('#gallery-modal').detach());
+
   $slider.nivoSlider($settings)
   $('#gallery-modal *').disableSelection()
 
