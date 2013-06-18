@@ -1,8 +1,10 @@
 <% content_for :title, @page.name + ' - Motor Car Export' %>
 <% content_for :featured, @page.featured %>
 
-<% if current_user %>
-<%= link_to 'Edit This Page', edit_page_path(@page), class: 'secondary button' %>
+<% cache [@page, !!current_user] do %>
+  <% if current_user %>
+    <%= link_to 'Edit This Page', edit_page_path(@page), class: 'secondary button' %>
+  <% end %>
 <% end %>
 
 <% if notice %>

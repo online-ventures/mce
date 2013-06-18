@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   before_filter :require_user, except: [:show, :home, :newrelic]
-  caches_action :show
+  caches_action :show, layout: false
 
   # GET /pages
   # GET /pages.json
