@@ -1,7 +1,7 @@
 class VehiclesController < ApplicationController
   before_filter :require_user, except: [:show, :inventory]
   caches_page :inventory, layout: false
-  caches_action :show, layout: false, cache_path: "Vehicle/show/admin-#{!!@current_user}"
+  caches_action :show, layout: false, cache_path: "Vehicle/show/#{@vehicle}/admin-#{!!@current_user}"
 
 
   # GET /vehicles

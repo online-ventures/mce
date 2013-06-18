@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   before_filter :require_user, except: [:show, :home, :newrelic]
-  caches_action :show, layout: false, cache_path: "Page/show/admin-#{!!@current_user}"
+  caches_action :show, layout: false, cache_path: "Page/show/#{@slug}/admin-#{!!@current_user}"
 
   # GET /pages
   # GET /pages.json
@@ -19,9 +19,10 @@ class PagesController < ApplicationController
     # ID is straightforward
     if params[:id]
       @page = Page.where(active: true).find(params[:id])
-
+      @slug = @page.slug
     # Find by slug, and if admin, include private pages
     elsif params[:slug]
+      @slug = params[:slug]
       conds = current_user ? true : {active: true}
       @page = Page.where(conds).find_by_slug(params[:slug])
     end
@@ -35,7 +36,7 @@ class PagesController < ApplicationController
     else
       respond_to do |format|
         # Try to render view, and if that fails, render generic version
-        format.html { render "pages/#{params[:slug]||@page.slug}" rescue render "pages/show"}
+        format.html { render "pages/#{@slug}" rescue render "pages/show"}
         format.json { render json: @page }
       end
     end
