@@ -1,8 +1,15 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :current_user_session, :current_user
+  before_filter
 
   private
+    def begin_profiling
+      if params[:activate_profiler] == 'true'
+        Rack::MiniProfiler.authorize_request
+      end
+    end
+
     def current_user_session
       return @current_user_session if defined?(@current_user_session)
       @current_user_session = UserSession.find
