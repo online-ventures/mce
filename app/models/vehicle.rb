@@ -33,6 +33,10 @@ class Vehicle < ActiveRecord::Base
   validates :stock_number, :presence => true, :length => {:minimum => 2, :maximum => 10}
   validates :status_id, :presence => true
 
+  def self.fetch(id)
+    Rails.cache.fetch("Vehicle/#{id}"){ Vehicle.find(id) }
+  end
+
 	def to_s(join=' ')
     bits = [year.to_s, make.name, model.name]
 		bits.join(join)
