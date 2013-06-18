@@ -6,7 +6,7 @@
 <p id="notice" class="alert-box"><%= notice %></p>
 <% end %>
 
-<% cache [@vehicle, !!currrent_user] do %>
+<% cache [@vehicle, !!current_user] do %>
 	<% if current_user %>
 		<%= link_to 'Edit Vehicle', edit_vehicle_path(@vehicle), class: 'primary button' %>
 	<% end %>
