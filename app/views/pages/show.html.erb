@@ -2,7 +2,6 @@
 <% content_for :featured, @page.featured %>
 
 <% if current_user %>
-<%= render partial: 'pages/breadcrumbs' if current_user %>
 <%= link_to 'Edit This Page', edit_page_path(@page), class: 'secondary button' %>
 <% end %>
 

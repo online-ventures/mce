@@ -2,8 +2,6 @@
 <% content_for :modal, 'modals/vehicle_gallery' %>
 <% content_for :title, @vehicle.to_s + ' at Motor Car Export' %>
 
-<%= render partial: 'vehicles/breadcrumbs' if current_user %>
-
 <% if notice %>
 <p id="notice" class="alert-box"><%= notice %></p>
 <% end %>

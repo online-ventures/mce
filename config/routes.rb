@@ -1,5 +1,5 @@
 MotorCarExport::Application.routes.draw do
-  root to: 'pages#home'
+  root to: 'pages#show', slug: 'home'
 
   resources :users
   resources :pages
@@ -21,8 +21,7 @@ MotorCarExport::Application.routes.draw do
   get '/logout', to: 'user_sessions#destroy'
 
   # Special Pages
-  get '/home', to: 'pages#home'
-  get '/members', to: 'pages#members'
+  get '/members', to: 'pages#show', slug: 'members'
   get '/new-relic-ping', to: 'pages#newrelic'
 
   # CMS pages

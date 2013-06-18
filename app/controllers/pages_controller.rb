@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   before_filter :require_user, except: [:show, :home, :newrelic]
+  caches_action :show
 
   # GET /pages
   # GET /pages.json
@@ -15,25 +16,29 @@ class PagesController < ApplicationController
   # GET /pages/1
   # GET /pages/1.json
   def show
+    # ID is straightforward
     if params[:id]
       @page = Page.where(active: true).find(params[:id])
+
+    # Find by slug, and if admin, include private pages
     elsif params[:slug]
       conds = current_user ? true : {active: true}
       @page = Page.where(conds).find_by_slug(params[:slug])
-
     end
-    if @page.nil?
+
+    # Does a view file exist for this slug?
+    has_view = File.exists? File.join(Rails.root, 'app/views/pages', "#{params[:slug]||@page.slug}.html.erb")
+
+    # If we don't have a @page, and we don't have a view, give up
+    if @page.nil? and !has_view
       redirect_to root_url, notice: "That Page Doesn't Exist"
     else
       respond_to do |format|
-        format.html # show.html.erb
+        # Try to render view, and if that fails, render generic version
+        format.html { render "pages/#{params[:slug]||@page.slug}" rescue render "pages/show"}
         format.json { render json: @page }
       end
     end
-  end
-
-  def home
-    @page = Page.where(slug: 'home').first
   end
 
   # GET /pages/new

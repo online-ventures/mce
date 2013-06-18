@@ -1,0 +1,62 @@
+<ul class="breadcrumbs">
+  <li><a href="/members">Member's Area</a></li>
+  <% unless params[:slug] == 'members' %>
+	<%
+	# Main Controller Block
+	%>
+    <% if params[:controller] == 'vehicles' %>
+        <li class="<%= 'current' if params[:action] == 'index' %>"><a href="/vehicles">Vehicles</a></li>
+    <% elsif params[:controller] == 'pages' %>
+        <li class="<%= 'current' if params[:action] == 'index' %>"><a href="/pages">Pages</a></li>
+    <% elsif params[:controller] == 'users' %>
+        <li class="<%= 'current' if params[:action] == 'index' %>"><a href="/users">Users</a></li>
+    <% end %>
+
+    <% if params[:action] == 'manage' and params[:controller] == 'features' %>
+  	    <li class="current"><a href="/features">Features</a></li>
+    <% end %>
+	<%
+	# Individual Sections Semantics
+	%>
+    <% if @vehicle %>
+		<% if @vehicle.new_record? %>
+		    <li class="current"><a href="/vehicles/new">New</a></li>
+		<% else %>
+			<li class="<%= 'current' if params[:action] == 'show' %>"><a href="<%= vehicle_path(@vehicle) %>"><%= @vehicle.to_s %></a></li>
+
+			<% if params[:action] != 'show' %>
+				<li class="<%= 'current' if params[:action] == 'edit' and params[:controller] == 'vehicles' %>"><a href="<%= edit_vehicle_path(@vehicle) %>">edit</a></li>
+			<% end %>
+
+			<% if params[:action] == 'index' and params[:controller] == 'photos' %>
+				<li class="current"><a href="<%= vehicle_photos_path(@vehicle) %>">photos</a></li>
+			<% end %>
+
+			<% if params[:action] == 'index' and params[:controller] == 'features' %>
+				<li class="current"><a href="<%= vehicle_features_path(@vehicle) %>">features</a></li>
+			<% end %>
+		<% end %>
+    <% elsif @user %>
+    	<% if @user.new_record? %>
+		  <li class="current"><a href="<%= new_user_path %>">New</a></li>
+		<% else %>
+		  <li class="<%= 'current' if params[:action] == 'show'%>"><a href="<%= user_path(@user) %>"><%= @user.login %></a></li>
+
+		  <% if params[:action] == 'edit' %>
+			<li class="current"><a href="<%= edit_user_path(@user) %>">Edit</a></li>
+		  <% end %>
+		<% end %>
+    <% elsif @page %>
+    	<% if @page.new_record? %>
+		  <li class="current"><a href="<%= new_page_path %>">New</a></li>
+		<% else %>
+    	  <li class="<%= 'current' if params[:action] == 'show' %>"><a href="<%= slug_path(@page.slug) %>"><%= @page.name %></a></li>
+
+		  <% if params[:action] == 'edit' %>
+		      <li class="current"><a href="<%= edit_page_path(@page) %>">Edit</a></li>
+		  <% end %>
+
+		<% end %>
+	<% end %>
+  <% end %>
+</ul>
