@@ -5,7 +5,8 @@ class ApplicationController < ActionController::Base
 
   private
     def begin_profiling
-      if params[:activate_profiler] == 'true'
+      if params[:profiler] == 'true'
+        abort 'params[:profiler]'
         Rack::MiniProfiler.authorize_request
       end
     end
