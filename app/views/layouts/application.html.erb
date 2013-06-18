@@ -55,7 +55,9 @@
 	  </article>
 
 	</div>
-	<%= render yield(:modal) if content_for?(:modal) %>
+	<% cache do %>
+		<%= render yield(:modal) if content_for?(:modal) %>
+	<% end %>
 	<%= javascript_include_tag "application" %>
 </body>
 </html>

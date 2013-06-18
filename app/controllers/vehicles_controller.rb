@@ -1,5 +1,8 @@
 class VehiclesController < ApplicationController
   before_filter :require_user, except: [:show, :inventory]
+  caches_page :inventory
+  caches_action :show
+
 
   # GET /vehicles
   # GET /vehicles.json
