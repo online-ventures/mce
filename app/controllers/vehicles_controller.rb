@@ -83,6 +83,7 @@ class VehiclesController < ApplicationController
   # PUT /vehicles/1
   # PUT /vehicles/1.json
   def update
+    expire_action :action => :show
     @vehicle = Vehicle.unscoped.find(params[:id])
     @vehicle.make = Make.find_or_initialize_by_name params[:make][:name] if params[:make]
     @vehicle.model = Model.find_or_initialize_by_name params[:model][:name] if params[:make]
@@ -108,6 +109,7 @@ class VehiclesController < ApplicationController
   # DELETE /vehicles/1
   # DELETE /vehicles/1.json
   def destroy
+    expire_action :action => :show
     @vehicle = Vehicle.unscoped.find(params[:id])
     if @vehicle.deleted_at
       @vehicle.deleted_at = nil
