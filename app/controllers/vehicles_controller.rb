@@ -1,7 +1,6 @@
 class VehiclesController < ApplicationController
   before_filter :require_user, except: [:show, :inventory]
   caches_page :inventory, layout: false
-  caches_action :show, layout: false, cache_path: "Vehicle/show/#{@vehicle}/admin-#{!!@current_user}"
 
 
   # GET /vehicles
@@ -83,10 +82,10 @@ class VehiclesController < ApplicationController
   # PUT /vehicles/1
   # PUT /vehicles/1.json
   def update
-    expire_action :actions => [:show,:inventory]
     @vehicle = Vehicle.unscoped.find(params[:id])
     @vehicle.make = Make.find_or_initialize_by_name params[:make][:name] if params[:make]
     @vehicle.model = Model.find_or_initialize_by_name params[:model][:name] if params[:make]
+    Rails.cache.delete(@vehicle)
 
     params[:vehicle].each do |k,v|
       params[:vehicle][k] = true if v == 'true'
@@ -109,8 +108,8 @@ class VehiclesController < ApplicationController
   # DELETE /vehicles/1
   # DELETE /vehicles/1.json
   def destroy
-    expire_action :actions => [:show,:inventory]
     @vehicle = Vehicle.unscoped.find(params[:id])
+    Rails.cache.delete(@vehicle)
     if @vehicle.deleted_at
       @vehicle.deleted_at = nil
       @vehicle.photos.update_all(deleted_at: nil)

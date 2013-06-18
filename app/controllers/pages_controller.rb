@@ -1,6 +1,5 @@
 class PagesController < ApplicationController
   before_filter :require_user, except: [:show, :home, :newrelic]
-  caches_action :show, layout: false, cache_path: "Page/show/#{@slug}/admin-#{!!@current_user}"
 
   # GET /pages
   # GET /pages.json
@@ -77,7 +76,7 @@ class PagesController < ApplicationController
   # PUT /pages/1
   # PUT /pages/1.json
   def update
-    expire_action action: :show
+    Rails.cache.delete(@page)
     @page = Page.find(params[:id])
 
     respond_to do |format|
@@ -94,7 +93,7 @@ class PagesController < ApplicationController
   # DELETE /pages/1
   # DELETE /pages/1.json
   def destroy
-    expire_action action: :show
+    Rails.cache.delete(@page)
     @page = Page.find(params[:id])
     @page.destroy
 

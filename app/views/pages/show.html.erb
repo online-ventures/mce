@@ -11,8 +11,10 @@
 <p id="notice" class="alert-box radius"><%= notice %></p>
 <% end %>
 
-<% unless @page.active? %>
-	<p class="alert-box alert radius">This page is not publicly viewable.</p>
-<% end %>
+<% cache @page do %>
+	<% unless @page.active? %>
+		<p class="alert-box alert radius">This page is not publicly viewable.</p>
+	<% end %>
 
-<%= raw @page.body %>
+	<%= raw @page.body %>
+<% end %>
