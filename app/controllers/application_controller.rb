@@ -1,12 +1,11 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :current_user_session, :current_user
-  before_filter
+  before_filter :begin_profiling
 
   private
     def begin_profiling
       if params[:profiler] == 'true'
-        abort 'params[:profiler]'
         Rack::MiniProfiler.authorize_request
       end
     end
