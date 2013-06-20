@@ -13,7 +13,7 @@
 	    <h1 class="subtitle"><%= @vehicle.subtitle %></h1>
 	  </div>
 	  <div class="title-box">
-	    <h3>Vehicle Information</h3>
+	    <h3 class="title">Vehicle Information</h3>
 	    <table>
 	      <tr>
 	        <th>Year</th>
@@ -42,7 +42,7 @@
 	    </table>
 	  </div>
 	  <div class="title-box">
-	    <h3>Vehicle Condition</h3>
+	    <h3 class="title">Vehicle Condition</h3>
 	    <table>
 	      <tr>
 	        <th>Exterior Paint</th>
@@ -64,24 +64,24 @@
 	  </div>
 
 	  <div class="title-box">
-	    <h3>Vehicle Description</h3>
-	    <p><%= @vehicle.description %></p>
+	    <h3 class="title">Vehicle Description</h3>
+	    <%= raw RDiscount.new(@vehicle.description).to_html %>
 	  </div>
 
 	  <% if @vehicle.title.about %>
 	  <div class="title-box">
-	    <h3>About The Title</h3>
+	    <h3 class="title">About The Title</h3>
 	    <p><%= @vehicle.title.about %></p>
 	  </div>
 	  <% end %>
 
 	  <div class="title-box">
-	    <h3>Disclosure Agreement</h3>
+	    <h3 class="title">Disclosure Agreement</h3>
 	    <p><%= @vehicle.warranty.about(@vehicle) %></p>
 	  </div>
 
 	  <div class="title-box">
-	    <h3>Photos</h3>
+	    <h3 class="title">Photos</h3>
 	    <% @vehicle.photos.find_each do |photo| %>
 	        <%= image_tag photo.image.url %>
 	    <% end %>

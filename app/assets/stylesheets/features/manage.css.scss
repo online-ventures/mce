@@ -1,5 +1,6 @@
 .manage.features {
   ol.features.list {
+    position: relative;
     li.feature {
       display: list-item;
       cursor: pointer;
@@ -8,6 +9,17 @@
       margin-bottom: 0.5em;
       position: relative;
       text-align: left;
+
+      a {
+        color: $alert-color;
+
+        &:hover i:before {
+          content: "\f003";
+          display: inline-block;
+          @include transform(rotate(45deg));
+        }
+
+      }
     }
     .empty-spot {
       font-weight: bold;

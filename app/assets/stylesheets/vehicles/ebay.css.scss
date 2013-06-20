@@ -41,12 +41,16 @@ body.ebay.vehicle {
   .title-box {
     border: 2px solid #bbb;
     margin-bottom: 1em;
-    h3 {
+    h3.title {
       font-size: 0.8em;
       line-height: 1.2em;
       padding: 0 1em;
       margin:0;
       background: #bbb;
+    }
+    h1,h2,h3,h4,h5,h6 {
+      padding: 1em;
+      margin: 0;
     }
     p {
       padding: 1em;

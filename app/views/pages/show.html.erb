@@ -16,5 +16,5 @@
 		<p class="alert-box alert radius">This page is not publicly viewable.</p>
 	<% end %>
 
-	<%= raw @page.body %>
+	<%= raw RDiscount.new(@page.body).to_html %>
 <% end %>

@@ -11,7 +11,7 @@
 	<% end %>
 <% end %>
 
-<% cache @vehicle do %>
+<% cache ["v1",@vehicle] do %>
 
 <% unless @vehicle.photos.empty? %>
 <div class="row photo-box">
@@ -33,13 +33,13 @@
 </header>
 
 
-<p class="description">
-  <%= @vehicle.description %>
-</p>
+<div class="description">
+  <%= raw RDiscount.new(@vehicle.description).to_html %>
+</div>
 
 
 <div class="row info">
-  <div class="general large-6 columns">
+  <div class="general large-6 columns block">
     <h4 class="centered">Information</h4>
 	<table class="heading-right full-width">
 	  <tr>
@@ -92,7 +92,7 @@
 	  </tr>
 	</table>
   </div>
-  <div class="condition large-6 columns">
+  <div class="condition large-6 columns block">
 	<h4 class="centered">Condition</h4>
     <table class="heading-right full-width">
       <tr>
@@ -134,7 +134,7 @@
     </table>
   </div>
   <% if @vehicle.features.any? %>
-  <div class="features large-12 columns">
+  <div class="features large-12 columns block">
 	<h4 class="centered">Features</h4>
     <div class="list row">
       <% @vehicle.features.find_each do |feature| %>
@@ -145,6 +145,22 @@
     </div>
   </div>
   <% end %>
+
+  <% if @vehicle.title.about %>
+  <div class="title large-12 columns block">
+    <h4 class="centered">About The Title</h4>
+    <p>
+      <%= @vehicle.title.about %>
+    </p>
+  </div>
+  <% end %>
+
+  <div class="warranty large-12 columns block">
+	<h4 class="centered">Disclosure Agreement</h4>
+	<p>
+	  <%= @vehicle.warranty.about(@vehicle) %>
+	</p>
+  </div>
 </div>
 
 <p class="small">Vehicle last updated <%= time_ago_in_words(@vehicle.updated_at) %> ago.</p>

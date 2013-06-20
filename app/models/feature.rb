@@ -1,10 +1,11 @@
 class Feature < ActiveRecord::Base
-  attr_accessible :name, :order
+  acts_as_paranoid
+  attr_accessible :name, :order, :deleted_at
   has_and_belongs_to_many :vehicles, join_table: 'vehicles_features'
   before_create :set_order
-  before_destroy :shift_up_orders
+  before_destroy :shift_up_orders, :destroyed_order
 
-  default_scope order('"order" asc')
+  default_scope where('"order" > 0').order('"order" asc, "id" asc')
 
   def set_order
     self.order = (Feature.maximum(:order) || 0) + 1
@@ -26,5 +27,9 @@ class Feature < ActiveRecord::Base
   # Move the order of existing rows up (--) to cover the gap of moved row
   def shift_up_orders()
     Feature.update_all('"order" = "order" - 1', '"order" > '+order.to_s)
+  end
+
+  def destroyed_order
+    update_attributes({ order: self.id - 1000 })
   end
 end

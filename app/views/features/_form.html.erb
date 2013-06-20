@@ -1,17 +1,14 @@
-<%= form_for(@feature) do |f| %>
-  <% if @feature.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@feature.errors.count, "error") %> prohibited this feature from being saved:</h2>
+<div class="row">
 
-      <ul>
-      <% @feature.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+<%= form_for(@feature, remote: true, html: { class: 'large-6 columns large-centered'}) do |f| %>
+  <div class="row collapse">
+    <div class="field large-11 columns">
+      <%= f.text_field :name %>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit %>
+    <div class="actions large-1 columns">
+      <%= f.submit '+', class:'button prefix' %>
+    </div>
   </div>
 <% end %>
+
+</div>

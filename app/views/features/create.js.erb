@@ -1,2 +1,31 @@
 $('#feature_name').val('');
+<% if @vehicle %>
 $('.vehicle .list').prepend('<%= render partial: 'features/vehicles_feature', locals: {feature: @feature, addable: false} %>');
+<% else %>
+var feature = $('li[data-id=<%= @feature.id%>]');
+var list = $('ol.features');
+var message = $('.message.centered');
+if($(feature).length > 0)
+{
+	$('body,html').animate({scrollTop: $(feature).offset().top - 200 },700);
+	setTimeout(function(){
+		$(feature).addClass('shake');
+		setTimeout(function(){ $(feature).removeClass('shake'); }, 1000);
+	}, 1000);
+} else {
+	feature = $('<%= render partial: 'features/feature', locals: { feature: @feature }%>');
+	list.append(feature);
+	message.slideDown().html('This feature will be added to the bottom of the list.').delay(3000).slideUp();
+	$(feature).css({ position: 'absolute', top: '0', width: list.width() });
+	list.css('padding-top',($(feature).css('height').substring(0,2)*1)+6 + 'px');
+	setTimeout(function(){
+		$(feature).addClass('hinge');
+		setTimeout(function(){
+			$(feature).css({ position: 'relative' });
+			$(feature).removeClass('hinge');
+			$(list).delay(150).animate({ 'padding-top': '0px' })
+		}, 2000);
+	}, 1000);
+
+}
+<% end %>

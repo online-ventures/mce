@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+  require 'rdiscount'
   before_filter :require_user, except: [:show, :home, :newrelic]
 
   # GET /pages

@@ -1,3 +1,6 @@
-<li class="feature secondary button" data-id="<%= feature.id %>">
-  <%= feature.name %>
-</li>
+<% cache ["v1", feature] do %><li class="feature secondary button animated" data-id="<%= feature.id %>"><%= link_to '<i class="foundicon-enclosed-minus"></i>'.html_safe, feature_path(feature),
+              data:{
+		              remote: true,
+		              method: :delete,
+		              confirm: "Delete this feature? It won't be removed from existing vehicles."
+              }, class:'right'%><%= feature.name %></li><% end %>

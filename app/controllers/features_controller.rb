@@ -20,17 +20,20 @@ class FeaturesController < ApplicationController
   # POST /features.json
   def create
     @feature = Feature.find_or_create_by_name(params[:feature][:name])
+    @feature.update_attributes({ deleted_at: nil })
     if params[:vehicle_id]
       @vehicle = Vehicle.find(params[:vehicle_id])
-      @vehicle.features << @feature unless @feature.in? @vehicle.features
+      @vehicle.features << @feature
     end
     respond_to do |format|
       if @feature.save
+        format.html
         format.json { render json: @feature, status: :created, location: @feature }
-        format.js
+        format.js   { render 'features/create' }
       else
         format.html { render action: "new" }
         format.json { render json: @feature.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
@@ -63,10 +66,12 @@ class FeaturesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to features_url }
       format.json { head :no_content }
+      format.js
     end
   end
 
   def manage
+    @feature = Feature.new
     @features = Feature.all
   end
 

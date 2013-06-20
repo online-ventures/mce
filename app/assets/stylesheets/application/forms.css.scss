@@ -1,7 +1,7 @@
 .field{
   margin: 0 0 1em 0;
 
-  label {
+  label:not(.prefix, .postfix) {
     display: inline-block;
   }
   input[type=checkbox]{
@@ -13,6 +13,11 @@
   textarea{
     height: inherit;
   }
+  &.checkbox {
+    label {
+      display: inline-block;
+    }
+  }
 }
 input[type=submit] {
     @extend .button;
@@ -22,6 +27,15 @@ form {
   margin:0;
   .field:last-child {
     margin: 0;
+  }
+
+  &.custom {
+    input[type="text"], input[type="password"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="week"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="time"], input[type="url"], textarea {
+      font-size: 0.875em;
+    }
+    .custom.dropdown {
+      margin-bottom: 1em;
+    }
   }
 }
 #error_explanation {
