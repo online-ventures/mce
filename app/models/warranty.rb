@@ -12,7 +12,7 @@ class Warranty < ActiveRecord::Base
       slugs = %W(disclosure-#{vehicle.status.to_s('-')} disclosure-#{vehicle.drivable.to_s('-')} disclosure-#{vehicle.warranty.to_s('-')})
       pages = Page.find_all_by_slug slugs
       pages.each do |page|
-        about << page.body
+        about << page.body if page.body
       end
     end
     outro = Page.find_by_slug('disclosure-conclusion')
