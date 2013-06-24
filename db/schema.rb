@@ -11,7 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130619175543) do
+ActiveRecord::Schema.define(:version => 20130624183911) do
+
+  create_table "body_types", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "colors", :force => true do |t|
     t.string "name"
@@ -72,8 +78,32 @@ ActiveRecord::Schema.define(:version => 20130619175543) do
     t.datetime "deleted_at"
   end
 
+  create_table "requests", :force => true do |t|
+    t.integer  "subscriber_id"
+    t.integer  "vehicle_id"
+    t.integer  "body_type_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.datetime "deleted_at"
+  end
+
+  add_index "requests", ["body_type_id"], :name => "index_requests_on_body_type_id"
+  add_index "requests", ["subscriber_id"], :name => "index_requests_on_subscriber_id"
+  add_index "requests", ["vehicle_id"], :name => "index_requests_on_vehicle_id"
+
   create_table "statuses", :force => true do |t|
     t.string "name"
+  end
+
+  create_table "subscribers", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "phone"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.datetime "deleted_at"
+    t.string   "confirmation_code"
+    t.boolean  "confirmed"
   end
 
   create_table "suspensions", :force => true do |t|
@@ -139,8 +169,10 @@ ActiveRecord::Schema.define(:version => 20130619175543) do
     t.integer  "featured_id"
     t.boolean  "featured",        :default => false
     t.boolean  "sold",            :default => false
+    t.integer  "body_type_id"
   end
 
+  add_index "vehicles", ["body_type_id"], :name => "index_vehicles_on_body_type_id"
   add_index "vehicles", ["damage_id"], :name => "index_vehicles_on_damage_id"
   add_index "vehicles", ["drivable_id"], :name => "index_vehicles_on_drivable_id"
   add_index "vehicles", ["engine_id"], :name => "index_vehicles_on_engine_id"

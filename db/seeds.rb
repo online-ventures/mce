@@ -253,6 +253,21 @@ suspensions = [
     { name: 'Damaged' }
 ]
 
+body_types = [
+    { name: 'Convertible' },
+    { name: 'Coupe' },
+    { name: 'Crossover' },
+    { name: 'Electric' },
+    { name: 'Hatchback' },
+    { name: 'Hybrid' },
+    { name: 'Luxury' },
+    { name: 'Pickup' },
+    { name: 'Sedan' },
+    { name: 'SUV' },
+    { name: 'Van / Minivan' },
+    { name: 'Wagon' },
+]
+
 # Seed Everything
 pages.each do |page|
   Page.find_or_create_by_name(page)
@@ -304,4 +319,8 @@ end
 
 suspensions.each do |suspension|
     Suspension.find_or_create_by_name(suspension)
+end
+
+body_types.each do |body_type|
+    BodyType.find_or_create_by_name(body_type)
 end

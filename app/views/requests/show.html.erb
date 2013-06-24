@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Subscriber:</b>
+  <%= @request.subscriber_id %>
+</p>
+
+<p>
+  <b>Vehicle:</b>
+  <%= @request.vehicle_id %>
+</p>
+
+<p>
+  <b>Body type:</b>
+  <%= @request.body_type_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_request_path(@request) %> |
+<%= link_to 'Back', requests_path %>

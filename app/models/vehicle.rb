@@ -5,12 +5,13 @@ class Vehicle < ActiveRecord::Base
   scope :inactive, where('deleted_at IS NOT NULL')
   scope :random_featured, where(featured: true).order('RANDOM()').limit(1)
 
-  attr_accessible :burns, :description, :ebay, :engine_type, :miles, :price, :photos, :stains, :stock_number, :subtitle, :tears, :vin, :year,
+  attr_accessible :burns, :body_type, :description, :ebay, :engine_type, :miles, :price, :photos, :stains, :stock_number, :subtitle, :tears, :vin, :year,
                   :make_id, :make, :model, :model_id, :warranty_id, :title_id, :engine_id, :transmission_id, :ext_color_id, :int_color_id, :status_id,
-                  :damage_id, :paint_id, :interior_id, :drivable_id, :suspension_id, :featured_id, :featured, :sold
+                  :damage_id, :paint_id, :interior_id, :drivable_id, :suspension_id, :featured_id, :featured, :sold, :body_type_id
 
   belongs_to :make
   belongs_to :model
+  belongs_to :body_type
   belongs_to :damage
   belongs_to :drivable
   belongs_to :engine
@@ -24,6 +25,7 @@ class Vehicle < ActiveRecord::Base
   belongs_to :transmission
   belongs_to :warranty
   has_many :photos
+  has_many :requests
   accepts_nested_attributes_for :photos
   has_and_belongs_to_many :features, join_table: 'vehicles_features'
 

@@ -22,7 +22,7 @@
 	<%= javascript_include_tag "custom.modernizr.dev" if Rails.env == 'development' %>
 	<%= csrf_meta_tags %>
 </head>
-<body class="<%= params[:action] %> <%= params[:controller] %>">
+<body class="<%= "#{params[:action]} #{params[:controller]} #{params[:slug]}" %>">
 	<div class="topbar">
 		<h1 class="right" small-text="586.854.8781">Call: 586.854.8781</h1>
 		<a href="/"><h1>Motor Car Export</h1></a>

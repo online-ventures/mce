@@ -43,3 +43,6 @@ gem 'memcachier'
 
 # Markdown
 gem 'rdiscount'
+
+# Emails
+gem 'mandrill-api'

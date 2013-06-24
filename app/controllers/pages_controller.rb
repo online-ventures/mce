@@ -23,8 +23,8 @@ class PagesController < ApplicationController
     # Find by slug, and if admin, include private pages
     elsif params[:slug]
       @slug = params[:slug]
-      conds = current_user ? true : {active: true}
-      @page = Page.where(conds).find_by_slug(params[:slug])
+      conditions = current_user ? true : {active: true}
+      @page = Page.where(conditions).find_by_slug(@slug)
     end
 
     # Does a view file exist for this slug?
@@ -36,7 +36,12 @@ class PagesController < ApplicationController
     else
       respond_to do |format|
         # Try to render view, and if that fails, render generic version
-        format.html { render "pages/#{@slug}" rescue render "pages/show"}
+        format.html {
+          begin
+            render "pages/#{@slug}"
+          rescue ActionView::MissingTemplate
+            render "pages/show"
+          end }
         format.json { render json: @page }
       end
     end

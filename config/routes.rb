@@ -1,6 +1,11 @@
 MotorCarExport::Application.routes.draw do
   root to: 'pages#show', slug: 'home'
 
+  resources :subscribers do
+    get '/confirm/:code', on: :member, to: 'subscribers#confirm', as: 'confirm'
+    get '/cancel/:code', on: :member, to: 'subscribers#cancel'
+  end
+  resources :requests
   resources :users
   resources :pages
   resources :features do

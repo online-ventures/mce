@@ -15,4 +15,33 @@
 <p id="notice" class="alert-box radius"><%= notice %></p>
 <% end %>
 
-<%= raw @page.body %>
+<% cache ["v1", @page] do %>
+	<%= raw RDiscount.new(@page.body).to_html %>
+<% end %>
+
+<% if DEV %>
+<div class="panel large-8 columns large-centered">
+  <h3>Want More Info?</h3>
+  <%= form_for(Request.new, html:{class:'custom'}) do |r| %>
+
+	  <div class="row">
+	    <div class="large-6 small-12 columns">
+	      <%= r.label :vehicle, 'Select A Vehicle' %>
+		  <%= r.collection_select :vehicle_id, Vehicle.all, :id, :to_s, {include_blank: 'Select One'} %>
+	    </div>
+	    <div class="large-6 small-12 columns">
+	      <%= r.label :body_type, 'Or Select a Body Type' %>
+		  <%= r.collection_select :body_type_id, BodyType.all, :id, :name, {include_blank: 'Select One'} %>
+	    </div>
+	    <%= r.fields_for(Subscriber.new) do |s| %>
+	    <div class="large-12 columns">
+	      <%= s.label :email %>
+	      <%= s.text_field :email %>
+	    </div>
+	    <% end %>
+	  </div>
+
+	<%= r.submit 'Let\'s Go! »', class: 'expand round' %>
+  <% end %>
+</div>
+<% end %>

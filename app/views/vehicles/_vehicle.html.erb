@@ -1,4 +1,4 @@
-<% cache ["v1", vehicle] do %>
+<% cache ["v1", "partial", vehicle] do %>
 <div class="vehicle large-12 columns <%= vehicle.word_status %> <%= 'featured' if vehicle.featured? %>">
   <a href="<%= seo_vehicle_path(vehicle, name: vehicle.to_s('-'))%>" title="<%= vehicle %>">
   <div class="row">

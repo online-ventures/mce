@@ -3,7 +3,7 @@
 <br>
 <br>
 <div class="row">
-  <div class="large-3 columns">
+  <div class="large-4 columns">
     <a href="/vehicles" class="expand button">Manage Vehicles</a>
     <table class="full-width">
       <tr>
@@ -22,7 +22,8 @@
         <th>Avg Photo Count</th>
         <td><%= (Photo.unscoped.count.to_f / Vehicle.unscoped.count.to_f).round(2) %></td>
       </tr>
-      <% if turnaround = Vehicle.unscoped.average('extract(\'epoch\' from deleted_at) - extract(\'epoch\' from created_at)') %>
+      <% turnaround = Vehicle.unscoped.average('extract(\'epoch\' from deleted_at) - extract(\'epoch\' from created_at)') %>
+      <% if turnaround %>
       <tr>
         <th>Avg Turnaround</th>
         <td><%= time_ago_in_words(turnaround.seconds.from_now) %></td>
@@ -30,7 +31,7 @@
 	  <% end %>
     </table>
   </div>
-  <div class="large-3 columns">
+  <div class="large-4 columns">
     <a href="/features" class="expand button">Manage Features</a>
     <table class="full-width">
       <tr>
@@ -39,7 +40,7 @@
       </tr>
     </table>
   </div>
-  <div class="large-3 columns">
+  <div class="large-4 columns">
     <a href="/pages" class="expand button">Manage Pages</a>
     <table class="full-width">
       <tr>
@@ -52,7 +53,7 @@
       </tr>
     </table>
   </div>
-  <div class="large-3 columns">
+  <div class="large-4 columns">
     <a href="/users" class="expand button">Manage Users</a>
     <table class="full-width">
       <tr>
@@ -62,6 +63,19 @@
       <tr>
         <th>Online</th>
         <td><%= User.online.count %></td>
+      </tr>
+    </table>
+  </div>
+  <div class="large-4 columns">
+    <a href="/subscribers" class="expand button">Manage Subscribers</a>
+    <table class="full-width">
+      <tr>
+        <th>Subscribers</th>
+        <td><%= Subscriber.count %></td>
+      </tr>
+      <tr>
+        <th>Confirmed Subscribers</th>
+        <td><%= Subscriber.confirmed.count %></td>
       </tr>
     </table>
   </div>

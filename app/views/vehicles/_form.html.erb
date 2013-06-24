@@ -87,6 +87,10 @@
     <%= f.text_field :engine_type %>
   </div>
   <div class="field large-4 columns">
+    <%= f.label :body_type_id %>
+    <%= f.collection_select :body_type_id, BodyType.all, :id, :name %>
+  </div>
+  <div class="field large-4 columns">
     <%= f.label :ext_color_id %>
     <%= f.collection_select :ext_color_id, Color.all, :id, :name %>
   </div>
