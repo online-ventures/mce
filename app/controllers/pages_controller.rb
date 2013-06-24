@@ -82,7 +82,6 @@ class PagesController < ApplicationController
   # PUT /pages/1
   # PUT /pages/1.json
   def update
-    Rails.cache.delete(@page)
     @page = Page.find(params[:id])
 
     respond_to do |format|
@@ -99,7 +98,6 @@ class PagesController < ApplicationController
   # DELETE /pages/1
   # DELETE /pages/1.json
   def destroy
-    Rails.cache.delete(@page)
     @page = Page.find(params[:id])
     @page.destroy
 

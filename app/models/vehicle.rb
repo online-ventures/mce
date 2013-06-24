@@ -98,7 +98,7 @@ class Vehicle < ActiveRecord::Base
 
   def word_miles
     if miles
-      ActionController::Base.helpers.number_to_human(miles, units: {unit: 'mi', thousand: 'k'}, precision: 0).delete ' '
+      ActionController::Base.helpers.number_to_human(miles, units: {unit: '', thousand: 'k'}, precision: 0).delete ' '
     end
   end
 
