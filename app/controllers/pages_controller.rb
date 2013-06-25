@@ -23,8 +23,10 @@ class PagesController < ApplicationController
     # Find by slug, and if admin, include private pages
     elsif params[:slug]
       @slug = params[:slug]
-      conditions = current_user ? true : {active: true}
-      @page = Page.where(conditions).find_by_slug(@slug)
+      @page = Page.find_by_slug(@slug)
+    end
+    unless @page.active?
+      require_user
     end
 
     # Does a view file exist for this slug?
