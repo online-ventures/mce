@@ -64,7 +64,7 @@
 	  </tr>
 	  <tr>
 	    <th>Miles</th>
-	    <td><%= @vehicle.miles %></td>
+	    <td><%= @vehicle.word_miles %></td>
 	  </tr>
 	  <tr>
 	    <th>Title</th>
@@ -136,11 +136,10 @@
   <% if @vehicle.features.any? %>
   <div class="features large-12 columns block">
 	<h4 class="centered">Features</h4>
-    <div class="list row">
+    <div class="panel list row">
       <% @vehicle.features.find_each do |feature| %>
-	      <div class="large-4 small-6 columns feature">
-	        <%= feature.name %>
-	      </div>
+	      <%= content_tag :div, feature.name, class: 'large-4 small-6 columns feature' %>
+
       <% end %>
     </div>
   </div>
@@ -149,21 +148,21 @@
   <% if @vehicle.title.about %>
   <div class="title large-12 columns block">
     <h4 class="centered">About The Title</h4>
-    <p>
-      <%= @vehicle.title.about %>
+    <p class="panel list row">
+      <%= raw @vehicle.title.about %>
     </p>
   </div>
   <% end %>
 
   <div class="warranty large-12 columns block">
 	<h4 class="centered">Disclosure Agreement</h4>
-	<p>
-	  <%= @vehicle.warranty.about(@vehicle) %>
+	<p class="panel list row">
+	  <%= raw @vehicle.warranty.about(@vehicle) %>
 	</p>
   </div>
 </div>
 
-<p class="small">Vehicle last updated <%= time_ago_in_words(@vehicle.updated_at) %> ago.</p>
+<p class="small gray"><i class="foundicon-clock"></i> Updated <%= time_ago_in_words(@vehicle.updated_at) %> ago.</p>
 
 <%= render partial: 'modals/vehicle_gallery' %>
 

@@ -36,8 +36,7 @@ class Vehicle < ActiveRecord::Base
   validates :status_id, :presence => true
 
 	def to_s(join=' ')
-    bits = [year.to_s, make.name, model.name]
-		bits.join(join)
+    "#{year.to_s} #{make.name} #{model.name}".gsub(' ', join)
   end
 
   def new

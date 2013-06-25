@@ -21,6 +21,12 @@
   background-image: none;
   background-position: 0 0;
   background-repeat: repeat;
+  &:not(.default) {
+    font-size: 1.2em;
+    position: relative;
+    top: 0.2em;
+    font-style: normal;
+  }
 }
 [class*="foundicon-"]:before {
   font-family: 'GeneralFoundicons';

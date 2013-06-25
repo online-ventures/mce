@@ -39,7 +39,7 @@
     <td><%= link_to 'Ebay', seo_vehicle_path(id:vehicle.id, name: vehicle.to_s('-'), format: :ebay), class: 'small secondary button', title: 'Ebay View' %></td>
 
     <td><%= link_to '$', vehicle_path(vehicle, vehicle: {sold: !vehicle.sold }), class: 'sold small button '+(vehicle.sold ? 'success' : 'secondary'), title: (vehicle.sold ? 'Vehicle Sold' : 'Mark Sold'), data: { remote: true, method: :put }%>
-        <%= link_to '<i class="foundicon-star"></i>'.html_safe, vehicle_path(vehicle, vehicle: {featured: !vehicle.featured }), class: 'featured small button '+(vehicle.featured ? 'success' : 'secondary'), title: (vehicle.featured ? 'Vehicle Featured' : 'Mark Featured'), data: {remote:true, method: :put }%></td>
+        <%= link_to '<i class="foundicon-star default"></i>'.html_safe, vehicle_path(vehicle, vehicle: {featured: !vehicle.featured }), class: 'featured small button '+(vehicle.featured ? 'success' : 'secondary'), title: (vehicle.featured ? 'Vehicle Featured' : 'Mark Featured'), data: {remote:true, method: :put }%></td>
 
     <td><%= link_to 'Edit', edit_vehicle_path(vehicle), class: 'small secondary button' %>
         <%= link_to 'Destroy', vehicle, method: :delete, data: { confirm: 'Are you sure?' }, class: 'small alert button' %></td>
