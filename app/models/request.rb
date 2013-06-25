@@ -14,14 +14,12 @@ class Request < ActiveRecord::Base
   def initialize(request=nil)
     # properly assign subscriber
     if request
-      request[:subscriber] = Subscriber.find_or_create_by_email(request[:subscriber][:email]) || nil
-      abort request.to_yaml
+      request[:subscriber] = Subscriber.find_or_create_by_email(request[:subscriber][:email])
     end
     super(request)
   end
 
   def extract_body_type
-    abort 'doop'
     self.body_type_id = vehicle.body_type_id if vehicle
   end
 end

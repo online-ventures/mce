@@ -40,8 +40,9 @@ class RequestsController < ApplicationController
   # POST /requests
   def create
     @request = Request.new(params[:request])
-    abort @request.subscriber.to_yaml
-    if @request.save
+    if @request.valid?
+      @request.subscriber.save
+      @request.save
       notice = 'Thanks for signing up! Check your inbox to confirm your request.'
     else
       notice = 'There was a problem with your request. Please try again.'

@@ -11,7 +11,7 @@
 	<% end %>
 <% end %>
 
-<% cache ["v2",@vehicle] do %>
+<% cache ["v3",@vehicle] do %>
 
 <% unless @vehicle.photos.empty? %>
 <div class="row photo-box">
@@ -165,8 +165,8 @@
   </div>
 </div>
 
-<p class="small gray"><i class="foundicon-clock"></i> Updated <%= time_ago_in_words(@vehicle.updated_at) %> ago.</p>
-
 <%= render partial: 'modals/vehicle_gallery' %>
 
 <% end %>
+
+<p class="small gray"><i class="foundicon-clock"></i> Updated <%= time_ago_in_words(@vehicle.updated_at) %> ago.</p>

@@ -9,10 +9,6 @@ if defined?(Bundler)
   #Bundler.require(:default, :assets, Rails.env)
 end
 
-DEV = Rails.env == 'development'
-TEST = Rails.env == 'test'
-PROD = Rails.env == 'production'
-
 module MotorCarExport
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

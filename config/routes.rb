@@ -3,7 +3,7 @@ MotorCarExport::Application.routes.draw do
 
   resources :subscribers do
     get '/confirm/:code', on: :member, to: 'subscribers#confirm', as: 'confirm'
-    get '/cancel/:code', on: :member, to: 'subscribers#cancel'
+    get '/cancel/:code', on: :member, to: 'subscribers#cancel', as: 'cancel'
   end
   resources :requests
   resources :users
