@@ -97,10 +97,6 @@ $body.keydown (e)->
 $(document).ready ->
   $body.append($('#gallery-modal').detach());
 
-  $new_row = $('<tr class="padding-row"><td>&nbsp;</td><td>&nbsp;</td></tr>')
-  $new_row.height(($general.height() - $condition.height()) - 2) # the two accounts for borders
-  $condition.find('tbody').append($new_row)
-
   $slider.nivoSlider($settings)
   $('#gallery-modal *').disableSelection()
 

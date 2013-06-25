@@ -11,7 +11,7 @@
 	<% end %>
 <% end %>
 
-<% cache ["v1",@vehicle] do %>
+<% cache ["v2",@vehicle] do %>
 
 <% unless @vehicle.photos.empty? %>
 <div class="row photo-box">
@@ -131,6 +131,9 @@
         <th>Burns</th>
         <td><%= @vehicle.burns? ? 'Yes': 'No' %></td>
       </tr>
+      <tr><th>&nbsp;</th><td>&nbsp;</td></tr>
+      <tr><th>&nbsp;</th><td>&nbsp;</td></tr>
+      <tr><th>&nbsp;</th><td>&nbsp;</td></tr>
     </table>
   </div>
   <% if @vehicle.features.any? %>
