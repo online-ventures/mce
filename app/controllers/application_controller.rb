@@ -25,7 +25,6 @@ class ApplicationController < ActionController::Base
         store_location
         flash[:notice] = "You must be logged in to access this page"
         redirect_to '/login'
-        return false
       end
     end
 

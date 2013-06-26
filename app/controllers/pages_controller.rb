@@ -1,6 +1,7 @@
 class PagesController < ApplicationController
   require 'rdiscount'
   before_filter :require_user, except: [:show, :home, :newrelic]
+  before_filter :require_user, if: Proc.new() { params[:slug].in? %w(members) }
 
   # GET /pages
   # GET /pages.json
@@ -24,9 +25,6 @@ class PagesController < ApplicationController
     elsif params[:slug]
       @slug = params[:slug]
       @page = Page.find_by_slug(@slug)
-    end
-    unless @page.active?
-      require_user
     end
 
     # Does a view file exist for this slug?
