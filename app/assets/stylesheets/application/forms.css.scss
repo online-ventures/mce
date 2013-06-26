@@ -20,9 +20,20 @@
   }
 }
 input[type=submit] {
+  &:not(.no-button) {
     @extend .button;
     text-shadow: 0 0 2px #222;
   }
+  &.expand {
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top:0;
+    left:0;
+    border:0;
+  }
+}
 form {
   margin:0;
   .field:last-child {
