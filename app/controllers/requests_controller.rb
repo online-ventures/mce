@@ -41,7 +41,6 @@ class RequestsController < ApplicationController
   def create
     @request = Request.new(params[:request])
     if @request.valid?
-      @request.subscriber.save
       @request.save
       notice = 'Thanks for signing up! Check your inbox to confirm your request.'
     else

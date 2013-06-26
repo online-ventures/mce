@@ -1,5 +1,51 @@
-<p id="notice"><%= notice %></p>
-
-
 <%= link_to 'Edit', edit_subscriber_path(@subscriber) %> |
 <%= link_to 'Back', subscribers_path %>
+<% if notice %>
+<p id="notice"><%= notice %></p>
+<% end %>
+
+<h1><%= @subscriber.name || @subscriber.email %></h1>
+<h2 <%= raw 'class="red"' unless @subscriber.confirmed?%>>
+  <%= @subscriber.confirmed? ? 'Confirmed by Email' : 'Not Yet Confirmed' %></h2>
+
+<table>
+  <% if @subscriber.name %>
+  <tr>
+    <th>Name</th>
+    <td><%= @subscriber.name %></td>
+  </tr>
+  <% end %>
+  <tr>
+    <th>Email</th>
+    <td><%= @subscriber.email %></td>
+  </tr>
+  <% if @subscriber.phone %>
+  <tr>
+    <th>Phone</th>
+    <td><%= number_to_phone(@subscriber.phone) %></td>
+  </tr>
+  <% end %>
+</table>
+
+<% if @subscriber.requests.count %>
+<h2>Requests</h2>
+
+<table>
+  <tr>
+    <th>Vehicle</th>
+    <th>Body Type</th>
+  </tr>
+  <% @subscriber.requests.each do |request| %>
+  <tr>
+    <td>
+      <%= link_to request.vehicle if request.vehicle %>
+      <%= '---' unless request.vehicle %>
+    </td>
+    <td>
+      <%= request.body_type.name if request.body_type %>
+      <%= '---' unless request.body_type %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+<% end %>

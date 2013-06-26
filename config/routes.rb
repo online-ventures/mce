@@ -4,6 +4,7 @@ MotorCarExport::Application.routes.draw do
   resources :subscribers do
     get '/confirm/:code', on: :member, to: 'subscribers#confirm', as: 'confirm'
     get '/cancel/:code', on: :member, to: 'subscribers#cancel', as: 'cancel'
+    get '/tell-us-more', on: :member, to: 'subscribers#add_to', as: 'add_to'
   end
   resources :requests
   resources :users

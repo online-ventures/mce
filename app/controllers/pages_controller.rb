@@ -6,7 +6,7 @@ class PagesController < ApplicationController
   # GET /pages
   # GET /pages.json
   def index
-    @pages = Page.order(:id).all
+    @pages = Page.order('active DESC, id').all
 
     respond_to do |format|
       format.html # index.html.erb

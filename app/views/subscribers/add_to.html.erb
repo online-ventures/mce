@@ -1,0 +1,5 @@
+<%= content_for :title, @page.name %>
+
+<%= raw RDiscount.new(@page.body).to_html %>
+
+<%= render 'subscribers/form' %>

@@ -16,6 +16,7 @@ pages = [
     {id: 13, name: 'Title - Rebuilt', slug:'title-rebuilt', active: false, featured: false },
     {id: 14, name: 'Title - Reconstructed', slug:'title-reconstructed', active: false, featured: false },
     {id: 15, name: 'Title - Bill Of Sale', slug:'title-bill-of-sale', active: false, featured: false },
+    {id: 16, name: 'Tell Us More About Yourself', slug:'tell-us-more', active: true, featured: false }
 ]
 makes = [
 		{name: 'Acura'},

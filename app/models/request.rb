@@ -9,17 +9,11 @@ class Request < ActiveRecord::Base
 
   #validates :body_type_id, presence: true, if: 'vehicle_id.blank?'
 
-  before_create :extract_body_type
-
   def initialize(request=nil)
     # properly assign subscriber
     if request
       request[:subscriber] = Subscriber.find_or_create_by_email(request[:subscriber][:email])
     end
     super(request)
-  end
-
-  def extract_body_type
-    self.body_type_id = vehicle.body_type_id if vehicle
   end
 end

@@ -9,6 +9,8 @@ class Subscriber < ActiveRecord::Base
 
   scope :confirmed, where(confirmed: true)
 
+  validates :email, presence: true
+
 
   def confirm_link
     confirm_subscriber_url(subscriber: self, code: confirmation_code)
@@ -17,7 +19,6 @@ class Subscriber < ActiveRecord::Base
     cancel_subscriber_url(subscriber: self, code: email)
   end
   def confirm
-    self.confirmation_code = nil
     self.confirmed = true
     save
   end

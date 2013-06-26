@@ -24,7 +24,7 @@ input[type=submit] {
     @extend .button;
     text-shadow: 0 0 2px #222;
   }
-  &.expand {
+  &.invisible {
     opacity: 0;
     height: 100%;
     width: 100%;
@@ -60,5 +60,8 @@ form {
   text-shadow: 0 0 2px #000;
   &.secondary {
     text-shadow: none;
+  }
+  &.no-margin {
+    margin:0 !important;
   }
 }

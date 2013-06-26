@@ -13,8 +13,8 @@ class SubscriberMailer < ActionMailer::Base
           to: [{ email: subscriber.email }],
           headers: { 'Reply-To' => 'noreply@motorcarexport.com' },
           global_merge_vars: [
-              {name: 'confirm_link', content: "#{BASEURL}subscriber/#{subscriber.id}/confirm/#{subscriber.confirmation_code}" },
-              {name: 'cancel_link', content: "#{BASEURL}subscriber/#{subscriber.id}/cancel/#{subscriber.email}"},
+              {name: 'confirm_link', content: "#{BASEURL}subscribers/#{subscriber.id}/confirm/#{subscriber.confirmation_code}" },
+              {name: 'cancel_link', content: "#{BASEURL}subscribers/#{subscriber.id}/cancel/#{subscriber.email}"},
               {name: 'email', content: subscriber.email }
           ]
       }

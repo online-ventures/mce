@@ -2,16 +2,17 @@
 
 <table>
   <tr>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Subscriber</th>
+    <th>Confirmed Subscription</th>
+    <th>Actions</th>
   </tr>
 
 <% @subscribers.each do |subscriber| %>
   <tr>
-    <td><%= link_to 'Show', subscriber %></td>
-    <td><%= link_to 'Edit', edit_subscriber_path(subscriber) %></td>
-    <td><%= link_to 'Destroy', subscriber, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to subscriber.name || subscriber.email, subscriber%></td>
+    <td <%= raw subscriber.confirmed? ? 'class= "centered green">✓' : 'class= "centered red">✗' %></td>
+    <td><%= link_to 'Edit', edit_subscriber_path(subscriber), class:'small button no-margin' %>
+      <%= link_to 'Destroy', subscriber, method: :delete, data: { confirm: 'Are you sure?' }, class: 'small alert button no-margin' %></td>
   </tr>
 <% end %>
 </table>
