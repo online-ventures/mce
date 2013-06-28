@@ -5,7 +5,7 @@ class Photo < ActiveRecord::Base
   attr_accessible :image, :vehicle_id, :vehicles_photo_id, :deleted_at, :featured?
   belongs_to :vehicle, touch: true
 
-  has_attached_file :image, styles: { thumb: '150x150#' }
+  has_attached_file :image, styles: { thumb: '150x150#' }, s3_permissions: :read
   validates_attachment :image, presence: {message: 'must be chosen before saving'}
 	validates_attachment :image, content_type: {content_type: ['image/jpeg','image/jpg','image/png','image/gif','application/zip']}
   before_post_process :image?
@@ -62,7 +62,7 @@ class Photo < ActiveRecord::Base
   end
 
   def remove_zipped_file
-    Photo.delete_all(image_content_type: 'application/zip')
+    Photo.unscoped.where(image_content_type: 'application/zip').delete_all
   end
 
   # Overrides Paperclip methods which delete images, and image data
