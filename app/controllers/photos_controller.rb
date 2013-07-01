@@ -26,6 +26,7 @@ class PhotosController < ApplicationController
   end
 
   def create
+    @start_time = Time.now
     @vehicle = Vehicle.find(params[:vehicle_id])
 		@photo = @vehicle.photos.new(params[:photo])
 		if @photo.valid?

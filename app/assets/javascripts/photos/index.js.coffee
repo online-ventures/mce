@@ -35,7 +35,10 @@ if $('body').hasClass('index photos')
   $form.find('input[type=submit]').click ->
     if $file.val() == ''
       return false
-    $text.html('Uploading '+$object+ (' (This might take a while.)' if $object == 'Zip'))
+    exttext = ''
+    if $object == 'Zip'
+      exttext = ' (This might take a while.)'
+    $text.html('Uploading '+$object+exttext)
     $text.parent('div.button').animate({
       backgroundColor: '#aaa'
       borderColor: '#888'

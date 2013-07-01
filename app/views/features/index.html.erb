@@ -26,11 +26,14 @@
   </div>
 </div>
 
+<% cache ['v1',@all_features] do %>
 <script type="text/javascript">
+  $max_val = <%= @all_features.max{|a,b| a.id <=> b.id }.id %>;
   $features = [
-    <% @features.each do |f| %>
-		<%= "'#{f.name}',".html_safe %>
+    <% @all_features.each do |f| %>
+		<% string = f.name.gsub(/("|')/){"\\#{$1}"} %>
+		<%= "'#{string}',".html_safe %>
 	<% end %>
   ];
 </script>
-
+<% end %>

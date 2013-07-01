@@ -1,6 +1,7 @@
 $('#feature_name').val('');
 <% if @vehicle %>
-$('.vehicle .list').prepend('<%= render partial: 'features/vehicles_feature', locals: {feature: @feature, addable: false} %>');
+$('.on-probation[data-id=<%= @feature.id %>]').outerHTML = '<%= render partial: 'features/vehicles_feature', locals: {feature: @feature, addable: false} %>';
+//$('.vehicle .list').prepend('<%= render partial: 'features/vehicles_feature', locals: {feature: @feature, addable: false} %>');
 <% else %>
 var feature = $('li[data-id=<%= @feature.id%>]');
 var list = $('ol.features');

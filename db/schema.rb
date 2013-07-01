@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130624183911) do
+ActiveRecord::Schema.define(:version => 20130701163706) do
 
   create_table "body_types", :force => true do |t|
     t.string   "name"
@@ -77,6 +77,8 @@ ActiveRecord::Schema.define(:version => 20130624183911) do
     t.integer  "vehicles_photo_id"
     t.datetime "deleted_at"
   end
+
+  add_index "photos", ["vehicle_id"], :name => "index_photos_on_vehicle_id"
 
   create_table "requests", :force => true do |t|
     t.integer  "subscriber_id"
