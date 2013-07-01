@@ -24,7 +24,7 @@ class FeaturesController < ApplicationController
     @feature.update_attributes({ deleted_at: nil })
     if params[:vehicle_id]
       @vehicle = Vehicle.find(params[:vehicle_id])
-      @vehicle.features << @feature
+      @vehicle.features << @feature unless @feature.in? @vehicle.features
     end
     respond_to do |format|
       if @feature.save

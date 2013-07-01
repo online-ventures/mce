@@ -10,24 +10,28 @@ if $('body.features.index').length > 0
   $status = $('span[role=status]').detach()
 
 
-  $save.click (e)->
-    e.preventDefault()
-    $(this).val('Saving...')
-    $dots = setInterval(->
-      if $save.val().substr(-3,3) == '...'
-        $save.val('Saving')
-      else
-        $save.val($save.val()+'.')
+  #$save.click (e)->
+  #  e.preventDefault()
+  #  $(this).val('Saving...')
+  #  $dots = setInterval(->
+  #    if $save.val().substr(-3,3) == '...'
+  #      $save.val('Saving')
+  #    else
+  #      $save.val($save.val()+'.')
+#
+  #    if $.isEmptyObject($ajax_requests)
+  #      clearInterval($dots)
+  #      $save.val('Saved')
+  #      window.location = window.location.href.slice(0,-8)+'edit'
+  #  ,500);
 
-      if $.isEmptyObject($ajax_requests)
-        clearInterval($dots)
-        $save.val('Saved')
-        window.location = window.location.href.slice(0,-8)+'edit'
-    ,500);
-
+  $form.on('ajax:beforeSend', (event,xhr)->
+    $ajax_requests[$max_val] = xhr
+  ).on('ajax:complete', ->
+    delete $ajax_requests[$max_val]
+  )
   $form.submit ->
-    console.log 'Form Submitted!'
-    html = "<div class='large-10 small-centered columns feature subable on-probation' data-id='"+$max_val+"'><a class='secondary button left'><i class='foundicon-enclosed-minus default'></i><span>"+$("#feature_name").val()+"</span></a></div>"
+    html = "<div class='large-10 small-centered columns feature subable on-probation'><a class='secondary button left'><i class='foundicon-enclosed-minus default'></i><span>"+$("#feature_name").val()+"</span></a></div>"
     $('.vehicle .list').prepend(html)
     setTimeout(->
       $("#feature_name").val('')
@@ -40,8 +44,6 @@ if $('body.features.index').length > 0
 
   $('.feature').on('ajax:beforeSend', (event, xhr, status)->
     $ajax_requests[$(this).attr('data-id')] = xhr
-    console.log $ajax_requests
   ).on('ajax:complete', ->
     delete $ajax_requests[$(this).attr('data-id')]
-    console.log $ajax_requests
   )
