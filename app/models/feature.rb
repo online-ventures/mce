@@ -5,6 +5,8 @@ class Feature < ActiveRecord::Base
   before_create :set_order
   before_destroy :shift_up_orders, :destroyed_order
 
+  validates :name, length: {minimum: 3}
+
   default_scope where('"order" > 0').order('"order" asc, "id" asc')
 
   def set_order

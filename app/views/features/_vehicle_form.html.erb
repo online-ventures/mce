@@ -7,8 +7,11 @@
 			<% end %>
 	    </div>
 	    <div class="large-4 columns">
-			<%= f.submit 'Save Changes', class: 'button postfix' %>
+	        <%= f.submit 'Save Changes', style:'display:none;' %>
+			<%= content_tag :button, 'Save Changes', class: 'postfix button' %>
 	    </div>
 	</div>
 
 <% end %>
+
+<p class="alert-box alert"></p>

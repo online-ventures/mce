@@ -286,7 +286,7 @@ colors.each do |color|
 		Color.find_or_create_by_name(color)
 end
 
-Feature.unscoped.destroy_all
+Feature.unscoped.delete_all
 features.each do |feature|
 		Feature.find_or_create_by_name(feature)
 end
