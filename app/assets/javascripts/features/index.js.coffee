@@ -44,7 +44,7 @@ if $('body.features.index').length > 0
       $existing = $(selector)
       if $existing.length > 0 and $existing.first().parents('.system').length == 0
         $('body,html').animate({scrollTop: $existing.offset().top - 200 },700);
-        $existing.parent().animate({'background-color': '#FFFF00' }).delay(1000).animate({'background-color': '#d0d0d0'})
+        $existing.parent().animate({'background-color': '#FFFF00' }).delay(1000).animate({'background-color': '#e9e9e9'})
       else
         $('.system '+selector).parents('div.feature').hide()
         html = "<div class='large-10 small-centered columns feature subable on-probation'><a class='secondary button left'><i class='foundicon-enclosed-minus default'></i><span>"+$("#feature_name").val()+"</span></a></div>"
