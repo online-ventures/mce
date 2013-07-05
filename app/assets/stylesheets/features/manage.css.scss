@@ -12,6 +12,8 @@
 
       a {
         color: $alert-color;
+        position: relative;
+        top: -0.25em;
 
         &:hover i:before {
           content: "\f003";
