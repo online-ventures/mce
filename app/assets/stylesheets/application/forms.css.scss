@@ -13,10 +13,8 @@
   textarea{
     height: inherit;
   }
-  &.checkbox {
-    label {
+  .checkbox + label {
       display: inline-block;
-    }
   }
 }
 input[type=submit] {

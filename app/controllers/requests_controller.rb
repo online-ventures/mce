@@ -47,6 +47,7 @@ class RequestsController < ApplicationController
       else
         notice = 'We got your request! You\'ve previously subscribed, so we\'ll keep in touch.'
       end
+      @request.subscriber.save
     else
       notice = 'There was a problem with your request. Please try again.'
     end

@@ -12,7 +12,7 @@ class Request < ActiveRecord::Base
   def initialize(request=nil)
     # properly assign subscriber
     if request && request[:subscriber] && request[:subscriber][:email]
-      request[:subscriber] = Subscriber.find_or_create_by_email(request[:subscriber][:email])
+      request[:subscriber] = Subscriber.find_or_initialize_by_email(request[:subscriber][:email])
     end
     super(request)
   end

@@ -1,6 +1,6 @@
 $list = $('dl.sub-nav')
 $options = $list.find('dd a')
-$alert = $('p.alert-box')
+$alert = $('p.alert-box').not('#notice')
 $vehicles = $('.vehicle')
 
 if $list.length > 0

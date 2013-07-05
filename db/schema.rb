@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130701163706) do
+ActiveRecord::Schema.define(:version => 20130705192215) do
 
   create_table "body_types", :force => true do |t|
     t.string   "name"
@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(:version => 20130701163706) do
     t.datetime "deleted_at"
     t.string   "confirmation_code"
     t.boolean  "confirmed"
+    t.datetime "sent_at"
   end
 
   create_table "suspensions", :force => true do |t|
