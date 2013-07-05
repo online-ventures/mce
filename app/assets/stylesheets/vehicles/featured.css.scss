@@ -4,6 +4,7 @@
   width: 100%;
   background-image: url(asset-path('featured-bg.jpg', image));
   background-size: cover;
+  display: inline-block;
 
   .car {
     //white-space: nowrap;
@@ -48,6 +49,9 @@
 }
 
 @media #{$screen} and (max-width: #{$small-screen}) {
+  .featured-column {
+    padding:0;
+  }
   #featured-content .car {
     margin:0;
   }
