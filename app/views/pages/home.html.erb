@@ -19,7 +19,6 @@
 	<%= raw RDiscount.new(@page.body).to_html %>
 <% end %>
 
-<% if DEV %>
 <div class="panel large-8 columns large-centered">
   <h3>Want More Info?</h3>
   <%= form_for(Request.new, html:{class:'custom'}) do |r| %>
@@ -44,4 +43,3 @@
 	<%= r.submit 'Let\'s Go! »', class: 'expand round' %>
   <% end %>
 </div>
-<% end %>

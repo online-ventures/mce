@@ -10,11 +10,14 @@
         <li class="<%= 'current' if params[:action] == 'index' %>"><a href="/pages">Pages</a></li>
     <% elsif params[:controller] == 'users' %>
         <li class="<%= 'current' if params[:action] == 'index' %>"><a href="/users">Users</a></li>
+	<% elsif params[:controller] == 'subscribers' %>
+	    <li class="<%= 'current' if params[:action] == 'index' %>"><a href="/subscribers">Subscribers</a></li>
     <% end %>
 
     <% if params[:action] == 'manage' and params[:controller] == 'features' %>
   	    <li class="current"><a href="/features">Features</a></li>
     <% end %>
+
 	<%
 	# Individual Sections Semantics
 	%>
@@ -56,6 +59,16 @@
 		      <li class="current"><a href="<%= edit_page_path(@page) %>">Edit</a></li>
 		  <% end %>
 
+		<% end %>
+	<% elsif @subscriber %>
+	    <% if @subscriber.new_record? %>
+		  <li class="current"><a href="<%= new_subscriber_path %>">New</a></li>
+		<% else %>
+		  <li class="<%= 'current' if params[:action] == 'show' %>"><a href="<%= subscriber_path(@subscriber) %>"><%= @subscriber %></a></li>
+
+		  <% if params[:action] == 'edit' %>
+			  <li class="current"><a href="<%= edit_subscriber_path(@subscriber) %>">Edit</a></li>
+		  <% end %>
 		<% end %>
 	<% end %>
   <% end %>

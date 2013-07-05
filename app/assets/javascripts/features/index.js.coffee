@@ -1,5 +1,5 @@
-$('.alert-box').hide()
 if $('body.features.index').length > 0
+  $('.alert-box').hide()
   $ajax_requests = {}
   $max_val += 1;
   $form = $('form.edit_vehicle')

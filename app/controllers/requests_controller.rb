@@ -41,12 +41,16 @@ class RequestsController < ApplicationController
   def create
     @request = Request.new(params[:request])
     if @request.valid?
-      @request.save
-      notice = 'Thanks for signing up! Check your inbox to confirm your request.'
+      @request.is_duplicate? || @request.save # Prevent Duplicate Requests
+      if @request.subscriber.new_record?
+        notice = 'Thanks for signing up! Check your inbox to confirm your request.'
+      else
+        notice = 'We got your request! You\'ve previously subscribed, so we\'ll keep in touch.'
+      end
     else
       notice = 'There was a problem with your request. Please try again.'
     end
-    redirect_to root_path, notice: notice
+    redirect_to (request.env['HTTP_REFERER'] || root_path), notice: notice
   end
 
   # PUT /requests/1

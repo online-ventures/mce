@@ -36,7 +36,7 @@
 	        <li class=""><%= link_to 'FAQ', '/faq' %></li>
 	        <li class=""><%= link_to 'Contact', '/contact' %></li>
 	        <% if current_user %>
-	            <li class="right"><span class="a">Hello, <%= current_user.login.capitalize %></span> &bull; <%= link_to 'Member\'s Area', '/members'%></li>
+	            <li class="right"><span class="a">Hello, <%= current_user.login.titlecase %></span> &bull; <%= link_to 'Member\'s Area', '/members'%></li>
 		    <% else %>
 		        <li class="right"><%= link_to 'Log In', login_path %></li>
 		    <% end %>
@@ -52,10 +52,10 @@
 	  <article id="content" class="large-12 columns <%= 'pushed-down' if content_for? :featured and Vehicle.where(featured: true).any?%>">
 	    <%= render partial: 'layouts/breadcrumbs' if current_user %>
 	    <%= yield %>
-	    <div class="row">
+	  </article>
+	  <div class="row">
 	      <footer id="container-footer" class="twelve columns">&copy; <%= Time.new.year %> Motor Car Export</footer>
 	    </div>
-	  </article>
 	</div>
 
 	<%= render partial: yield(:modal) if content_for? :modal %>

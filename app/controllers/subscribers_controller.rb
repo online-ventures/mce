@@ -61,6 +61,7 @@ class SubscribersController < ApplicationController
     respond_to do |format|
       if @subscriber.update_attributes(params[:subscriber])
         if session[:subscriber]
+          session[:subscriber] = nil
           format.html { redirect_to root_path, notice: 'Thanks for adding more info! We\'ll get back to you soon.'}
         else
           format.html { redirect_to @subscriber, notice: 'Subscriber was successfully updated.' }

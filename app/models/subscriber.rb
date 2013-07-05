@@ -12,6 +12,9 @@ class Subscriber < ActiveRecord::Base
   validates :email, presence: true
 
 
+  def to_s
+    name || email
+  end
   def confirm_link
     confirm_subscriber_url(subscriber: self, code: confirmation_code)
   end

@@ -8,15 +8,15 @@
     <table class="full-width">
       <tr>
         <th>Vehicles</th>
+        <td><%= Vehicle.unscoped.count %></td>
+      </tr>
+      <tr>
+        <th>Active</th>
         <td><%= Vehicle.active.count %></td>
       </tr>
       <tr>
         <th>Featured</th>
         <td><%= Vehicle.where(featured:true).count %></td>
-      </tr>
-      <tr>
-        <th>Deleted</th>
-        <td><%= Vehicle.unscoped.inactive.count %></td>
       </tr>
       <tr>
         <th>Avg Photo Count</th>

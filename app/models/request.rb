@@ -3,7 +3,7 @@ class Request < ActiveRecord::Base
   attr_accessible :body_type_id, :subscriber_id, :vehicle_id, :subscriber
 
   belongs_to :body_type
-  belongs_to :subscriber
+  belongs_to :subscriber, touch: true
   belongs_to :vehicle
   accepts_nested_attributes_for :subscriber
 
@@ -11,9 +11,21 @@ class Request < ActiveRecord::Base
 
   def initialize(request=nil)
     # properly assign subscriber
-    if request
+    if request && request[:subscriber] && request[:subscriber][:email]
       request[:subscriber] = Subscriber.find_or_create_by_email(request[:subscriber][:email])
     end
     super(request)
+  end
+
+  def vehicle
+    Vehicle.unscoped.find(vehicle_id)
+  end
+
+  def is_duplicate?
+    params = {}
+    params[:subscriber_id] = subscriber_id if subscriber_id
+    params[:vehicle_id] = vehicle_id if vehicle_id
+    params[:body_type_id] = body_type_id if body_type_id
+    Request.unscoped.where(params).any?
   end
 end

@@ -11,7 +11,7 @@
   user_vars.each do |var| %>
   <tr>
     <th><%= var.to_s.gsub('_',' ').titlecase %></th>
-    <td><%= @user[var] %></td>
+    <td><%= @user[var] unless @user[var].is_a? Time %><%= @user[var].long if @user[var].is_a? Time %></td>
   </tr>
   <% end %>
 </table>

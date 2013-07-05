@@ -165,6 +165,24 @@
   </div>
 </div>
 
+<div class="panel large-8 columns large-centered">
+  <h3>Want More Info on this <%= "#{@vehicle.make} #{@vehicle.model}" %>?</h3>
+  <%= form_for(Request.new, html:{class:'custom'}) do |r| %>
+
+	  <div class="row">
+	    <%= r.hidden_field :vehicle_id, value: @vehicle.id %>
+	    <%= r.fields_for(Subscriber.new) do |s| %>
+	    <div class="large-12 columns">
+	      <%= s.label :email, 'All we need is your email' %>
+	      <%= s.text_field :email %>
+	    </div>
+	    <% end %>
+	  </div>
+
+	<%= r.submit 'Let\'s Go! »', class: 'expand round' %>
+  <% end %>
+</div>
+
 <%= render partial: 'modals/vehicle_gallery' %>
 
 <% end %>

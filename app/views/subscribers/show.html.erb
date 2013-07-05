@@ -1,10 +1,10 @@
-<%= link_to 'Edit', edit_subscriber_path(@subscriber) %> |
-<%= link_to 'Back', subscribers_path %>
+<%= link_to 'Edit', edit_subscriber_path(@subscriber), class:'button' %>
 <% if notice %>
 <p id="notice"><%= notice %></p>
 <% end %>
 
-<h1><%= @subscriber.name || @subscriber.email %></h1>
+<% cache ["v1", @subscriber] do %>
+<h1><%= @subscriber %></h1>
 <h2 <%= raw 'class="red"' unless @subscriber.confirmed?%>>
   <%= @subscriber.confirmed? ? 'Confirmed by Email' : 'Not Yet Confirmed' %></h2>
 
@@ -27,7 +27,7 @@
   <% end %>
 </table>
 
-<% if @subscriber.requests.count %>
+<% if @subscriber.requests.any? %>
 <h2>Requests</h2>
 
 <table>
@@ -38,14 +38,14 @@
   <% @subscriber.requests.each do |request| %>
   <tr>
     <td>
-      <%= link_to request.vehicle if request.vehicle %>
-      <%= '---' unless request.vehicle %>
+      <%= request.vehicle ? link_to(request.vehicle, request.vehicle) : '---' %>
     </td>
     <td>
-      <%= request.body_type.name if request.body_type %>
-      <%= '---' unless request.body_type %>
+      <%= request.body_type || '---' %>
     </td>
   </tr>
   <% end %>
 </table>
+<% end %>
+
 <% end %>
