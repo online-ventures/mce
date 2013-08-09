@@ -37,7 +37,7 @@ class Subscriber < ActiveRecord::Base
     true
   end
   def send_confirmation
-    unless confirmed? || (!sent_at.nil? and sent_at > 3.minutes.ago)
+    unless confirmed? || (!!sent_at and sent_at > 3.minutes.ago)
       self.sent_at = Time.now
       SubscriberMailer.confirm_subscription(self)
     end

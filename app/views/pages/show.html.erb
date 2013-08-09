@@ -1,14 +1,10 @@
 <% content_for :title, @page.name + ' - Motor Car Export' %>
 <% content_for :featured, @page.featured %>
 
-<% cache [@page, !!current_user] do %>
+<% cache [@page, "is-admin? #{!!current_user}"] do %>
   <% if current_user %>
     <%= link_to 'Edit This Page', edit_page_path(@page), class: 'secondary button' %>
   <% end %>
-<% end %>
-
-<% if notice %>
-<p id="notice" class="alert-box radius"><%= notice %></p>
 <% end %>
 
 <% cache @page do %>
@@ -16,5 +12,5 @@
 		<p class="alert-box alert radius">This page is not publicly viewable.</p>
 	<% end %>
 
-	<%= raw RDiscount.new(@page.body).to_html %>
+	<%= raw RDiscount.new(@page.body).to_html unless @page.body.blank? %>
 <% end %>

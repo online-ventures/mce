@@ -15,13 +15,16 @@
 <p id="notice" class="alert-box radius"><%= notice %></p>
 <% end %>
 
+
+<% unless @page.body.blank? %>
 <% cache ["v1", @page] do %>
 	<%= raw RDiscount.new(@page.body).to_html %>
+<% end %>
 <% end %>
 
 <div class="panel large-8 columns large-centered">
   <h3>Want More Info?</h3>
-  <%= form_for(Request.new, html:{class:'custom'}) do |r| %>
+  <%= form_for(Request.new, html: {class:'custom'} ) do |r| %>
 
 	  <div class="row">
 	    <div class="large-6 small-12 columns">

@@ -35,7 +35,7 @@ gem 'newrelic_rpm'
 gem 'paranoia'
 
 # Profiling / Benchmarking
-gem 'rack-mini-profiler'
+#gem 'rack-mini-profiler'
 
 # Memcache clients
 gem 'dalli'

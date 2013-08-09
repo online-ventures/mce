@@ -15,9 +15,7 @@
           <table>
             <tr>
               <td>Status: <%= vehicle.status.to_s.capitalize %></td>
-              <% if vehicle.new %>
               <td><i class="foundicon-smiley new">New Vehicle!</i></td>
-	          <% end %>
             </tr>
             <tr>
               <td><%= vehicle.word_miles %> miles</td>

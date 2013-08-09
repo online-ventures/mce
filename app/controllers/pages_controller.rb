@@ -1,7 +1,8 @@
 class PagesController < ApplicationController
   require 'rdiscount'
-  before_filter :require_user, except: [:show, :home, :newrelic]
+  before_filter :require_user, except: [:show, :home]
   before_filter :require_user, if: Proc.new() { params[:slug].in? %w(members) }
+  before_filter :set_page, only: [:show, :edit, :update, :destroy]
 
   # GET /pages
   # GET /pages.json
@@ -17,16 +18,6 @@ class PagesController < ApplicationController
   # GET /pages/1
   # GET /pages/1.json
   def show
-    # ID is straightforward
-    if params[:id]
-      @page = Page.where(active: true).find(params[:id])
-      @slug = @page.slug
-    # Find by slug, and if admin, include private pages
-    elsif params[:slug]
-      @slug = params[:slug]
-      @page = Page.find_by_slug(@slug)
-    end
-
     # Does a view file exist for this slug?
     has_view = File.exists? File.join(Rails.root, 'app/views/pages', "#{params[:slug]||@page.slug}.html.erb")
 
@@ -38,7 +29,7 @@ class PagesController < ApplicationController
         # Try to render view, and if that fails, render generic version
         format.html {
           begin
-            render "pages/#{@slug}"
+            render "pages/#{@page.slug}"
           rescue ActionView::MissingTemplate
             render "pages/show"
           end }
@@ -60,7 +51,6 @@ class PagesController < ApplicationController
 
   # GET /pages/1/edit
   def edit
-    @page = Page.find(params[:id])
   end
 
   # POST /pages
@@ -70,7 +60,7 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       if @page.save
-        format.html { redirect_to @page, notice: 'Page was successfully created.' }
+        format.html { redirect_to slug_path(@page.slug), notice: 'Page was successfully created.' }
         format.json { render json: @page, status: :created, location: @page }
       else
         format.html { render action: "new" }
@@ -82,8 +72,6 @@ class PagesController < ApplicationController
   # PUT /pages/1
   # PUT /pages/1.json
   def update
-    @page = Page.find(params[:id])
-
     respond_to do |format|
       if @page.update_attributes(params[:page])
         format.html { redirect_to slug_path(@page.slug), notice: 'Page was successfully updated.' }
@@ -98,7 +86,6 @@ class PagesController < ApplicationController
   # DELETE /pages/1
   # DELETE /pages/1.json
   def destroy
-    @page = Page.find(params[:id])
     @page.destroy
 
     respond_to do |format|
@@ -107,11 +94,14 @@ class PagesController < ApplicationController
     end
   end
 
-  def newrelic
-    if Page.find(1)
-      @status = 'Application Awake'
-    else
-      @status = 'Error: Application Asleep'
+  private
+    def set_page
+      @page = !!current_user ? Page.public : Page
+      if params[:id]
+        @page = @page.where(id: params[:id].to_i).first
+      elsif params[:slug]
+        @page = @page.where(slug: params[:slug]).first
+      end
+      throw ActiveRecord::RecordNotFound if @page.nil?
     end
-  end
 end
