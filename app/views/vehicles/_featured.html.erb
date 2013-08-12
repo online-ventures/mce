@@ -1,5 +1,6 @@
 <% vehicle = Vehicle.random_featured.first %>
 
+<% cache ["v1", vehicle, "featured"] do %>
 <a href="<%= seo_vehicle_path(vehicle, name: vehicle.to_s('-')) %>">
 <div id="featured-content">
 	<div class="large-12 columns featured-column">
@@ -9,9 +10,9 @@
 	        <div class="picture large-3 columns" style="background-image: url(<%= vehicle.featured_url %>)"></div>
 		    <div class="info large-9 columns">
 		  	    <h2><%= vehicle %> &mdash; <%= vehicle.word_price %></h2>
-		  	    <h4>Only <%= vehicle.word_miles %> Miles!</h4>
-		        <h4>Damage: <%= vehicle.damage.name %></h4>
-		  	    <div class="more-info button success">Click Here For More Info</div>
+		  	    <%= show_if '<h4>$1</h4>', vehicle.subtitle %>
+                <h4>Only <%= vehicle.word_miles %> Miles!</h4>
+		  	    <div class="small more-info button">Click Here For More Info</div>
 		    </div>
 	      </div>
 	    </div>
@@ -19,3 +20,4 @@
 	</div>
 </div>
 </a>
+<% end %>

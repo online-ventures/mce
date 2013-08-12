@@ -31,15 +31,15 @@ class Subscriber < ActiveRecord::Base
   end
 
   private
-  def create_confirmation_code
-    self.confirmation_code = Digest::SHA1.hexdigest("#{self.id} - #{self.email}")
-    self.confirmed = false
-    true
-  end
-  def send_confirmation
-    unless confirmed? || (!!sent_at and sent_at > 3.minutes.ago)
-      self.sent_at = Time.now
-      SubscriberMailer.confirm_subscription(self)
+    def create_confirmation_code
+      self.confirmation_code = Digest::SHA1.hexdigest("#{self.id} - #{self.email}")
+      self.confirmed = false
+      true
     end
-  end
+    def send_confirmation
+      unless confirmed? || (!!sent_at and sent_at > 3.minutes.ago)
+        self.sent_at = Time.now
+        SubscriberMailer.confirm_subscription(self)
+      end
+    end
 end

@@ -52,7 +52,7 @@
     <%= f.text_field :stock_number %>
   </div>
   <div class="field large-6 columns">
-    <%= f.label :subtitle %>
+    <%= f.label :subtitle, 'Subtitle / Featured Message' %>
     <%= f.text_field :subtitle %>
   </div>
   <div class="field large-6 columns">
@@ -129,8 +129,8 @@
   </div>
   <div class="large-6 small-12 columns">
     <div class="field">
-      <%= f.label :paint_id %>
-      <%= f.collection_select :paint_id, Condition.all, :id, :name %>
+      <%= f.label :exterior_id %>
+      <%= f.collection_select :exterior_id, Condition.all, :id, :name %>
     </div>
     <div class="field">
       <%= f.label :interior_id %>

@@ -1,20 +1,6 @@
 MotorCarExport::Application.routes.draw do
   root to: 'pages#show', slug: 'home'
 
-  resources :subscribers do
-    get '/confirm/:code', on: :member, to: 'subscribers#confirm', as: 'confirm'
-    get '/cancel/:code', on: :member, to: 'subscribers#cancel', as: 'cancel'
-    get '/tell-us-more', on: :member, to: 'subscribers#add_to', as: 'add_to'
-  end
-  resources :requests
-  resources :users
-  resources :pages
-  resources :features do
-    get '', on: :collection, to: 'features#manage'
-    post '/to/:to', on: :member, to: 'features#move'
-  end
-  resources :user_sessions
-
   resources :vehicles do
     get '/inventory', on: :collection, to: 'vehicles#inventory', as: 'inventory'
     resources :photos
@@ -22,13 +8,28 @@ MotorCarExport::Application.routes.draw do
     get '/:name', on: :member, to: 'vehicles#show', as: 'seo', name: /\d{4}\-[^\.]*/
   end
 
+  resources :subscribers do
+    get '/confirm/:code', on: :member, to: 'subscribers#confirm', as: 'confirm'
+    get '/cancel/:code', on: :member, to: 'subscribers#cancel', as: 'cancel'
+    get '/tell-us-more', on: :member, to: 'subscribers#add_to', as: 'add_to'
+  end
+
+  resources :features do
+    get '', on: :collection, to: 'features#manage'
+    post '/to/:to', on: :member, to: 'features#move'
+  end
+
+  resources :requests
+  resources :users
+  resources :pages
+
+  resources :user_sessions
   get '/login', to: 'user_sessions#new'
   post '/login', to: 'user_sessions#create'
   get '/logout', to: 'user_sessions#destroy'
 
   # Special Pages
   get '/members', to: 'pages#show', slug: 'members'
-  get '/new-relic-ping', to: 'pages#newrelic'
 
   # CMS pages
   # Should be last rule because it's a catch-all

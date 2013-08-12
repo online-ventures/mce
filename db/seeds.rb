@@ -251,22 +251,18 @@ engine_conditions = [
 
 suspensions = [
     { name: 'Intact' },
+    { name: 'Intact - Unknown Wheel Alignment'}
     { name: 'Damaged' }
 ]
 
 body_types = [
-    { name: 'Convertible' },
-    { name: 'Coupe' },
-    { name: 'Crossover' },
-    { name: 'Electric' },
-    { name: 'Hatchback' },
-    { name: 'Hybrid' },
-    { name: 'Luxury' },
-    { name: 'Pickup' },
     { name: 'Sedan' },
     { name: 'SUV' },
-    { name: 'Van / Minivan' },
-    { name: 'Wagon' },
+    { name: 'Pickup' },
+    { name: 'Coupe' },
+    { name: 'Wagon / Hatchback' },
+    { name: 'Hybrid' },
+    { name: 'Van' }
 ]
 
 # Seed Everything

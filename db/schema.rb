@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130705192215) do
+ActiveRecord::Schema.define(:version => 20130812180223) do
 
   create_table "body_types", :force => true do |t|
     t.string   "name"
@@ -157,7 +157,7 @@ ActiveRecord::Schema.define(:version => 20130705192215) do
     t.integer  "status_id"
     t.integer  "price"
     t.integer  "damage_id"
-    t.integer  "paint_id"
+    t.integer  "exterior_id"
     t.integer  "interior_id"
     t.integer  "drivable_id"
     t.integer  "engine_id"
@@ -180,11 +180,11 @@ ActiveRecord::Schema.define(:version => 20130705192215) do
   add_index "vehicles", ["drivable_id"], :name => "index_vehicles_on_drivable_id"
   add_index "vehicles", ["engine_id"], :name => "index_vehicles_on_engine_id"
   add_index "vehicles", ["ext_color_id"], :name => "index_vehicles_on_ext_color_id"
+  add_index "vehicles", ["exterior_id"], :name => "index_vehicles_on_paint_id"
   add_index "vehicles", ["int_color_id"], :name => "index_vehicles_on_int_color_id"
   add_index "vehicles", ["interior_id"], :name => "index_vehicles_on_interior_id"
   add_index "vehicles", ["make_id"], :name => "index_vehicles_on_make_id"
   add_index "vehicles", ["model_id"], :name => "index_vehicles_on_model_id"
-  add_index "vehicles", ["paint_id"], :name => "index_vehicles_on_paint_id"
   add_index "vehicles", ["status_id"], :name => "index_vehicles_on_status_id"
   add_index "vehicles", ["suspension_id"], :name => "index_vehicles_on_suspension_id"
   add_index "vehicles", ["title_id"], :name => "index_vehicles_on_title_id"

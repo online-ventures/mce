@@ -18,23 +18,15 @@ class PagesController < ApplicationController
   # GET /pages/1
   # GET /pages/1.json
   def show
-    # Does a view file exist for this slug?
-    has_view = File.exists? File.join(Rails.root, 'app/views/pages', "#{params[:slug]||@page.slug}.html.erb")
-
-    # If we don't have a @page, and we don't have a view, give up
-    if @page.nil? and !has_view
-      redirect_to root_url, notice: "That Page Doesn't Exist"
-    else
-      respond_to do |format|
-        # Try to render view, and if that fails, render generic version
-        format.html {
-          begin
-            render "pages/#{@page.slug}"
-          rescue ActionView::MissingTemplate
-            render "pages/show"
-          end }
-        format.json { render json: @page }
-      end
+    respond_to do |format|
+      # Try to render view, and if that fails, render generic version
+      format.html {
+        begin
+          render "pages/#{params[:slug] || @page.slug}"
+        rescue ActionView::MissingTemplate
+          render "pages/show"
+        end }
+      format.json { render json: @page }
     end
   end
 
@@ -102,6 +94,19 @@ class PagesController < ApplicationController
       elsif params[:slug]
         @page = @page.where(slug: params[:slug]).first
       end
-      throw ActiveRecord::RecordNotFound if @page.nil?
+      throw ActiveRecord::RecordNotFound if @page.nil? && !has_view?
+    end
+
+    def has_view?
+      found = false
+      to_search = []
+      to_search << params[:slug] unless params[:slug].nil?
+      to_search << @page.slug if @page.is_a?(Page)
+      to_search.each do |name|
+        if File.exists? File.join(Rails.root, 'app/views/pages', "#{name}.html.erb")
+          found = true
+        end
+      end
+      found
     end
 end

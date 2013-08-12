@@ -112,8 +112,8 @@
         <td><%= @vehicle.suspension.name %></td>
       </tr>
       <tr>
-        <th>Paint</th>
-        <td><%= @vehicle.paint.name %></td>
+        <th>Exterior</th>
+        <td><%= @vehicle.exterior.name %></td>
       </tr>
       <tr>
         <th>Interior</th>
@@ -165,6 +165,7 @@
   </div>
 </div>
 
+<!--
 <div class="panel large-8 columns large-centered">
   <h3>Want More Info on this <%= "#{@vehicle.make} #{@vehicle.model}" %>?</h3>
   <%= form_for(Request.new, html:{class:'custom'}) do |r| %>
@@ -182,6 +183,7 @@
 	<%= r.submit 'Let\'s Go! »', class: 'expand round' %>
   <% end %>
 </div>
+-->
 
 <%= render partial: 'modals/vehicle_gallery' %>
 
