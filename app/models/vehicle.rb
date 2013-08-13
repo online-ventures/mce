@@ -36,6 +36,8 @@ class Vehicle < ActiveRecord::Base
   validates :status_id, presence: true
   #validates :vin, length: { is: 17 }, format: /[^ioq]{17}/ # https://en.wikipedia.org/wiki/Vehicle_Identification_Number
 
+  after_save :update_associated_photos
+
 	def to_s(join=' ')
     "#{year} #{make.name} #{model.name}".gsub(' ', join)
   end
@@ -77,16 +79,15 @@ class Vehicle < ActiveRecord::Base
     featured_photo ? featured_photo.url(size) : photos.to_a.last.image.url(size) if photos.any?
   end
 
-  #def update_associated_photos
-  #  # [ not yet written ]
-  #  # Rename all the photos so they translate to the new pathname
-  #  # http://stackoverflow.com/questions/2708115/paperclip-renaming-files-after-theyre-saved
-  #  #
-  #  if self.year_changed? || self.model_id_changed? || self.make_id_changed?
-  #    old_name = "#{id}/#{year_was}_#{Make.find(make_id_was).name}_#{Model.find(model_id_was).name}"
-  #    photos.each do |photo|
-  #      photo.rename_files(old_name)
-  #    end
-  #  end
-  #end
+  def update_associated_photos
+    # Rename all the photos so they translate to the new pathname
+    # http://stackoverflow.com/questions/2708115/paperclip-renaming-files-after-theyre-saved
+    #
+    if self.year_changed? || self.model_id_changed? || self.make_id_changed?
+      old_name = "#{id}/#{year_was}_#{Make.find(make_id_was).name}_#{Model.find(model_id_was).name}"
+      photos.each do |photo|
+        photo.rename_files(old_name)
+      end
+    end
+  end
 end

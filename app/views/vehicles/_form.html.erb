@@ -24,7 +24,7 @@
 <br>
 <div class="row block">
   <h2 class="large-12 columns">Stock Information</h2>
-  <% if @vehicle.photos.empty? %>
+  <% if true || @vehicle.photos.empty? %>
   <div class="field large-4 small-4 columns">
     <%= f.label :year %>
     <%= f.select :year, (Time.now.year+2).downto(Time.now.year-50).to_a, selected: @vehicle.year || Time.now.year %>
