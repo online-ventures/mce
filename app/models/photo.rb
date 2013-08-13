@@ -43,7 +43,8 @@ class Photo < ActiveRecord::Base
       file_name = "#{old_name}_#{style}_#{vehicles_photo_id}#{File.extname(image.path(style))}"
       if PROD
         # Rename the old to the new on S3
-        AWS::S3::S3Object.move_to file_name, image.path(style), ENV[:S3_BUCKET_NAME]
+        object = AWS::S3::S3Object.new(ENV['S3_BUCKET_NAME'], file_name)
+        object.move_to image.path(style)
       else
         # Rename the old to the new locally
         path = File.join(Rails.root, 'public', 'uploads') << file_name
