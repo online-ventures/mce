@@ -36,6 +36,9 @@ class Vehicle < ActiveRecord::Base
   validates :status_id, presence: true
   validates :vin, length: { is: 17 }, format: /[^ioq]{17}/ # https://en.wikipedia.org/wiki/Vehicle_Identification_Number
 
+  before_save :update_associated_photos
+
+
 	def to_s(join=' ')
     "#{year.to_s} #{make.name} #{model.name}".gsub(' ', join)
   end
@@ -95,9 +98,23 @@ class Vehicle < ActiveRecord::Base
 
   def word_status
     if new
-      'new'
+      "new #{status}"
     else
-      status.to_s
+      "#{status}"
     end
+  end
+
+  def update_associated_photos
+    # [ not yet written ]
+    # Rename all the photos so they translate to the new pathname
+    # http://stackoverflow.com/questions/2708115/paperclip-renaming-files-after-theyre-saved
+    #
+    #(record.image.styles.keys+[:original]).each do |style|
+    #  path = record.image.path(style)
+    #  FileUtils.move(path, File.join(File.dirname(path), new_file_name))
+    #  AWS::S3::S3Object.move_to record.image.path(style), new_file_path, record.image.bucket_name
+    #end
+    #record.image_file_name = new_file_name
+    #record.save
   end
 end

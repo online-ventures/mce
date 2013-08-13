@@ -11,10 +11,6 @@
 <%= link_to 'Edit This Page', edit_page_path(@page), class: 'secondary button' %>
 <% end %>
 
-<% if notice %>
-<p id="notice" class="alert-box radius"><%= notice %></p>
-<% end %>
-
 
 <% unless @page.body.blank? %>
 <% cache ["v1", @page] do %>

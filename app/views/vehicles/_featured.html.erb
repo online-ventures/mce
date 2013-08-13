@@ -1,23 +1,21 @@
 <% vehicle = Vehicle.random_featured.first %>
 
 <% cache ["v1", vehicle, "featured"] do %>
-<a href="<%= seo_vehicle_path(vehicle, name: vehicle.to_s('-')) %>">
-<div id="featured-content">
-	<div class="large-12 columns featured-column">
-	  <div class="row">
-	    <div class="car small-12 large-centered columns">
-	      <div class="row">
-	        <div class="picture large-3 columns" style="background-image: url(<%= vehicle.featured_url %>)"></div>
-		    <div class="info large-9 columns">
-		  	    <h2><%= vehicle %> &mdash; <%= vehicle.word_price %></h2>
-		  	    <%= show_if '<h4>$1</h4>', vehicle.subtitle %>
+    <div id="featured-content">
+      <div class="large-12 columns featured-column">
+        <div class="row">
+          <div class="car small-12 large-centered columns">
+            <div class="row">
+              <div class="picture large-3 columns" style="background-image: url(<%= vehicle.featured_url %>)"></div>
+              <div class="info large-9 columns">
+                <h2><%= vehicle %> &mdash; <%= vehicle.word_price %></h2>
+                <%= show_if '<h4>$1</h4>', vehicle.subtitle %>
                 <h4>Only <%= vehicle.word_miles %> Miles!</h4>
-		  	    <div class="small more-info button">Click Here For More Info</div>
-		    </div>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-</div>
-</a>
+                <a href="<%= seo_vehicle_path(vehicle, name: vehicle.to_s('-')) %>" class="small more-info radius button">Click Here For More Info</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 <% end %>

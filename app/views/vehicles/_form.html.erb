@@ -64,7 +64,7 @@
   <h2 class="large-12 columns">Vehicle Details</h2>
   <div class="field large-4 columns">
     <%= f.label :vin %>
-    <%= f.text_field :vin %>
+    <%= f.text_field :vin, maxlength: '17' %>
   </div>
   <div class="field large-4 columns">
     <%= f.label :warranty_id %>
