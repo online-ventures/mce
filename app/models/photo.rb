@@ -37,13 +37,14 @@ class Photo < ActiveRecord::Base
   end
 
   def rename_files(old_name)
+    bucket = AWS::S3::Bucket.new ENV['S3_BUCKET_NAME']
     # Iterate through each photo, and each style
     (image.styles.keys+[:original]).each do |style|
       # Generate what the file name was
       file_name = "#{old_name}_#{style}_#{vehicles_photo_id}#{File.extname(image.path(style))}"
       if PROD
         # Rename the old to the new on S3
-        object = AWS::S3::S3Object.new(ENV['S3_BUCKET_NAME'], file_name)
+        object = AWS::S3::S3Object.new(bucket, file_name)
         object.move_to image.path(style)
       else
         # Rename the old to the new locally
