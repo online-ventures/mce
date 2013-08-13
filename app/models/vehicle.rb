@@ -85,7 +85,7 @@ class Vehicle < ActiveRecord::Base
     # http://stackoverflow.com/questions/2708115/paperclip-renaming-files-after-theyre-saved
     #
     if self.year_changed? || self.model_id_changed? || self.make_id_changed?
-      old_name = "/#{id}/#{year_was}_#{Make.find(make_id_was).name}_#{Model.find(model_id_was).name}"
+      old_name = "#{id}/#{year_was}_#{Make.find(make_id_was).name}_#{Model.find(model_id_was).name}"
 
       photos.each do |photo|
         photo.rename_files(old_name)

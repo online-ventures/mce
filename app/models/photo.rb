@@ -48,7 +48,7 @@ class Photo < ActiveRecord::Base
         object.move_to image.path(style)
       else
         # Rename the old to the new locally
-        path = File.join(Rails.root, 'public', 'uploads') << file_name
+        path = File.join(Rails.root, 'public', 'uploads/') << file_name
         FileUtils.move(path, image.path(style))
       end
     end
