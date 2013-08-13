@@ -24,6 +24,7 @@
 <br>
 <div class="row block">
   <h2 class="large-12 columns">Stock Information</h2>
+  <% if @vehicle.photos.empty? %>
   <div class="field large-4 small-4 columns">
     <%= f.label :year %>
     <%= f.select :year, (Time.now.year+2).downto(Time.now.year-50).to_a, selected: @vehicle.year || Time.now.year %>
@@ -39,6 +40,23 @@
     <%= f.collection_select :model_id, models, :id, :name, {include_blank: 'Create New Model', selected: @vehicle.model_id} %>
 	<%= f.sub_text_field :model %>
   </div>
+  <% else %>
+  <div class="field large-4 small-4 columns">
+    <%= f.label :year %>
+    <%= f.text_field :year, disabled: true %>
+  </div>
+  <div class="field large-4 small-4 columns">
+    <%= f.label :make %>
+    <%= f.text_field :make, disabled: true, value: @vehicle.make.name %>
+  </div>
+  <div class="field large-4 small-4 columns">
+    <%= f.label :model %>
+    <%= f.text_field :model, disabled: true, value: @vehicle.model.name %>
+  </div>
+  <div class="large-12 small-12 columns">
+    <div class="alert-box radius">You can't change the year, make, or model because you've already uploaded photos for this vehicle.</div>
+  </div>
+  <% end %>
   <div class="field large-4 small-4 columns">
     <%= f.label :price %>
     <%= f.text_field :price %>
