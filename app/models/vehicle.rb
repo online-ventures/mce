@@ -34,7 +34,7 @@ class Vehicle < ActiveRecord::Base
   validates :model_id, presence: true
   validates :stock_number, presence: true, length: { in: 2..10 }
   validates :status_id, presence: true
-  validates :vin, length: { is: 17 }, format: /[^ioq]{17}/ # https://en.wikipedia.org/wiki/Vehicle_Identification_Number
+  #validates :vin, length: { is: 17 }, format: /[^ioq]{17}/ # https://en.wikipedia.org/wiki/Vehicle_Identification_Number
 
   after_save :update_associated_photos
 

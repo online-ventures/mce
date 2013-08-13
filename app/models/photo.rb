@@ -41,7 +41,7 @@ class Photo < ActiveRecord::Base
     (image.styles.keys+[:original]).each do |style|
       # Generate what the file name was
       file_name = "#{old_name}_#{style}_#{vehicles_photo_id}#{File.extname(image.path(style))}"
-      if(ENV == PROD)
+      if ENV == PROD
         # Rename the old to the new on S3
         AWS::S3::S3Object.move_to file_name, image.path(style), ENV[:S3_BUCKET_NAME]
       else
