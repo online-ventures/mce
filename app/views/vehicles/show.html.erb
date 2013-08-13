@@ -1,10 +1,6 @@
 <% content_for :canonical, seo_vehicle_path(id: @vehicle.id, name: @vehicle.to_s('-')) %>
 <% content_for :title, @vehicle.to_s + ' at Motor Car Export' %>
 
-<% if notice %>
-<p id="notice" class="alert-box"><%= notice %></p>
-<% end %>
-
 <% cache [@vehicle, !!current_user] do %>
 	<% if current_user %>
 		<%= link_to 'Edit Vehicle', edit_vehicle_path(@vehicle), class: 'primary button' %>
@@ -29,7 +25,13 @@
 
 <header>
   <h1><%= @vehicle.to_s %></h1>
-  <h2 class="subtitle"><%= @vehicle.word_price %><%=' — ' + @vehicle.subtitle unless @vehicle.subtitle.blank? %><%= '<br>Inactive — Not Publicly Visible'.html_safe if @vehicle.deleted_at %></h2>
+  <h2 class="subtitle">
+    <%= price %>
+    <%= show_if " &mdash; ", '', !!(price && @vehicle.ebay) %>
+    <%= show_if "$1", link_to('Bid on eBay', @vehicle.ebay), @vehicle.ebay %>
+    <%= show_if " &mdash; $1", @vehicle.subtitle %>
+    <%= show_if '<br>Inactive — Not Publicly Visible', @vehicle.deleted_at %>
+  </h2>
 </header>
 
 
@@ -64,7 +66,7 @@
 	  </tr>
 	  <tr>
 	    <th>Miles</th>
-	    <td><%= @vehicle.word_miles %></td>
+	    <td><%= miles %></td>
 	  </tr>
 	  <tr>
 	    <th>Title</th>
@@ -99,6 +101,12 @@
         <th>Status</th>
         <td><%= @vehicle.status.name %></td>
       </tr>
+      <% if @vehicle.damage.name != 'None' %>
+      <tr>
+        <th>Damage</th>
+        <td><%= @vehicle.damage.name %></td>
+      </tr>
+      <% end %>
       <tr>
         <th>Drivability</th>
         <td><%= @vehicle.drivable.name %></td>
@@ -133,7 +141,9 @@
       </tr>
       <tr><th>&nbsp;</th><td>&nbsp;</td></tr>
       <tr><th>&nbsp;</th><td>&nbsp;</td></tr>
+      <% if @vehicle.damage.name == 'None' %>
       <tr><th>&nbsp;</th><td>&nbsp;</td></tr>
+      <% end %>
     </table>
   </div>
   <% if @vehicle.features.any? %>

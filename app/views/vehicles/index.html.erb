@@ -34,7 +34,7 @@
     </td>
     <td><%= vehicle.stock_number %></td>
     <td><%= vehicle.status.name %></td>
-    <td><%= vehicle.word_price %></td>
+    <td><%= price(vehicle) %></td>
     <td><%= link_to vehicle.photos.count, vehicle_photos_path(vehicle) %></td>
     <td><%= link_to 'Ebay', seo_vehicle_path(id:vehicle.id, name: vehicle.to_s('-'), format: :ebay), class: 'small secondary button', title: 'Ebay View' %></td>
 

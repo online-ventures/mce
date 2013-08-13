@@ -30,20 +30,19 @@ class Vehicle < ActiveRecord::Base
   has_and_belongs_to_many :features, join_table: 'vehicles_features'
 
   validates :year, presence: true, :numericality => true
-  #validates :make_id, :presence => true
-  #validates :model_id, :presence => true
+  validates :make_id, presence: true
+  validates :model_id, presence: true
   validates :stock_number, presence: true, length: { in: 2..10 }
   validates :status_id, presence: true
   validates :vin, length: { is: 17 }, format: /[^ioq]{17}/ # https://en.wikipedia.org/wiki/Vehicle_Identification_Number
 
-  before_save :update_associated_photos
-
+  after_save :update_associated_photos
 
 	def to_s(join=' ')
-    "#{year.to_s} #{make.name} #{model.name}".gsub(' ', join)
+    "#{year} #{make.name} #{model.name}".gsub(' ', join)
   end
 
-  def new
+  def is_new?
     created_at > 5.days.ago
   end
 
@@ -80,41 +79,17 @@ class Vehicle < ActiveRecord::Base
     featured_photo ? featured_photo.url(size) : photos.to_a.last.image.url(size) if photos.any?
   end
 
-  def word_price
-    if sold?
-      'Sold'
-    elsif !ebay.blank?
-      "<a href=\"#{ebay}\">Bid On Ebay</a>".html_safe
-    else
-      ActionController::Base.helpers.number_to_currency(price, precision: 0)
-    end
-  end
-
-  def word_miles
-    if miles
-      ActionController::Base.helpers.number_to_human(miles, units: {unit: '', thousand: 'k'}, precision: 0).delete ' '
-    end
-  end
-
-  def word_status
-    if new
-      "new #{status}"
-    else
-      "#{status}"
-    end
-  end
-
   def update_associated_photos
     # [ not yet written ]
     # Rename all the photos so they translate to the new pathname
     # http://stackoverflow.com/questions/2708115/paperclip-renaming-files-after-theyre-saved
     #
-    #(record.image.styles.keys+[:original]).each do |style|
-    #  path = record.image.path(style)
-    #  FileUtils.move(path, File.join(File.dirname(path), new_file_name))
-    #  AWS::S3::S3Object.move_to record.image.path(style), new_file_path, record.image.bucket_name
-    #end
-    #record.image_file_name = new_file_name
-    #record.save
+    if self.year_changed? || self.model_id_changed? || self.make_id_changed?
+      old_name = "/#{id}/#{year_was}_#{Make.find(make_id_was).name}_#{Model.find(model_id_was).name}"
+
+      photos.each do |photo|
+        photo.rename_files(old_name)
+      end
+    end
   end
 end

@@ -1,5 +1,5 @@
 <% cache ["v1", "partial", vehicle] do %>
-<div class="vehicle large-12 columns <%= vehicle.word_status %> <%= 'featured' if vehicle.featured? %>">
+<div class="vehicle large-12 columns <%= status(vehicle) %> <%= 'featured' if vehicle.featured? %>">
   <a href="<%= seo_vehicle_path(vehicle, name: vehicle.to_s('-'))%>" title="<%= vehicle %>">
   <div class="row">
 
@@ -17,12 +17,12 @@
               <td><i class="foundicon-smiley new">New Vehicle!</i></td>
             </tr>
             <tr>
-              <td><%= vehicle.word_miles %> miles</td>
-              <td>Damage: <%= vehicle.damage.name %></td>
+              <td><%= miles(vehicle) %> miles</td>
+              <td><%= show_if 'Damage: $1', vehicle.damage.name, vehicle.damage.name != 'None' %></td>
             </tr>
             <tr>
               <td>Stock #<%= vehicle.stock_number %></td>
-              <td>Price: <%= vehicle.word_price %></td>
+              <td><%= show_if 'Price: $1', price(vehicle) %></td>
             </tr>
           </table>
         </div>
