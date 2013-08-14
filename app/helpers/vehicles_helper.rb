@@ -6,14 +6,18 @@ module VehiclesHelper
 
   def miles(vehicle=nil)
     vehicle ||= @vehicle
-    number_to_human(vehicle.miles, units: {unit: '', thousand: 'k'}, precision: 0).delete ' '
+    if vehicle.miles
+      number_to_human(vehicle.miles, units: {unit: '', thousand: 'k'}, precision: 0).delete ' '
+    end
   end
 
   def price(vehicle=nil)
     vehicle ||= @vehicle
-    if vehicle.price == 0
-      return false
+    if vehicle.price
+      if vehicle.price == 0
+        return false
+      end
+      number_to_currency(vehicle.price, precision: 0)
     end
-    number_to_currency(vehicle.price, precision: 0)
   end
 end

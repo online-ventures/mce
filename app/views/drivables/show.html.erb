@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @drivable.name %>
+</p>
+
+<p>
+  <b>Body:</b>
+  <%= @drivable.body %>
+</p>
+
+
+<%= link_to 'Edit', edit_drivable_path(@drivable) %> |
+<%= link_to 'Back', drivables_path %>

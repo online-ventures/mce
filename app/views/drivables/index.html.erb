@@ -1,0 +1,20 @@
+<%= index_title_helper %>
+
+<%= new_and_toggle_buttons %>
+
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Body</th>
+    <th>Manage</th>
+  </tr>
+
+<% @drivables.each do |drivable| %>
+  <tr>
+    <td><%= link_to drivable.name, edit_drivable_path(drivable) %></td>
+    <td><%= truncate drivable.body, length: 100 %></td>
+    <td><%= manage_buttons(drivable) %></td>
+  </tr>
+<% end %>
+</table>

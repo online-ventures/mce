@@ -1,0 +1,19 @@
+<%= index_title_helper %>
+
+<%= new_and_toggle_buttons %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Manage</th>
+  </tr>
+
+<% @titles.each do |title| %>
+  <tr>
+    <td><%= link_to title.name, edit_title_path(title) %></td>
+    <td><%= truncate title.body, length: 100 %></td>
+    <td><%= manage_buttons(title) %></td>
+  </tr>
+<% end %>
+</table>
