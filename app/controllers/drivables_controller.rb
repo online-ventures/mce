@@ -46,7 +46,7 @@ class DrivablesController < ApplicationController
 
     respond_to do |format|
       if @drivable.save
-        format.html { redirect_to :index, notice: 'Drivable was successfully created.' }
+        format.html { redirect_to drivables_path, notice: 'Drivable was successfully created.' }
         format.json { render json: @drivable, status: :created, location: @drivable }
       else
         format.html { render action: "new" }
@@ -62,7 +62,7 @@ class DrivablesController < ApplicationController
 
     respond_to do |format|
       if @drivable.update_attributes(params[:drivable])
-        format.html { redirect_to :index, notice: 'Drivable was successfully updated.' }
+        format.html { redirect_to drivables_path, notice: 'Drivable was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
