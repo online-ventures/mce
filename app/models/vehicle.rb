@@ -3,7 +3,7 @@ class Vehicle < ActiveRecord::Base
   acts_as_paranoid
   scope :active, where(deleted_at: nil)
   scope :inactive, where('deleted_at IS NOT NULL')
-  scope :random_featured, where(featured: true).order('RANDOM()').limit(1)
+  scope :random_featured, order('featured DESC').order('RANDOM()').limit(1)
 
   attr_accessible :burns, :body_type, :description, :ebay, :engine_type, :miles, :price, :photos, :stains, :stock_number, :subtitle, :tears, :vin, :year,
                   :make_id, :make, :model, :model_id, :warranty_id, :title_id, :engine_id, :transmission_id, :ext_color_id, :int_color_id, :status_id,
@@ -79,14 +79,24 @@ class Vehicle < ActiveRecord::Base
     featured_photo ? featured_photo.url(size) : photos.to_a.last.image.url(size) if photos.any?
   end
 
+  def restore
+    self.deleted_at = nil
+    self.photos.update_all(deleted_at: nil)
+    save!
+  end
+
   def update_associated_photos
     # Rename all the photos so they translate to the new pathname
     # http://stackoverflow.com/questions/2708115/paperclip-renaming-files-after-theyre-saved
     #
-    if self.year_changed? || self.model_id_changed? || self.make_id_changed?
-      old_name = "#{id}/#{year_was}_#{Make.find(make_id_was).name}_#{Model.find(model_id_was).name}"
-      photos.each do |photo|
-        photo.rename_files(old_name)
+    unless model_id_was.nil? || make_id_was.nil?
+      if self.year_changed? || self.model_id_changed? || self.make_id_changed?
+        old_name = "#{id}/#{year_was}_#{Make.find(make_id_was).name}_#{Model.find(model_id_was).name}"
+        bucket = AWS::S3::Bucket.new ENV['S3_BUCKET_NAME']
+        photos.each do |photo|
+          photo.rename_files(old_name)
+        end
+        bucket.acl = :public_read
       end
     end
   end

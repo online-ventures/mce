@@ -44,11 +44,15 @@
         display: inline-block;
         vertical-align: bottom;
       }
-      .more-info.button {
-        @include button-style(#7aa3af,emCalc(7px));
-        margin:0;
+      .links {
         position: absolute;
         bottom: 0;
+        .button {
+          margin: 0;
+          &.more-info {
+            @include button-style(#7aa3af);
+          }
+        }
       }
     }
   }

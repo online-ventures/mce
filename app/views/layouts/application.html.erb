@@ -43,7 +43,7 @@
 		  </ul>
 		</nav>
 	</div>
-	<% if content_for? :featured and Vehicle.where(featured: true).any? %>
+	<% if content_for? :featured %>
 	  <div id="featured-box">
 	    <%= render 'vehicles/featured' %>
 	  </div>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  body: MyText
+  deleted_at: 2013-08-14 15:00:48
+
+two:
+  name: MyString
+  body: MyText
+  deleted_at: 2013-08-14 15:00:48

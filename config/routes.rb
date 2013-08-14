@@ -6,6 +6,7 @@ MotorCarExport::Application.routes.draw do
     resources :photos
     resources :features
     get '/:name', on: :member, to: 'vehicles#show', as: 'seo', name: /\d{4}\-[^\.]*/
+    put '/restore', on: :member, to: 'vehicles#restore', as: 'restore'
   end
 
   resources :subscribers do
@@ -21,7 +22,21 @@ MotorCarExport::Application.routes.draw do
 
   resources :requests
   resources :users
-  resources :pages
+
+  [:disclosures, :pages, :warranties].each do |resource|
+    resources resource do
+      put '/restore', on: :member, to: :restore, as: 'restore'
+    end
+  end
+  #resources :disclosures do
+  #  put '/restore', on: :member, to: :restore, as: 'restore'
+  #end
+  #resources :pages do
+  #  put '/restore', on: :member, to: :restore, as: 'restore'
+  #end
+  #resources :warranties do
+  #  put '/restore', on: :member, to: :restore, as: 'restore'
+  #end
 
   resources :user_sessions
   get '/login', to: 'user_sessions#new'

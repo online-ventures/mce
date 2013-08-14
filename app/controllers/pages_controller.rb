@@ -2,12 +2,16 @@ class PagesController < ApplicationController
   require 'rdiscount'
   before_filter :require_user, except: [:show, :home]
   before_filter :require_user, if: Proc.new() { params[:slug].in? %w(members) }
-  before_filter :set_page, only: [:show, :edit, :update, :destroy]
+  before_filter :set_page, only: [:show, :edit, :update, :destroy, :restore]
 
   # GET /pages
   # GET /pages.json
   def index
-    @pages = Page.order('active DESC, id').all
+    if params[:deleted] and params[:deleted] == 'true'
+      @pages = Page.unscoped.where('deleted_at IS NOT NULL')
+    else
+      @pages = Page.order('active DESC, id').all
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -86,9 +90,17 @@ class PagesController < ApplicationController
     end
   end
 
+  def restore
+    @page.restore
+    respond_to do |format|
+      format.html { redirect_to pages_url }
+      format.json { head :no_content }
+    end
+  end
+
   private
     def set_page
-      @page = !!current_user ? Page.public : Page
+      @page = !!!current_user ? Page.public : Page.unscoped
       if params[:id]
         @page = @page.where(id: params[:id].to_i).first
       elsif params[:slug]

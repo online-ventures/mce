@@ -1,0 +1,19 @@
+<%= index_title_helper %>
+
+<%= new_and_toggle_buttons %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Body</th>
+    <th>Manage</th>
+  </tr>
+
+<% @disclosures.each do |disclosure| %>
+  <tr>
+    <td><%= link_to disclosure.name, edit_disclosure_path(disclosure) %></td>
+    <td><%= truncate(disclosure.body, length: 100) %></td>
+    <td><%= manage_buttons(disclosure) %></td>
+  </tr>
+<% end %>
+</table>

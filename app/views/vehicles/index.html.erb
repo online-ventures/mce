@@ -1,16 +1,12 @@
-<h1>Listing <%= 'Deleted ' if params[:deleted] and params[:deleted] == 'true' %>vehicles</h1>
+<%= index_title_helper(Vehicle) %>
 
 <div class="row">
   <div class="large-3 columns">
-    <%= link_to 'New Vehicle', new_vehicle_path, class: 'button' %>
+    <%= new_record_button(Vehicle) %>
   </div>
 
   <div class="large-4 columns">
-    <% if params[:deleted] and params[:deleted] == 'true' %>
-        <%= link_to 'Show Active Vehicles', vehicles_path, class:'button right' %>
-	<% else %>
-        <%= link_to 'Show Deleted Vehicles', '?deleted=true', class:'button right' %>
-    <% end %>
+    <%= toggle_deleted_view_button(Vehicle) %>
   </div>
 </div>
 
@@ -41,8 +37,7 @@
     <td><%= link_to '$', vehicle_path(vehicle, vehicle: {sold: !vehicle.sold }), class: 'sold small button '+(vehicle.sold ? 'success' : 'secondary'), title: (vehicle.sold ? 'Vehicle Sold' : 'Mark Sold'), data: { remote: true, method: :put }%>
         <%= link_to '<i class="foundicon-star default"></i>'.html_safe, vehicle_path(vehicle, vehicle: {featured: !vehicle.featured }), class: 'featured small button '+(vehicle.featured ? 'success' : 'secondary'), title: (vehicle.featured ? 'Vehicle Featured' : 'Mark Featured'), data: {remote:true, method: :put }%></td>
 
-    <td><%= link_to 'Edit', edit_vehicle_path(vehicle), class: 'small secondary button' %>
-        <%= link_to 'Destroy', vehicle, method: :delete, data: { confirm: 'Are you sure?' }, class: 'small alert button' %></td>
+    <td><%= manage_buttons(vehicle) %></td>
   </tr>
 <% end %>
 </table>

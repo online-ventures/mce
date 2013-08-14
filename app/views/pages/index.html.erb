@@ -1,14 +1,14 @@
-<h1>Listing pages</h1>
+<%= index_title_helper(Page) %>
+
+<%= new_and_toggle_buttons %>
 
 
-<%= link_to 'New Page', new_page_path, class: 'button' %>
 <table class="full-width">
   <tr>
     <th>Page</th>
     <th>Active</th>
     <th>Featured Visible?</th>
-    <th></th>
-    <th></th>
+    <th>Manage</th>
   </tr>
 
 <% @pages.each do |page| %>
@@ -18,8 +18,7 @@
     </td>
     <td <%= raw page.active ? 'class= "centered green">✓' : 'class= "centered red">✗' %></td>
     <td <%= raw page.featured ? 'class= "centered green">✓' : 'class= "centered red">✗' %></td>
-    <td><%= link_to 'Edit', edit_page_path(page), class: 'secondary button' %></td>
-    <td><%= link_to 'Destroy', page, method: :delete, data: { confirm: 'Are you sure?' }, class: 'alert button' %></td>
+    <td><%= manage_buttons(page) %></td>
   </tr>
 <% end %>
 </table>

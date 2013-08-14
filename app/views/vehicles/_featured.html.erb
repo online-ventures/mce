@@ -11,7 +11,10 @@
                 <h2><%= vehicle %><%= show_if "  <span class='no-wrap'>&mdash; $1</span>", price(vehicle) %></h2>
                 <%= show_if '<h4>$1</h4>', vehicle.subtitle %>
                 <h4>Only <%= miles(vehicle) %> Miles!</h4>
-                <a href="<%= seo_vehicle_path(vehicle, name: vehicle.to_s('-')) %>" class="small more-info radius button">Click Here For More Info</a>
+                <div class="links">
+                    <a href="<%= seo_vehicle_path(vehicle, name: vehicle.to_s('-')) %>" class="small more-info radius button">Click Here For More Info</a>
+                    <a href="<%= inventory_vehicles_path %>" class="success small radius button">Show Me More Cars &raquo;</a>
+                </div>
               </div>
             </div>
           </div>

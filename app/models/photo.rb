@@ -36,8 +36,7 @@ class Photo < ActiveRecord::Base
     update_attribute :deleted_at, nil
   end
 
-  def rename_files(old_name)
-    bucket = AWS::S3::Bucket.new ENV['S3_BUCKET_NAME']
+  def rename_files(old_name, bucket)
     # Iterate through each photo, and each style
     (image.styles.keys+[:original]).each do |style|
       # Generate what the file name was

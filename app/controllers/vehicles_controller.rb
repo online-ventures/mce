@@ -110,19 +110,22 @@ class VehiclesController < ApplicationController
   # DELETE /vehicles/1.json
   def destroy
     @vehicle = Vehicle.unscoped.find(params[:id])
-    Rails.cache.delete(@vehicle)
-    if @vehicle.deleted_at
-      @vehicle.deleted_at = nil
-      @vehicle.photos.update_all(deleted_at: nil)
-      @vehicle.save
-    else
-      @vehicle.destroy
-    end
+    @vehicle.destroy
 
     respond_to do |format|
       format.html { redirect_to vehicles_url }
       format.json { head :no_content }
       format.js   { }
+    end
+  end
+
+  def restore
+    @vehicle = Vehicle.unscoped.find(params[:id])
+    @vehicle.restore
+
+    respond_to do |format|
+      format.html { redirect_to vehicles_url }
+      format.json { head :no_content }
     end
   end
 end

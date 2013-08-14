@@ -1,0 +1,19 @@
+<%= index_title_helper %>
+
+<%= new_and_toggle_buttons %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Body</th>
+    <th>Manage</th>
+  </tr>
+
+<% @warranties.each do |warranty| %>
+  <tr>
+    <td><%= link_to warranty.name, edit_warranty_path(warranty) %></td>
+    <td><%= truncate(warranty.body, length: 200) %></td>
+    <td><%= manage_buttons(warranty) %></td>
+  </tr>
+<% end %>
+</table>

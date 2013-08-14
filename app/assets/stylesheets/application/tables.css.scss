@@ -1,6 +1,21 @@
 table {
   min-width: 50%;
 
+  th {
+    text-align: left;
+
+    &.center {
+      text-align: center;
+    }
+    &.right {
+      text-align: right;
+    }
+  }
+  .small.button {
+    margin: 0;
+    width: 100%;
+  }
+
   &.inline { display: inline-table; vertical-align: top; }
 
   &.full-width { width: 100%; }
