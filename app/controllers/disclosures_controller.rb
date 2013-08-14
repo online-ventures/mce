@@ -14,11 +14,9 @@ class DisclosuresController < ApplicationController
   # GET /disclosures/1
   # GET /disclosures/1.json
   def show
-    @disclosure = Disclosure.find(params[:id])
-
     respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @disclosure }
+      format.html { redirect_to :index}
+      format.json { render json: Disclosure.find(params[:id]) }
     end
   end
 
@@ -45,7 +43,7 @@ class DisclosuresController < ApplicationController
 
     respond_to do |format|
       if @disclosure.save
-        format.html { redirect_to @disclosure, notice: 'Disclosure was successfully created.' }
+        format.html { redirect_to disclosures_path, notice: 'Disclosure was successfully created.' }
         format.json { render json: @disclosure, status: :created, location: @disclosure }
       else
         format.html { render action: "new" }
@@ -61,7 +59,7 @@ class DisclosuresController < ApplicationController
 
     respond_to do |format|
       if @disclosure.update_attributes(params[:disclosure])
-        format.html { redirect_to @disclosure, notice: 'Disclosure was successfully updated.' }
+        format.html { redirect_to disclosures_path, notice: 'Disclosure was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

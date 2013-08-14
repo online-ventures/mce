@@ -20,11 +20,9 @@ class WarrantiesController < ApplicationController
   # GET /warranties/1
   # GET /warranties/1.json
   def show
-    @warranty = Warranty.find(params[:id])
-
     respond_to do |format|
-      format.html { redirect_to warranties_path }
-      format.json { render json: @warranty }
+      format.html { redirect_to :index }
+      format.json { render json: Warranty.find(params[:id]) }
     end
   end
 
