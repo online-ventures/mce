@@ -24,15 +24,15 @@ class ActionView::Helpers::FormBuilder
   end
 
   def check_box_collection(attribute_name, options, selected)
-		attribute_name = attribute_name.singularize
+		attribute_name = attribute_name.to_s.singularize
 		field_name = "#{@object_name}[#{attribute_name}_ids][]"
-		html = '<ul>'
+		html = '<ul class="input-list">'
 		options.each do |o|
-			field_id = "#{model_name}_#{attribute_name}_#{o.id}"
+			field_id = "#{@object_name}_#{attribute_name}_#{o.id}"
 			checked = selected.include?(o.id) ? 'checked="checked"' : ''
 			html += "<li><input type='checkbox' id='#{field_id}' name='#{field_name}' value='#{o.id}' #{checked} />"
 			html += "<label for='#{field_id}'>#{o.name}</label></li>"
 		end
-		raw(html + '</ul>')
+		(html + '</ul>').html_safe
 	end
 end

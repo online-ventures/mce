@@ -24,7 +24,7 @@ MotorCarExport::Application.routes.draw do
   resources :users
 
   # Create these resources, and add custom restore option
-  [:titles, :pages, :warranties, :drivables, :body_types].each do |resource|
+  [:titles, :pages, :warranties, :drivables, :body_types, :disclosures].each do |resource|
     resources resource do
       put '/restore', on: :member, to: :restore, as: 'restore'
     end

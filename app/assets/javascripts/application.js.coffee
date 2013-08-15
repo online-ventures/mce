@@ -40,6 +40,10 @@ $(window).resize ->
 	if $floater.offset()['top'] >= $subnav.offset()['top'] + $subnav.outerHeight()
 		$subnav.css 'min-height', $subnav.outerHeight() + $floater.outerHeight() + 'px'
 
-
+$body = $('body')
+content_height = 0
+$body.children().not('script, .typekit-badge, #container').each ->
+	content_height += $(this).outerHeight()
+$('body > #container').css('min-height', $(window).height() - content_height)
 
 $(document).foundation()

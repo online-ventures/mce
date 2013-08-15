@@ -1,65 +1,71 @@
-.field{
-  margin: 0 0 1em 0;
-
-  label:not(.prefix, .postfix) {
-    display: inline-block;
-  }
-  input[type=checkbox]{
-    display: inline-block;
-  }
-  .button {
-    margin: 0;
-  }
-  textarea{
-    height: inherit;
-  }
-  .checkbox + label {
-      display: inline-block;
-  }
-}
 input[type=submit] {
-  &:not(.no-button) {
-    @extend .button;
-    text-shadow: 0 0 2px #222;
-  }
-  &.invisible {
-    opacity: 0;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top:0;
-    left:0;
-    border:0;
-  }
+	&:not(.no-button) {
+		@extend .button;
+	}
+	&.invisible {
+		opacity: 0;
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		border: 0;
+	}
 }
-form {
-  margin:0;
-  .field:last-child {
-    margin: 0;
-  }
 
-  &.custom {
-    input[type="text"], input[type="password"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="week"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="time"], input[type="url"], textarea {
-      font-size: 0.875em;
-    }
-    .custom.dropdown {
-      margin-bottom: 1em;
-    }
-  }
+form {
+	margin: 0;
+	.field:last-child {
+		margin: 0;
+	}
+
+	&.custom {
+		input[type="text"], input[type="password"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="week"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="time"], input[type="url"], textarea {
+			font-size: 0.875em;
+		}
+		.custom.dropdown {
+			margin-bottom: 1em;
+		}
+	}
+	.field {
+		margin: 0 0 1em 0;
+	}
+	label:not(.prefix, .postfix) {
+		display: inline-block;
+	}
+	input[type=checkbox] {
+		display: inline-block;
+	}
+	.button {
+		margin: 0;
+	}
+	textarea {
+		height: inherit;
+	}
+	.input-list {
+		list-style-type: none;
+	}
+	.checkbox {
+		margin-right: 0.5em;
+		+ label {
+			display: inline-block;
+		}
+	}
 }
+
 #error_explanation {
-  h2 {
-    font-size: 2em;
-    color: $alert-color;
-  }
+	h2 {
+		font-size: 2em;
+		color: $alert-color;
+	}
 }
 
 .button, .alert-box {
-  text-shadow: 0 0 2px #000;
-  &.secondary {
-    text-shadow: none;
-  }
-  &.no-margin {
-    margin:0 !important;
-  }
+
+	&.secondary {
+		text-shadow: none;
+	}
+	&.no-margin {
+		margin: 0 !important;
+	}
 }

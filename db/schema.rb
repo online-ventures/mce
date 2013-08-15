@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130815144949) do
+ActiveRecord::Schema.define(:version => 20130815204925) do
 
   create_table "body_types", :force => true do |t|
     t.string   "name"
@@ -205,6 +205,13 @@ ActiveRecord::Schema.define(:version => 20130815144949) do
   add_index "vehicles", ["title_id"], :name => "index_vehicles_on_title_id"
   add_index "vehicles", ["transmission_id"], :name => "index_vehicles_on_trans_id"
   add_index "vehicles", ["warranty_id"], :name => "index_vehicles_on_warranty_id"
+
+  create_table "vehicles_disclosures", :id => false, :force => true do |t|
+    t.integer "vehicle_id",    :null => false
+    t.integer "disclosure_id", :null => false
+  end
+
+  add_index "vehicles_disclosures", ["vehicle_id", "disclosure_id"], :name => "index_vehicles_disclosures_on_vehicle_id_and_disclosure_id"
 
   create_table "vehicles_features", :id => false, :force => true do |t|
     t.integer "vehicle_id"
