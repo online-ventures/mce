@@ -39,18 +39,18 @@ module ApplicationHelper
 	end
 
 	def index_title_helper
-		klass = eval(params[:controller].downcase.camelize.singularize)
+		klass = eval(params[:controller].classify)
 		raw "<h1>Listing #{'Deleted' if params[:deleted] and params[:deleted] == 'true'} #{klass.to_s.pluralize.capitalize}</h1>"
 	end
 
 	def new_record_button(klass)
-		link_to "New #{klass.to_s}", eval("new_#{klass.to_s.downcase}_path"), class: 'button'
+		link_to "New #{klass.to_s.humanize}", eval("new_#{klass.to_s.tableize.singularize}_path"), class: 'button'
 	end
 
 	def toggle_deleted_view_button(klass)
 		if klass.unscoped.where('deleted_at IS NOT NULL').count > 0
 			if params[:deleted] and params[:deleted] == 'true'
-				link_to "Show Active #{klass.to_s.pluralize}", eval("#{klass.to_s.downcase.pluralize}_path"), class: 'button right'
+				link_to "Show Active #{klass.to_s.pluralize}", eval("#{klass.to_s.tableize}_path"), class: 'button right'
 			else
 				link_to "Show Deactivated #{klass.to_s.pluralize}", '?deleted=true', class: 'button right'
 			end
@@ -58,7 +58,7 @@ module ApplicationHelper
 	end
 
 	def new_and_toggle_buttons
-		klass = eval(params[:controller].singularize.capitalize)
+		klass = eval(params[:controller].classify)
 		"<div class='row'>
       <div class='large-3 columns'>
         #{new_record_button(klass)}
@@ -71,7 +71,7 @@ module ApplicationHelper
 
 	def manage_buttons(record)
 		output = ''
-		output << link_to('Edit', eval("edit_#{record.class.to_s.downcase}_path(record)"), class: 'small secondary button')
+		output << link_to('Edit', eval("edit_#{record.class.to_s.tableize.singularize}_path(record)"), class: 'small secondary button')
 		if params[:deleted] and params[:deleted] == 'true'
 			output << link_to('Reactivate', eval("restore_#{record.class.to_s.downcase}_path(record)"), method: :put, class: 'small success button')
 		else
