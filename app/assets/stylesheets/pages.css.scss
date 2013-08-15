@@ -30,6 +30,9 @@
 		&:first-letter {
 			font-weight: bold;
 		}
+		&:hover {
+			cursor: pointer;
+		}
 	}
 	>dd {
 		&:first-letter {
