@@ -1,11 +1,5 @@
-<!doctype html>
-<html>
-<head>
-  <title><%= @vehicle %></title>
-  <link rel="icon" type="image/png" href="<%= image_path('favicon.ico') %>"/>
-  <%= stylesheet_link_tag 'vehicles/ebay' %>
-</head>
 <body class="ebay vehicle">
+	<link rel="stylesheet" href="<%= request.protocol + request.host %><%= asset_path('vehicles/ebay.css') %>">
 	<div class="container">
 	  <div class="featured">
 		<h1 class="name"><%= @vehicle %></h1>
