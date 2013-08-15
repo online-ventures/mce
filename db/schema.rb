@@ -11,12 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130814204602) do
+ActiveRecord::Schema.define(:version => 20130815144949) do
 
   create_table "body_types", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.text     "body"
+    t.datetime "deleted_at"
   end
 
   create_table "colors", :force => true do |t|

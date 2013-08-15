@@ -1,0 +1,19 @@
+<%= index_title_helper %>
+
+<%= new_and_toggle_buttons %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Body</th>
+    <th>Manage</th>
+  </tr>
+
+<% @body_types.each do |body_type| %>
+  <tr>
+    <td><%= link_to body_type.name, edit_body_type_path(body_type) %></td>
+    <td><%= truncate body_type.body, length: 100 %></td>
+    <td><%= manage_buttons(body_type) %></td>
+  </tr>
+<% end %>
+</table>

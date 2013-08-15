@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @body_type.name %>
+</p>
+
+<p>
+  <b>Body:</b>
+  <%= @body_type.body %>
+</p>
+
+
+<%= link_to 'Edit', edit_body_type_path(@body_type) %> |
+<%= link_to 'Back', body_types_path %>
