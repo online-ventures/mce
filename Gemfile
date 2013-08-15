@@ -29,7 +29,7 @@ gem 'aws-sdk'
 gem 'rubyzip'
 
 # Application Monitoring
-gem 'newrelic_rpm'
+#gem 'newrelic_rpm'
 
 # File permanence
 gem 'paranoia'

@@ -1,12 +1,14 @@
 class VehiclesController < ApplicationController
   require 'rdiscount'
-  before_filter :require_user, except: [:show, :inventory]
-  caches_page :inventory, layout: false
+  before_filter :require_user, except: [:show, :inventory, :index]
 
 
   # GET /vehicles
   # GET /vehicles.json
   def index
+  	if !current_user
+		render :inventory
+	end
     if params[:deleted] and params[:deleted] == 'true'
       @vehicles = Vehicle.unscoped.inactive.order('updated_at desc').all
     else
@@ -86,7 +88,6 @@ class VehiclesController < ApplicationController
     @vehicle = Vehicle.unscoped.find(params[:id])
     @vehicle.make = Make.find_or_initialize_by_name params[:make][:name] if params[:make]
     @vehicle.model = Model.find_or_initialize_by_name params[:model][:name] if params[:make]
-    Rails.cache.delete(@vehicle)
 
     params[:vehicle].each do |k,v|
       params[:vehicle][k] = true if v == 'true'
