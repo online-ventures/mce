@@ -68,18 +68,6 @@
 	    <%= raw RDiscount.new(@vehicle.description).to_html %>
 	  </div>
 
-	  <% if @vehicle.title.about %>
-	  <div class="title-box">
-	    <h3 class="title">About The Title</h3>
-	    <p><%= @vehicle.title.about %></p>
-	  </div>
-	  <% end %>
-
-	  <div class="title-box">
-	    <h3 class="title">Disclosure Agreement</h3>
-	    <p><%= @vehicle.warranty.about(@vehicle) %></p>
-	  </div>
-
 	  <div class="title-box">
 	    <h3 class="title">Photos</h3>
 	    <% @vehicle.photos.find_each do |photo| %>
