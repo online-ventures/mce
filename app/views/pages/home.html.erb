@@ -1,11 +1,11 @@
 <% content_for :title, 'Motor Car Export - Buy Used, Save Huge' %>
 <% content_for :featured, @page.featured %>
 
-<div class="row">
-  <div class="large-8 small-12 columns"><h1 class="text-right small-left" small-text="Buy Used,<br/> Save Huge">Buy Used, Save Huge</h1></div>
-  <div class="large-4 small-12 columns"><a href="<%= inventory_vehicles_path %>" class="large radius success button">Show Me Cars &raquo;</a></div>
-</div>
-
+<h2>
+Buy Used, Save Huge
+<br/>
+<small>Your source for late model, clean repairables, & used vehicles in mint condition.</small></h2>
+<br/>
 <% if current_user %>
 <%= link_to '« All Pages', pages_path, class: 'secondary button' %>
 <%= link_to 'Edit This Page', edit_page_path(@page), class: 'secondary button' %>

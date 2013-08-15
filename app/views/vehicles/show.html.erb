@@ -167,15 +167,14 @@
 			  <% end %>
 			</div>
 		  </div>
-	  <% end %>
+	<% end %>
+	<%= warranty_disclosure %>
 
-		<%= warranty_disclosure %>
+	<%= title_disclosure %>
 
-		<%= title_disclosure %>
+	<%= drivable_disclosure %>
 
-		<%= drivable_disclosure %>
-
-		<%= vehicle_type_disclosure %>
+	<%= vehicle_type_disclosure %>
 	</div>
 
 	<!--
@@ -184,13 +183,15 @@
   <%= form_for(Request.new, html: {class: 'custom'}) do |r| %>
 
 	  <div class="row">
-	    <%= r.hidden_field :vehicle_id, value: @vehicle.id %>
+		<%= r.hidden_field :vehicle_id, value: @vehicle.id %>
 		<%= r.fields_for(Subscriber.new) do |s| %>
-	    <div class="large-12 columns">
-	      <%= s.label :email, 'All we need is your email' %>
+		<div class="large-12 columns">
+		  <%= s.label :email, 'All we need is your email' %>
 			<%= s.text_field :email %>
-	    </div>
-	    <% end %>
+		</div>
+
+
+		<% end %>
 	  </div>
 
 	<%= r.submit 'Let\'s Go! »', class: 'expand round' %>

@@ -35,7 +35,6 @@ body,html{
 
 div.topbar {
   position: relative;
-  box-shadow: 0 0 2px #000;
   margin:0;
   z-index: 90;
   background: #276030;
@@ -45,9 +44,8 @@ div.topbar {
     line-height: 1em;
     color: white;
     margin: 0;
-    text-shadow: 1px 1px 3px #000;
     display: inline-block;
-    padding: 0.1em 0.25em;
+    padding: 0.5em 0.25em;
     &.right {
       float: right;
     }
@@ -61,10 +59,9 @@ div.topbar {
         margin: 0 auto;
         li {
           display: inline-block;
-          text-shadow: 1px 1px 1px #000;
           color: white;
-          padding: 0.3em 0;
-          font-weight: bold;
+          padding: 0.5em 0.3em;
+          font-size: 1.2em;
           a, .a {
             color: white;
             padding: 0.5em 1em;
@@ -103,11 +100,20 @@ div.topbar {
 article#content {
   padding: 15px;
 }
+
+.call-to-action {
+	text-align: center;
+	font-size: 1.2em;
+}
+
 footer {
-    font-size: 0.75em;
-    color: #222;
-    text-align: center;
+    color: #eee;
+    background: #2a2a2a;
     padding: 1em;
+
+    ul {
+    	list-style-type: none;
+    }
 }
 
 @media #{$screen} and (max-width: #{$small-screen}) {
@@ -119,6 +125,15 @@ footer {
   }
   .small-right {
     text-align: right !important;
+  }
+  div.topbar {
+  	h1 {
+  		padding: 0.1em 0;
+  		min-width: 49%;
+  		&.right {
+  			text-align: right;
+  		}
+  	}
   }
 }
 @media #{$small} {

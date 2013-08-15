@@ -1,66 +1,102 @@
 <!DOCTYPE html>
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
-<!--[if lt IE 7 ]> <html class="ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]>    <html class="ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]>    <html class="ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
+<!--[if lt IE 7 ]>
+<html class="ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>
+<html class="ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>
+<html class="ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en"> <!--<![endif]-->
 <head>
-    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge" />
-	<meta charset="utf-8" />
-	<!-- Set the viewport width to device width for mobile -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <% if content_for?(:canonical) %>
-	  <link rel="canonical" href="<%= request.protocol + request.host + yield(:canonical) %>" />
-    <% end %>
-	<title><%= content_for?(:title) ? yield(:title) : 'Motor Car Export' %></title>
-    <link rel="icon" type="image/png" href="<%= PROD ? 'http://motor-car-export.s3.amazonaws.com/favicon.ico' : image_path('favicon.ico') %>"/>
+  <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge"/>
+  <meta charset="utf-8"/>
+  <!-- Set the viewport width to device width for mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <% if content_for?(:canonical) %>
+	  <link rel="canonical" href="<%= request.protocol + request.host + yield(:canonical) %>"/>
+  <% end %>
+  <title><%= content_for?(:title) ? yield(:title) : 'Motor Car Export' %></title>
+  <link rel="icon" type="image/png" href="<%= PROD ? 'http://motor-car-export.s3.amazonaws.com/favicon.ico' : image_path('favicon.ico') %>"/>
   <!--[if lt IE 9]>
 	<%= javascript_include_tag "html5shiv" %>
   <![endif]-->
-	<%= stylesheet_link_tag    "application", media: 'all' %>
-    <%= javascript_include_tag "respond.min" %>
-	<%= javascript_include_tag "custom.modernizr.dev" if Rails.env == 'development' %>
-	<%= csrf_meta_tags %>
+  <%= stylesheet_link_tag "application", media: 'all' %>
+  <%= javascript_include_tag "respond.min" %>
+  <script type="text/javascript" src="//use.typekit.net/bce8gfj.js"></script>
+  <script type="text/javascript">try { Typekit.load(); } catch (e) {}</script>
+  <%= csrf_meta_tags %>
 </head>
 <body class="<%= "#{params[:action]} #{params[:controller]} #{params[:slug]}" %>">
-	<div class="topbar">
-		<a href="/"><h1>Motor Car Export</h1></a>
-		<h1 class="right" small-text="248.446.8289">Call: 248.446.8289</h1>
-	</div>
-	<div class="topbar subnav">
-		<nav>
-		  <ul>
-	        <li class="inventory"><%= link_to 'Vehicles', inventory_vehicles_path %></li>
-		    <li class=""><%= link_to 'About', '/about' %></li>
-	        <li class=""><%= link_to 'Buyer Info', '/buyer-info' %></li>
-	        <li class=""><%= link_to 'FAQ', '/faq' %></li>
-	        <li class=""><%= link_to 'Contact', '/contact' %></li>
-	        <% if current_user %>
-	            <li class="right"><span class="a">Hello, <%= current_user.login.titlecase %></span> &bull; <%= link_to 'Member\'s Area', '/members'%></li>
-		    <% else %>
-		        <li class="right"><%= link_to 'Log In', login_path %></li>
-		    <% end %>
-		  </ul>
-		</nav>
-	</div>
-	<% if content_for? :featured %>
-	  <div id="featured-box">
-	    <%= render 'vehicles/featured' %>
-	  </div>
+<div class="topbar">
+  <a href="/"><h1>Motor Car Export</h1></a>
+
+  <h1 class="right" small-text="248.446.8289">Call: 248.446.8289</h1>
+</div>
+<div class="topbar subnav">
+  <nav>
+	<ul>
+	  <% if current_user %>
+		  <li class="right">
+			<span class="a">Hello, <%= current_user.login.titlecase %></span> &bull; <%= link_to 'Member\'s Area', '/members' %>
+		  </li>
 	  <% end %>
-	<div id="container" class="row">
-	  <article id="content" class="large-12 columns <%= 'pushed-down' if content_for? :featured and Vehicle.where(featured: true).any?%>">
-        <%= content_tag :p, notice, class: 'alert-box radius', id: 'notice' if notice %>
-        <%= render partial: 'layouts/breadcrumbs' if current_user %>
-	    <%= yield %>
-	  </article>
-	  <div class="row">
-	      <footer id="container-footer" class="twelve columns">&copy; <%= Time.new.year %> Motor Car Export</footer>
-	    </div>
+	  <li class=""><%= link_to 'Vehicles', inventory_vehicles_path %></li>
+	  <li class=""><%= link_to 'About', '/about' %></li>
+	  <li class=""><%= link_to 'Buyer Info', '/buyer-info' %></li>
+	  <li class=""><%= link_to 'FAQ', '/faq' %></li>
+	  <li class=""><%= link_to 'Contact', '/contact' %></li>
+	  <% if !current_user %>
+		  <li class="right"><%= link_to 'Log In', login_path %></li>
+	  <% end %>
+	</ul>
+  </nav>
+</div>
+<% if content_for? :featured %>
+	<div id="featured-box">
+	  <%= render 'vehicles/featured' %>
 	</div>
+<% end %>
+<div id="container" class="row">
+  <article id="content" class="large-12 columns <%= 'pushed-down' if content_for? :featured and Vehicle.where(featured: true).any? %>">
+	<%= content_tag :p, notice, class: 'alert-box radius', id: 'notice' if notice %>
+	<%= render partial: 'layouts/breadcrumbs' if current_user %>
+	<%= yield %>
+  </article>
+</div>
+<% unless params[:controller] == 'vehicles' and params[:action] == 'inventory' %>
+<div class="row">
+	<p class="call-to-action"><span class="no-wrap">Interested in what we have to offer?</span> <span class="no-wrap">Click <a href="/vehicles/inventory">here</a> to see a full list of our inventory.</span></p>
+</div>
+<% end %>
+<footer id="container-footer" class="twelve columns">
+	<div class="row">
+		<div class="large-2 small-0 columns">&nbsp;</div>
+		<div class="large-2 small-4 columns">
+			<nav>
+				<ul>
+					<% {
+						'Vehicles' => '/vehicles/inventory',
+						'About' => '/about',
+						'Buyer Info' => '/buyer-info',
+						'FAQ' => '/faq',
+						'Contact' => '/contact'
+					}.each do |text,href| %>
+					<%= content_tag :li, link_to(text, href, class: 'no-wrap') %>
+					<% end %>
+				</ul>
+			</nav>
+		</div>
+		<div class="large-6 small-8 columns">
+		  	<p>&copy; <%= Time.new.year %> Motor Car Export</p>
+		  	<p>Powered by <a class="no-wrap" href="http://www.webonlineventures.com">Web Online Ventures, LLC</a></p>
+		</div>
+	  <div class="large-2 small-0 columns">&nbsp;</div>
+	</div>
+</footer>
 
-	<%= render partial: yield(:modal) if content_for? :modal %>
+<%= render partial: yield(:modal) if content_for? :modal %>
 
-	<%= javascript_include_tag "application" %>
+<%= javascript_include_tag "application" %>
 </body>
 </html>
