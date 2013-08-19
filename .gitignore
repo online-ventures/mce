@@ -24,3 +24,6 @@ public/uploads
 public/assets
 vendor/bundle
 latest.dump
+
+# Ignore vim
+*.swp
