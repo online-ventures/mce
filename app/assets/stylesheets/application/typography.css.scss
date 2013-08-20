@@ -115,9 +115,11 @@ article {
 h1,h2,h3,h4,h5,h6 {
   letter-spacing: -0.03em;
   font-weight: bold;
+  font-size: 2.375em;
   small {
   	font-family: $sans;
   	font-weight: bold;
+    font-size: .55em;
   }
 }
 h4,h5,h4 {

@@ -26,6 +26,7 @@
       height: 180px;
       background-size: cover;
       background-position: center;
+      border: 5px solid #ffffff;
     }
     .info {
       font-size: 120%;
@@ -34,14 +35,16 @@
 
       h2,h3,h4 {
         margin:0;
-        line-height: 1.15em;
+        line-height: 1.1em;
         font-family: 'source-sans-pro', 'helvetica neue', 'verdana', 'arial narrow', sans;
-        font-weight: regular;
+        font-weight: 400;
+        font-size: 2em;
       }
       h2, .price {
         color: darken(#276030, 5%);
         font-family: 'source-sans-pro', 'helvetica neue', 'verdana', 'arial narrow', sans;
         font-weight: bold;
+        font-size: 2.375em;
       }
       .price {
         margin: 0.3em 1em 0 0;
