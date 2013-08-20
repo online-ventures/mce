@@ -1,7 +1,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  title: MyString
+  name: Excellent
 
 two:
-  title: MyString
+  name: Above Average
+
+three:
+  name: Average
+
+four:
+  name: Below Average
+
+five:
+  name: Poor

@@ -1,7 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  name: MyString
+  name: Sedan
+  body: 'This bad jackson of an automobile has apprx. 4 doors.'
 
 two:
-  name: MyString
+  name: SUV
+  body: 'Sports utility vehicles are very large.' 

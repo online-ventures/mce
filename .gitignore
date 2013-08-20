@@ -7,11 +7,14 @@
 # Ignore schema.rb because git
 db/schema.rb
 
-# Ignore bundler config
+# Ignore bundler config, and the bundle
 /.bundle
+vendor/bundle
 
-# Ignore the default SQLite database.
+# Ignore database files.
 /db/*.sqlite3
+latest.dump
+db/*.db
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
@@ -19,11 +22,11 @@ db/schema.rb
 
 # Also ignore JetBrains garbage
 /.idea/*
+
+# Ignore extra, uploaded and compiled files
 /files
 public/uploads
 public/assets
-vendor/bundle
-latest.dump
 
 # Ignore vim
 *.swp

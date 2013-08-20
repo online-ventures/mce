@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  name: MyString
-  body: MyText
+  name: Intro 
+  body: 'We Sell Repairables AS IS...'
   deleted_at: 2013-08-14 15:00:48
 
 two:
-  name: MyString
-  body: MyText
+  name: Test Disclosure
+  body: 'This disclosure exists for the sole purpose of being tested...'
   deleted_at: 2013-08-14 15:00:48

@@ -1,10 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  login: MyString
-  email: MyString
-  crypted_password: MyString
-  password_salt: MyString
+nick:
+  login: nick 
+  email: nick@webonlineventures.com        
+  password: 'mce4evar!'
   persistence_token: MyString
   login_count: 1
   failed_login_count: 1
