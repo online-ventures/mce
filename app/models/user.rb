@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
 
   attr_accessible :crypted_password, :current_login_at, :current_login_ip, :email, :failed_login_count,
                   :last_login_at, :last_login_ip, :last_request_at, :login, :login_count, :password,
-                  :password_salt, :perishable_token, :persistence_token
+                  :password_salt, :perishable_token, :persistence_token, :username, :password
 
   scope :online, where("last_request_at > ?", 10.minutes.ago)
 end

@@ -1,22 +1,22 @@
 # Get Everything
 
 pages = [
-    {id: 1, name: 'Home', slug:'home', active: true, featured: true },
-    {id: 2, name: 'About Us', slug:'about', active: true, featured: false },
-    {id: 3, name: 'Buyer Information', slug:'buyer-info', active: true, featured: false },
-    {id: 4, name: 'Frequently Asked Questions', slug:'faq', active: true, featured: false },
-    {id: 5, name: 'Contact Us', slug:'contact', active: true, featured: false },
-    {id: 6, name: 'Disclosure - Intro', slug:'disclosure-intro', active: false, featured: false },
-    {id: 7, name: 'Disclosure - Conclusion', slug:'disclosure-conclusion', active: false, featured: false },
-    {id: 8, name: 'Disclosure - Repairable', slug:'disclosure-repairable', active: false, featured: false },
-    {id: 9, name: 'Disclosure - 30-Day Limited Warranty', slug:'disclosure-30-day-limited', active: false, featured: false },
-    {id: 10, name: 'Disclosure - Lot Drives', slug:'disclosure-lot-drives', active: false, featured: false },
-    {id: 11, name: 'Title - Clear', slug:'title-clear', active: false, featured: false },
-    {id: 12, name: 'Title - Salvage', slug:'title-salvage', active: false, featured: false },
-    {id: 13, name: 'Title - Rebuilt', slug:'title-rebuilt', active: false, featured: false },
-    {id: 14, name: 'Title - Reconstructed', slug:'title-reconstructed', active: false, featured: false },
-    {id: 15, name: 'Title - Bill Of Sale', slug:'title-bill-of-sale', active: false, featured: false },
-    {id: 16, name: 'Tell Us More About Yourself', slug:'tell-us-more', active: true, featured: false }
+    {id: 1, body: 'a', name: 'Home', slug:'home', active: true, featured: true },
+    {id: 2, body: 'a', name: 'About Us', slug:'about', active: true, featured: false },
+    {id: 3, body: 'a', name: 'Buyer Information', slug:'buyer-info', active: true, featured: false },
+    {id: 4, body: 'a', name: 'Frequently Asked Questions', slug:'faq', active: true, featured: false },
+    {id: 5, body: 'a', name: 'Contact Us', slug:'contact', active: true, featured: false },
+    {id: 6, body: 'a', name: 'Disclosure - Intro', slug:'disclosure-intro', active: false, featured: false },
+    {id: 7, body: 'a', name: 'Disclosure - Conclusion', slug:'disclosure-conclusion', active: false, featured: false },
+    {id: 8, body: 'a', name: 'Disclosure - Repairable', slug:'disclosure-repairable', active: false, featured: false },
+    {id: 9, body: 'a', name: 'Disclosure - 30-Day Limited Warranty', slug:'disclosure-30-day-limited', active: false, featured: false },
+    {id: 10,body: 'a',  name: 'Disclosure - Lot Drives', slug:'disclosure-lot-drives', active: false, featured: false },
+    {id: 11,body: 'a',  name: 'Title - Clear', slug:'title-clear', active: false, featured: false },
+    {id: 12,body: 'a',  name: 'Title - Salvage', slug:'title-salvage', active: false, featured: false },
+    {id: 13,body: 'a',  name: 'Title - Rebuilt', slug:'title-rebuilt', active: false, featured: false },
+    {id: 14,body: 'a',  name: 'Title - Reconstructed', slug:'title-reconstructed', active: false, featured: false },
+    {id: 15,body: 'a',  name: 'Title - Bill Of Sale', slug:'title-bill-of-sale', active: false, featured: false },
+    {id: 16,body: 'a',  name: 'Tell Us More About Yourself', slug:'tell-us-more', active: true, featured: false }
 ]
 makes = [
 		{name: 'Acura'},
@@ -251,7 +251,7 @@ engine_conditions = [
 
 suspensions = [
     { name: 'Intact' },
-    { name: 'Intact - Unknown Wheel Alignment'}
+    { name: 'Intact - Unknown Wheel Alignment'},
     { name: 'Damaged' }
 ]
 
@@ -267,58 +267,58 @@ body_types = [
 
 # Seed Everything
 pages.each do |page|
-  Page.find_or_create_by_name(page)
+  Page.find_or_create_by_name(page).save!
 end
 
 makes.each do |make|
-		Make.find_or_create_by_name(make)
+		Make.find_or_create_by_name(make).save!
 end
 
 titles.each do |title|
-		Title.find_or_create_by_name(title)
+		Title.find_or_create_by_name(title).save!
 end
 
 colors.each do |color|
-		Color.find_or_create_by_name(color)
+		Color.find_or_create_by_name(color).save!
 end
 
 Feature.unscoped.delete_all
 features.each do |feature|
-		Feature.find_or_create_by_name(feature)
+		Feature.find_or_create_by_name(feature).save!
 end
 
 warranties.each do |warranty|
-		Warranty.find_or_create_by_name(warranty)
+		Warranty.find_or_create_by_name(warranty).save!
 end
 
 transmissions.each do |transmission|
-    Transmission.find_or_create_by_name(transmission)
+    Transmission.find_or_create_by_name(transmission).save!
 end
 
 statuses.each do |status|
-    Status.find_or_create_by_name(status)
+    Status.find_or_create_by_name(status).save!
 end
 
 damages.each do |damage|
-    Damage.find_or_create_by_name(damage)
+    Damage.find_or_create_by_name(damage).save!
 end
 
 conditions.each do |condition|
-    Condition.find_or_create_by_name(condition)
+    Condition.find_or_create_by_name(condition).save!
 end
 
 drivables.each do |drivable|
-    Drivable.find_or_create_by_name(drivable)
+    Drivable.find_or_create_by_name(drivable).save!
 end
 
 engine_conditions.each do |engine_condition|
-    Engine.find_or_create_by_name(engine_condition)
+    Engine.find_or_create_by_name(engine_condition).save!
 end
 
 suspensions.each do |suspension|
-    Suspension.find_or_create_by_name(suspension)
+    Suspension.find_or_create_by_name(suspension).save!
 end
 
 body_types.each do |body_type|
-    BodyType.find_or_create_by_name(body_type)
+    BodyType.find_or_create_by_name(body_type).save!
 end

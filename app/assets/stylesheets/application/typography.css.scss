@@ -94,6 +94,10 @@ $classPrefix: "foundicon-";
 @include i-class(smiley,"02d");
 @include i-class(search,"02e");
 
+$sans: 'source-sans-pro', 'helvetica neue', 'verdana', 'arial narrow', sans;
+$serif: "museo-sans-condensed", "Helvetica Narrow", "Arial Narrow", Helvetica, Arial, sans-serif;
+
+
 article {
   color: #222;
 
@@ -104,7 +108,7 @@ article {
 
 .button {
 	text-transform: uppercase;
-	font-family: 'source-sans-pro', 'helvetica neue', 'verdana', 'arial narrow', sans;
+	font-family: $sans;
 	font-weight: bold;
 }
 
@@ -112,7 +116,7 @@ h1,h2,h3,h4,h5,h6 {
   letter-spacing: -0.03em;
   font-weight: bold;
   small {
-  	font-family: 'source-sans-pro', 'helvetica neue', 'verdana', 'arial narrow', sans;
+  	font-family: $sans;
   	font-weight: bold;
   }
 }

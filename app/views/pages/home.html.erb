@@ -1,5 +1,5 @@
 <% content_for :title, 'Motor Car Export - Buy Used, Save Huge' %>
-<% content_for :featured, @page.featured %>
+<% content_for :featured, true %>
 
 <h2>
 Buy Used, Save Huge
@@ -12,7 +12,7 @@ Buy Used, Save Huge
 <% end %>
 
 
-<% unless @page.body.blank? %>
+<% if !@page.nil? and !@page.body.blank? %>
 <% cache ["v1", @page] do %>
 	<%= raw RDiscount.new(@page.body).to_html %>
 <% end %>
