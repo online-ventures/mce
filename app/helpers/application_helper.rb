@@ -71,10 +71,10 @@ module ApplicationHelper
 
 	def manage_buttons(record)
 		output = ''
-		output << link_to('Edit', eval("edit_#{record.class.to_s.tableize.singularize}_path(record)"), class: 'small secondary button')
 		if params[:deleted] and params[:deleted] == 'true'
 			output << link_to('Reactivate', eval("restore_#{record.class.to_s.downcase}_path(record)"), method: :put, class: 'small success button')
 		else
+			output << link_to('Edit', eval("edit_#{record.class.to_s.tableize.singularize}_path(record)"), class: 'small secondary button')
 			output << link_to('Deactivate', record, method: :delete, data: {confirm: 'Are you sure?'}, class: 'small alert button')
 		end
 		raw output

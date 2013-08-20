@@ -4,19 +4,8 @@
 	<%
 	# Main Controller Block
 	%>
-    <% if params[:controller] == 'vehicles' %>
-        <li class="<%= 'current' if params[:action] == 'index' %>"><a href="/vehicles">Vehicles</a></li>
-    <% elsif params[:controller] == 'pages' %>
-        <li class="<%= 'current' if params[:action] == 'index' %>"><a href="/pages">Pages</a></li>
-    <% elsif params[:controller] == 'users' %>
-        <li class="<%= 'current' if params[:action] == 'index' %>"><a href="/users">Users</a></li>
-	<% elsif params[:controller] == 'subscribers' %>
-	    <li class="<%= 'current' if params[:action] == 'index' %>"><a href="/subscribers">Subscribers</a></li>
-    <% end %>
-
-    <% if params[:action] == 'manage' and params[:controller] == 'features' %>
-  	    <li class="current"><a href="/features">Features</a></li>
-    <% end %>
+    <% model = eval("@#{params[:controller].tableize.singularize}") %>
+	<li class="<%= 'current' if params[:action] == 'index' %>"><a href="/<%= params[:controller]%>"><%= '(Deactivated) ' if params[:deleted] and params[:deleted] == 'true'%><%= params[:controller].capitalize %></a></li>
 
 	<%
 	# Individual Sections Semantics
@@ -69,6 +58,15 @@
 		  <% if params[:action] == 'edit' %>
 			  <li class="current"><a href="<%= edit_subscriber_path(@subscriber) %>">Edit</a></li>
 		  <% end %>
+		<% end %>
+	<% else %>
+		<% model = eval("@#{params[:controller].tableize.singularize}") %>
+		<% if model.nil? # probably index? %>
+			
+		<% elsif model.new_record? %>
+			<li class="current"><a href="<%= eval("new_#{params[:controller].tableize.singularize}_path") %>">New</a></li>
+		<% else %>
+			<li class="current"><%= link_to model %></li>	
 		<% end %>
 	<% end %>
   <% end %>

@@ -36,7 +36,7 @@ class DrivablesController < ApplicationController
 
   # GET /drivables/1/edit
   def edit
-    @drivable = Drivable.find(params[:id])
+    @drivable = Drivable.unscoped.find(params[:id])
   end
 
   # POST /drivables
@@ -58,7 +58,7 @@ class DrivablesController < ApplicationController
   # PUT /drivables/1
   # PUT /drivables/1.json
   def update
-    @drivable = Drivable.find(params[:id])
+    @drivable = Drivable.unscoped.find(params[:id])
 
     respond_to do |format|
       if @drivable.update_attributes(params[:drivable])
