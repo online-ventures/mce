@@ -1,81 +1,95 @@
 body.ebay.vehicle {
-  margin:0;
-  * {
-    box-sizing: border-box;
-  }
-  h1,h2,h3,h4,h5,h6,th,td,p {
-    font-family: Helvetica, Arial, sans;
-  }
-  .container {
-  	width: 700px;
-  	margin: 0 auto;
-      padding: 1em;
-  	background: #f5f5f5;
-  	min-height: 300px;
-  }
-  .featured {
-    position: relative;
-    margin-bottom: 1em;
-    img {
-      width: 100%;
-      display: block;
-    }
-    h1 {
-      margin: 0.5em 0;
-      padding: 0.3em;
-      font-size: 2.5em;
-      line-height: 0.9em;
-      position: absolute;
-      width: 100%;
-      text-align: center;
-      background: rgba(255,255,255,0.7);
-      &.name {
-        top:0;
-      }
-      &.subtitle {
-        bottom:0;
-      }
-    }
-  }
+	margin: 0;
+	* {
+		box-sizing: border-box;
+	}
+	h1, h2, h3, h4, h5, h6, th, td, p {
+		font-family: Helvetica, Arial, sans;
+	}
+	.container {
+		width: 700px;
+		margin: 0 auto;
+		padding: 1em;
+		background: #f5f5f5;
+		min-height: 300px;
+	}
+	.logo {
+		margin-bottom: 1em;
+		img {
+			height: 50px;
+			display: inline-block;
+			vertical-align: middle;
+			margin-right: 1em;
+		}
+		h1 {
+			display: inline-block;
+			vertical-align: middle;
+			margin: 0;
+		}
+	}
+	.featured {
+		position: relative;
+		margin-bottom: 1em;
+		img {
+			width: 100%;
+			display: block;
+		}
+		h1 {
+			margin: 0.5em 0;
+			padding: 0.3em;
+			font-size: 2.5em;
+			line-height: 0.9em;
+			position: absolute;
+			width: 100%;
+			text-align: center;
+			background: rgba(255, 255, 255, 0.7);
+			&.name {
+				top: 0;
+			}
+			&.subtitle {
+				bottom: 0;
+			}
+		}
+	}
 
-  .title-box {
-    border: 2px solid #bbb;
-    margin-bottom: 1em;
-    h3.title {
-      font-size: 0.8em;
-      line-height: 1.2em;
-      padding: 0 1em;
-      margin:0;
-      background: #bbb;
-    }
-    h1,h2,h3,h4,h5,h6 {
-      padding: 1em;
-      margin: 0;
-    }
-    p {
-      padding: 1em;
-      margin: 0;
-      font-size: 0.9em;
-      line-height: 1.2em;
-    }
-    img {
-      display: block;
-      width: 100%;
-    }
-    table {
-      padding: 0.5em;
-      width: 100%;
-      font-size: 0.9em;
-      th {
-        text-align: right;
-        padding: 0.25em;
-        width: 25%;
-      }
-      td {
-        text-align: left;
-        padding: 0.25em;
-        width: 25%;
-      }
-    }
-  }
+	.title-box {
+		border: 2px solid #bbb;
+		margin-bottom: 1em;
+		h3.title {
+			font-size: 0.8em;
+			line-height: 1.2em;
+			padding: 0 1em;
+			margin: 0;
+			background: #bbb;
+		}
+		h1, h2, h3, h4, h5, h6 {
+			padding: 1em;
+			margin: 0;
+		}
+		p {
+			padding: 1em;
+			margin: 0;
+			font-size: 0.9em;
+			line-height: 1.2em;
+		}
+		img {
+			display: block;
+			width: 100%;
+		}
+		table {
+			padding: 0.5em;
+			width: 100%;
+			font-size: 0.9em;
+			th {
+				text-align: right;
+				padding: 0.25em;
+				width: 25%;
+			}
+			td {
+				text-align: left;
+				padding: 0.25em;
+				width: 25%;
+			}
+		}
+	}
 }
