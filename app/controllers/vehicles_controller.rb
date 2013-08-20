@@ -7,14 +7,13 @@ class VehiclesController < ApplicationController
   # GET /vehicles.json
   def index
   	if !current_user
-		render :inventory
-	end
+		  redirect_to inventory_vehicles_path and return
+	  end
     if params[:deleted] and params[:deleted] == 'true'
       @vehicles = Vehicle.unscoped.inactive.order('updated_at desc').all
     else
       @vehicles = Vehicle.unscoped.active.order('updated_at desc').all
     end
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @vehicles }

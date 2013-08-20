@@ -1,5 +1,5 @@
 <% content_for :title, @page.name + ' - Motor Car Export' %>
-<% content_for :featured, @page.featured %>
+<% content_for :featured, @page.featured || false %>
 
 <% cache [@page, "is-admin? #{!!current_user}"] do %>
   <% if current_user %>
