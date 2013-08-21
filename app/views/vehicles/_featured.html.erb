@@ -8,7 +8,7 @@
             <div class="row">
               <div class="picture large-3 columns" style="background-image: url(<%= vehicle.featured_url %>)"></div>
               <div class="info large-9 columns">
-                <h2><%= vehicle %><%= show_if "  <span class='small-0 no-wrap'>&mdash; $1</span>", price(vehicle) %></h2>
+                <h2 small-text="<%= vehicle %>"><%= vehicle %><%= show_if "  <span class='small-0 no-wrap'>&mdash; $1</span>", price(vehicle) %></h2>
                 <%= show_if '<h4>$1</h4>', vehicle.subtitle %>
                 <h4>Only <%= miles(vehicle) %> Miles!</h4>
                 <div class="links">
