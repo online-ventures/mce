@@ -3,11 +3,11 @@ class FeaturesController < ApplicationController
   # GET /features
   # GET /features.json
   def index
-    @feature = Feature.new
     if params[:vehicle_id]
       @vehicle = Vehicle.find(params[:vehicle_id])
       @vehicle_features = @vehicle.features
     end
+    @feature = Feature.new
     @features = Feature.all
     @all_features = Feature.unscoped.all
 
