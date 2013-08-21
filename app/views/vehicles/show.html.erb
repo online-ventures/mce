@@ -7,7 +7,7 @@
 	<% end %>
 <% end %>
 
-<% cache ["v4", @vehicle] do %>
+<% cache ["v6", @vehicle] do %>
 
 	<% unless @vehicle.photos.empty? %>
 		<div class="row photo-box">
@@ -28,9 +28,10 @@
 
 	  <h2 class="subtitle">
 		<%= price %>
-		<%= show_if " &mdash; ", '', !!(price && @vehicle.ebay) %>
-		<%= show_if "$1", link_to('Bid on eBay', @vehicle.ebay), @vehicle.ebay %>
-		<%= show_if " &mdash; $1", @vehicle.subtitle %>
+		<%= show_if " &mdash; ", '', !!(price && !@vehicle.ebay.blank?) %>
+		<%= show_if "$1", link_to('Bid on eBay', @vehicle.ebay), !@vehicle.ebay.blank? %>
+		<%= show_if " &mdash; ", '', !!(@vehicle.subtitle and (price or !@vehicle.ebay.blank?)) %>
+		<%= show_if "$1", @vehicle.subtitle %>
 		<%= show_if '<br>Inactive — Not Publicly Visible', @vehicle.deleted_at %>
 	  </h2>
 	</header>
