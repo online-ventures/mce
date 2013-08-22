@@ -33,8 +33,11 @@ $(window).resize ->
 		min_width += $(this).outerWidth()
 	if $this.outerWidth() < min_width
 		$topbar.css 'min-height', ($topbar.find('h1').outerHeight() * 2) + 'px'
+		$topbar.find('h1').removeClass('right').addClass('center')
 	else
 		$topbar.css 'min-height', $topbar.find('h1').outerHeight() + 'px'
+		$topbar.find('h1').removeClass('center')
+		$topbar.find('h1').last().addClass('right')
 
 	$floater = $subnav.find('.right')
 	if $floater.offset()['top'] >= $subnav.offset()['top'] + $subnav.outerHeight()

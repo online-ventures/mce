@@ -2,8 +2,9 @@
 // of the application, exept the sidenav because
 // it's slightly more complex.
 body{
-  background-size: 3px;
   box-sizing: border-box;
+  width: 100%;
+  overflow-x: hidden;
 }
 body,html{
   &.full{
@@ -127,10 +128,29 @@ footer {
   }
   div.topbar {
   	h1 {
-  		padding: 0.1em 0;
+  		padding: 0.2em;
   		min-width: 49%;
   		&.right {
   			text-align: right;
+  		}
+  		&.center {
+  			width: 100%;
+  			text-align: center;
+  		}
+  	}
+  	&.subnav {
+  		nav ul {
+  			li {
+  				padding: 0.2em 0.3em;
+  				a, .a {
+  					padding: 0.2em;
+  				}
+
+  				&.right {
+  					width: 100%;
+  					text-align: center;
+  				}
+  			}
   		}
   	}
   }
