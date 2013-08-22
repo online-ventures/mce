@@ -1,13 +1,10 @@
-<% cache ["v2", "partial", vehicle] do %>
+<% cache ["v3", "partial", vehicle] do %>
 <div class="vehicle large-12 columns <%= status(vehicle) %> <%= 'featured' if vehicle.featured? %>">
   <a href="<%= seo_vehicle_path(vehicle, name: vehicle.to_s('-'))%>" title="<%= vehicle %>">
   <div class="row">
+    <div class="image large-4 columns" style="background-image: url(<%= featured_image_url(vehicle) %>)">&nbsp;</div>
 
-    <% if vehicle.photos.any? %>
-      <div class="image large-4 columns" style="background-image: url(<%= vehicle.featured_url unless vehicle.photos.empty? %>)">&nbsp;</div>
-	<% end %>
-
-    <div class="large-8 <%= 'large-centered small-12' unless vehicle.photos.any? %> columns">
+    <div class="large-8 columns">
       <div class="row">
         <div class="large-12 small-centered columns">
           <h2><%= vehicle %></h2>

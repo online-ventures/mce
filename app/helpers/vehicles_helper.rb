@@ -77,4 +77,11 @@ module VehiclesHelper
 			end
 		end
 	end
+
+	def featured_image_url(vehicle=nil)
+		vehicle ||= @vehicle
+		url = vehicle.featured_url
+		url = asset_path('placeholder.jpg') unless url
+		url
+	end
 end

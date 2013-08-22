@@ -30,7 +30,7 @@
 		<%= price %>
 		<%= show_if " &mdash; ", '', !!(price && !@vehicle.ebay.blank?) %>
 		<%= show_if "$1", link_to('Bid on eBay', @vehicle.ebay), !@vehicle.ebay.blank? %>
-		<%= show_if " &mdash; ", '', !!(@vehicle.subtitle and (price or !@vehicle.ebay.blank?)) %>
+		<%= show_if " &mdash;2 ", '', !!(!@vehicle.subtitle.blank? and (price or !@vehicle.ebay.blank?)) %>
 		<%= show_if "$1", @vehicle.subtitle %>
 		<%= show_if '<br>Inactive — Not Publicly Visible', @vehicle.deleted_at %>
 	  </h2>

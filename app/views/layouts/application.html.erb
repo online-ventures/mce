@@ -41,11 +41,20 @@
 			<span class="a">Hello, <%= current_user.login.titlecase %></span> &bull; <%= link_to 'Member\'s Area', '/members' %>
 		  </li>
 	  <% end %>
-	  <li class=""><%= link_to 'Vehicles', inventory_vehicles_path %></li>
-	  <li class=""><%= link_to 'About', '/about' %></li>
-	  <li class=""><%= link_to 'Buyer Info', '/buyer-info' %></li>
-	  <li class=""><%= link_to 'FAQ', '/faq' %></li>
-	  <li class=""><%= link_to 'Contact', '/contact' %></li>
+	  <% params[:slug] ||= 'vehicles/inventory' %>
+	  <% cache ['v1', "subnav-on-page-/#{params[:slug]}"] do %>
+	  	<% {
+	  		'Vehicles' => inventory_vehicles_path,
+	  		'About' => '/about',
+	  		'Buyer Info' => '/buyer-info',
+	  		'FAQ' => '/faq',
+	  		'Contact' => '/contact'
+	  		}.each do |text, href| %>
+	  			<li <%= 'class=current' if href == "/#{params[:slug]}" %>>
+	  				<%= link_to(text, href) %></li>
+	  		<% end
+	  	%>
+	  <% end %>
 	  <% if !current_user %>
 		  <li class="right"><%= link_to 'Log In', login_path %></li>
 	  <% end %>

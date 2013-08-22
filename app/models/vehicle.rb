@@ -70,8 +70,11 @@ class Vehicle < ActiveRecord::Base
 	end
 
 	def featured_url(size = :original)
-		#                                           to_a orders by id DESC
-		featured_photo ? featured_photo.url(size) : photos.to_a.last.image.url(size) if photos.any?
+		if photos.any?
+			featured_photo ? featured_photo.url(size) : photos.to_a.last.image.url(size)
+		else
+			false
+		end
 	end
 
 	def restore

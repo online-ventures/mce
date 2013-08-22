@@ -1,12 +1,12 @@
 <% vehicle = Vehicle.random_featured.first %>
 
-<% cache ["v3", vehicle, "featured"] do %>
+<% cache ["v4", vehicle, "featured"] do %>
     <div id="featured-content">
       <div class="large-12 columns featured-column">
         <div class="row">
           <div class="car small-12 large-centered columns">
             <div class="row">
-              <div class="picture large-3 columns" style="background-image: url(<%= vehicle.featured_url %>)"></div>
+              <div class="picture large-3 columns" style="background-image: url(<%= featured_image_url(vehicle) %>)"></div>
               <div class="info large-9 columns">
                 <h2 small-text="<%= vehicle %>"><%= vehicle %><%= show_if "  <span class='small-0 no-wrap'>&mdash; $1</span>", price(vehicle) %></h2>
                 <%= show_if '<h4>$1</h4>', vehicle.subtitle %>
