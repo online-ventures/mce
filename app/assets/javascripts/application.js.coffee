@@ -38,11 +38,10 @@ $(window).resize ->
 		$topbar.css 'min-height', $topbar.find('h1').outerHeight() + 'px'
 		$topbar.find('h1').removeClass('center')
 		$topbar.find('h1').last().addClass('right')
-
-	$floater = $subnav.find('.right')
-	if $floater.length > 1 and $floater.offset()['top'] >= $subnav.offset()['top'] + $subnav.outerHeight()
-		$subnav.css 'min-height', $subnav.outerHeight() + $floater.outerHeight() + 'px'
-
+	if $subnav.outerHeight() >= $subnav.find('li').outerHeight() * 2
+		$subnav.find('li').map ->
+			if $(this).html().search(/about|buyer/) > 1
+				$(this).hide()
 $body = $('body')
 content_height = 0
 $body.children().not('script, .typekit-badge, #container').each ->

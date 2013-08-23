@@ -12,8 +12,12 @@
 //
 
 // This is the default html and body font-size for the base em value.
-// $em-base: 16px;
+$em-base: 16px;
 
+/* Working in ems is annoying. Think in pixels by using this handy function, emCalc(#) */
+@function emCalc($pxWidth) {
+  @return $pxWidth / $em-base * 1em;
+}
 // We use these to control various global styles
 // $body-bg: #fff;
 // $body-font-color: #222;
