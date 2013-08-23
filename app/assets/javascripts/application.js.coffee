@@ -40,7 +40,7 @@ $(window).resize ->
 		$topbar.find('h1').last().addClass('right')
 
 	$floater = $subnav.find('.right')
-	if $floater.offset()['top'] >= $subnav.offset()['top'] + $subnav.outerHeight()
+	if $floater.length > 1 and $floater.offset()['top'] >= $subnav.offset()['top'] + $subnav.outerHeight()
 		$subnav.css 'min-height', $subnav.outerHeight() + $floater.outerHeight() + 'px'
 
 $body = $('body')

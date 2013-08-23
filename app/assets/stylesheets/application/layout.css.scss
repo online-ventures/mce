@@ -11,26 +11,6 @@ body,html{
     height: 100%;
     overflow: hidden;
 
-    #gallery-modal {
-      background-size: 100% 100% !important;
-      background-repeat: no-repeat !important;
-      height: 100% !important;
-      width: 100%;
-      top: 0px !important;
-      left: 0px !important;
-      margin: 0px 0px 0px 0px !important;
-
-      .close-full-modal {
-        position: fixed;
-        top: 5px;
-        right: 5px;
-        z-index: 1000;
-      }
-      .nivo-nextNav, .nivo-prevNav {
-        z-index: 1000;
-        border-radius: 100px;
-      }
-    }
   }
 }
 
@@ -98,7 +78,6 @@ div.topbar {
 }
 
 article#content {
-  padding: 15px;
 }
 
 .call-to-action {

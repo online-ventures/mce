@@ -59,7 +59,7 @@ module VehiclesHelper
 		if vehicle.warranty and !vehicle.warranty.body.blank?
 			content_tag :div, class: klass do
 				"#{content_tag(:h3, 'About The Warranty', class: 'centered title')}
-				#{content_tag(:p, vehicle.warranty.body, class: 'panel list row')}".html_safe
+				#{content_tag(:p, vehicle.warranty.body.html_safe, class: 'panel list row')}".html_safe
 			end
 		end
 	end
@@ -70,7 +70,7 @@ module VehiclesHelper
 		if vehicle.title and !vehicle.title.body.blank?
 			content_tag :div, class: klass do
 				"#{content_tag(:h3, 'About The Title', class: 'centered title')}
-				#{content_tag(:p, vehicle.title.body, class: 'panel list row')}".html_safe
+				#{content_tag(:p, vehicle.title.body.html_safe, class: 'panel list row')}".html_safe
 			end
 		end
 	end
@@ -81,7 +81,7 @@ module VehiclesHelper
 		if vehicle.drivable and !vehicle.drivable.body.blank?
 			content_tag :div, class: klass do
 				"#{content_tag(:h3, 'About "'+vehicle.drivable.name+'"', class: 'centered title')}
-				#{content_tag(:p, vehicle.drivable.body, class: 'panel list row')}".html_safe
+				#{content_tag(:p, vehicle.drivable.body.html_safe, class: 'panel list row')}".html_safe
 			end
 		end
 	end
@@ -92,7 +92,7 @@ module VehiclesHelper
 		if vehicle.body_type and !vehicle.body_type.body.blank?
 			content_tag :div, class: klass do
 				"#{content_tag(:h3, 'About '+vehicle.body_type.name+'s', class: 'centered title')}
-				#{content_tag(:p, vehicle.title.body, class: 'panel list row')}".html_safe
+				#{content_tag(:p, vehicle.body_type.body.html_safe, class: 'panel list row')}".html_safe
 			end
 		end
 	end
