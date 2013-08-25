@@ -81,7 +81,7 @@ div.topbar {
 
 #container {
   background: #fff;
-  padding-bottom: 2em;
+  padding-bottom: 1.5em;
   position: relative;
 }
 
@@ -98,12 +98,18 @@ div.topbar {
 }
 
 article#content {
-  padding: 15px;
+  padding-top: 15px;
+  padding-bottom: 6px;
+  padding-right: 15px;
+  padding-left: 0px;
+
 }
 
 .call-to-action {
 	text-align: center;
 	font-size: 1.2em;
+  border-top: 1px dotted #bbb;
+  padding-top: 20px;
 }
 
 footer {

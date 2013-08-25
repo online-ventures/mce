@@ -21,6 +21,10 @@
     cursor: pointer;
     >.row{
       margin: 0;
+      padding-bottom: 5px;
+      padding-top: 5px;
+      padding-left: 5px;
+      padding-right: 5px;
     }
     .picture {
       height: 180px;
@@ -38,13 +42,15 @@
         line-height: 1.1em;
         font-family: 'source-sans-pro', 'helvetica neue', 'verdana', 'arial narrow', sans;
         font-weight: 400;
-        font-size: 2em;
+        font-size: 1.75em;
+        margin-bottom: 2px;
       }
       h2, .price {
         color: darken(#276030, 5%);
         font-family: 'source-sans-pro', 'helvetica neue', 'verdana', 'arial narrow', sans;
         font-weight: bold;
-        font-size: 2.375em;
+        font-size: 2.275em;
+        margin-top: 5px;
       }
       .price {
         margin: 0.3em 1em 0 0;
@@ -56,8 +62,12 @@
         bottom: 0;
         .button {
           margin: 0;
+          min-height: 42px;
+          min-width: 200px;
           &.more-info {
             @include button-style(#7aa3af);
+            min-width: 200px;
+            min-height: 42px;
           }
         }
       }
