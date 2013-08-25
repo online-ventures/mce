@@ -12,7 +12,7 @@
   <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge"/>
   <meta charset="utf-8"/>
   <!-- Set the viewport width to device width for mobile -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, user-scalable=no"/>
   <% if content_for?(:canonical) %>
 	  <link rel="canonical" href="<%= request.protocol + request.host + yield(:canonical) %>"/>
   <% end %>
@@ -31,7 +31,7 @@
 <div class="topbar">
   <a href="/"><h1>Motor Car Export</h1></a>
 
-  <h1 class="right" small-text="248.446.8289">Ph. 248.446.8289</h1>
+  <a href="tel:2484468289"><h1 class="right" small-text="248.446.8289">Ph. 248.446.8289</h1></a>
 </div>
 <div class="topbar subnav">
   <nav>
@@ -41,13 +41,19 @@
 			<span class="a">Hello, <%= current_user.login.titlecase %></span> &bull; <%= link_to 'Member\'s Area', '/members' %>
 		  </li>
 	  <% end %>
-	  <li class=""><%= link_to 'Vehicles', inventory_vehicles_path %></li>
-	  <li class=""><%= link_to 'About', '/about' %></li>
-	  <li class=""><%= link_to 'Buyer Info', '/buyer-info' %></li>
-	  <li class=""><%= link_to 'FAQ', '/faq' %></li>
-	  <li class=""><%= link_to 'Contact', '/contact' %></li>
-	  <% if !current_user %>
-		  <li class="right"><%= link_to 'Log In', login_path %></li>
+	  <% params[:slug] ||= 'vehicles/inventory' %>
+	  <% cache ['v1', "subnav-on-page-/#{params[:slug]}"] do %>
+	  	<% {
+	  		'Vehicles' => inventory_vehicles_path,
+	  		'About' => '/about',
+	  		'Buyer Info' => '/buyer-info',
+	  		'FAQ' => '/faq',
+	  		'Contact' => '/contact'
+	  		}.each do |text, href| %>
+	  			<li <%= 'class=current' if href == "/#{params[:slug]}" %>>
+	  				<%= link_to(text, href) %></li>
+	  		<% end
+	  	%>
 	  <% end %>
 	</ul>
   </nav>
@@ -84,6 +90,11 @@
 					}.each do |text,href| %>
 					<%= content_tag :li, link_to(text, href, class: 'no-wrap') %>
 					<% end %>
+				  <% if !current_user %>
+					  <li><%= link_to 'Log In', login_path, class: 'no-wrap' %></li>
+				  <% else %>
+					  <li><%= link_to 'Log Out', logout_path, class: 'no-wrap' %></li>
+				  <% end %>
 				</ul>
 			</nav>
 		</div>

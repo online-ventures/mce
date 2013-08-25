@@ -21,6 +21,12 @@
       padding: .5em;
     }
   }
+
+  &.members {
+  	.expand.button {
+  		margin-bottom: 0;
+  	}
+  }
 }
 .faq-list {
 	font-size: 120%;

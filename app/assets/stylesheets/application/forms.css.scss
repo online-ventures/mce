@@ -23,8 +23,33 @@ form {
 		input[type="text"], input[type="password"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="week"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="time"], input[type="url"], textarea {
 			font-size: 0.875em;
 		}
+		.custom.dropdown, input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="url"] {
+			height: 2.3125em;
+		}
 		.custom.dropdown {
 			margin-bottom: 1em;
+		}
+		span.custom.checkbox {
+			font-size: 16px;
+			padding: 0px;
+			margin: 0px;
+			margin-right: 0.5em;
+			top:0px;
+			&.checked {
+				&:before {
+					font-size: 16px;
+					top: 0px;
+					left: 3px;
+					margin: 0px;
+					padding: 0px;
+					position: absolute;
+					display: block;
+				}
+			}
+
+			+ label {
+				display: inline-block;
+			}
 		}
 	}
 	.field {
@@ -44,12 +69,7 @@ form {
 	}
 	.input-list {
 		list-style-type: none;
-	}
-	.checkbox {
-		margin-right: 0.5em;
-		+ label {
-			display: inline-block;
-		}
+		margin:0;
 	}
 }
 

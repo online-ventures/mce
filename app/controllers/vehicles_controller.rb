@@ -72,7 +72,7 @@ class VehiclesController < ApplicationController
       if @vehicle.valid? && @vehicle.make.valid? && @vehicle.model.valid?
         @vehicle.save
         @vehicle.model.update_attributes({make_id: @vehicle.make_id })
-        format.html { redirect_to @vehicle, notice: 'Vehicle was successfully created.' }
+        format.html { redirect_to vehicle_features_path(@vehicle), notice: 'Vehicle was successfully created.' }
         format.json { render json: @vehicle, status: :created, location: @vehicle }
       else
         format.html { render action: "new" }

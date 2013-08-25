@@ -7,30 +7,27 @@
 	<% end %>
 <% end %>
 
-<% cache ["v4", @vehicle] do %>
+<% cache ["v8", @vehicle] do %>
 
 	<% unless @vehicle.photos.empty? %>
-		<div class="row photo-box">
-		  <div class="large-8 columns photo" data-src="<%= @vehicle.featured_url %>" data-reveal-id="gallery-modal">
-		  </div>
-		  <div class="large-4 columns photos">
-			<% i = 0 %>
-			<% @vehicle.photos.order(:vehicles_photo_id).find_each do |photo| %>
-				<% i += 1 %>
-				<%= image_tag photo.image.url(:thumb), {alt: @vehicle.to_s, data: {src: photo.image.url(:original), 'reveal-id' => 'gallery-modal', id: photo.id, slide_id: i}} %>
+		<ul data-orbit data-options="timer_speed:2500; animation_speed:50; bullets: false;">
+			<% @vehicle.photos.order(:vehicle_photo_id).find_each do |photo| %>
+				<li>
+					<img src="<%= photo.image.url %>" />
+				</li>
 			<% end %>
-		  </div>
-		</div>
+		</ul>
 	<% end %>
 
 	<header>
 	  <h1><%= @vehicle.to_s %></h1>
 
 	  <h2 class="subtitle">
-		<%= price %>
-		<%= show_if " &mdash; ", '', !!(price && @vehicle.ebay) %>
-		<%= show_if "$1", link_to('Bid on eBay', @vehicle.ebay), @vehicle.ebay %>
-		<%= show_if " &mdash; $1", @vehicle.subtitle %>
+		<%= show_if '$1', price %>
+		<%= show_if " &mdash; ", '', !!(price && !@vehicle.ebay.blank?) %>
+		<%= show_if "$1", link_to('Bid on eBay', @vehicle.ebay), !@vehicle.ebay.blank? %>
+		<%= show_if " &mdash; ", '', !!(!@vehicle.subtitle.blank? and (price or !@vehicle.ebay.blank?)) %>
+		<%= show_if "$1", @vehicle.subtitle %>
 		<%= show_if '<br>Inactive — Not Publicly Visible', @vehicle.deleted_at %>
 	  </h2>
 	</header>
@@ -202,7 +199,6 @@
 </div>
 -->
 
-	<%= render partial: 'modals/vehicle_gallery' %>
 
 <% end %>
 

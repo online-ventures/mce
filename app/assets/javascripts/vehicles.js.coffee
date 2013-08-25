@@ -2,6 +2,15 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+$('.new.banner').each ->
+	$this = $(this)
+	expr = parseInt($this.attr('data-expires'))
+	time = Math.round (new Date()).getTime() / 1000
+	if time > expr
+		$this.hide()
+
 $('.vehicle').each ->
-  unless $(this).hasClass('new')
-    $('i.foundicon-smiley.new').hide(); # Hide the new status instead of rendering differently
+	$this = $(this)
+	href = $this.find('a.expand.radius.button').attr('href')
+	$this.click ->
+		window.location = href

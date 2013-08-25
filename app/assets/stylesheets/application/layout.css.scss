@@ -2,34 +2,15 @@
 // of the application, exept the sidenav because
 // it's slightly more complex.
 body{
-  background-size: 3px;
   box-sizing: border-box;
+  width: 100%;
+  overflow-x: hidden;
 }
 body,html{
   &.full{
     height: 100%;
     overflow: hidden;
 
-    #gallery-modal {
-      background-size: 100% 100% !important;
-      background-repeat: no-repeat !important;
-      height: 100% !important;
-      width: 100%;
-      top: 0px !important;
-      left: 0px !important;
-      margin: 0px 0px 0px 0px !important;
-
-      .close-full-modal {
-        position: fixed;
-        top: 5px;
-        right: 5px;
-        z-index: 1000;
-      }
-      .nivo-nextNav, .nivo-prevNav {
-        z-index: 1000;
-        border-radius: 100px;
-      }
-    }
   }
 }
 
@@ -67,8 +48,7 @@ div.topbar {
             padding: 0.5em 1em;
           }
 
-          &.inventory {
-            padding:0;
+          &.current {
             a {
               color: #fffd9c;
             }
@@ -134,10 +114,30 @@ footer {
   }
   div.topbar {
   	h1 {
-  		padding: 0.1em 0;
+  		padding: 0.2em;
   		min-width: 49%;
   		&.right {
   			text-align: right;
+  		}
+  		&.center {
+  			width: 100%;
+  			text-align: center;
+  		}
+  	}
+  	&.subnav {
+  		nav ul {
+			text-align: center;
+  			li {
+  				padding: 0.2em 0.3em;
+  				a, .a {
+  					padding: 0.2em;
+  				}
+
+  				&.right {
+  					width: 100%;
+  					text-align: center;
+  				}
+  			}
   		}
   	}
   }

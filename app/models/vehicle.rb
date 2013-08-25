@@ -28,7 +28,7 @@ class Vehicle < ActiveRecord::Base
 	has_many :requests
 	accepts_nested_attributes_for :photos
 	has_and_belongs_to_many :features, join_table: 'vehicles_features'
-	has_and_belongs_to_many :disclosures, join_table: 'vehicles_disclosures'
+	has_and_belongs_to_many :disclosures, join_table: 'vehicles_disclosures', before_add: :validates_unique_disclosure
 
 	after_create :ensure_it_has_the_intro_disclosure
 	after_save :update_associated_photos
@@ -70,8 +70,11 @@ class Vehicle < ActiveRecord::Base
 	end
 
 	def featured_url(size = :original)
-		#                                           to_a orders by id DESC
-		featured_photo ? featured_photo.url(size) : photos.to_a.last.image.url(size) if photos.any?
+		if photos.any?
+			featured_photo ? featured_photo.url(size) : photos.to_a.last.image.url(size)
+		else
+			false
+		end
 	end
 
 	def restore
@@ -85,7 +88,7 @@ class Vehicle < ActiveRecord::Base
 		the_intro_disclosure = Disclosure.find(1)
 
 		# Ensure it has the intro disclosure
-		self.disclosures << the_intro_disclosure
+		self.disclosures << the_intro_disclosure unless self.disclosures.include? the_intro_disclosure
 	end
 
 	def update_associated_photos
@@ -102,5 +105,10 @@ class Vehicle < ActiveRecord::Base
 				bucket.acl = :public_read
 			end
 		end
+	end
+
+	# http://stackoverflow.com/questions/4988630/habtm-uniqueness-constraint
+	def validates_unique_disclosure(disclosure)
+		raise ActiveRecord::Rollback if self.disclosures.include? disclosure
 	end
 end

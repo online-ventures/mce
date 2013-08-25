@@ -33,13 +33,15 @@ $(window).resize ->
 		min_width += $(this).outerWidth()
 	if $this.outerWidth() < min_width
 		$topbar.css 'min-height', ($topbar.find('h1').outerHeight() * 2) + 'px'
+		$topbar.find('h1').removeClass('right').addClass('center')
 	else
 		$topbar.css 'min-height', $topbar.find('h1').outerHeight() + 'px'
-
-	$floater = $subnav.find('.right')
-	if $floater.offset()['top'] >= $subnav.offset()['top'] + $subnav.outerHeight()
-		$subnav.css 'min-height', $subnav.outerHeight() + $floater.outerHeight() + 'px'
-
+		$topbar.find('h1').removeClass('center')
+		$topbar.find('h1').last().addClass('right')
+	if $subnav.outerHeight() >= $subnav.find('li').outerHeight() * 2
+		$subnav.find('li').map ->
+			if $(this).html().search(/about|buyer/) > 1
+				$(this).hide()
 $body = $('body')
 content_height = 0
 $body.children().not('script, .typekit-badge, #container').each ->
