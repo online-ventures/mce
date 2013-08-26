@@ -113,8 +113,8 @@ footer {
 		color: rgba(0,0,0,0);
 		display: inline-block;
 		vertical-align: top;
-		background-size: #{$canvas-height}px #{$canvas-width}px;
-		margin: 0.2em 0.5em;
+		background-size: #{$canvas-width}px #{$canvas-height}px;
+		margin: 0.4em 0.8em;
 	}
 	.ebay-motors {
 		height: #{$motors-height}px;
