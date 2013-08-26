@@ -43,17 +43,17 @@
 	  <% end %>
 	  <% params[:slug] ||= 'vehicles/inventory' %>
 	  <% cache ['v1', "subnav-on-page-/#{params[:slug]}"] do %>
-	  	<% {
-	  		'Vehicles' => inventory_vehicles_path,
-	  		'About' => '/about',
-	  		'Buyer Info' => '/buyer-info',
-	  		'FAQ' => '/faq',
-	  		'Contact' => '/contact'
-	  		}.each do |text, href| %>
-	  			<li <%= 'class=current' if href == "/#{params[:slug]}" %>>
-	  				<%= link_to(text, href) %></li>
-	  		<% end
-	  	%>
+		<% {
+			'Vehicles' => inventory_vehicles_path,
+			'About' => '/about',
+			'Buyer Info' => '/buyer-info',
+			'FAQ' => '/faq',
+			'Contact' => '/contact'
+			}.each do |text, href| %>
+				<li <%= 'class=current' if href == "/#{params[:slug]}" %>>
+					<%= link_to(text, href) %></li>
+			<% end
+		%>
 	  <% end %>
 	</ul>
   </nav>
@@ -77,7 +77,6 @@
 <% end %>
 <footer id="container-footer" class="twelve columns">
 	<div class="row">
-		<div class="large-2 small-0 columns">&nbsp;</div>
 		<div class="large-2 small-4 columns">
 			<nav>
 				<ul>
@@ -98,11 +97,15 @@
 				</ul>
 			</nav>
 		</div>
-		<div class="large-6 small-8 columns">
-		  	<p>&copy; <%= Time.new.year %> Motor Car Export</p>
-		  	<p>Powered by <a class="no-wrap" href="http://www.webonlineventures.com">Web Online Ventures, LLC</a></p>
+		<div class="large-5 small-8 columns">
+			<p>&copy; <%= Time.new.year %> Motor Car Export</p>
+			<p>Powered by <a class="no-wrap" href="http://www.webonlineventures.com">Web Online Ventures, LLC</a></p>
 		</div>
-	  <div class="large-2 small-0 columns">&nbsp;</div>
+		<div class="large-5 small-12 columns">
+			<a href="https://www.paypal.com/us/webapps/mpp/security/verification-faq" class="paypal-verified logo" target="_blank" title="Motor Car Export is Paypal Verified">Motor Car Export is Paypal Verified</a>
+<a href="http://myworld.ebay.com/motorcarexport/" class="ebay-power-seller logo" target="_blank" title="Motor Car Export is an Ebay Power Seller">Motor Car Export is an Ebay Power Seller</a>
+			<a href="http://www.ebay.com/sch/motorcarexport/m.html?_nkw=&_armrs=1&_from=&_ipg=50&_sop=1" class="ebay-motors logo" target="_blank" title="Motor Car Export on Ebay Motors">Motor Car Export on Ebay Motors</a>
+		</div>
 	</div>
 </footer>
 

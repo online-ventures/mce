@@ -78,11 +78,6 @@ div.topbar {
 }
 
 article#content {
-  padding-top: 15px;
-  padding-bottom: 6px;
-  padding-right: 15px;
-  padding-left: 0px;
-
 }
 
 .call-to-action {
@@ -100,6 +95,42 @@ footer {
     ul {
     	list-style-type: none;
     }
+	$sprite-scale-factor: 0.4;
+	@function calcSize($size) {
+		@return round($size * $sprite-scale-factor);
+	}
+	$canvas-height: calcSize(436);
+	$canvas-width: calcSize(300);
+	$motors-height: calcSize(146);
+	$motors-width: calcSize(243);
+	$seller-height: calcSize(137);
+	$seller-width: calcSize(300);
+	$paypal-height: calcSize(153);
+	$paypal-width: $paypal-height;
+	
+	.logo {
+		@include background(url(asset-path('ebay-paypal-sprite.png', image)));
+		color: rgba(0,0,0,0);
+		display: inline-block;
+		vertical-align: top;
+		background-size: #{$canvas-height}px #{$canvas-width}px;
+		margin: 0.2em 0.5em;
+	}
+	.ebay-motors {
+		height: #{$motors-height}px;
+		width: #{$motors-width}px;
+		background-position: 0 0;
+	}
+	.ebay-power-seller {
+		height: #{$seller-height}px;
+		width: #{$seller-width}px;
+		background-position: 0 -#{$motors-height}px;
+	}
+	.paypal-verified {
+		height: #{$paypal-height}px;
+		width: #{$paypal-width}px;
+		background-position: 0 -#{$motors-height + $seller-height}px;
+	}
 }
 
 @media #{$screen} and (max-width: #{$small-screen}) {
