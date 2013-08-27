@@ -27,7 +27,7 @@
   <script type="text/javascript">try { Typekit.load(); } catch (e) {}</script>
   <%= csrf_meta_tags %>
 </head>
-<body class="<%= "#{params[:action]} #{params[:controller]} #{params[:slug]}" %>">
+<body> 
 <div class="topbar">
   <a href="/"><h1><%= image_tag('mce-logo-white.png') %>Motor Car Export</h1></a>
 
@@ -64,7 +64,7 @@
 	</div>
 <% end %>
 <div id="container" class="row">
-  <article id="content" class="large-12 columns <%= 'pushed-down' if content_for? :featured and Vehicle.where(featured: true).any? %>">
+  <article id="content" class="large-12 columns <%= 'pushed-down' if content_for? :featured and Vehicle.where(featured: true).any? %> <%= "#{params[:action]} #{params[:controller]} #{params[:slug]}" %>">
 	<%= content_tag :p, notice, class: 'alert-box radius', id: 'notice' if notice %>
 	<%= render partial: 'layouts/breadcrumbs' if current_user %>
 	<%= yield %>
