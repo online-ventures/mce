@@ -30,6 +30,10 @@ div.topbar {
     &.right {
       float: right;
     }
+	img {
+		height: 1em;
+		margin-right: 0.5em;
+	}
   }
   &.subnav {
     background: lighten(#276030, 10%);
@@ -117,21 +121,6 @@ footer {
 		vertical-align: top;
 		background-size: #{$canvas-width}px #{$canvas-height}px;
 		margin: 0.4em 0.8em;
-	}
-	.ebay-motors {
-		height: #{$motors-height}px;
-		width: #{$motors-width}px;
-		background-position: 0 0;
-	}
-	.ebay-power-seller {
-		height: #{$seller-height}px;
-		width: #{$seller-width}px;
-		background-position: 0 -#{$motors-height}px;
-	}
-	.paypal-verified {
-		height: #{$paypal-height}px;
-		width: #{$paypal-width}px;
-		background-position: 0 -#{$motors-height + $seller-height}px;
 	}
 }
 

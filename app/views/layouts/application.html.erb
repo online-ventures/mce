@@ -29,7 +29,7 @@
 </head>
 <body class="<%= "#{params[:action]} #{params[:controller]} #{params[:slug]}" %>">
 <div class="topbar">
-  <a href="/"><h1>Motor Car Export</h1></a>
+  <a href="/"><h1><%= image_tag('mce-logo-white.png') %>Motor Car Export</h1></a>
 
   <a href="tel:2484468289"><h1 class="right" small-text="248.446.8289">Ph. 248.446.8289</h1></a>
 </div>
@@ -77,6 +77,7 @@
 <% end %>
 <footer id="container-footer" class="twelve columns">
 	<div class="row">
+		<div class="large-2 small-0 columns">&nbsp;</div>
 		<div class="large-2 small-4 columns">
 			<nav>
 				<ul>
@@ -86,26 +87,22 @@
 						'Buyer Info' => '/buyer-info',
 						'FAQ' => '/faq',
 						'Contact' => '/contact'
-					}.each do |text,href| %>
-					<%= content_tag :li, link_to(text, href, class: 'no-wrap') %>
+						}.each do |text,href| %>
+							<%= content_tag :li, link_to(text, href, class: 'no-wrap') %>
 					<% end %>
-				  <% if !current_user %>
-					  <li><%= link_to 'Log In', login_path, class: 'no-wrap' %></li>
-				  <% else %>
-					  <li><%= link_to 'Log Out', logout_path, class: 'no-wrap' %></li>
-				  <% end %>
+					<% if !current_user %>
+						<li><%= link_to 'Log In', login_path, class: 'no-wrap' %></li>
+					<% else %>
+						<li><%= link_to 'Log Out', logout_path, class: 'no-wrap' %></li>
+					<% end %>
 				</ul>
 			</nav>
 		</div>
-		<div class="large-5 small-8 columns">
-			<p>&copy; <%= Time.new.year %> Motor Car Export</p>
+		<div class="large-6 small-8 columns">
+			<%= Time.new.year %> Motor Car Export</p>
 			<p>Powered by <a class="no-wrap" href="http://www.webonlineventures.com">Web Online Ventures, LLC</a></p>
 		</div>
-		<div class="large-5 small-12 columns">
-			<a href="https://www.paypal.com/us/webapps/mpp/security/verification-faq" class="paypal-verified logo" target="_blank" title="Motor Car Export is Paypal Verified">Motor Car Export is Paypal Verified</a>
-<a href="http://myworld.ebay.com/motorcarexport/" class="ebay-power-seller logo" target="_blank" title="Motor Car Export is an Ebay Power Seller">Motor Car Export is an Ebay Power Seller</a>
-			<a href="http://www.ebay.com/sch/motorcarexport/m.html?_nkw=&_armrs=1&_from=&_ipg=50&_sop=1" class="ebay-motors logo" target="_blank" title="Motor Car Export on Ebay Motors">Motor Car Export on Ebay Motors</a>
-		</div>
+		<div class="large-2 small-0 columns">&nbsp;</div>
 	</div>
 </footer>
 

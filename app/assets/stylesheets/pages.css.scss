@@ -4,6 +4,10 @@
 
 .show.pages {
   h1 {
+  	font-size: 2.375em;
+	small {
+		font-size: 0.55em;
+	}
   }
 
   img.content {
@@ -32,8 +36,11 @@
 		}
 	}
 	>dd {
-		&:first-letter {
-			font-weight: bold;
+		p {
+			margin-bottom: 0;
+			&:first-letter {
+				font-weight: bold;
+			}
 		}
 		padding: 0.5em 1.5em;
 		color: #444;
@@ -51,10 +58,7 @@
 @media #{$screen} and (max-width: #{$small-screen}) {
   .show.pages {
     img.content {
-      &.half{
-        width: 100%;
-        padding: 0;
-      }
-    }
+    	width: 100%;
+	}
   }
 }
