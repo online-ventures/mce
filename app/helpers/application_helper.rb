@@ -30,7 +30,7 @@ module ApplicationHelper
 			# if we pass a block, give that instead
 			if block_given?
 				yield block
-			else
+			elsif template.match /\$1/
 				raw template.gsub('$1', variable)
 			end
 		else

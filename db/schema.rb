@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130823152828) do
+ActiveRecord::Schema.define(:version => 20130906202406) do
 
   create_table "body_types", :force => true do |t|
     t.string   "name"
@@ -152,6 +152,7 @@ ActiveRecord::Schema.define(:version => 20130823152828) do
     t.string   "last_login_ip"
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
+    t.datetime "deleted_at"
   end
 
   create_table "vehicles", :force => true do |t|

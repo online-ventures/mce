@@ -3,10 +3,10 @@ class Vehicle < ActiveRecord::Base
 	acts_as_paranoid
 	scope :active, where(deleted_at: nil)
 	scope :inactive, where('deleted_at IS NOT NULL')
-	scope :random_featured, order('featured DESC').order('RANDOM()').limit(1)
+	scope :random_featured, where(sold: false).order('featured DESC').order('RANDOM()').limit(1)
 
 	attr_accessible :burns, :body_type, :description, :ebay, :engine_type, :miles, :price, :photos, :stains, :stock_number, :subtitle, :tears, :vin, :year,
-					:make_id, :make, :model, :model_id, :warranty_id, :title_id, :engine_id, :transmission_id, :ext_color_id, :int_color_id, :status_id,
+					:make_id, :make, :model, :model_id, :warranty_id, :title_id, :engine_id, :transmission_id, :ext_color_id, :int_color_id, :status_id, :deleted_at,
 					:damage_id, :exterior_id, :interior_id, :drivable_id, :suspension_id, :featured_id, :featured, :sold, :body_type_id, :disclosures, :disclosure_ids
 
 	belongs_to :make
@@ -75,6 +75,12 @@ class Vehicle < ActiveRecord::Base
 		else
 			false
 		end
+	end
+
+	def destroy
+		self.updated_at = Time.now
+		save!
+		super
 	end
 
 	def restore
