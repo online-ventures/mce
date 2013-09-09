@@ -22,6 +22,7 @@ MotorCarExport::Application.routes.draw do
 
   resources :requests
   resources :users
+  resources :user_sessions
 
   # Create these resources, and add custom restore option
   [:titles, :pages, :warranties, :drivables, :body_types, :disclosures].each do |resource|
@@ -38,8 +39,7 @@ MotorCarExport::Application.routes.draw do
   #resources :warranties do
   #  put '/restore', on: :member, to: :restore, as: 'restore'
   #end
-
-  resources :user_sessions
+	get '/favicon.ico', to: redirect('http://motor-car-export.s3.amazonaws.com/favicon.ico')
   get '/login', to: 'user_sessions#new'
   post '/login', to: 'user_sessions#create'
   get '/logout', to: 'user_sessions#destroy'
