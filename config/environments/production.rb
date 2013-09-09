@@ -60,7 +60,7 @@ MotorCarExport::Application.configure do
   config.i18n.fallbacks = true
 
   # Silence Deprecation Notices by Heroku (Not A Real Problem)
-  config.active_support.deprecation = :silence
+  #config.active_support.deprecation = :silence
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
