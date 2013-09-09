@@ -17,7 +17,7 @@
 	  <link rel="canonical" href="<%= request.protocol + request.host + yield(:canonical) %>"/>
   <% end %>
   <title><%= content_for?(:title) ? yield(:title) : 'Motor Car Export' %></title>
-  <link rel="icon" type="image/png" href="<%= PROD ? 'http://motor-car-export.s3.amazonaws.com/favicon.ico' : image_path('favicon.ico') %>"/>
+  <link rel="icon" type="image/png" href="<%= Rails.env == 'production' ? 'http://motor-car-export.s3.amazonaws.com/favicon.ico' : image_path('favicon.ico') %>"/>
   <!--[if lt IE 9]>
 	<%= javascript_include_tag "html5shiv" %>
   <![endif]-->

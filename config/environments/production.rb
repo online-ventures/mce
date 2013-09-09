@@ -76,12 +76,12 @@ MotorCarExport::Application.configure do
     }
   }
 
-  ActionController::Base.asset_host = Proc.new { |source|
-    if source.starts_with?('/images')
-      'http://images.motorcarexport.com'
-    else
-      'http://assets.motorcarexport.com'
-    end
-  }
+  #ActionController::Base.asset_host = Proc.new { |source|
+  #	if source.starts_with?('/images')
+  #		'http://images.motorcarexport.com'
+  # else
+  #   	'http://assets.motorcarexport.com'
+  # end
+  #}
 
 end
