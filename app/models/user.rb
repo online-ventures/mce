@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
  	acts_as_paranoid 
 	acts_as_authentic do |config|
 		config.require_password_confirmation = false
+		config.validates_uniqueness_of_login_field_options[:case_sensitive] = true
 	end
 
 	attr_accessible :crypted_password, :current_login_at, :current_login_ip, :email, :failed_login_count,
