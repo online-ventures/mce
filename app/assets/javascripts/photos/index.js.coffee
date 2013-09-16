@@ -1,4 +1,4 @@
-if $('body').hasClass('index','photos')
+if $('article#content').hasClass('index','photos')
 	$form = $('#new_photo')
 	$text = $form.find('span#upload-text')
 	$file = $('#photo_image')
