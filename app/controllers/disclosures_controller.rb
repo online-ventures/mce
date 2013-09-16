@@ -3,7 +3,7 @@ class DisclosuresController < ApplicationController
   # GET /disclosures
   # GET /disclosures.json
   def index
-    @disclosures = Disclosure.all
+    @disclosures = Disclosure.order(:id).all
 
     respond_to do |format|
       format.html # index.html.erb
