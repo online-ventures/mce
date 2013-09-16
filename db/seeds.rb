@@ -6,17 +6,7 @@ pages = [
     {id: 3, body: 'a', name: 'Buyer Information', slug:'buyer-info', active: true, featured: false },
     {id: 4, body: 'a', name: 'Frequently Asked Questions', slug:'faq', active: true, featured: false },
     {id: 5, body: 'a', name: 'Contact Us', slug:'contact', active: true, featured: false },
-    {id: 6, body: 'a', name: 'Disclosure - Intro', slug:'disclosure-intro', active: false, featured: false },
-    {id: 7, body: 'a', name: 'Disclosure - Conclusion', slug:'disclosure-conclusion', active: false, featured: false },
-    {id: 8, body: 'a', name: 'Disclosure - Repairable', slug:'disclosure-repairable', active: false, featured: false },
-    {id: 9, body: 'a', name: 'Disclosure - 30-Day Limited Warranty', slug:'disclosure-30-day-limited', active: false, featured: false },
-    {id: 10,body: 'a',  name: 'Disclosure - Lot Drives', slug:'disclosure-lot-drives', active: false, featured: false },
-    {id: 11,body: 'a',  name: 'Title - Clear', slug:'title-clear', active: false, featured: false },
-    {id: 12,body: 'a',  name: 'Title - Salvage', slug:'title-salvage', active: false, featured: false },
-    {id: 13,body: 'a',  name: 'Title - Rebuilt', slug:'title-rebuilt', active: false, featured: false },
-    {id: 14,body: 'a',  name: 'Title - Reconstructed', slug:'title-reconstructed', active: false, featured: false },
-    {id: 15,body: 'a',  name: 'Title - Bill Of Sale', slug:'title-bill-of-sale', active: false, featured: false },
-    {id: 16,body: 'a',  name: 'Tell Us More About Yourself', slug:'tell-us-more', active: true, featured: false }
+    {id: 6,body: 'a',  name: 'Tell Us More About Yourself', slug:'tell-us-more', active: true, featured: false }
 ]
 makes = [
 		{name: 'Acura'},

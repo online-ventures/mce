@@ -159,7 +159,6 @@
 	  	</div>
 	</div>
 	<ul class="button-group actions">
-	  	<li><%= f.submit %></li>
 	  	<% if current_user and !@vehicle.new_record? %>
 			  <%= render 'vehicles/nav', f: f %>
 	  	<% end %>

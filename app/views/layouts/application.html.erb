@@ -42,7 +42,7 @@
 		  </li>
 	  <% end %>
 	  <% params[:slug] ||= 'vehicles/inventory' %>
-	  <% cache ['v1', "subnav-on-page-/#{params[:slug]}"] do %>
+	  <% cache ['v1', "subnav-on-page/#{params[:slug]}"] do %>
 		<% {
 			'Vehicles' => inventory_vehicles_path,
 			'About' => '/about',

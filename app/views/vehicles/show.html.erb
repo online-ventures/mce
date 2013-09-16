@@ -7,7 +7,7 @@
 	<% end %>
 <% end %>
 
-<% cache ["v8", @vehicle] do %>
+<% cache ["v9", @vehicle] do %>
 
 	<% unless @vehicle.photos.empty? %>
 		<ul data-orbit data-options="timer_speed:2500; animation_speed:50; bullets: false;">
@@ -166,6 +166,9 @@
 		  </div>
 	<% end %>
 
+<% end # end of cache block %>
+	
+	
 	<%= all_the_disclosures! %>
 
 	<%= warranty_disclosure %>
@@ -200,6 +203,5 @@
 -->
 
 
-<% end %>
 
 <p class="small gray"><i class="foundicon-clock"></i> Updated <%= time_ago_in_words(@vehicle.updated_at) %> ago.</p>
