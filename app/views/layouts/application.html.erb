@@ -27,7 +27,7 @@
   <script type="text/javascript">try { Typekit.load(); } catch (e) {}</script>
   <%= csrf_meta_tags %>
 </head>
-<body> 
+<body class="<%= "#{params[:controller]} #{params[:action]}" %>"> 
 <div class="topbar">
   <a href="/"><h1><%= image_tag('mce-logo-white.png') %>Motor Car Export</h1></a>
 

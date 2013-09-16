@@ -30,12 +30,11 @@
 <% end %>
 <div class="existing-photos row">
 	<% @photos.each do |photo| %>
-	  <% cache ['v1',photo,"featured-#{photo.featured?}"] do %>
+	  <% cache ['v2',photo,"featured-#{photo.featured?}"] do %>
 	  <div class="photo large-3 columns <%= 'featured' if photo.featured? %>" data-id="<%= photo.id %>">
-	    <%= link_to image_tag(photo.image.url(:thumb)), '#', data: {
+	    <%= link_to image_tag(photo.image.url), '#', data: {
 			    'active' => photo.deleted_at == nil,
 			    'reveal-id' => 'view-image-modal',
-			    'big-url' => photo.image.url(),
 	            'path' => vehicle_photo_path(vehicle_id: @vehicle.id, id: photo.id)
 	    }, class: "#{'featured' if photo.featured? }" %>
       </div>
