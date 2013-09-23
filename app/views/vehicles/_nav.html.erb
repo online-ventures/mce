@@ -1,4 +1,4 @@
-<%= content_tag :li, f.submit if params[:action] == 'edit' %>
+<%= content_tag :li, f.submit %>
 <%= content_tag :li, link_to('Edit Vehicle', edit_vehicle_path(@vehicle), class: 'secondary button') unless params[:action] == 'edit' %>
 <%= content_tag :li, link_to('Edit Photos', vehicle_photos_path(@vehicle), class: 'secondary button') unless params[:controller] == 'photos' %>
 <%= content_tag :li, link_to('Edit Features', vehicle_features_path(@vehicle), class: 'secondary button') unless params[:controller] == 'features' %>
