@@ -159,7 +159,10 @@
 	  	</div>
 	</div>
 	<ul class="button-group actions">
-	  	<% if current_user  %>
+			<% if @vehicle.new_record? %>
+				<li><%= f.submit %></li>
+			<% end %>
+	  	<% if current_user and !@vehicle.new_record? %>
 			  <%= render 'vehicles/nav', f: f %>
 	  	<% end %>
 	</ul>
