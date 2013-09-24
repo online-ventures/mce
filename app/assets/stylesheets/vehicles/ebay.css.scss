@@ -30,6 +30,7 @@ body.ebay.vehicle {
 			vertical-align: middle;
 			margin: 0;
 			color: #FFF;
+			font-style: italic;
 		}
 	}
 	.featured {
@@ -48,6 +49,8 @@ body.ebay.vehicle {
 			width: 100%;
 			text-align: center;
 			background: rgba(255, 255, 255, 0.5);
+			font-style: italic;
+
 			&.name {
 				top: 0;
 			}
