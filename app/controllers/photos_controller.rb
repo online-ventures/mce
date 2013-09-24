@@ -28,13 +28,15 @@ class PhotosController < ApplicationController
   def create
     @start_time = Time.now
     @vehicle = Vehicle.find(params[:vehicle_id])
+	unless @vehicle.nil?
 		@photo = @vehicle.photos.new(params[:photo])
 		if @photo.valid?
 			@photo.save
 			redirect_to vehicle_photos_path(@vehicle), notice: 'Successfully uploaded'
 		else
 			render action: :index
-    end
+    	end
+  	end
   end
 
   def destroy
