@@ -41,6 +41,10 @@ class Vehicle < ActiveRecord::Base
 		created_at > 5.days.ago
 	end
 
+	def photos
+		super.order("id = '#{featured_id || 0}' DESC")
+	end
+
 	def toggle_feature(feature)
 		if feature.in? features
 			features.delete(feature)

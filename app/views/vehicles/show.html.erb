@@ -11,7 +11,7 @@
 
 	<% unless @vehicle.photos.empty? %>
 		<ul data-orbit data-options="timer_speed:2500; animation_speed:50; bullets: false;">
-			<% @vehicle.photos.order(:vehicle_photo_id).find_each do |photo| %>
+			<% @vehicle.photos.each do |photo| %>
 				<li>
 					<img src="<%= photo.image.url %>" />
 				</li>
