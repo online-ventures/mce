@@ -1,8 +1,12 @@
-<html>
-<head></head>
 <body class="ebay vehicle">
 <link rel="stylesheet" href="<%= request.protocol + request.host %><%= asset_path('vehicles/ebay.css') %>">
 <div class="container">
+	<% nested ||= false %>
+	<% unless nested %> 
+	<textarea class="page-source" onClick="this.focus(); this.select();">
+<%= render file: 'vehicles/show.ebay',  locals: {nested: true } %>
+	</textarea>
+	<% end %>
 	<div class="logo">
 		<img src="<%= request.protocol + request.host %><%= asset_path 'mce-logo-white.png' %>" alt="Motor Car Export" />
 		<h1>Motor Car Export</h1>
@@ -86,4 +90,3 @@
 	</div>
 </div>
 </body>
-</html>
