@@ -4,13 +4,15 @@
 <link rel="stylesheet" href="<%= request.protocol + request.host %><%= asset_path('vehicles/ebay.css') %>">
 <div class="container">
 	<div class="logo">
-		<img src="http://motor-car-export.s3.amazonaws.com/logo.png" alt="Motor Car Export" />
+		<img src="<%= request.protocol + request.host %><%= asset_path 'mce-logo-white.png' %>" alt="Motor Car Export" />
 		<h1>Motor Car Export</h1>
 	</div>
 	<div class="featured">
 		<h1 class="name"><%= @vehicle %></h1>
 		<img src="<%= @vehicle.featured_url %>"/>
-		<h1 class="subtitle"><%= @vehicle.subtitle %></h1>
+		<% if @vehicle.subtitle.present? %>
+			<h1 class="subtitle"><%= @vehicle.subtitle %></h1>
+		<% end %>
 	</div>
 	<div class="title-box">
 		<h3 class="title">Vehicle Information</h3>
