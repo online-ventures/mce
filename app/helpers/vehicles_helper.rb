@@ -80,7 +80,7 @@ module VehiclesHelper
 		klass = params[:format] == 'ebay' ? 'title-box' : 'title large-12 columns block'
 		if vehicle.drivable and !vehicle.drivable.body.blank?
 			content_tag :div, class: klass do
-				"#{content_tag(:h3, 'About "'+vehicle.drivable.name+'"', class: 'centered title')}
+				"#{content_tag(:h3, "Drivability Details", class: 'centered title')}
 				#{content_tag(:p, vehicle.drivable.body.html_safe, class: 'panel list row')}".html_safe
 			end
 		end
