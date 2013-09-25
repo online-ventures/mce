@@ -7,7 +7,7 @@
 	<% end %>
 <% end %>
 
-<% cache ["v12", @vehicle] do %>
+<% cache ["v13", @vehicle] do %>
 
 	<% unless @vehicle.photos.empty? %>
 		<ul class="loading" data-orbit data-options="timer_speed:2500; animation_speed:50; bullets: false;">
@@ -64,7 +64,7 @@
 		  </tr>
 		  <tr>
 			<th>Miles</th>
-			<td><%= miles %></td>
+			<td><%= number_with_delimiter(@vehicle.miles) %></td>
 		  </tr>
 		  <tr>
 			<th>Title</th>

@@ -45,6 +45,11 @@
 				<th>Stock #</th>
 				<td><%= @vehicle.stock_number %></td>
 			</tr>
+			<tr>
+				<th>Mileage</th>
+				<td><%= number_with_delimiter(@vehicle.miles) %></td>
+				<th>VIN #</th>
+				<td><%= @vehicle.vin %></td>
 		</table>
 	</div>
 	<div class="title-box">
