@@ -10,7 +10,7 @@
 <% cache ["v12", @vehicle] do %>
 
 	<% unless @vehicle.photos.empty? %>
-		<ul data-orbit data-options="timer_speed:2500; animation_speed:50; bullets: false;">
+		<ul class="loading" data-orbit data-options="timer_speed:2500; animation_speed:50; bullets: false;">
 			<% @vehicle.photos.each do |photo| %>
 				<li>
 					<img src="<%= photo.image.url %>" />
@@ -205,3 +205,14 @@
 
 
 <p class="small gray"><i class="foundicon-clock"></i> Updated <%= time_ago_in_words(@vehicle.updated_at) %> ago.</p>
+
+
+<% unless @vehicle.photos.empty? %>
+	<div class="row image-wrap">
+	<% @vehicle.photos.each do |photo| %>
+		<a name="photo-<%= photo.vehicles_photo_id %>" href="#photo-<%= photo.vehicles_photo_id + ( photo == @vehicle.photos.last ? 0 : 1 ) %>">
+		<img src="<%= photo.image.url %>" />
+		</a>
+	<% end %>
+	</div>
+<% end %>

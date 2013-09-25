@@ -29,3 +29,6 @@ unless $slider.self.length == 0
 		else
 			$slider.number.removeClass('dark')
 	.resize()
+
+$(document).ready ->
+	$slider.self.find('ul').removeClass 'loading'
