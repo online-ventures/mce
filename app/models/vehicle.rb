@@ -42,7 +42,7 @@ class Vehicle < ActiveRecord::Base
 	end
 
 	def photos
-		super.order("id = '#{featured_id || 0}' DESC")
+		super.order("id = '#{featured_id || 0}' DESC, id ASC") # put featured first, then normal sort
 	end
 
 	def toggle_feature(feature)
