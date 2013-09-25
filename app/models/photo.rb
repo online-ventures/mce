@@ -7,7 +7,8 @@ class Photo < ActiveRecord::Base
 
 	has_attached_file :image
 	validates_attachment :image, presence: {message: 'must be chosen before saving'}
-	validates_attachment :image, content_type: {content_type: [/^image\/(png|gif|jpe?g)$/, /^application\/.*zip.*$/]}
+	#validates_attachment :image, content_type: {content_type: [/^image\/(png|gif|jpe?g)$/, /^application\/.*zip.*$/]}
+	validates_is_photo_or_zip :image
 	before_post_process :image?
 	before_create :set_vehicles_photo_id
 	before_save :detect_zipped_file
@@ -17,7 +18,11 @@ class Photo < ActiveRecord::Base
 	scope :inactive, where('deleted_at IS NOT NULL')
 
 	def image?
-		image_content_type !~ /^application\/.*zip.*$/
+		image_content_type =~ /^image\/(png|gif|jpe?g)$/
+	end
+
+	def zip?
+		image_file_name =~ /^.*\.zip$/
 	end
 
 	def vehicle
@@ -60,7 +65,7 @@ class Photo < ActiveRecord::Base
 	end
 
 	def detect_zipped_file
-		if !image?
+		if zip?
 			@vehicle ||= vehicle
 			Zip::ZipFile.open(image.queued_for_write[:original].path) do |zipfile|
 				zipfile.each do |entry|
@@ -75,6 +80,7 @@ class Photo < ActiveRecord::Base
 					end
 				end
 			end
+			self.image_content_type = 'application/zip'
 		end
 	end
 
