@@ -110,7 +110,7 @@ class Vehicle < ActiveRecord::Base
 				old_name = "#{id}/#{year_was}_#{Make.find(make_id_was).name}_#{Model.find(model_id_was).name}"
 				bucket = AWS::S3::Bucket.new ENV['S3_BUCKET_NAME']
 				photos.each do |photo|
-					photo.rename_files(old_name)
+					photo.rename_files(old_name, bucket)
 				end
 				bucket.acl = :public_read
 			end
