@@ -67,18 +67,11 @@ class Vehicle < ActiveRecord::Base
 	end
 
 	def featured_photo
-		if featured_id
-			photo = Photo.find(featured_id)
-			photo ? photo.image : false
-		end
+		photos.limit(1).first
 	end
 
 	def featured_url(size = :original)
-		if photos.any?
-			featured_photo ? featured_photo.url(size) : photos.to_a.last.image.url(size)
-		else
-			false
-		end
+		featured_photo.present? ? featured_photo.image.url(size) : false
 	end
 
 	def destroy
