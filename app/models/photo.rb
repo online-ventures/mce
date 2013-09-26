@@ -49,6 +49,7 @@ class Photo < ActiveRecord::Base
 			if PROD
 				# Rename the old to the new on S3
 				object = AWS::S3::S3Object.new(bucket, file_name)
+				object.acl = :public_read
 				object.move_to image.path(style)[1..-1]
 			else
 				# Rename the old to the new locally

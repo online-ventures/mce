@@ -6,9 +6,7 @@ class VehiclesController < ApplicationController
   # GET /vehicles
   # GET /vehicles.json
   def index
-  	if !current_user
-		  redirect_to inventory_vehicles_path and return
-	  end
+  	redirect_to inventory_vehicles_path and return unless current_user
     if params[:deleted] and params[:deleted] == 'true'
       @vehicles = Vehicle.unscoped.inactive.order('updated_at desc').all
     else
@@ -95,6 +93,7 @@ class VehiclesController < ApplicationController
     respond_to do |format|
       if @vehicle.valid? && @vehicle.make.valid? && @vehicle.model.valid?
         @vehicle.update_attributes(params[:vehicle])
+        @vehicle.model.update_attributes({make_id: @vehicle.make_id })
         format.html { redirect_to @vehicle, notice: 'Vehicle was successfully updated.' }
         format.json { head :no_content }
         format.js   {  }
