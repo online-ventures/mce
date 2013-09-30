@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130906202406) do
+ActiveRecord::Schema.define(:version => 20130926180251) do
 
   create_table "body_types", :force => true do |t|
     t.string   "name"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(:version => 20130906202406) do
     t.integer  "vehicle_id"
     t.integer  "vehicles_photo_id"
     t.datetime "deleted_at"
+    t.string   "vehicle_string"
   end
 
   add_index "photos", ["vehicle_id"], :name => "index_photos_on_vehicle_id"
