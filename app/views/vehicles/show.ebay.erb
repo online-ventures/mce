@@ -76,6 +76,24 @@
 		</table>
 	</div>
 
+	<% if @vehicle.features.any? %>
+	<div class="title-box">
+		<h3 class="title">Features</h3>
+		<% features = @vehicle.features %>
+		<% one = features.slice! 0, (features.length/2).ceil %>
+		<ul class="inline">
+		<% one.each do |f| %> 
+			<li><%= "#{f.name}<br/>".html_safe %></li>
+		<% end %>
+		</ul>
+		<ul class="inline">
+		<% features.each do |f| %>
+			<li><%= "#{f.name}<br/>".html_safe %></li>
+		<% end %>
+		</ul>
+	</div>
+	<% end %>
+
 	<div class="title-box">
 		<h3 class="title">Vehicle Description</h3>
 		<%= raw RDiscount.new(@vehicle.description).to_html %>

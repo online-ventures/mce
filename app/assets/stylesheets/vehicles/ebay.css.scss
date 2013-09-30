@@ -88,6 +88,11 @@ body.ebay.vehicle {
 			display: block;
 			width: 100%;
 		}
+		ul.inline {
+			width: 49%;
+			display: inline-block;
+			vertical-align: top;
+		}
 		table {
 			padding: 0.5em;
 			width: 100%;
