@@ -39,6 +39,7 @@ MotorCarExport::Application.routes.draw do
   #resources :warranties do
   #  put '/restore', on: :member, to: :restore, as: 'restore'
   #end
+	get '/cpanel', to: redirect('http://old.motorcarexport.com/cpanel')
 	get '/carPictures/*path', to: redirect {|params| "http://old.motorcarexport.com/carPictures/#{params[:path]}.jpg" }
 	get '/repairables/vehicleList.php', to: redirect('/vehicles/inventory')
 	get '/contactUs/:anything', to: redirect('/contact')
