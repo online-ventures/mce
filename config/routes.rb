@@ -40,6 +40,8 @@ MotorCarExport::Application.routes.draw do
   #  put '/restore', on: :member, to: :restore, as: 'restore'
   #end
 	get '/carPictures/*path', to: redirect {|params| "http://old.motorcarexport.com/carPictures/#{params[:path]}.jpg" }
+	get '/repairables/vehicleList.php', to: redirect('/vehicles/inventory')
+	get '/contactUs/:anything', to: redirect('/contact')
 	get '/images/vehicle/mainPicFrame.gif', to: redirect('http://old.motorcarexport.com/images/vehicle/mainPicFrame.gif')
 	get '/assets/vehicles/ebay-:hash.css', to: redirect('/assets/vehicles/ebay.css')
 	get '/favicon.ico', to: redirect('http://motor-car-export.s3.amazonaws.com/favicon.ico')
