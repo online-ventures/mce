@@ -19,6 +19,7 @@
   <title><%= content_for?(:title) ? yield(:title) : 'Motor Car Export' %></title>
   <link rel="icon" type="image/png" href="<%= Rails.env == 'production' ? 'http://motor-car-export.s3.amazonaws.com/favicon.ico' : image_path('favicon.ico') %>"/>
   <%= stylesheet_link_tag "application", media: 'all' %>
+	<% if Rails.env == 'production' %>
 	<script type="text/javascript">
     var _gaq = _gaq || [];
 	_gaq.push(['_setAccount', 'UA-6337190-6']);
@@ -30,6 +31,7 @@
 		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	})();
 	</script>
+	<% end %> 
   <!--[if lt IE 9]>
 	<%= javascript_include_tag "html5shiv" %>
   <![endif]-->
