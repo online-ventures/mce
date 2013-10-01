@@ -7,13 +7,12 @@ Buy Used, Save Huge
 <small>Your source for late model, clean repairables, & used vehicles in mint condition.</small></h2>
 <br/>
 <% if current_user %>
-<%= link_to '« All Pages', pages_path, class: 'secondary button' %>
 <%= link_to 'Edit This Page', edit_page_path(@page), class: 'secondary button' %>
 <% end %>
 
 
-<% if !@page.nil? and !@page.body.blank? %>
-<% cache ["v1", @page] do %>
-	<%= raw RDiscount.new(@page.body).to_html %>
-<% end %>
+<% if @page and @page.body.present? %>
+	<% cache ["v1", @page] do %>
+		<%= raw RDiscount.new(@page.body).to_html %>
+	<% end %>
 <% end %>
