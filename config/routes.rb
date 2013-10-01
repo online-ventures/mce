@@ -39,6 +39,7 @@ MotorCarExport::Application.routes.draw do
   #resources :warranties do
   #  put '/restore', on: :member, to: :restore, as: 'restore'
   #end
+	get '/assets/vehicles/ebay-:hash.css', to: redirect('/assets/vehicles/ebay.css')
 	get '/favicon.ico', to: redirect('http://motor-car-export.s3.amazonaws.com/favicon.ico')
   get '/login', to: 'user_sessions#new'
   post '/login', to: 'user_sessions#create'
