@@ -16,6 +16,7 @@ class Photo < ActiveRecord::Base
 
 	scope :active, where(deleted_at: nil)
 	scope :inactive, where('deleted_at IS NOT NULL')
+	scope :prioritize_id, ->(id) { order("id = '#{id || 0}' DESC, id ASC") } # put featured first, then normal sort
 
 	def image?
 		image_content_type =~ /^image\/(png|gif|jpe?g)$/
