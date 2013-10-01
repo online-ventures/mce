@@ -1,5 +1,6 @@
 <% content_for :canonical, seo_vehicle_path(id: @vehicle.id, name: @vehicle.to_s('-')) %>
 <% content_for :title, @vehicle.to_s + ' at Motor Car Export' %>
+<% content_for :itemtype, "http://schema.org/Product" %>
 
 <% cache [@vehicle, !!current_user] do %>
 	<% if current_user %>
@@ -13,17 +14,17 @@
 		<ul class="loading" data-orbit data-options="timer_speed:2500; animation_speed:50; bullets: false;">
 			<% @vehicle.photos.each do |photo| %>
 				<li>
-					<img src="<%= photo.image.url %>" />
+					<img src="<%= photo.image.url %>" <%= 'itemprop="image"'.html_safe if photo == @vehicle.photos.first %>/>
 				</li>
 			<% end %>
 		</ul>
 	<% end %>
 
 	<header>
-	  <h1><%= @vehicle.to_s %></h1>
+	  <h1 itemprop="name"><%= @vehicle.to_s %></h1>
 
-	  <h2 class="subtitle">
-		<%= show_if '$1', price %>
+	  <h2 itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="subtitle">
+		<%= show_if '<span itemprop="price">$1</span>', price %>
 		<%= show_if " &mdash; ", '', !!(price && !@vehicle.ebay.blank?) %>
 		<%= show_if "$1", link_to('Bid on eBay', @vehicle.ebay), !@vehicle.ebay.blank? %>
 		<%= show_if " &mdash; ", '', !!(!@vehicle.subtitle.blank? and (price or !@vehicle.ebay.blank?)) %>
@@ -33,7 +34,7 @@
 	</header>
 
 
-	<div class="description">
+	<div class="description" itemprop="description">
 	  <%= raw RDiscount.new(@vehicle.description).to_html %>
 	</div>
 
@@ -46,9 +47,9 @@
 			<th>Year</th>
 			<td><%= @vehicle.year %></td>
 		  </tr>
-		  <tr>
+		  <tr itemprop="brand" itemscope itemtype="http://schema.org/Brand">
 			<th>Make</th>
-			<td><%= @vehicle.make.name %></td>
+			<td itemprop="name"><%= @vehicle.make.name %></td>
 		  </tr>
 		  <tr>
 			<th>Model</th>

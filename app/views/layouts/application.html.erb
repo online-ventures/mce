@@ -76,7 +76,7 @@
 	  <%= render 'vehicles/featured' %>
 	</div>
 <% end %>
-<div id="container" class="row">
+<div id="container" class="row" <%= "itemscope itemtype='#{yield(:itemtype)}'" if content_for? :itemtype %>>
   <article id="content" class="large-12 columns <%= 'pushed-down' if content_for? :featured and Vehicle.where(featured: true).any? %> <%= "#{params[:action]} #{params[:controller]} #{params[:slug]}" %>">
 	<%= content_tag :p, notice, class: 'alert-box radius', id: 'notice' if notice %>
 	<%= render partial: 'layouts/breadcrumbs' if current_user %>
