@@ -8,9 +8,9 @@ class VehiclesController < ApplicationController
   def index
   	redirect_to inventory_vehicles_path and return unless current_user
     if params[:deleted] and params[:deleted] == 'true'
-      @vehicles = Vehicle.unscoped.inactive.order('updated_at desc').all
+      @vehicles = Vehicle.unscoped.inactive.order(:stock_number).all
     else
-      @vehicles = Vehicle.unscoped.active.order('updated_at desc').all
+      @vehicles = Vehicle.unscoped.active.order(:stock_number).all
     end
     respond_to do |format|
       format.html # index.html.erb

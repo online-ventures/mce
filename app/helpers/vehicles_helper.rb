@@ -7,7 +7,7 @@ module VehiclesHelper
 	def miles(vehicle=nil)
 		vehicle ||= @vehicle
 		if vehicle.miles and vehicle.miles > 0
-			number_to_human(vehicle.miles, units: {unit: '', thousand: 'k'}, precision: 0).delete ' '
+			number_with_delimiter vehicle.miles
 		else
 			false
 		end
@@ -33,10 +33,10 @@ module VehiclesHelper
 
 	def stock_number(vehicle=nil)
 		vehicle ||= @vehicle
-		if vehicle.stock_number.blank?
-			false
-		else
+		if vehicle.stock_number.present?
 			vehicle.stock_number
+		else
+			false
 		end
 	end
 

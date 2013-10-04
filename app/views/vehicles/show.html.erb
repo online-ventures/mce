@@ -8,7 +8,7 @@
 	<% end %>
 <% end %>
 
-<% cache ["v14", @vehicle] do %>
+<% cache ["v15", @vehicle] do %>
 
 	<% unless @vehicle.photos.empty? %>
 		<ul class="loading" data-orbit data-options="timer_speed:2500; animation_speed:50; bullets: false;">
@@ -57,11 +57,11 @@
 		  </tr>
 		  <tr>
 			<th>Stock Number</th>
-			<td>#<%= @vehicle.stock_number %></td>
+			<td><%= @vehicle.stock_number %></td>
 		  </tr>
 		  <tr>
 			<th>Vehicle ID Number</th>
-			<td>#<%= @vehicle.vin %></td>
+			<td><%= @vehicle.vin %></td>
 		  </tr>
 		  <tr>
 			<th>Miles</th>

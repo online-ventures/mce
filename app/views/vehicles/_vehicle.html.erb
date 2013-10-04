@@ -13,7 +13,8 @@
 
 			  <h3 class="subtitle">
 				<%= show_if '<span>$1</span>', price(vehicle) %>
-				<%= show_if ' &mdash; <span class="no-wrap">$1</span>', vehicle.subtitle, !!(!!vehicle.subtitle and !vehicle.subtitle.blank?) %>
+				<%= show_if ' &ndash; ', '', !!(price(vehicle) and vehicle.subtitle.present?) %>
+				<%= show_if '<span class="no-wrap">$1</span>', vehicle.subtitle, vehicle.subtitle.present? %>
 			  </h3>
 
 			  <p>
