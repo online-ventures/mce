@@ -62,6 +62,7 @@ module MotorCarExport
     # Add the fonts path
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
     # And the vendor paths
+	config.assets.paths << Rails.root.join('vendor', 'bundle')
     config.assets.paths << Rails.root.join('vendor', 'assets', 'javascripts')
     config.assets.paths << Rails.root.join('vendor', 'assets', 'stylesheets')
     config.assets.paths << Rails.root.join('vendor', 'assets', 'images')

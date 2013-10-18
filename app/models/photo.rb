@@ -1,8 +1,8 @@
-require 'zip/zip'
+require 'zip'
 class Photo < ActiveRecord::Base
 	# populates deleted_at, and prevents deletion
 	acts_as_paranoid
-	attr_accessible :image, :vehicle_id, :vehicle_string, :vehicles_photo_id, :deleted_at, :featured?
+	attr_accessible :image, :vehicle_id, :vehicles_photo_id, :deleted_at, :featured?
 	belongs_to :vehicle, touch: true
 
 	has_attached_file :image
@@ -42,32 +42,34 @@ class Photo < ActiveRecord::Base
 		update_attribute :deleted_at, nil
 	end
 
-	def rename_files(old_name, bucket)
-		# Generate what the file name was
-		file_name = "#{old_name}_#{vehicles_photo_id}#{File.extname(image.path)}"
-		if PROD
-			# Rename the old to the new on S3
-			object = AWS::S3::S3Object.new(bucket, file_name)
-			object.move_to image.path[1..-1], acl: :public_read
-		else
-			# Rename the old to the new locally
-			path = File.join(Rails.root, 'public', 'uploads/') << file_name
-			FileUtils.move(path, image.path)
-		end
-		save
+	def rename_files(old_name)
+			# Generate what the file name was
+			ext = File.extname(image.path)
+			file_name = "#{old_name}_#{vehicles_photo_id}#{ext}"
+			if PROD
+				#bucket setup
+				@bucket ||= AWS::S3::Bucket.new ENV['S3_BUCKET_NAME']
+				# Rename the old to the new on S3
+				object = AWS::S3::S3Object.new(@bucket, file_name)
+				object.move_to "#{id}#{ext}", acl: :public_read
+			else
+				# Rename the old to the new locally
+				path = File.join(Rails.root, 'public', 'uploads/') << file_name
+				FileUtils.move(path, File.join(Rails.root, 'public/uploads/', vehicle.id.to_s, vehicles_photo_id.to_s)+ext)
+			end
+			save!
 	  end
 
 	private
 	def set_vehicles_photo_id
 		self.vehicles_photo_id = (vehicle.photos.maximum(:vehicles_photo_id)|| 0) + 1
-		self.vehicle_string = "#{vehicle.to_s '_'}_original"
 	end
 
 	def detect_zipped_file
 		if zip?
 			@vehicle ||= vehicle
-			Zip::ZipFile.open(image.queued_for_write[:original].path) do |zipfile|
-				zipfile.each do |entry|
+			Zip::InputStream.open(image.queued_for_write[:original].path) do |io|
+				while entry = io.get_next_entry
 					unless entry.name.match(/^(\.||\_||\.\.||\_\_)+(MACOSX)?(DS_Store)?\/?(\._.*)?$/)
 						tempfile = Tempfile.new([File.basename(entry.name, File.extname(entry.name)),File.extname(entry.name)], '/tmp')
 						tempfile.binmode
