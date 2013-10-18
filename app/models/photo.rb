@@ -42,24 +42,6 @@ class Photo < ActiveRecord::Base
 		update_attribute :deleted_at, nil
 	end
 
-	def rename_files(old_name)
-			# Generate what the file name was
-			ext = File.extname(image.path)
-			file_name = "#{old_name}_#{vehicles_photo_id}#{ext}"
-			if PROD
-				#bucket setup
-				@bucket ||= AWS::S3::Bucket.new ENV['S3_BUCKET_NAME']
-				# Rename the old to the new on S3
-				object = AWS::S3::S3Object.new(@bucket, file_name)
-				object.move_to "#{id}#{ext}", acl: :public_read
-			else
-				# Rename the old to the new locally
-				path = File.join(Rails.root, 'public', 'uploads/') << file_name
-				FileUtils.move(path, File.join(Rails.root, 'public/uploads/', vehicle.id.to_s, vehicles_photo_id.to_s)+ext)
-			end
-			save!
-	  end
-
 	private
 	def set_vehicles_photo_id
 		self.vehicles_photo_id = (vehicle.photos.maximum(:vehicles_photo_id)|| 0) + 1

@@ -31,7 +31,6 @@ class Vehicle < ActiveRecord::Base
 	has_and_belongs_to_many :disclosures, join_table: 'vehicles_disclosures', before_add: :validates_unique_disclosure
 
 	after_create :ensure_it_has_the_intro_disclosure
-	after_save :update_associated_photos
 
 	def to_s(join=' ')
 		"#{year} #{make.name} #{model.name}".gsub(' ', join)
@@ -92,21 +91,6 @@ class Vehicle < ActiveRecord::Base
 
 		# Ensure it has the intro disclosure
 		self.disclosures << the_intro_disclosure unless self.disclosures.include? the_intro_disclosure
-	end
-
-	def update_associated_photos
-		# Rename all the photos so they translate to the new pathname
-		# http://stackoverflow.com/questions/2708115/paperclip-renaming-files-after-theyre-saved
-		#
-		unless model_id_was.nil? || make_id_was.nil?
-			if self.year_changed? || self.model_id_changed? || self.make_id_changed?
-				old_name = "#{id}/#{year_was}_#{Make.find(make_id_was).name}_#{Model.find(model_id_was).name}_original"
-				photos.each do |photo|
-					photo.rename_files(old_name)
-				end
-				@bucket.acl = :public_read unless @bucket.nil?
-			end
-		end
 	end
 
 	# http://stackoverflow.com/questions/4988630/habtm-uniqueness-constraint
