@@ -51,7 +51,16 @@ class Photo < ActiveRecord::Base
 		if zip?
 			@vehicle ||= vehicle
 			Zip::InputStream.open(image.queued_for_write[:original].path) do |io|
+				# We need to catch the first "next_entry"
+				# because this is actually the last file
+				# inside the zip, and file order is important
+				entries = []
+				last = io.get_next_entry
 				while entry = io.get_next_entry
+					entries.push entry
+				end
+				entries.push last
+				entries.each do |entry|
 					unless entry.name.match(/^(\.||\_||\.\.||\_\_)+(MACOSX)?(DS_Store)?\/?(\._.*)?$/)
 						tempfile = Tempfile.new([File.basename(entry.name, File.extname(entry.name)),File.extname(entry.name)], '/tmp')
 						tempfile.binmode
