@@ -62,13 +62,12 @@ module MotorCarExport
     # Add the fonts path
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
     # And the vendor paths
-	#config.assets.paths << Rails.root.join('vendor', 'bundle')
     config.assets.paths << Rails.root.join('vendor', 'assets', 'javascripts')
     config.assets.paths << Rails.root.join('vendor', 'assets', 'stylesheets')
     config.assets.paths << Rails.root.join('vendor', 'assets', 'images')
 
     # Precompile additional assets
-    #config.assets.precompile += %w( .css .scss .svg .eot .woff .ttf nivo-slider.css light.css vehicles/ebay.css backgroundsize.min.htc html5shiv.js respond.min.js animate-custom.css)
+    config.assets.precompile += %w(vehicles/ebay.css)
 
     #initialize logger
     config.logger = Logger.new(STDOUT)
