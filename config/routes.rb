@@ -1,4 +1,8 @@
 MotorCarExport::Application.routes.draw do
+  constraints(subdomain: 'www') do
+  	match '/*url', to: redirect { |params, request| "#{request.host.gsub('www.', '')}#{params[:url]}" }
+  end
+  
   root to: 'pages#show', slug: 'home'
 
   resources :vehicles do
