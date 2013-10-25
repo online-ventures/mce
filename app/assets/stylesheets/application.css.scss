@@ -18,18 +18,22 @@
 @import "bourbon/bourbon";
 @import "foundation_and_overrides";
 @import "mixins";
-@import "animate-custom.css";
+@import "animate-custom.css.scss";
 
 // Import application-wide styles
-@import "application/*";
+@import "application/forms";
+@import "application/header";
+@import "application/layout";
+@import "application/tables";
+@import "application/typography";
 
 // "Tree"
 @import "pages";
 @import "vehicles";
-@import "vehicles/*";
-@import "features/*";
-@import "photos/*";
+@import "vehicles/_vehicles";
+@import "features/_features";
+@import "photos/_photos";
 @import "subscribers";
-@import "modals/*";
+@import "modals/_view_image";
 
 @import "ie";
