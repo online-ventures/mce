@@ -41,13 +41,18 @@
 
 				&.new {
 					background: $primary-color;
+					left: -54px;
+					top: 32px;
+				}
+				&.sold {
+					background: $success-color;
 					left: -70px;
 					top: 15px;
 				}
 				&.featured {
 					background: $alert-color;
-					left: -55px;
-					top: 35px;
+					left: -38px;
+					top: 50px;
 				}
 				i[class*=foundicon] {
 					font-size: 0.9em;

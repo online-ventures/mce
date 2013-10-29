@@ -114,6 +114,11 @@ module VehiclesHelper
 		end
 	end
 
+	def sold_banner(vehicle=nil)
+		vehicle ||= @vehicle
+		content_tag :span, '<b>$</b> Sold'.html_safe, class: 'sold banner' if vehicle.sold
+	end
+
 	def featured_banner(vehicle=nil)
 		vehicle ||= @vehicle
 		content_tag :span, '<i class="foundicon-star"></i>Featured'.html_safe, class: 'featured banner' if vehicle.featured
