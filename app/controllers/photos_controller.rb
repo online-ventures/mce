@@ -4,7 +4,7 @@ class PhotosController < ApplicationController
     @vehicle = Vehicle.unscoped.find(params[:vehicle_id])
     @photo = Photo.new
     if params[:deleted] == 'true'
-      @photos = @vehicle.photos.unscoped.inactive
+      @photos = Photo.unscoped.where(vehicle_id: @vehicle.id).inactive
     else
       @photos = @vehicle.photos
     end
