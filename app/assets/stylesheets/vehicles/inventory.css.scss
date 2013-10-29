@@ -15,6 +15,9 @@
 		padding-bottom: 1em;
 		position: relative;
 		cursor: pointer;
+		&:first-of-type {
+			border-top: none;
+		}
 		>a>.row {
 			margin: 0;
 		}
@@ -26,7 +29,6 @@
 			@include transition(background, 3s, ease);
 			overflow: hidden;
 			position: relative;
-			margin-left: -15px;
 			.banner {
 				color: white;
 				font-size: 1em;
@@ -55,6 +57,7 @@
 		}
 		.info {
 			min-height: emCalc(180px);
+			padding-left: 2em;
 
 			h3.subtitle {
 				color: #444;
