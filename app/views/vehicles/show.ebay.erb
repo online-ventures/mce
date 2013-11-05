@@ -79,16 +79,12 @@
 	<% if @vehicle.features.any? %>
 	<div class="title-box">
 		<h3 class="title">Features</h3>
-		<% features = @vehicle.features %>
-		<% one = features.slice! 0, (features.length/2).ceil %>
+		<% i = 0 %>
 		<ul class="inline">
-		<% one.each do |f| %> 
-			<li><%= "#{f.name}<br/>".html_safe %></li>
-		<% end %>
-		</ul>
-		<ul class="inline">
-		<% features.each do |f| %>
-			<li><%= "#{f.name}<br/>".html_safe %></li>
+		<% @vehicle.features.each do |f| %>
+			<% i += 1 %>
+			<li><%= f.name %></li>
+			<%= '</ul><ul class="inline">'.html_safe if i == (@vehicle.features.count / 2).ceil+1 %>
 		<% end %>
 		</ul>
 	</div>
