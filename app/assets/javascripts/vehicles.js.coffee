@@ -12,5 +12,6 @@ $('.new.banner').each ->
 $('.vehicle').each ->
 	$this = $(this)
 	href = $this.find('a.expand.radius.button').attr('href')
-	$this.click ->
-		window.location = href
+	if href
+		$this.click ->
+			window.location = href
