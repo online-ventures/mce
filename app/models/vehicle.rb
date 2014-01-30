@@ -27,7 +27,7 @@ class Vehicle < ActiveRecord::Base
 	has_many :photos
 	has_many :requests
 	accepts_nested_attributes_for :photos
-	has_and_belongs_to_many :features, join_table: 'vehicles_features'
+	has_and_belongs_to_many :features, join_table: 'vehicles_features', after_add: :touch
 	has_and_belongs_to_many :disclosures, join_table: 'vehicles_disclosures', before_add: :validates_unique_disclosure
 
 	after_create :ensure_it_has_the_intro_disclosure
@@ -84,6 +84,10 @@ class Vehicle < ActiveRecord::Base
 		self.photos.update_all(deleted_at: nil)
 		save!
 	end
+
+  def touch
+    update_attributes(updated_at: Time.now)
+  end
 
 	private
 	def ensure_it_has_the_intro_disclosure
