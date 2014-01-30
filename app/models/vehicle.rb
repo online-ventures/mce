@@ -86,7 +86,8 @@ class Vehicle < ActiveRecord::Base
 	end
 
   def touch(object)
-    update_attributes(updated_at: Time.now)
+    self.updated_at = Time.now
+    save!
   end
 
 	private
