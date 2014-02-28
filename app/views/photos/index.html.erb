@@ -23,7 +23,8 @@
 <br/><br/>
 <% unless @photos.nil? or @photos.empty? %>
   <h4>Existing Photos</h4>
-  <%= link_to 'Destroy All', destroy_all_vehicle_photos_path, method: :delete, remote: true, class: 'alert button', style: 'float: right' %>
+  <%= link_to 'Destroy All', destroy_all_vehicle_photos_path, method: :delete, remote: true, class: 'alert button' %>
+  <br>
   <div class="existing-photos row">
     <% @photos.each do |photo| %>
       <% cache ['v2',photo,"featured-#{photo.featured?}"] do %>
