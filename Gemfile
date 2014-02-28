@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
-ruby '1.9.3'
+ruby '2.0.0'
 gem 'rails', '3.2.13'
 
 gem 'pg'
 
 group :test do
-	gem 'sqlite3'
+  gem 'sqlite3'
 end
 
 group :assets do
@@ -50,3 +50,5 @@ gem 'rdiscount'
 
 # Emails
 gem 'mandrill-api'
+
+gem 'ensure_subdomain', '~> 1.0.2', path: '../../gems/ensure_subdomain'

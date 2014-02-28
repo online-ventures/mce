@@ -1,46 +1,42 @@
 <h2>Add Photos</h2>
 <%= form_for(@photo, url: vehicle_photos_path(@vehicle), html:{class:'custom'}) do |f| %>
-	<% if @photo.errors.any? %>
-		<div id="error_explanation">
-			<h2><%= pluralize(@photo.errors.count, "error") %> prohibited this vehicle photo from being saved:</h2>
+  <% if @photo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@photo.errors.count, "error") %> prohibited this vehicle photo from being saved:</h2>
 
-			<ul>
-				<% @photo.errors.full_messages.each do |msg| %>
-					<li><%= msg %></li>
-				<% end %>
-			</ul>
-		</div>
-	<% end %>
-	<div class="field">
-		<%= f.file_field :image %>
-	</div>
-	<div class="actions button">
-		<%= f.submit 'Upload Photo', class:'no-button invisible' %>
-	    <i class="foundicon-up-arrow default"></i>&nbsp;&nbsp;<span id="upload-text">Nothing to Upload</span>
-	</div>
+      <ul>
+        <% @photo.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.file_field :image %>
+  </div>
+  <div class="actions button">
+    <%= f.submit 'Upload Photo', class:'no-button invisible' %>
+    <i class="foundicon-up-arrow default"></i>&nbsp;&nbsp;<span id="upload-text">Nothing to Upload</span>
+  </div>
 <% end %>
 
 <br/><br/>
-<% unless @photos.nil? %>
-<h4>Existing Photos</h4>
-<% if params[:deleted] == 'true' %>
-<p>Viewing Deactivated Photos. <%= link_to 'Show Active.', vehicle_photos_path(@vehicle), class: 'italic' %></p>
-<% else %>
-<p>Viewing Active Photos. <%= link_to 'Show Deactivated.', '?deleted=true', class: 'italic' %></p>
-<% end %>
-<div class="existing-photos row">
-	<% @photos.each do |photo| %>
-	  <% cache ['v2',photo,"featured-#{photo.featured?}"] do %>
-	  <div class="photo large-3 columns <%= 'featured' if photo.featured? %>" data-id="<%= photo.id %>">
-	    <%= link_to image_tag(photo.image.url), '#', data: {
-			    'active' => photo.deleted_at == nil,
-			    'reveal-id' => 'view-image-modal',
-	            'path' => vehicle_photo_path(vehicle_id: @vehicle.id, id: photo.id)
-	    }, class: "#{'featured' if photo.featured? }" %>
+<% unless @photos.nil? or @photos.empty? %>
+  <h4>Existing Photos</h4>
+  <%= link_to 'Destroy All', destroy_all_vehicle_photos_path, method: :delete, remote: true, class: 'alert button', style: 'float: right' %>
+  <div class="existing-photos row">
+    <% @photos.each do |photo| %>
+      <% cache ['v2',photo,"featured-#{photo.featured?}"] do %>
+      <div class="photo large-3 columns <%= 'featured' if photo.featured? %>" data-id="<%= photo.id %>">
+        <%= link_to image_tag(photo.image.url), '#', data: {
+        'active' => photo.deleted_at == nil,
+        'reveal-id' => 'view-image-modal',
+        'path' => vehicle_photo_path(vehicle_id: @vehicle.id, id: photo.id)
+        }, class: "#{'featured' if photo.featured? }" %>
       </div>
-	  <% end %>
-	<% end %>
-</div>
+      <% end %>
+    <% end %>
+  </div>
 <% end %>
 
 <% content_for :modal, 'modals/view_image' %>

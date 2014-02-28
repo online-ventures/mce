@@ -1,3 +1,9 @@
+PATH
+  remote: ../../gems/ensure_subdomain
+  specs:
+    ensure_subdomain (1.0.2)
+      actionpack (>= 3.2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -151,6 +157,7 @@ DEPENDENCIES
   bourbon
   coffee-rails (~> 3.2.1)
   dalli
+  ensure_subdomain (~> 1.0.2)!
   jquery-rails
   jquery-ui-rails
   mandrill-api

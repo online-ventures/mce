@@ -1,13 +1,11 @@
 class PhotosController < ApplicationController
+  before_filter :require_user
+  respond_to :js, only: [:destroy, :destroy_all]
 
   def index
     @vehicle = Vehicle.unscoped.find(params[:vehicle_id])
     @photo = Photo.new
-    if params[:deleted] == 'true'
-      @photos = Photo.unscoped.where(vehicle_id: @vehicle.id).inactive
-    else
-      @photos = @vehicle.photos
-    end
+    @photos = @vehicle.photos
   end
 
   def update
@@ -28,15 +26,15 @@ class PhotosController < ApplicationController
   def create
     @start_time = Time.now
     @vehicle = Vehicle.find(params[:vehicle_id])
-	unless @vehicle.nil?
-		@photo = @vehicle.photos.new(params[:photo])
-		if @photo.valid?
-			@photo.save
-			redirect_to vehicle_photos_path(@vehicle), notice: 'Successfully uploaded'
-		else
-			render action: :index
-    	end
-  	end
+    unless @vehicle.nil?
+      @photo = @vehicle.photos.new(params[:photo])
+      if @photo.valid?
+        @photo.save
+        redirect_to vehicle_photos_path(@vehicle), notice: 'Successfully uploaded'
+      else
+        render action: :index
+      end
+    end
   end
 
   def destroy
@@ -45,8 +43,10 @@ class PhotosController < ApplicationController
       @photo.vehicle.update_attribute(:featured_id, nil)
     end
     @photo.destroy
-    respond_to do |format|
-      format.js
-    end
+  end
+
+  def destroy_all
+    @vehicle = Vehicle.find(params[:vehicle_id])
+    @vehicle.photos.destroy_all
   end
 end
