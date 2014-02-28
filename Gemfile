@@ -51,4 +51,4 @@ gem 'rdiscount'
 # Emails
 gem 'mandrill-api'
 
-gem 'ensure_subdomain', '~> 1.0.2', path: '../../gems/ensure_subdomain'
+gem 'ensure_subdomain', '~> 1.0.3'
