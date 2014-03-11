@@ -1,117 +1,117 @@
 <html>
-<head></head>
-<body class="ebay vehicle">
-<link rel="stylesheet" href="http://motorcarexport.com<%= asset_path 'vehicles/ebay.css' %>">
-<div class="container">
-	<% nested ||= false %>
-	<% unless nested %> 
-	<textarea class="page-source" onClick="this.focus(); this.select();">
-<%= render file: 'vehicles/show.ebay',  locals: {nested: true } %>
-	</textarea>
-	<% end %>
-	<div class="logo">
-		<img src="<%= request.protocol + request.host %><%= asset_path 'mce-logo-white.png' %>" alt="Motor Car Export" />
-		<h1>Motor Car Export</h1>
-	</div>
-	<div class="featured">
-		<h1 class="name"><%= @vehicle %></h1>
-		<img src="<%= @vehicle.featured_url %>"/>
-		<% if @vehicle.subtitle.present? %>
-			<h1 class="subtitle"><%= @vehicle.subtitle %></h1>
-		<% end %>
-	</div>
-	<div class="title-box">
-		<h3 class="title">Vehicle Information</h3>
-		<table>
-			<tr>
-				<th>Year</th>
-				<td><%= @vehicle.year %></td>
-				<th>Title</th>
-				<td><%= @vehicle.title.name %></td>
-			</tr>
-			<tr>
-				<th>Make</th>
-				<td><%= @vehicle.make.name %></td>
-				<th>Warranty</th>
-				<td><%= @vehicle.warranty.name %></td>
-			</tr>
-			<tr>
-				<th>Model</th>
-				<td><%= @vehicle.model.name %></td>
-				<th>Engine</th>
-				<td><%= @vehicle.engine_type %></td>
-			</tr>
-			<tr>
-				<th>Exterior Color</th>
-				<td><%= @vehicle.ext_color.name %></td>
-				<th>Stock #</th>
-				<td><%= @vehicle.stock_number %></td>
-			</tr>
-			<tr>
-				<th>Mileage</th>
-				<td><%= number_with_delimiter(@vehicle.miles) %></td>
-				<th>VIN #</th>
-				<td><%= @vehicle.vin %></td>
-		</table>
-	</div>
-	<div class="title-box">
-		<h3 class="title">Vehicle Condition</h3>
-		<table>
-			<tr>
-				<th>Exterior Paint</th>
-				<td><%= @vehicle.exterior.name %></td>
-				<th>Interior</th>
-				<td><%= @vehicle.interior.name %></td>
-			</tr>
-			<tr>
-				<th>Engine</th>
-				<td><%= @vehicle.engine.name %></td>
-				<th>Suspension</th>
-				<td><%= @vehicle.suspension.name %></td>
-			</tr>
-			<tr>
-				<th>Drivability</th>
-				<td><%= @vehicle.drivable.name %></td>
-			</tr>
-		</table>
-	</div>
+  <head></head>
+  <body class="ebay vehicle">
+    <link rel="stylesheet" href="http://<%= request.host %><%= asset_path 'vehicles/ebay.css' %>">
+    <div class="container">
+      <% nested ||= false %>
+      <% unless nested %>
+      <textarea class="page-source" onClick="this.focus(); this.select();">
+        <%= render file: 'vehicles/show.ebay',  locals: {nested: true } %>
+      </textarea>
+      <% end %>
+      <div class="logo">
+        <img src="<%= request.protocol + request.host %><%= asset_path 'mce-logo-white.png' %>" alt="Motor Car Export" />
+        <h1>Motor Car Export</h1>
+      </div>
+      <div class="featured">
+        <h1 class="name"><%= @vehicle %></h1>
+        <img src="<%= @vehicle.featured_url %>"/>
+        <% if @vehicle.subtitle.present? %>
+        <h1 class="subtitle"><%= @vehicle.subtitle %></h1>
+        <% end %>
+      </div>
+      <div class="title-box">
+        <h3 class="title">Vehicle Information</h3>
+        <table>
+          <tr>
+            <th>Year</th>
+            <td><%= @vehicle.year %></td>
+            <th>Title</th>
+            <td><%= @vehicle.title.name %></td>
+          </tr>
+          <tr>
+            <th>Make</th>
+            <td><%= @vehicle.make.name %></td>
+            <th>Warranty</th>
+            <td><%= @vehicle.warranty.name %></td>
+          </tr>
+          <tr>
+            <th>Model</th>
+            <td><%= @vehicle.model.name %></td>
+            <th>Engine</th>
+            <td><%= @vehicle.engine_type %></td>
+          </tr>
+          <tr>
+            <th>Exterior Color</th>
+            <td><%= @vehicle.ext_color.name %></td>
+            <th>Stock #</th>
+            <td><%= @vehicle.stock_number %></td>
+          </tr>
+          <tr>
+            <th>Mileage</th>
+            <td><%= number_with_delimiter(@vehicle.miles) %></td>
+            <th>VIN #</th>
+            <td><%= @vehicle.vin %></td>
+          </table>
+        </div>
+        <div class="title-box">
+          <h3 class="title">Vehicle Condition</h3>
+          <table>
+            <tr>
+              <th>Exterior Paint</th>
+              <td><%= @vehicle.exterior.name %></td>
+              <th>Interior</th>
+              <td><%= @vehicle.interior.name %></td>
+            </tr>
+            <tr>
+              <th>Engine</th>
+              <td><%= @vehicle.engine.name %></td>
+              <th>Suspension</th>
+              <td><%= @vehicle.suspension.name %></td>
+            </tr>
+            <tr>
+              <th>Drivability</th>
+              <td><%= @vehicle.drivable.name %></td>
+            </tr>
+          </table>
+        </div>
 
-	<% if @vehicle.features.any? %>
-	<div class="title-box">
-		<h3 class="title">Features</h3>
-		<% i = 0 %>
-		<ul class="inline">
-		<% @vehicle.features.each do |f| %>
-			<% i += 1 %>
-			<li><%= f.name %></li>
-			<%= '</ul><ul class="inline">'.html_safe if i == (@vehicle.features.count / 2).ceil+1 %>
-		<% end %>
-		</ul>
-	</div>
-	<% end %>
+        <% if @vehicle.features.any? %>
+        <div class="title-box">
+          <h3 class="title">Features</h3>
+          <% i = 0 %>
+          <ul class="inline">
+            <% @vehicle.features.each do |f| %>
+            <% i += 1 %>
+            <li><%= f.name %></li>
+            <%= '</ul><ul class="inline">'.html_safe if i == (@vehicle.features.count / 2).ceil+1 %>
+            <% end %>
+          </ul>
+        </div>
+        <% end %>
 
-	<div class="title-box">
-		<h3 class="title">Vehicle Description</h3>
-		<%= raw RDiscount.new(@vehicle.description).to_html %>
-	</div>
+        <div class="title-box">
+          <h3 class="title">Vehicle Description</h3>
+          <%= raw RDiscount.new(@vehicle.description).to_html %>
+        </div>
 
-	
-	<%= all_the_disclosures! %>
-	
-	<%= warranty_disclosure %>
 
-	<%= title_disclosure %>
+        <%= all_the_disclosures! %>
 
-	<%= drivable_disclosure %>
+        <%= warranty_disclosure %>
 
-	<%= vehicle_type_disclosure %>
+        <%= title_disclosure %>
 
-	<div class="title-box">
-		<h3 class="title">Photos</h3>
-		<% @vehicle.photos.find_each do |photo| %>
-			<%= image_tag photo.image.url %>
-		<% end %>
-	</div>
-</div>
-</body>
-</html>
+        <%= drivable_disclosure %>
+
+        <%= vehicle_type_disclosure %>
+
+        <div class="title-box">
+          <h3 class="title">Photos</h3>
+          <% @vehicle.photos.find_each do |photo| %>
+          <%= image_tag photo.image.url %>
+          <% end %>
+        </div>
+      </div>
+    </body>
+  </html>
