@@ -3,7 +3,6 @@ development:
   encoding: unicode
   database: mce
   pool: 5
-  username: mceadmin
-  password: 'MC3@#1always'
+  username: mce
   host: localhost
   port: 5432
