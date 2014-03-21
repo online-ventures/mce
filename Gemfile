@@ -19,6 +19,8 @@ group :assets do
   gem 'turbo-sprockets-rails3'
 end
 
+gem 'spring', group: :development
+
 gem 'zurb-foundation'
 
 # Silences Asset Pipeline Messages

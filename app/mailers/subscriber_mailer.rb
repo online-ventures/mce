@@ -1,9 +1,11 @@
 require 'mandrill'
 class SubscriberMailer < ActionMailer::Base
-  def self.mandrill
-    @mandrill = Mandrill::API.new 'qR-rkGT9xM24xFmeA9qAZA'
+
+  def mandrill
+    @mandrill = Mandrill::API.new Rails.configuration.mandrill[:api_key]
   end
-  def self.confirm_subscription(subscriber)
+
+  def confirm_subscription(subscriber)
     #begin
       mandrill
       template_content = []
@@ -26,4 +28,5 @@ class SubscriberMailer < ActionMailer::Base
       #puts "Mandrill Error: #{e.class}: #{e.message}"
     #end
   end
+
 end

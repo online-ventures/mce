@@ -79,3 +79,30 @@ div.orbit-container {
 		}
 	}
 }
+
+.vehicle-order-info {
+  .gray-bg {
+    background-color: #f9f9f9;
+  }
+  border: 1px solid #ddd;
+  margin-bottom: 40px;
+  @media #{$small} {
+    .button {
+      min-width: 75%;
+    }
+  }
+  @media #{$medium} {
+  }
+  .button {
+    margin-top: 30px;
+    margin-bottom: 0;
+    min-width: 50%;
+  }
+  p {
+    margin: 10px 0 0;
+    padding-bottom: 15px;
+    color: #999;
+    line-height: 1.25em;
+    font-size: 0.9em;
+  }
+}

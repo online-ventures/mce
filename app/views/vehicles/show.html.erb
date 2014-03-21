@@ -38,6 +38,32 @@
 	  <%= raw RDiscount.new(@vehicle.description).to_html %>
 	</div>
 
+  <h4 class="centered">Find Out More</h4>
+  <div class="vehicle-order-info">
+    <div class="row">
+      <div class="large-4 small-12 centered columns"><div class="gray-bg">
+        <div class="show-for-touch">
+          <a id="mobile-phone-number" href="tel:2484468289">248.446.8289</a>
+        </div>
+        <div class="hide-for-touch">
+          <a id="desktop-phone-number" class="button" href="/contact">Call Us</a>
+        </div>
+        <p>Immediate response<br/>time</p>
+      </div></div>
+      <div class="large-4 small-12 centered columns">
+        <a class="button">Email</a>
+        <p>Easy and secure<br/>contact form</p>
+      </div>
+      <div class="large-4 small-12 centered columns"><div class="gray-bg">
+        <a class="button">Subscribe</a>
+        <p>Stay informed of<br/>more cars like this</p>
+      </div></div>
+    </div>
+  </div>
+
+  <div id="email-form" class="reveal-modal">
+    <% %>
+  </div>
 
 	<div class="row info">
 	  <div class="general large-6 columns block">
