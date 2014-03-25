@@ -1,8 +1,0 @@
-development:
-  adapter: postgresql
-  encoding: unicode
-  database: mce
-  pool: 5
-  username: mce
-  host: localhost
-  port: 5432
