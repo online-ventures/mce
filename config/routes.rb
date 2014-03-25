@@ -1,5 +1,5 @@
 MotorCarExport::Application.routes.draw do
-  ensure_apex
+  ensure_on production: '', staging: 'staging'
 
   root to: 'pages#show', slug: 'home'
 
