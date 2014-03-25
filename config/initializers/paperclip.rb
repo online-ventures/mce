@@ -1,9 +1,9 @@
 location = '/:vehicle_id/:vehicle_photo_id.:extension'
 
-url = PROD ? ':s3_domain_url' : '/uploads' + location
+url = REMOTE ? ':s3_domain_url' : '/uploads' + location
 Paperclip::Attachment.default_options[:url] = url
 
-path = PROD ? '' : ':rails_root/public/uploads'
+path = REMOTE ? '' : ':rails_root/public/uploads'
 Paperclip::Attachment.default_options[:path] = path + location
 
 Paperclip::Attachment.default_options[:default_style] = :original
