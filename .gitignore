@@ -31,3 +31,7 @@ public/assets
 
 # Ignore vim
 *.swp
+*.swo
+
+# Ignore pow
+.powrc

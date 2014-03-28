@@ -14,9 +14,10 @@ MotorCarExport::Application.routes.draw do
   end
 
   resources :subscribers do
-    get '/confirm/:code', on: :member, to: 'subscribers#confirm', as: 'confirm'
-    get '/cancel/:code', on: :member, to: 'subscribers#cancel', as: 'cancel'
-    get '/tell-us-more', on: :member, to: 'subscribers#add_to', as: 'add_to'
+    collection do
+      get 'set_subscription_plan/:plan/:token', to: 'subscribers#set_subscription_plan', as: 'change_plan'
+      get 'cancel/:token', to: 'subscribers#cancel', as: 'cancel'
+    end
   end
 
   resources :features do
@@ -24,7 +25,7 @@ MotorCarExport::Application.routes.draw do
     post '/to/:to', on: :member, to: 'features#move'
   end
 
-  resources :requests, :users, :user_sessions
+  resources :requests, :users, :user_sessions, :inquiries
 
   # Create these resources, and add custom restore option
   [:titles, :pages, :warranties, :drivables, :body_types, :disclosures].each do |resource|

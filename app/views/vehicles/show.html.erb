@@ -51,18 +51,14 @@
         <p>Immediate response<br/>time</p>
       </div></div>
       <div class="large-4 small-12 centered columns">
-        <a class="button">Email</a>
+        <a class="button" data-reveal-id="email-form">Email</a>
         <p>Easy and secure<br/>contact form</p>
       </div>
       <div class="large-4 small-12 centered columns"><div class="gray-bg">
-        <a class="button">Subscribe</a>
+        <a class="button" data-reveal-id="subscribe-form">Subscribe</a>
         <p>Stay informed of<br/>more cars like this</p>
       </div></div>
     </div>
-  </div>
-
-  <div id="email-form" class="reveal-modal">
-    <% %>
   </div>
 
 	<div class="row info">
@@ -243,3 +239,114 @@
 	<% end %>
 	</div>
 <% end %>
+
+<div id="email-form" class="reveal-modal medium">
+  <a class="close-reveal-modal">&#215;</a>
+  <h3>Email Us</h3>
+  <div class="loading"><%= image_tag 'loading.gif' %></div>
+  <div data-alert class="alert-box success radius hidden">
+    Your message has been successfully received.  You will receive an email confirmation shortly.
+  </div>
+  <div data-alert class="alert-box alert radius hidden">
+  </div>
+  <%= form_for @inquiry, remote: true do |i| %>
+    <%= i.hidden_field :vehicle_id %>
+    <%= fields_for @interest do |n| %>
+      <%= n.hidden_field :vehicle_id %>
+    <% end %>
+    <%= fields_for @subscriber do |s| %>
+      <div class="row">
+        <div class="small-12 large-6 columns">
+          <div class="row">
+            <div class="small-12 large-3 columns">
+              <%= s.label :first_name, 'First Name', class: 'inline' %>
+            </div>
+            <div class="small-12 large-9 columns">
+              <%= s.text_field :first_name %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="small-12 large-3 columns">
+              <%= s.label :last_name, 'Last Name', class: 'inline' %>
+            </div>
+            <div class="small-12 large-9 columns">
+              <%= s.text_field :last_name %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="small-12 large-3 columns">
+              <%= s.label :email, 'Email', class: 'inline' %>
+            </div>
+            <div class="small-12 large-9 columns">
+              <%= s.text_field :email %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="small-12 large-3 columns">
+              <%= s.label :phone, 'Phone', class: 'inline' %>
+            </div>
+            <div class="small-12 large-9 columns">
+              <%= s.text_field :phone %>
+            </div>
+          </div>
+        </div>
+        <div class="small-12 large-6 columns">
+          <%= i.text_area :body, placeholder: 'Your message here', class: 'email-message' %>
+        </div>
+      </div>
+      <%= i.submit 'Send' %>
+    <% end %>
+  <% end %>
+</div>
+
+<div id="subscribe-form" class="reveal-modal medium">
+  <a class="close-reveal-modal">&#215;</a>
+  <h3>Subscribe</h3>
+  <div class="loading"><%= image_tag 'loading.gif' %></div>
+  <div data-alert class="alert-box success radius hidden">
+    Your now subscribed to receive emails on vehicles like this one.
+  </div>
+  <div data-alert class="alert-box alert radius hidden">
+  </div>
+  <%= form_for @subscriber, remote: true do |s| %>
+    <%= fields_for @interest do |i| %>
+      <%= i.hidden_field :vehicle_id %>
+    <% end %>
+    <%= fields_for @subscriber do |s| %>
+      <%= s.hidden_field :subscription_plan, value: 'weekly' %>
+      <div class="row">
+        <div class="small-12 large-2 columns">
+          <%= s.label :first_name, 'First Name', class: 'inline' %>
+        </div>
+        <div class="small-12 large-10 columns">
+          <%= s.text_field :first_name %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="small-12 large-2 columns">
+          <%= s.label :last_name, 'Last Name', class: 'inline' %>
+        </div>
+        <div class="small-12 large-10 columns">
+          <%= s.text_field :last_name %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="small-12 large-2 columns">
+          <%= s.label :email, 'Email', class: 'inline' %>
+        </div>
+        <div class="small-12 large-10 columns">
+          <%= s.text_field :email %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="small-12 large-2 columns">
+          <%= s.label :phone, 'Phone', class: 'inline' %>
+        </div>
+        <div class="small-12 large-10 columns">
+          <%= s.text_field :phone %>
+        </div>
+      </DIV>
+      <%= s.submit 'Subscribe' %>
+    <% end %>
+  <% end %>
+</div>

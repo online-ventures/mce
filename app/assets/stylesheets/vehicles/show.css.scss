@@ -106,3 +106,26 @@ div.orbit-container {
     font-size: 0.9em;
   }
 }
+
+.hidden {
+  display: none;
+}
+.loading {
+  display: none;
+  width: 100%;
+  img {
+    display: block;
+    margin: 30px auto;
+  }
+}
+#email-form {
+  h3 {
+    color: #276030;
+  }
+  label {
+    margin-top: 0.3em;
+  }
+  .email-message {
+    height: 12.8em;
+  }
+}

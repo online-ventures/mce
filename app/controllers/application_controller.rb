@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :current_user_session, :current_user
-  before_filter :begin_profiling, :current_user
+  before_filter :begin_profiling, :current_user, :set_action_mailer_defaults
 
   private
     def begin_profiling
@@ -39,5 +39,9 @@ class ApplicationController < ActionController::Base
 
     def store_location
       session[:return_to] = request.url
+    end
+
+    def set_action_mailer_defaults
+      ActionMailer::Base.default_url_options[:host] = request.host_with_port
     end
 end
