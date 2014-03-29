@@ -33,6 +33,14 @@ class AjaxifyModal
     @errors.hide()
     @modal.find("input,textarea,select").removeClass('error')
 
+  show_loading: ->
+    @reset_form()
+    @loading.fadeIn duration: 200
+
+  show_form: ->
+    @reset_form()
+    @form.fadeIn duration: 200
+
   receive_errors: (data) ->
     for model, errors of data
       for field, text of errors

@@ -42,6 +42,7 @@ class Subscriber < ActiveRecord::Base
 
   def subscribed!
     self.plan = 'weekly'
+    opted_in
   end
 
   def cancel!
@@ -57,6 +58,7 @@ class Subscriber < ActiveRecord::Base
     if ['weekly','daily','none'].include? new_plan
       new_plan = '' if new_plan == 'none'
       self.subscription_plan = new_plan
+      opted_in
       save
       true
     else
@@ -88,6 +90,10 @@ class Subscriber < ActiveRecord::Base
     @interest
   end
 
+  def search_results
+    { first_name: first_name, last_name: last_name, email: email, phone: phone }
+  end
+
   private
 
     def create_token
@@ -98,6 +104,12 @@ class Subscriber < ActiveRecord::Base
 
     def default_plan!
       self.subscription_plan = ''
+    end
+
+    def opted_in
+      if opted_in_at.blank?
+        self.opted_in_at = DateTime.now
+      end
     end
 
     def send_confirmation

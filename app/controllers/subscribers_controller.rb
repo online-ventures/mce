@@ -1,5 +1,5 @@
 class SubscribersController < ApplicationController
-  before_filter :require_user, except: [:cancel, :confirm, :add_to, :set_subscription_plan, :create]
+  before_filter :require_user, except: [:cancel, :confirm, :add_to, :set_subscription_plan, :create, :search]
   # GET /subscribers
   # GET /subscribers.json
   def index
@@ -51,6 +51,19 @@ class SubscribersController < ApplicationController
       else
         format.html { render action: "new" }
         format.js { render json: {subscriber: @subscriber.errors}, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def search
+    @subscriber = Subscriber.find_by_email params[:email]
+    respond_to do |format|
+      format.js do
+        if @subscriber
+          render json: @subscriber.search_results
+        else
+          render nothing: true, status: :unprocessable_entity
+        end
       end
     end
   end

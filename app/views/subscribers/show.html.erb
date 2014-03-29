@@ -5,7 +5,7 @@
 
 <% cache ["v1", @subscriber] do %>
 <h1><%= @subscriber %></h1>
-<h2 <%= raw 'class="red"' unless @subscriber.active? %>>
+<h2 <%= raw 'class="red"' unless @subscriber.subscribed? %>>
   <%= @subscriber.plan.titleize %>
 </h2>
 

@@ -243,6 +243,7 @@
 <div id="email-form" class="reveal-modal medium">
   <a class="close-reveal-modal">&#215;</a>
   <h3>Email Us</h3>
+  <p>Email us with any questions or buying information you need by filling out the following form.</p>
   <div class="loading"><%= image_tag 'loading.gif' %></div>
   <div data-alert class="alert-box success radius hidden">
     Your message has been successfully received.  You will receive an email confirmation shortly.
@@ -259,6 +260,14 @@
         <div class="small-12 large-6 columns">
           <div class="row">
             <div class="small-12 large-3 columns">
+              <%= s.label :email, 'Email', class: 'inline' %>
+            </div>
+            <div class="small-12 large-9 columns">
+              <%= s.text_field :email %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="small-12 large-3 columns">
               <%= s.label :first_name, 'First Name', class: 'inline' %>
             </div>
             <div class="small-12 large-9 columns">
@@ -271,14 +280,6 @@
             </div>
             <div class="small-12 large-9 columns">
               <%= s.text_field :last_name %>
-            </div>
-          </div>
-          <div class="row">
-            <div class="small-12 large-3 columns">
-              <%= s.label :email, 'Email', class: 'inline' %>
-            </div>
-            <div class="small-12 large-9 columns">
-              <%= s.text_field :email %>
             </div>
           </div>
           <div class="row">
@@ -302,6 +303,7 @@
 <div id="subscribe-form" class="reveal-modal medium">
   <a class="close-reveal-modal">&#215;</a>
   <h3>Subscribe</h3>
+  <p>Sign up to receive weekly emails about similar vehicles like this one we get into inventory.</p>
   <div class="loading"><%= image_tag 'loading.gif' %></div>
   <div data-alert class="alert-box success radius hidden">
     Your now subscribed to receive emails on vehicles like this one.
@@ -316,6 +318,14 @@
       <%= s.hidden_field :subscription_plan, value: 'weekly' %>
       <div class="row">
         <div class="small-12 large-2 columns">
+          <%= s.label :email, 'Email', class: 'inline' %>
+        </div>
+        <div class="small-12 large-10 columns">
+          <%= s.text_field :email %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="small-12 large-2 columns">
           <%= s.label :first_name, 'First Name', class: 'inline' %>
         </div>
         <div class="small-12 large-10 columns">
@@ -328,14 +338,6 @@
         </div>
         <div class="small-12 large-10 columns">
           <%= s.text_field :last_name %>
-        </div>
-      </div>
-      <div class="row">
-        <div class="small-12 large-2 columns">
-          <%= s.label :email, 'Email', class: 'inline' %>
-        </div>
-        <div class="small-12 large-10 columns">
-          <%= s.text_field :email %>
         </div>
       </div>
       <div class="row">

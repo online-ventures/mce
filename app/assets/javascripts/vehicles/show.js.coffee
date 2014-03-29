@@ -34,3 +34,29 @@ $(document).ready ->
   $slider.self.find('ul').removeClass('loading')
   contactForm = new AjaxifyModal 'email-form', 'new_inquiry'
   subscribeForm = new AjaxifyModal 'subscribe-form', 'new_subscriber'
+  $('#email-form #subscriber_email').blur ->
+    contactForm.show_loading()
+    $.ajax(
+      url: "/subscribers/search"
+      data: {email: $(this).val()}
+      dataType: 'json'
+      success: (data) ->
+        $('#email-form #subscriber_first_name').val data.first_name
+        $('#email-form #subscriber_last_name').val data.last_name
+        $('#email-form #subscriber_phone').val data.phone
+      complete: ->
+        contactForm.show_form()
+    )
+  $('#subscribe-form #subscriber_email').blur ->
+    subscribeForm.show_loading()
+    $.ajax(
+      url: "/subscribers/search"
+      data: {email: $(this).val()}
+      dataType: 'json'
+      success: (data) ->
+        $('#subscribe-form #subscriber_first_name').val data.first_name
+        $('#subscribe-form #subscriber_last_name').val data.last_name
+        $('#subscribe-form #subscriber_phone').val data.phone
+      complete: ->
+        subscribeForm.show_form()
+    )
