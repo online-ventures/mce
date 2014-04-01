@@ -76,6 +76,18 @@ MotorCarExport::Application.configure do
     }
   }
 
+  # Smtp settings
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.mandrillapp.com',
+    port: 587,
+    domain: 'motorcarexport.com',
+    user_name: Rails.configuration.mandrill[:username]
+    password: Rails.configuration.mandrill[:password]
+  }
+  config.action_mailer.default_url_options = {
+    host: 'motorcarexport.com'
+  }
+
   #ActionController::Base.asset_host = Proc.new { |source|
   #	if source.starts_with?('/images')
   #		'http://images.motorcarexport.com'

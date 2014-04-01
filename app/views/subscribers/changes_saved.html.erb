@@ -1,0 +1,12 @@
+<% content_for :title, 'Subscription Saved' %>
+<h1>Subscription Settings Saved</h1>
+<div data-alert class="alert-box">
+  We have saved your changes to your subscription status.
+  <a href="#" class="close">&times;</a>
+</div>
+<p>Hello <%= @subscriber.first_name %></p>
+<% if @subscriber.subscribed? %>
+  <p>You will receive great, relevant emails <%= @subscriber.subscription_plan %> if we have any that match the kind of vehicles you have expressed interest in.</p>
+<% end %>
+<p>We look forward to working with you soon.  Thanks and have a great day!</p>
+<p style="height: 300px">&nbsp;</p>

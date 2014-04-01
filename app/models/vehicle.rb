@@ -25,7 +25,9 @@ class Vehicle < ActiveRecord::Base
 	belongs_to :transmission
 	belongs_to :warranty
 	has_many :photos
-	has_many :requests
+  has_many :interests
+	has_many :subscribers, through: :interests
+  has_many :inquiries
 	accepts_nested_attributes_for :photos
 	has_and_belongs_to_many :features, join_table: 'vehicles_features', after_add: :touch, after_remove: :touch
 	has_and_belongs_to_many :disclosures, join_table: 'vehicles_disclosures', before_add: :validates_unique_disclosure

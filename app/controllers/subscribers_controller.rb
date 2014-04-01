@@ -1,5 +1,5 @@
 class SubscribersController < ApplicationController
-  before_filter :require_user, except: [:cancel, :confirm, :add_to]
+  before_filter :require_user, except: [:cancel, :confirm, :add_to, :set_subscription_plan, :create, :search]
   # GET /subscribers
   # GET /subscribers.json
   def index
@@ -41,15 +41,29 @@ class SubscribersController < ApplicationController
   # POST /subscribers
   # POST /subscribers.json
   def create
-    @subscriber = Subscriber.new(params[:subscriber])
+    @subscriber = Subscriber.find_or_initialize_by_params params[:subscriber]
 
     respond_to do |format|
       if @subscriber.save
+        @subscriber.save_interest params[:interest]
         format.html { redirect_to @subscriber, notice: 'Subscriber was successfully created.' }
-        format.json { render json: @subscriber, status: :created, location: @subscriber }
+        format.js { render nothing: true, status: :created }
       else
         format.html { render action: "new" }
-        format.json { render json: @subscriber.errors, status: :unprocessable_entity }
+        format.js { render json: {subscriber: @subscriber.errors}, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def search
+    @subscriber = Subscriber.find_by_email params[:email]
+    respond_to do |format|
+      format.js do
+        if @subscriber
+          render json: @subscriber.search_results
+        else
+          render nothing: true, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -88,33 +102,36 @@ class SubscribersController < ApplicationController
 
   # TODO: Merge these two methods gracefully
   def confirm
-    @subscriber = Subscriber.find_by_confirmation_code(params[:code])
+    @subscriber = Subscriber.find_by_token(params[:code])
     if @subscriber
       @subscriber.confirm
-      session[:subscriber] = @subscriber.confirmation_code
+      session[:subscriber] = @subscriber.token
       redirect_to add_to_subscriber_path(@subscriber)
     else
       redirect_to root_path, notice: 'That code is no longer valid.'
     end
   end
 
-  def cancel
-    if params[:code].include?('@')
-      @subscriber = Subscriber.find_by_email(params[:code])
+  def set_subscription_plan
+    @subscriber = Subscriber.find_by_token params[:token]
+    if @subscriber and @subscriber.plan = params[:plan]
+      render 'changes_saved'
     else
-      @subscriber = Subscriber.find_by_confirmation_code(params[:code])
+      redirect_to root_path, notice: 'Could not locate your subscription.'
     end
-    if @subscriber
-      @subscriber.cancel
-      redirect_to root_path, notice: 'You\'ve been unsubscribed. We\'re sorry to see you go.'
+  end
+
+  def cancel
+    if @subscriber = Subscriber.find_by_token(params[:token])
+      @subscriber.cancel!
     else
-      redirect_to root_path, notice: 'That code is no longer valid.'
+      redirect_to root_path, notice: 'Could not locate your subscription account.  Please email us if you continue to have trouble.'
     end
   end
 
   def add_to
     @subscriber = Subscriber.find(params[:id])
-    if session[:subscriber] and session[:subscriber] == @subscriber.confirmation_code
+    if session[:subscriber] and session[:subscriber] == @subscriber.token
       @page = Page.find(16) # tell-us-more as defined by seeds.rb
     else
       redirect_to root_path, notice: 'It doesn\'t look like you\'re the subscriber you\'re trying to update.'

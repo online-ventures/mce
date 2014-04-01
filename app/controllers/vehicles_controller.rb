@@ -26,6 +26,9 @@ class VehiclesController < ApplicationController
   # GET /vehicles/1.json
   def show
     @vehicle = Vehicle.unscoped.find(params[:id])
+    @subscriber = Subscriber.new
+    @interest = @subscriber.interests.build vehicle_id: @vehicle.id
+    @inquiry = @subscriber.inquiries.build vehicle_id: @vehicle.id
     if @vehicle.deleted_at and !current_user
       redirect_to '/vehicles/inventory', notice: 'That vehicle cannot be found' and return
     end

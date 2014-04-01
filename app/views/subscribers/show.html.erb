@@ -5,16 +5,15 @@
 
 <% cache ["v1", @subscriber] do %>
 <h1><%= @subscriber %></h1>
-<h2 <%= raw 'class="red"' unless @subscriber.confirmed?%>>
-  <%= @subscriber.confirmed? ? 'Confirmed by Email' : 'Not Yet Confirmed' %></h2>
+<h2 <%= raw 'class="red"' unless @subscriber.subscribed? %>>
+  <%= @subscriber.plan.titleize %>
+</h2>
 
 <table>
-  <% if @subscriber.name %>
   <tr>
-    <th>Name</th>
-    <td><%= @subscriber.name %></td>
+    <th>Joined</th>
+    <td><%= @subscriber.created_at.to_formatted_s :short %></td>
   </tr>
-  <% end %>
   <tr>
     <th>Email</th>
     <td><%= @subscriber.email %></td>
@@ -24,25 +23,29 @@
     <th>Phone</th>
     <td><%= number_to_phone(@subscriber.phone) %></td>
   </tr>
+  <tr>
+    <th>Subscribed</th>
+    <td><%= @subscriber.opt_in_date %></td>
+  </tr>
+  <tr>
+    <th>Source</th>
+    <td><%= @subscriber.source_text.titleize %></td>
+  </tr>
   <% end %>
 </table>
 
-<% if @subscriber.requests.any? %>
-<h2>Requests</h2>
+<% if @subscriber.inquiries.any? %>
+<h2>Inquiries Made</h2>
 
 <table>
   <tr>
+    <th>Date</th>
     <th>Vehicle</th>
-    <th>Body Type</th>
   </tr>
-  <% @subscriber.requests.each do |request| %>
+  <% @subscriber.inquiries.each do |inquiry| %>
   <tr>
-    <td>
-      <%= request.vehicle ? link_to(request.vehicle, request.vehicle) : '---' %>
-    </td>
-    <td>
-      <%= request.body_type || '---' %>
-    </td>
+    <td><%= inquiry.created_at.to_formatted_s :short %></td>
+    <td><%= link_to inquiry.vehicle, inquiry.vehicle %></td>
   </tr>
   <% end %>
 </table>
