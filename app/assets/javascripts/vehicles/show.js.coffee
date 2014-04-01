@@ -23,7 +23,6 @@ unless $slider.self.length == 0
 
 	$window.resize ->
 		$active = $slider.active()
-		console.log $slider.self.outerWidth(), $active.find('img').outerWidth()
 		if $slider.self.outerWidth() > $active.find('img').outerWidth()
 			$slider.number.addClass('dark')
 		else

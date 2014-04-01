@@ -36,6 +36,5 @@ $make_select.change ->
   current = $model_select.find('option:selected').text()
   put_into_select($('#vehicle_model_id'), $makes[$(this).val()], ['', 'Create New Model'])
   old_current = $model_select.find('option:contains('+current+')')
-  console.log(current, old_current)
   if old_current.length > 0
     $model_select.val(old_current.attr('value'))
