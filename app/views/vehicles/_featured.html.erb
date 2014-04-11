@@ -13,7 +13,7 @@
               <h4>Only <%= miles(vehicle) %> Miles!</h4>
               <div class="links">
                 <%= link_to 'View Details »', seo_vehicle_path(vehicle, name: vehicle.to_s('-'), mps: 'featured-vehicle-details-link'), {class: 'small more-info radius button', :"small-text"=>'More Info'} %>
-                <a id="featured-inventory-link" href="<%= inventory_vehicles_path %>" class="success small radius button">Full Inventory  &raquo;</a>
+                <%= link_to 'Full Inventory »', inventory_vehicles_path, { id: 'featured-inventory-link', class: 'success small radius button', :'small-text' => 'Inventory' } %>
               </div>
             </div>
           </div>
