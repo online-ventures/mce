@@ -26,7 +26,6 @@ unless $html.hasClass('ie8') || $html.hasClass('ie7') || $html.hasClass('ie6')
 			else
 				$('[small-text]:not(.button)').each ->
 					if($(this).height() > ($(this).css('line-height').substring(0, 2) * 1))
-						console.log()
 						$(this).shrink_text()
 		else if(previous is 'small' and width > toggle)
 			previous = 'large'

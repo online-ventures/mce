@@ -6,7 +6,7 @@ class VehiclesController < ApplicationController
   # GET /vehicles
   # GET /vehicles.json
   def index
-  	redirect_to inventory_vehicles_path and return unless current_user
+    redirect_to inventory_vehicles_path and return unless current_user
     if params[:deleted] and params[:deleted] == 'true'
       @vehicles = Vehicle.unscoped.inactive.order(:stock_number).all
     else

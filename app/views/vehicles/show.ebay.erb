@@ -10,8 +10,9 @@
       </textarea>
       <% end %>
       <div class="logo">
-        <img src="<%= request.protocol + request.host %><%= asset_path 'mce-logo-white.png' %>" alt="Motor Car Export" />
+        <img src="<%= request.protocol + request.host %><%= asset_path 'logo.png' %>" alt="Motor Car Export" />
         <h1>Motor Car Export</h1>
+        <h1><a href="tel:2484468289">248.446.8289</a></h1>
       </div>
       <div class="featured">
         <h1 class="name"><%= @vehicle %></h1>
@@ -95,7 +96,6 @@
           <%= raw RDiscount.new(@vehicle.description).to_html %>
         </div>
 
-
         <%= all_the_disclosures! %>
 
         <%= warranty_disclosure %>
@@ -108,6 +108,11 @@
 
         <div class="title-box">
           <h3 class="title">Photos</h3>
+          <div class="call-to-action">
+            <img src="<%= request.protocol + request.host %><%= asset_path 'logo.png' %>" alt="Motor Car Export" />
+            <h1>Motor Car Export</h1>
+            <h1><a href="tel:2484468289">248.446.8289</a></h1>
+          </div>
           <% @vehicle.photos.find_each do |photo| %>
           <%= image_tag photo.image.url %>
           <% end %>

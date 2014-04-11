@@ -39,7 +39,6 @@ if $('body.features.index').length > 0
 		else
 			unless feature.length == 0
 				selector = '.feature span:contains('+feature+')'
-				console.log selector
 				$existing = $(selector)
 				if $existing.length > 0 and $existing.first().parents('.system').length == 0
 					$('body,html').animate({scrollTop: $existing.offset().top - 200 },700)

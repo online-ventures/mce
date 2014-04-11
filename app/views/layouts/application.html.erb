@@ -14,24 +14,33 @@
   <!-- Set the viewport width to device width for mobile -->
   <meta name="viewport" content="width=device-width, initial-scale=0.9, user-scalable=no"/>
   <% if content_for?(:canonical) %>
-	  <link rel="canonical" href="<%= request.protocol + request.host + yield(:canonical) %>"/>
+    <link rel="canonical" href="<%= request.protocol + request.host + yield(:canonical) %>"/>
   <% end %>
   <title><%= content_for?(:title) ? yield(:title) : 'Motor Car Export' %></title>
   <link rel="icon" type="image/png" href="<%= Rails.env == 'production' ? 'http://motor-car-export.s3.amazonaws.com/favicon.ico' : image_path('favicon.ico') %>"/>
   <%= stylesheet_link_tag "application", media: 'all' %>
-	<% if Rails.env == 'production' %>
-	<script type="text/javascript">
-    var _gaq = _gaq || [];
-	_gaq.push(['_setAccount', 'UA-6337190-6']);
-	_gaq.push(['_setDomainName', 'motorcarexport.com']);
-	_gaq.push(['_trackPageview']);
-	(function() {
-		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	})();
-	</script>
-	<% end %> 
+  <% if Rails.env == 'production' %>
+    <!-- start Google Analytics -->
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-6337190-6']);
+      _gaq.push(['_setDomainName', 'motorcarexport.com']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+    <!-- end Google Analytics -->
+    <!-- start Mixpanel -->
+    <script type="text/javascript">
+      (function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");
+      for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f)}})(document,window.mixpanel||[]);
+        mixpanel.init("719324205bb52c001c03ffce9fc315b6");
+    </script>
+    <!-- end Mixpanel -->
+  <% end %>
   <script type="text/javascript" src="//use.typekit.net/bce8gfj.js"></script>
   <script type="text/javascript">try { Typekit.load(); } catch (e) {}</script>
   <%= csrf_meta_tags %>
@@ -47,79 +56,78 @@ mixpanel.init("<%= Rails.configuration.mixpanel[:selected] %>");</script>
 <div class="topbar">
   <a href="/"><h1><%= image_tag('mce-logo-white.png') %>Motor Car Export</h1></a>
 
-  <a id="call-phone" href="tel:2484468289"><h1 class="right" small-text="248.446.8289">Ph. 248.446.8289</h1></a>
-</div>
-<div class="topbar subnav">
-  <nav>
-	<ul>
-	  <% if current_user %>
-		  <li class="right">
-			<span class="a">Hello, <%= current_user.login.titlecase %></span> &bull; <%= link_to 'Member\'s Area', '/members' %>
-		  </li>
-	  <% end %>
-	  <% params[:slug] ||= 'vehicles/inventory' %>
-	  <% cache ['v1', "subnav-on-page/#{params[:slug]}"] do %>
-		<% {
-			'Vehicles' => inventory_vehicles_path,
-			'About' => '/about',
-			'Buyer Info' => '/buyer-info',
-			'FAQ' => '/faq',
-			'Contact' => '/contact'
-			}.each do |text, href| %>
-				<li <%= 'class=current' if href == "/#{params[:slug]}" %>>
-					<%= link_to(text, href, class: 'nav-link') %></li>
-			<% end
-		%>
-	  <% end %>
-	</ul>
-  </nav>
-</div>
+    <a href="tel:2484468289"><h1 class="right" small-text="248.446.8289">Ph. 248.446.8289</h1></a>
+  </div>
+  <div class="topbar subnav">
+    <nav>
+      <ul>
+        <% if current_user %>
+          <li class="right">
+            <span class="a">Hello, <%= current_user.login.titlecase %></span> &bull; <%= link_to 'Member\'s Area', '/members' %>
+          </li>
+        <% end %>
+        <% params[:slug] ||= 'vehicles/inventory' %>
+        <% cache ['v1', "subnav-on-page/#{params[:slug]}"] do
+          {
+            'Vehicles' => inventory_vehicles_path,
+            'About' => '/about',
+            'Buyer Info' => '/buyer-info',
+            'FAQ' => '/faq',
+            'Contact' => '/contact'
+          }.each do |text, href| %>
+          <li <%= 'class=current' if href == "/#{params[:slug]}" %>>
+            <%= link_to(text, href) %></li>
+          <% end %>
+        <% end %>
+      </ul>
+    </nav>
+  </div>
 <% if content_for?(:featured) and Vehicle.any? %>
-	<div id="featured-box">
-	  <%= render 'vehicles/featured' %>
-	</div>
+  <div id="featured-box">
+    <%= render 'vehicles/featured' %>
+  </div>
 <% end %>
 <div id="container" class="row" <%= "itemscope itemtype='#{yield(:itemtype)}'" if content_for? :itemtype %>>
   <article id="content" class="large-12 columns <%= 'pushed-down' if content_for? :featured and Vehicle.where(featured: true).any? %> <%= "#{params[:action]} #{params[:controller]} #{params[:slug]}" %>">
-	<%= content_tag :p, notice, class: 'alert-box radius', id: 'notice' if notice %>
-	<%= render partial: 'layouts/breadcrumbs' if current_user %>
-	<%= yield %>
+    <%= content_tag :p, notice, class: 'alert-box radius', id: 'notice' if notice %>
+    <%= render partial: 'layouts/breadcrumbs' if current_user %>
+    <%= yield %>
   </article>
 </div>
 <% unless params[:controller] == 'vehicles' and params[:action] == 'inventory' %>
-<div class="row">
-	<p class="call-to-action"><span class="no-wrap">Interested in what we have to offer?</span> <span class="no-wrap">Click <a href="/vehicles/inventory">here</a> to see a full list of our inventory.</span></p>
-</div>
+  <div class="row">
+    <p class="call-to-action"><span class="no-wrap">Interested in what we have to offer?</span> <span class="no-wrap">Click <a href="/vehicles/inventory">here</a> to see a full list of our inventory.</span></p>
+  </div>
 <% end %>
 <footer id="container-footer" class="twelve columns">
-	<div class="row">
-		<div class="large-2 small-0 columns">&nbsp;</div>
-		<div class="large-2 small-4 columns">
-			<nav>
-				<ul>
-					<% {
-						'Vehicles' => '/vehicles/inventory',
-						'About' => '/about',
-						'Buyer Info' => '/buyer-info',
-						'FAQ' => '/faq',
-						'Contact' => '/contact'
-						}.each do |text,href| %>
-							<%= content_tag :li, link_to(text, href, class: 'no-wrap') %>
-					<% end %>
-					<% if !current_user %>
-						<li><%= link_to 'Log In', login_path, class: 'no-wrap' %></li>
-					<% else %>
-						<li><%= link_to 'Log Out', logout_path, class: 'no-wrap' %></li>
-					<% end %>
-				</ul>
-			</nav>
-		</div>
-		<div class="large-6 small-8 columns">
-			<p><%= Time.new.year %> Motor Car Export</p>
-			<p>Powered by <a class="no-wrap" href="http://www.webonlineventures.com">Web Online Ventures, LLC</a></p>
-		</div>
-		<div class="large-2 small-0 columns">&nbsp;</div>
-	</div>
+  <div class="row">
+    <div class="large-2 small-0 columns">&nbsp;</div>
+    <div class="large-2 small-4 columns">
+      <nav>
+        <ul>
+          <% {
+            'Vehicles' => '/vehicles/inventory',
+            'About' => '/about',
+            'Buyer Info' => '/buyer-info',
+            'FAQ' => '/faq',
+            'Contact' => '/contact'
+          }.each do |text,href| %>
+          <%= content_tag :li, link_to(text, href, class: 'no-wrap') %>
+        <% end %>
+        <% if !current_user %>
+          <li><%= link_to 'Log In', login_path, class: 'no-wrap' %></li>
+        <% else %>
+          <li><%= link_to 'Log Out', logout_path, class: 'no-wrap' %></li>
+        <% end %>
+      </ul>
+    </nav>
+  </div>
+  <div class="large-6 small-8 columns">
+    <p><%= Time.new.year %> Motor Car Export</p>
+    <p>Powered by <a class="no-wrap" href="http://www.webonlineventures.com">Web Online Ventures, LLC</a></p>
+  </div>
+  <div class="large-2 small-0 columns">&nbsp;</div>
+</div>
 </footer>
 
 <%= render partial: yield(:modal) if content_for? :modal %>
