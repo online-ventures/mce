@@ -27,13 +27,16 @@ class VehiclesController < ApplicationController
   def show
     @vehicle = Vehicle.unscoped.find(params[:id])
     @subscriber = Subscriber.new
-    @interest = @subscriber.interests.build vehicle_id: @vehicle.id
     @inquiry = @subscriber.inquiries.build vehicle_id: @vehicle.id
+
     if @vehicle.deleted_at and !current_user
-      redirect_to '/vehicles/inventory', notice: 'That vehicle cannot be found' and return
+      redirect_to '/vehicles/inventory', notice: 'That vehicle cannot be found'
+      return
     end
+
     unless params[:name]
-      redirect_to seo_vehicle_path(id: @vehicle.id, name: @vehicle.to_s('-')), status: 301 and return
+      redirect_to seo_vehicle_path(id: @vehicle.id, name: @vehicle.to_s('-')), status: 301
+      return
     end
 
     respond_to do |format|

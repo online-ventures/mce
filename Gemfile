@@ -38,6 +38,9 @@ gem 'paperclip'
 gem 'aws-sdk'
 gem 'rubyzip'
 
+# Mixpanel
+gem 'mixpanel-ruby'
+
 # Application Monitoring
 gem 'newrelic_rpm'
 

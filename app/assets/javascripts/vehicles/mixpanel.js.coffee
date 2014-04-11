@@ -1,33 +1,57 @@
 $(document).ready ->
 
-  # Determine the environment
-  url = window.location.href.split '/'
-  host = url[2]
-  window.environment = 'development'
-  if host.indexOf('dev') == -1
-    window.environment = 'production'
+  # jQuery extensions
+  $.fn.exists = ->
+    @length != 0
 
-  # Only do this in production
-  if window.environment == 'production'
+  $.urlParam = (name) ->
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]")
+    regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
+    results = regex.exec(location.search)
+    if results then decodeURIComponent results[1].replace(/\+/g, " ") else ""
 
-    # Register important properties
-    #mixpanel.register
+  # Global register data
+  register_data = {}
 
-    # Links
-    mixpanel.track_link '.nav-link', 'Navigation link',
-      link: $(this).html()
+  # Subscriber data
+  register_data = window.subscriber if window.subscriber
 
-    mixpanel.track_link '#call-phone', 'Top nav phone',
-      referrer: document.referrer
+  # Specified source
+  if $.urlParam('mps')
+    register_data.source = $.urlParam('mps')
+  else if $.cookie('msp')
+    register_data.source = $.cookie('mps')
 
-    mixpanel.track_link '#mobile-phone-number', 'Mobile phone call'
-    mixpanel.track_link '#desktop-phone-number', 'Desktop phone call'
+  # Vehicle details
+  $.extend register_data, $.parseJSON($('#vehicle-data').attr('data-vehicle')) if $('#vehicle-data').exists()
 
-    mixpanel.track_link '#featured-details-link', 'Featured vehicle link',
-      stock: $('#featured-car').attr('data-stock-number')
-      name: $('#featured-car').attr('data-name')
-      referrer: document.referrer
+  # Register the data
+  mixpanel.register register_data
 
-    mixpanel.track_link '[data-inventory-list-link]', 'Inventory list link',
-      stock: $(this).attr('data-stock-number')
-      name: $(this).attr('data-name')
+  # Unique subscribers please
+  mixpanel.identify = window.subscriber_id if window.subscriber_id
+
+  # Featured vehicle
+  window.featured = $.parseJSON $('#featured-car').attr('data-vehicle') if $('#featured-car').exists()
+
+  # Links
+  $('a[data-mixpanel]').each ->
+    $(this).uniqueId()
+    properties = {} # defaults can go here
+    $.extend properties, $.parseJSON($(this).attr('data-properties')) if $(this).attr('data-properties')
+    mixpanel.track_links '#'+this.id, $(this).attr('data-mixpanel'), properties
+
+  #mixpanel.track_link '#call-phone', 'Top nav phone',
+    #referrer: document.referrer
+
+  #mixpanel.track_link '#mobile-phone-number', 'Mobile phone call'
+  #mixpanel.track_link '#desktop-phone-number', 'Desktop phone call'
+
+  #mixpanel.track_link '#featured-details-link', 'Featured vehicle link',
+    #stock: $('#featured-car').attr('data-stock-number')
+    #name: $('#featured-car').attr('data-name')
+    #referrer: document.referrer
+
+  #mixpanel.track_link '[data-inventory-list-link]', 'Inventory list link',
+    #stock: $(this).attr('data-stock-number')
+    #name: $(this).attr('data-name')

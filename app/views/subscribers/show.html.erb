@@ -51,4 +51,20 @@
 </table>
 <% end %>
 
+<% if @subscriber.vehicles.any? %>
+  <h2>Vehicles Interested In</h2>
+  <table>
+    <tr>
+      <th>Vehicle</th>
+      <th>Status</th>
+    </tr>
+    <% @subscriber.vehicles.each do |vehicle| %>
+    <tr>
+      <td><%= link_to vehicle.to_s, vehicle %></td>
+      <td><%= vehicle.status_text %></td>
+    </tr>
+    <% end %>
+  </table>
 <% end %>
+
+<% end # end cache %>

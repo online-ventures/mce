@@ -92,9 +92,37 @@ class Vehicle < ActiveRecord::Base
     save!
   end
 
-  private
-  def ensure_it_has_the_intro_disclosure
-    the_intro_disclosure = Disclosure.find(1)
+  def edit_purchase_path
+    routes = Rails.application.routes.url_helpers
+    return routes.edit_vehicle_purchase_path(self, purchase) if purchase
+    routes.new_vehicle_purchase_path(self)
+  end
+
+  def status_text
+    sold ? 'Sold' : status.name.titleize
+  end
+
+  def to_mixpanel_hash
+    {
+      stock: stock_number,
+      year: year,
+      make: make.name,
+      model: model.name,
+      title: title.name,
+      status: status.name,
+      damage: damage.name,
+      price: price
+    }
+  end
+
+  def to_mixpanel_json
+    ActiveSupport::JSON.encode to_mixpanel_hash
+  end
+
+	private
+
+	def ensure_it_has_the_intro_disclosure
+		the_intro_disclosure = Disclosure.find(1)
 
     # Ensure it has the intro disclosure
     self.disclosures << the_intro_disclosure unless self.disclosures.include? the_intro_disclosure

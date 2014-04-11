@@ -1,0 +1,105 @@
+<div id="subscriber-form">
+  <%= tag :div, id: 'vehicle-data', data: {vehicle: @vehicle.to_mixpanel_json} %>
+  <div class="loading"><%= image_tag 'loading.gif' %></div>
+  <%= form_for([@vehicle, @purchase], html: {class: 'custom'}) do |f| %>
+  <% if @subscriber.errors.any? or @purchase.errors.any? %>
+    <div id="error_explanation">
+      <h2>There were some errors saving this buyer</h2>
+
+      <ul>
+      <% @subscriber.errors.full_messages.each do |msg| %>
+        <% unless msg =~ /^purchases/i %>
+          <li><%= msg %></li>
+        <% end %>
+      <% end %>
+      <% @purchase.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= fields_for :subscriber do |s| %>
+    <%= s.hidden_field :source, value: 'buyer form' %>
+    <div class="row collapse">
+      <div class="large-2 columns">
+        <span class="prefix"><%= s.label :email, 'Email' %></span>
+      </div>
+      <div class="large-4 columns">
+        <%= s.text_field :email %>
+      </div>
+      <div class="large-6 columns"></div>
+    </div>
+
+    <div class="row collapse">
+      <div class="large-2 columns">
+        <span class="prefix"><%= s.label :first_name, 'First Name' %></span>
+      </div>
+      <div class="large-4 columns">
+        <%= s.text_field :first_name %>
+      </div>
+      <div class="large-6 columns"></div>
+    </div>
+
+    <div class="row collapse">
+      <div class="large-2 columns">
+        <span class="prefix"><%= s.label :last_name, 'Last Name' %></span>
+      </div>
+      <div class="large-4 columns">
+        <%= s.text_field :last_name %>
+      </div>
+      <div class="large-6 columns"></div>
+    </div>
+
+    <div class="row collapse">
+      <div class="large-2 columns">
+        <span class="prefix"><%= s.label :phone, 'Phone' %></span>
+      </div>
+      <div class="large-4 columns">
+        <%= s.text_field :phone %>
+      </div>
+      <div class="large-6 columns"></div>
+    </div>
+  <% end %>
+
+  <%= fields_for @purchase do |p| %>
+    <%= p.hidden_field :vehicle_id %>
+    <div class="row collapse">
+      <div class="large-2 columns">
+        <span class="prefix"><%= p.label :price, 'Purchase Price' %></span>
+      </div>
+      <div class="large-4 columns">
+        <%= p.text_field :price %>
+      </div>
+      <div class="large-6 columns"></div>
+    </div>
+
+    <div class="row collapse">
+      <div class="large-2 columns">
+        <span class="prefix"><%= p.label :profit, 'Profit' %></span>
+      </div>
+      <div class="large-4 columns">
+        <%= p.text_field :profit %>
+      </div>
+      <div class="large-6 columns"></div>
+    </div>
+    
+    <div class="row collapse">
+      <div class="large-2 columns">
+        <span class="prefix"><%= p.label :source, 'Source' %></span>
+      </div>
+      <div class="large-4 columns">
+        <%= p.select :source, ['Unknown','eBay','MCE site','Friend','Referral','Autotrader','Craigslist'] %>
+      </div>
+      <div class="large-6 columns"></div>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit 'Save' %>
+    <% unless @purchase.new_record? %>
+      <%= link_to 'Remove', vehicle_purchase_path(@vehicle, @purchase), confirm: 'Are you sure you want to remove this buyer?', class: 'button alert', method: 'delete' %>
+    <% end %>
+  </div>
+<% end %>
+</div>

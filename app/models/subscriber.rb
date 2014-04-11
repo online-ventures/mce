@@ -2,11 +2,11 @@ require 'digest/sha1'
 
 class Subscriber < ActiveRecord::Base
   acts_as_paranoid
-  attr_accessible :first_name, :last_name, :email, :phone, :token, :confirmed?, :subscription_plan, :opted_in_at, :source
+  attr_accessible :first_name, :last_name, :email, :phone, :token, :confirmed?, :subscription_plan, :opted_in_at, :source, :profit
 
-  has_many :interests
-  has_many :vehicles, through: :interests
+  has_and_belongs_to_many :vehicles, uniq: true
   has_many :inquiries
+  has_many :purchases
 
   before_create :create_token
   before_create :default_plan!
@@ -16,10 +16,17 @@ class Subscriber < ActiveRecord::Base
 
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates :email, presence: true, format: { with: %r{.+@.+\..+} }
+  validates :email, presence: true, format: { with: %r{.+@.+\..+} }, if: :require_email?
+  
+  def require_email?
+    source != 'buyer form'
+  end
 
   def self.find_or_initialize_by_params(params)
     s = (find_by_email(params[:email]) or self.new)
+    if params[:subscription_plan] and s.subscription_plan == 'daily'
+      params.delete :subscription_plan
+    end
     s.attributes = params
     s
   end
@@ -49,52 +56,69 @@ class Subscriber < ActiveRecord::Base
     self.plan = 'none'
   end
 
+  def source=(new_source)
+    unless source
+      write_attribute :source, new_source
+    end
+  end
+
   def plan
-    "#{subscription_plan} subscriber" if subscription_plan.present?
-    "no subscription plan"
+    subscription_plan.present? ? "#{subscription_plan} subscriber" : "no subscription plan"
   end
 
   def plan=(new_plan)
-    if ['weekly','daily','none'].include? new_plan
+    if ['monthly','weekly','daily','none'].include? new_plan
       new_plan = '' if new_plan == 'none'
       self.subscription_plan = new_plan
-      opted_in
+      unless new_plan == ''
+        self.opted_in_at = DateTime.now
+      end
       save
-      true
-    else
-      false
     end
   end
 
   def opt_in_date
-    opted_in_at.to_formatted_s(:short) if opted_in_at.present?
-    "Never opted in"
+    opted_in_at.present? ? opted_in_at.to_formatted_s(:short) : "Never opted in"
   end
 
   def source_text
-    source if source.present?
-    "none"
-  end
-
-  def interested_in(vehicle_id)
-    interests.where(vehicle_id: vehicle_id).first
-  end
-
-  def save_interest(params)
-    @interest = Interest.where(subscriber_id: id, vehicle_id: params[:vehicle_id]).first
-    if @interest
-      @interest.update_attributes params
-    else
-      @interest = interests.create params
-    end
-    @interest
+    source.present? ? source : "none"
   end
 
   def search_results
     { first_name: first_name, last_name: last_name, email: email, phone: phone }
   end
 
+  def likes(vehicle)
+    unless vehicles.where(id: vehicle.id).exists?
+      vehicles.push vehicle
+    end
+  end
+
+  def unlikes(vehicle)
+    vehicles.delete vehicle
+  end
+
+  def mixpanel_fields
+    [:first_name,:last_name,:email,:phone,:source,:subscription_plan]
+  end
+
+  def to_mixpanel_hash
+    serializable_hash only: mixpanel_fields
+  end
+
+  def to_mixpanel_json
+    to_json only: mixpanel_fields
+  end
+
   private
+
+    def to_hash(methods)
+      hash = {}
+      methods.each do |m|
+        send m
+      end
+    end
 
     def create_token
       self.token = Digest::SHA1.hexdigest("#{id} - #{email}")
@@ -104,12 +128,6 @@ class Subscriber < ActiveRecord::Base
 
     def default_plan!
       self.subscription_plan = ''
-    end
-
-    def opted_in
-      if opted_in_at.blank?
-        self.opted_in_at = DateTime.now
-      end
     end
 
     def send_confirmation

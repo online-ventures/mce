@@ -77,5 +77,8 @@ module MotorCarExport
 
     # Don't initialize just to compile assets
     config.assets.initialize_on_precompile = false
+
+    # Don't include model name in json
+    ActiveRecord::Base.include_root_in_json = false
   end
 end
