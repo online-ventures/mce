@@ -1,100 +1,100 @@
 .inventory.vehicles {
-	.filter-box {
-		margin-bottom: 1em;
-	}
-	#filter_status {
-		width: 25%;
-	}
-	label[for="filter_status"] {
-		display: inline-block;
-	}
+  .filter-box {
+    margin-bottom: 1em;
+  }
+  #filter_status {
+    width: 25%;
+  }
+  label[for="filter_status"] {
+    display: inline-block;
+  }
 
-	.vehicle {
-		border-top: 1px solid #ddd;
-		padding-top: 1em;
-		padding-bottom: 1em;
-		position: relative;
-		cursor: pointer;
-		&:first-of-type {
-			border-top: none;
-		}
-		>a>.row {
-			margin: 0;
-		}
-		.image {
-			background-size: cover;
-			background-repeat: no-repeat;
-			background-position: center;
-			min-height: emCalc(180px);
-			@include transition(background, 3s, ease);
-			overflow: hidden;
-			position: relative;
-			.banner {
-				color: white;
-				font-size: 1em;
-				padding: 0.25em;
-				width: 200px;
-				text-align: center;
-				display: inline-block;
-				position: absolute;
-				@include transform(rotate(-45deg));
+  .vehicle {
+    border-top: 1px solid #ddd;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    position: relative;
+    cursor: pointer;
+    &:first-of-type {
+      border-top: none;
+    }
+    >a>.row {
+      margin: 0;
+    }
+    .image {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      min-height: emCalc(180px);
+      @include transition(background, 3s, ease);
+      overflow: hidden;
+      position: relative;
+      .banner {
+        color: white;
+        font-size: 1em;
+        padding: 0.25em;
+        width: 200px;
+        text-align: center;
+        display: inline-block;
+        position: absolute;
+        @include transform(rotate(-45deg));
 
-				&.new {
-					background: $primary-color;
-					left: -54px;
-					top: 32px;
-				}
-				&.sold {
-					background: $success-color;
-					left: -70px;
-					top: 15px;
-				}
-				&.featured {
-					background: $alert-color;
-					left: -38px;
-					top: 50px;
-				}
-				i[class*=foundicon] {
-					font-size: 0.9em;
-					margin-right: 0.5em;
-				}
-			}
-		}
-		.info {
-			min-height: emCalc(180px);
-			padding-left: 2em;
+        &.new {
+          background: $primary-color;
+          left: -54px;
+          top: 32px;
+        }
+        &.sold {
+          background: $success-color;
+          left: -70px;
+          top: 15px;
+        }
+        &.featured {
+          background: $alert-color;
+          left: -38px;
+          top: 50px;
+        }
+        i[class*=foundicon] {
+          font-size: 0.9em;
+          margin-right: 0.5em;
+        }
+      }
+    }
+    .info {
+      min-height: emCalc(180px);
+      padding-left: 2em;
 
-			h3.subtitle {
-				color: #444;
-			}
+      h3.subtitle {
+        color: #444;
+      }
 
-			p {
-				margin-bottom: 0.5em;
-			}
-			.more-info {
-				position: absolute;
-				bottom: 0;
-				a.button {
-					margin: 0;
-				}
-			}
-		}
-	}
+      p {
+        margin-bottom: 0.5em;
+      }
+      .more-info {
+        position: absolute;
+        bottom: 0;
+        a.button {
+          margin: 0;
+        }
+      }
+    }
+  }
 }
 
 @media #{$screen} and (max-width: #{$small-screen}) {
-	.inventory.vehicles {
-		.vehicle {
-			.image {
-				margin-bottom: 1em;
-			}
-			.info {
-				min-height: 0em;
+  .inventory.vehicles {
+    .vehicle {
+      .image {
+        margin-bottom: 1em;
+      }
+      .info {
+        min-height: 0em;
 
-				.more-info {
-					position: static;
-				}
-			}
-		}
-	}
+        .more-info {
+          position: static;
+        }
+      }
+    }
+  }
 }

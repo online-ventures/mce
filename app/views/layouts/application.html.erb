@@ -18,6 +18,7 @@
   <% end %>
   <title><%= content_for?(:title) ? yield(:title) : 'Motor Car Export' %></title>
   <link rel="icon" type="image/png" href="<%= Rails.env == 'production' ? 'http://motor-car-export.s3.amazonaws.com/favicon.ico' : image_path('favicon.ico') %>"/>
+  <%= javascript_include_tag 'vendor/custom.modernizr' %>
   <%= stylesheet_link_tag "application", media: 'all' %>
   <% if Rails.env == 'production' %>
     <!-- start Google Analytics -->
@@ -45,40 +46,43 @@
   <script type="text/javascript">try { Typekit.load(); } catch (e) {}</script>
   <%= csrf_meta_tags %>
 
-  <!-- start Mixpanel -->
-<script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");
-for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f)}})(document,window.mixpanel||[]);
-mixpanel.init("719324205bb52c001c03ffce9fc315b6");</script>
-<!-- end Mixpanel -->
-
 </head>
 <body class="<%= "#{params[:controller]} #{params[:action]}" %>">
   <div class="topbar">
-    <a href="/"><h1><%= image_tag('logo.png') %>Motor Car Export</h1></a>
-
-    <a href="tel:2484468289"><h1 class="right" small-text="248.446.8289">Ph. 248.446.8289</h1></a>
+    <%= link_to "/", title: 'Motor Car Export' do %>
+      <%= image_tag('logo.svg', alt: 'Motor Car Export', class: 'logo svg') %>
+      <%= image_tag('logo.png', alt: 'Motor Car Export', class: 'logo no-svg') %>
+      <%= content_tag :h1 do %>
+        <%= image_tag('motor-car-export.svg', alt: 'Motor Car Export', class: 'title svg') %>
+        <%= image_tag('motor-car-export.png', alt: 'Motor Car Export', class: 'title no-svg') %>
+      <% end %>
+    <% end %>
   </div>
   <div class="topbar subnav">
     <nav>
       <ul>
-        <% if current_user %>
-          <li class="right">
-            <span class="a">Hello, <%= current_user.login.titlecase %></span> &bull; <%= link_to 'Member\'s Area', '/members' %>
-          </li>
-        <% end %>
-        <% params[:slug] ||= 'vehicles/inventory' %>
-        <% cache ['v1', "subnav-on-page/#{params[:slug]}"] do
-          {
-            'Vehicles' => inventory_vehicles_path,
-            'About' => '/about',
-            'Buyer Info' => '/buyer-info',
-            'FAQ' => '/faq',
-            'Contact' => '/contact'
-          }.each do |text, href| %>
-          <li <%= 'class=current' if href == "/#{params[:slug]}" %>>
-            <%= link_to(text, href) %></li>
+        <% cache ['v1', "subnav-on-page/#{params[:slug]}"] do %>
+          <% menu_elements do |text, href| %>
+            <li <%= 'class=current' if href == "/#{params[:slug] || 'vehicles/inventory'}" %>>
+              <%= link_to(text, href) %>
+            </li>
           <% end %>
         <% end %>
+        <li class="mobile-menu">
+          <a>Menu</a>
+          <select id="mobile-menu">
+            <% menu_elements do |text, href| %>
+              <option value="<%= href %>"><%= text %></option>
+            <% end %>
+          </select>
+        </li>
+        <li class="phone-number">
+          <% if current_user %>
+            <span class="a">Hello, <%= current_user.login.titlecase %></span> &bull; <%= link_to 'Member\'s Area', '/members' %>
+          <% else %>
+            <a href="tel:2484468289" small-text="248.446.8289">Ph. 248.446.8289</a>
+          <% end %>
+        </li>
       </ul>
     </nav>
   </div>
