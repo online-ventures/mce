@@ -42,10 +42,12 @@ class SubscribersController < ApplicationController
   # POST /subscribers.json
   def create
     @subscriber = Subscriber.find_or_initialize_by_params params[:subscriber]
+    @vehicle = Vehicle.where(params[:vehicle]).first
 
     respond_to do |format|
       if @subscriber.save
-        @subscriber.save_interest params[:interest]
+        @subscriber.likes @vehicle
+        mixpanel.track @subscriber.id, 'Vehicle subscriber', mixpanel_data
         format.html { redirect_to @subscriber, notice: 'Subscriber was successfully created.' }
         format.js { render nothing: true, status: :created }
       else
@@ -56,7 +58,9 @@ class SubscribersController < ApplicationController
   end
 
   def search
-    @subscriber = Subscriber.find_by_email params[:email]
+    if params[:email]
+      @subscriber = Subscriber.find_by_email params[:email]
+    end
     respond_to do |format|
       format.js do
         if @subscriber

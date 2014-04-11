@@ -87,13 +87,4 @@ MotorCarExport::Application.configure do
   config.action_mailer.default_url_options = {
     host: 'motorcarexport.com'
   }
-
-  #ActionController::Base.asset_host = Proc.new { |source|
-  #	if source.starts_with?('/images')
-  #		'http://images.motorcarexport.com'
-  # else
-  #   	'http://assets.motorcarexport.com'
-  # end
-  #}
-
 end

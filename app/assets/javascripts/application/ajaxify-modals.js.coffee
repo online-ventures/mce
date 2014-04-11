@@ -3,13 +3,14 @@ this.typeIsArray = Array.isArray || ( value ) -> return {}.toString.call( value 
 
 # Ajaxify a modal relying on certain foundation elements
 class AjaxifyModal
-  constructor: (modal, trigger_send) ->
+  constructor: (modal, trigger_send, success_callback = null) ->
     @modal = $("##{modal}")
     @trigger_event = $("##{trigger_send}")
     @form = @modal.find('form')
     @loading = @modal.find('.loading')
     @success = @modal.find('.success')
     @errors = @modal.find('.alert')
+    @callback = success_callback
     @trigger_event.on('ajax:send', =>
       @reset_form()
       @form.show().fadeOut duration: 200, done: =>
@@ -18,6 +19,7 @@ class AjaxifyModal
       @reset_form()
       @loading.show().fadeOut duration: 200, done: =>
         @success.fadeIn duration:200
+      @callback() if @callback
     ).on "ajax:error", (e, xhr, status, error) =>
       @reset_form()
       @loading.show().fadeOut duration: 200, done: =>
@@ -39,7 +41,8 @@ class AjaxifyModal
 
   show_form: ->
     @reset_form()
-    @form.fadeIn duration: 200
+    @form.fadeIn duration: 200, ->
+      @form.find('input:first').focus()
 
   receive_errors: (data) ->
     for model, errors of data
@@ -50,3 +53,37 @@ class AjaxifyModal
         @modal.find("##{model}_#{field}").addClass('error')
 
 @AjaxifyModal = AjaxifyModal
+
+class AjaxifyForm
+  constructor: (form_container) ->
+    @container = $("##{form_container}")
+    @form = @container.find('form')
+    @loading = @container.find('.loading')
+    @success = @container.find('.success')
+    @errors = @container.find('.alert')
+
+  reset_form: ->
+    @form.stop(true).hide()
+    @loading.stop(true).hide()
+    @loading.height @form.outerHeight()
+    @success.hide()
+    @errors.hide()
+    @container.find("input,textarea,select").removeClass('error')
+
+  show_loading: ->
+    @reset_form()
+    @loading.fadeIn duration: 200
+
+  show_form: ->
+    @reset_form()
+    @form.fadeIn duration: 200
+
+  receive_errors: (data) ->
+    for model, errors of data
+      for field, text of errors
+        if typeIsArray text
+          text = text.join ' and '
+        @errors.find("ul").append "<li>#{field.humanize()} #{text}</li>"
+        @container.find("##{model}_#{field}").addClass('error')
+
+@AjaxifyForm = AjaxifyForm

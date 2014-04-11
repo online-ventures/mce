@@ -25,9 +25,9 @@ class Vehicle < ActiveRecord::Base
 	belongs_to :transmission
 	belongs_to :warranty
 	has_many :photos
-  has_many :interests
-	has_many :subscribers, through: :interests
+  has_and_belongs_to_many :subscribers, uniq: true
   has_many :inquiries
+  has_one :purchase
 	accepts_nested_attributes_for :photos
 	has_and_belongs_to_many :features, join_table: 'vehicles_features', after_add: :touch, after_remove: :touch
 	has_and_belongs_to_many :disclosures, join_table: 'vehicles_disclosures', before_add: :validates_unique_disclosure
@@ -92,7 +92,35 @@ class Vehicle < ActiveRecord::Base
     save!
   end
 
+  def edit_purchase_path
+    routes = Rails.application.routes.url_helpers
+    return routes.edit_vehicle_purchase_path(self, purchase) if purchase
+    routes.new_vehicle_purchase_path(self)
+  end
+
+  def status_text
+    sold ? 'Sold' : status.name.titleize
+  end
+
+  def to_mixpanel_hash
+    {
+      stock: stock_number,
+      year: year,
+      make: make.name,
+      model: model.name,
+      title: title.name,
+      status: status.name,
+      damage: damage.name,
+      price: price
+    }
+  end
+
+  def to_mixpanel_json
+    ActiveSupport::JSON.encode to_mixpanel_hash
+  end
+
 	private
+
 	def ensure_it_has_the_intro_disclosure
 		the_intro_disclosure = Disclosure.find(1)
 

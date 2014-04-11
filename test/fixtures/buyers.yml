@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  subscriber_id: 1
+  vehicle_id: 1
+  price: 1.5
+  profit: 1.5
+
+two:
+  subscriber_id: 1
+  vehicle_id: 1
+  price: 1.5
+  profit: 1.5

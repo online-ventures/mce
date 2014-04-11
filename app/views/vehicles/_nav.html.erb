@@ -2,4 +2,5 @@
 <%= content_tag :li, link_to('Edit Vehicle', edit_vehicle_path(@vehicle), class: 'secondary button') unless params[:action] == 'edit' %>
 <%= content_tag :li, link_to('Edit Photos', vehicle_photos_path(@vehicle), class: 'secondary button') unless params[:controller] == 'photos' %>
 <%= content_tag :li, link_to('Edit Features', vehicle_features_path(@vehicle), class: 'secondary button') unless params[:controller] == 'features' %>
+<%= content_tag :li, link_to(@vehicle.purchase ? 'Edit Buyer' : 'Add Buyer', @vehicle.edit_purchase_path, class: 'secondary button') unless params[:controller] == 'buyers' %>
 <%= content_tag :li, link_to("#{@vehicle.deleted_at ? 'Una' : 'A'}rchive Vehicle", vehicle_path(@vehicle), data: {remote: true, method: :delete}, class: 'alert button') %>

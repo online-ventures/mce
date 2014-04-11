@@ -1,38 +1,37 @@
 <% cache ["v6", "partial", vehicle] do %>
-	<div class="vehicle large-12 columns <%= status(vehicle) %> <%= 'featured' if vehicle.featured? %>">
-	  <div class="row">
-		<div class="image large-4 columns" style="background-image: url(<%= featured_image_url(vehicle) %>)">
-		  <%= new_banner(vehicle) %>
-		  <%= sold_banner(vehicle) %>
-		  <%= featured_banner(vehicle) %>
-		</div>
+  <div class="vehicle large-12 columns <%= status(vehicle) %> <%= 'featured' if vehicle.featured? %>">
+  <div class="row">
+    <div class="image large-4 columns" style="background-image: url(<%= featured_image_url(vehicle) %>)">
+      <%= new_banner(vehicle) %>
+      <%= sold_banner(vehicle) %>
+      <%= featured_banner(vehicle) %>
+    </div>
 
-		<div class="info large-8 columns">
-		  <div class="row">
-			<div class="large-12 small-centered columns">
-			  <h2><%= vehicle %></h2>
+    <div class="info large-8 columns">
+      <div class="row">
+        <div class="large-12 small-centered columns">
+          <h2><%= vehicle %></h2>
 
-			  <h3 class="subtitle">
-				<%= show_if '<span>$1</span>', price(vehicle) %>
-				<%= show_if ' &ndash; ', '', !!(price(vehicle) and vehicle.subtitle.present?) %>
-				<%= show_if '<span class="no-wrap">$1</span>', vehicle.subtitle, vehicle.subtitle.present? %>
-			  </h3>
+          <h3 class="subtitle">
+            <%= show_if '<span>$1</span>', price(vehicle) %>
+            <%= show_if ' &ndash; ', '', !!(price(vehicle) and vehicle.subtitle.present?) %>
+            <%= show_if '<span class="no-wrap">$1</span>', vehicle.subtitle, vehicle.subtitle.present? %>
+          </h3>
 
-			  <p>
-				<%= show_if '<span class="no-wrap">$1 miles</span>', miles(vehicle) %>
-				<%= show_if ' &bull; ', '', !!(miles(vehicle) and (damage(vehicle) or stock_number(vehicle))) %>
-				<%= show_if '<span class="no-wrap">$1 Damage</span>', damage(vehicle) %>
-				<%= show_if ' &bull; ', '', !!(stock_number(vehicle) and (damage(vehicle) or miles(vehicle))) %>
-				<%= show_if '<span class="no-wrap">Stock #$1</span>', stock_number(vehicle) %>
-			  </p>
+          <p>
+          <%= show_if '<span class="no-wrap">$1 miles</span>', miles(vehicle) %>
+          <%= show_if ' &bull; ', '', !!(miles(vehicle) and (damage(vehicle) or stock_number(vehicle))) %>
+          <%= show_if '<span class="no-wrap">$1 Damage</span>', damage(vehicle) %>
+          <%= show_if ' &bull; ', '', !!(stock_number(vehicle) and (damage(vehicle) or miles(vehicle))) %>
+          <%= show_if '<span class="no-wrap">Stock #$1</span>', stock_number(vehicle) %>
+          </p>
 
-			</div>
-			<div class="more-info large-5 small-12 columns left">
-        <a data-stock-number="<%= vehicle.stock_number %>" data-name="<%= vehicle %>" data-inventory-list-link href="<%= seo_vehicle_path(vehicle, name: vehicle.to_s('-')) %>" title="<%= vehicle %>" class="success expand radius button">More
-				Info &raquo;</a>
-			</div>
-		  </div>
-		</div>
-	  </div>
-	</div>
+        </div>
+        <div class="more-info large-5 small-12 columns left">
+          <a href="<%= seo_vehicle_path(vehicle, name: vehicle.to_s('-'), mps: 'inventory-list-link') %>" title="<%= vehicle.to_s %>" class="success expand radius button">More Info &raquo;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <% end %>

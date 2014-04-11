@@ -23,7 +23,6 @@ unless $slider.self.length == 0
 
   $window.resize ->
     $active = $slider.active()
-    console.log $slider.self.outerWidth(), $active.find('img').outerWidth()
     if $slider.self.outerWidth() > $active.find('img').outerWidth()
       $slider.number.addClass('dark')
     else
@@ -46,6 +45,7 @@ $(document).ready ->
         $('#email-form #subscriber_phone').val data.phone
       complete: ->
         contactForm.show_form()
+        $('#email-form #subscriber_first_name').focus()
     )
   $('#subscribe-form #subscriber_email').blur ->
     subscribeForm.show_loading()
@@ -59,4 +59,5 @@ $(document).ready ->
         $('#subscribe-form #subscriber_phone').val data.phone
       complete: ->
         subscribeForm.show_form()
+        $('#subscribe-form #subscriber_first_name').focus()
     )

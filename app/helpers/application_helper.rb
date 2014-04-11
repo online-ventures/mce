@@ -52,7 +52,7 @@ module ApplicationHelper
 			if params[:deleted] and params[:deleted] == 'true'
 				link_to "Show Active #{klass.to_s.pluralize}", eval("#{klass.to_s.tableize}_path"), class: 'button right'
 			else
-				link_to "Show Deactivated #{klass.to_s.pluralize}", '?deleted=true', class: 'button right'
+				link_to "Show Deleted #{klass.to_s.pluralize}", '?deleted=true', class: 'button right'
 			end
 		end
 	end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140328135820) do
+ActiveRecord::Schema.define(:version => 20140407193714) do
 
   create_table "body_types", :force => true do |t|
     t.string   "name"
@@ -66,17 +66,6 @@ ActiveRecord::Schema.define(:version => 20140328135820) do
     t.string   "error"
   end
 
-  create_table "interests", :force => true do |t|
-    t.integer  "subscriber_id"
-    t.integer  "vehicle_id"
-    t.datetime "purchased_at"
-    t.float    "purchase_price"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-  end
-
-  add_index "interests", ["subscriber_id", "vehicle_id"], :name => "index_interests_on_subscriber_id_and_vehicle_id", :unique => true
-
   create_table "makes", :force => true do |t|
     t.string "name"
   end
@@ -114,6 +103,16 @@ ActiveRecord::Schema.define(:version => 20140328135820) do
 
   add_index "photos", ["vehicle_id"], :name => "index_photos_on_vehicle_id"
 
+  create_table "purchases", :force => true do |t|
+    t.integer  "subscriber_id"
+    t.integer  "vehicle_id"
+    t.float    "price"
+    t.float    "profit"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.string   "source"
+  end
+
   create_table "requests", :force => true do |t|
     t.integer  "subscriber_id"
     t.integer  "vehicle_id"
@@ -147,6 +146,13 @@ ActiveRecord::Schema.define(:version => 20140328135820) do
     t.string   "source"
     t.string   "email_errors",      :default => ""
   end
+
+  create_table "subscribers_vehicles", :id => false, :force => true do |t|
+    t.integer "subscriber_id"
+    t.integer "vehicle_id"
+  end
+
+  add_index "subscribers_vehicles", ["subscriber_id", "vehicle_id"], :name => "index_subscribers_vehicles_on_subscriber_id_and_vehicle_id", :unique => true
 
   create_table "suspensions", :force => true do |t|
     t.string "name"

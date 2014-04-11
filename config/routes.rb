@@ -11,6 +11,8 @@ MotorCarExport::Application.routes.draw do
     resources :features
     get '/:name', on: :member, to: 'vehicles#show', as: 'seo', name: /\d{4}\-[^\.]*/
     put '/restore', on: :member, to: 'vehicles#restore', as: 'restore'
+    resources :purchases, except: [:show, :index]
+    resources :inquiries, only: [:new, :create]
   end
 
   resources :subscribers do
@@ -26,7 +28,7 @@ MotorCarExport::Application.routes.draw do
     post '/to/:to', on: :member, to: 'features#move'
   end
 
-  resources :requests, :users, :user_sessions, :inquiries
+  resources :requests, :users, :user_sessions
 
   # Create these resources, and add custom restore option
   [:titles, :pages, :warranties, :drivables, :body_types, :disclosures].each do |resource|

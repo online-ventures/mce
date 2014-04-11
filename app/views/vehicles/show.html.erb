@@ -10,6 +10,8 @@
 
 <% cache ["v15", @vehicle] do %>
 
+  <%= tag :div, id: 'vehicle-data', data: {vehicle: @vehicle.to_mixpanel_json} %>
+
 	<% unless @vehicle.photos.empty? %>
 		<ul class="loading" data-orbit data-options="timer_speed:2500; animation_speed:50; bullets: false;">
 			<% @vehicle.photos.each do |photo| %>
@@ -250,12 +252,10 @@
   </div>
   <div data-alert class="alert-box alert radius hidden">
   </div>
-  <%= form_for @inquiry, remote: true do |i| %>
+  <%= form_for [@vehicle, @inquiry], method: 'post', remote: true do |i| %>
     <%= i.hidden_field :vehicle_id %>
-    <%= fields_for @interest do |n| %>
-      <%= n.hidden_field :vehicle_id %>
-    <% end %>
     <%= fields_for @subscriber do |s| %>
+      <%= s.hidden_field :source, value: 'inquiry form' %>
       <div class="row">
         <div class="small-12 large-6 columns">
           <div class="row">
@@ -311,44 +311,43 @@
   <div data-alert class="alert-box alert radius hidden">
   </div>
   <%= form_for @subscriber, remote: true do |s| %>
-    <%= fields_for @interest do |i| %>
-      <%= i.hidden_field :vehicle_id %>
+    <%= fields_for @vehicle do |v| %>
+      <%= v.hidden_field :id %>
     <% end %>
-    <%= fields_for @subscriber do |s| %>
-      <%= s.hidden_field :subscription_plan, value: 'weekly' %>
-      <div class="row">
-        <div class="small-12 large-2 columns">
-          <%= s.label :email, 'Email', class: 'inline' %>
-        </div>
-        <div class="small-12 large-10 columns">
-          <%= s.text_field :email %>
-        </div>
+    <%= s.hidden_field :subscription_plan, value: 'weekly' %>
+    <%= s.hidden_field :source, value: 'subscribe form' %>
+    <div class="row">
+      <div class="small-12 large-2 columns">
+        <%= s.label :email, 'Email', class: 'inline' %>
       </div>
-      <div class="row">
-        <div class="small-12 large-2 columns">
-          <%= s.label :first_name, 'First Name', class: 'inline' %>
-        </div>
-        <div class="small-12 large-10 columns">
-          <%= s.text_field :first_name %>
-        </div>
+      <div class="small-12 large-10 columns">
+        <%= s.text_field :email %>
       </div>
-      <div class="row">
-        <div class="small-12 large-2 columns">
-          <%= s.label :last_name, 'Last Name', class: 'inline' %>
-        </div>
-        <div class="small-12 large-10 columns">
-          <%= s.text_field :last_name %>
-        </div>
+    </div>
+    <div class="row">
+      <div class="small-12 large-2 columns">
+        <%= s.label :first_name, 'First Name', class: 'inline' %>
       </div>
-      <div class="row">
-        <div class="small-12 large-2 columns">
-          <%= s.label :phone, 'Phone', class: 'inline' %>
-        </div>
-        <div class="small-12 large-10 columns">
-          <%= s.text_field :phone %>
-        </div>
-      </DIV>
-      <%= s.submit 'Subscribe' %>
-    <% end %>
+      <div class="small-12 large-10 columns">
+        <%= s.text_field :first_name %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="small-12 large-2 columns">
+        <%= s.label :last_name, 'Last Name', class: 'inline' %>
+      </div>
+      <div class="small-12 large-10 columns">
+        <%= s.text_field :last_name %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="small-12 large-2 columns">
+        <%= s.label :phone, 'Phone', class: 'inline' %>
+      </div>
+      <div class="small-12 large-10 columns">
+        <%= s.text_field :phone %>
+      </div>
+    </div>
+    <%= s.submit 'Subscribe' %>
   <% end %>
 </div>
