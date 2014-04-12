@@ -81,8 +81,8 @@ MotorCarExport::Application.configure do
     address: 'smtp.mandrillapp.com',
     port: 587,
     domain: 'motorcarexport.com',
-    user_name: Rails.configuration.mandrill[:username],
-    password: Rails.configuration.mandrill[:password]
+    user_name: ENV['MANDRILL_USERNAME'],
+    password: ENV['MANDRILL_PASSWORD']
   }
   config.action_mailer.default_url_options = {
     host: 'motorcarexport.com'
