@@ -42,6 +42,8 @@ class ApplicationController < ActionController::Base
       end
       if params[:mps]
         data.merge! source: params[:mps]
+      elsif cookies[:mps]
+        data.merge! source: cookies[:mps]
       end
       if additional_data
         data.merge! additional_data

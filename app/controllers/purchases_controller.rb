@@ -25,7 +25,7 @@ class PurchasesController < ApplicationController
 
     respond_to do |format|
       if @subscriber.save
-        mixpanel.track @subscriber.id, 'Buyer added', mixpanel_data({source: 'Buyer form'})
+        mixpanel.track @subscriber.id, 'Buyer added', mixpanel_data(source: @purchase.source)
         format.html { redirect_to edit_vehicle_path(@vehicle), notice: 'Buyer successfully added for this vehicle.' }
         format.json { render json: @purchase, status: :created, location: @purchase }
       else
