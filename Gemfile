@@ -21,9 +21,8 @@ end
 
 group :development do
   gem 'awesome_print'
+  gem 'spring'
 end
-
-gem 'spring', group: :development
 
 gem 'zurb-foundation'
 
