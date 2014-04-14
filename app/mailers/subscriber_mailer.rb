@@ -48,6 +48,7 @@ class SubscriberMailer < ActionMailer::Base
         name: message.subscriber.name,
         phone: message.subscriber.phone.strip,
         vehicle_link: vehicle_url(message.vehicle),
+        vehicle_main_image: vehicle.featured_url,
         body: RDiscount.new(message.body).to_html
       }, message.subscriber)
     })
