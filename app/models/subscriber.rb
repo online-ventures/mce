@@ -56,6 +56,7 @@ class Subscriber < ActiveRecord::Base
     self.plan = 'none'
   end
 
+  # Source can only be set once
   def source=(new_source)
     unless source
       write_attribute :source, new_source

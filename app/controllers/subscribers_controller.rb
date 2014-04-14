@@ -119,6 +119,10 @@ class SubscribersController < ApplicationController
     @subscriber = Subscriber.find_by_token params[:id]
     if @subscriber
       @subscriber.plan = 'weekly' unless @subscriber.subscription_plan == 'daily'
+      if params[:mps] and @subscriber.source.blank?
+        @subscriber.source = params[:mps]
+        @subscriber.save
+      end
       render 'changes_saved'
     else
       redirect_to root_path, notice: 'Could not locate your subscription.'
