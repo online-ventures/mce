@@ -11,7 +11,8 @@ class SubscriberMailer < ActionMailer::Base
   end
 
   def prepare_template_vars(data, subscriber)
-    data[:CANCEL_LINK] = cancel_subscribers_url(subscriber.token)
+    data[:CANCEL_LINK] = cancel_subscriber_url(subscriber.token)
+    data[:SUBSCRIBE_LINK] = subscribe_subscriber_url(subscriber.token)
     data[:SUBSCRIBED] = subscriber.subscribed?
     formatted = []
     data.each do |key, value| 
@@ -48,7 +49,6 @@ class SubscriberMailer < ActionMailer::Base
         name: message.subscriber.name,
         phone: message.subscriber.phone.strip,
         vehicle_link: vehicle_url(message.vehicle),
-        vehicle_main_image: vehicle.featured_url,
         body: RDiscount.new(message.body).to_html
       }, message.subscriber)
     })
@@ -72,8 +72,7 @@ class SubscriberMailer < ActionMailer::Base
         name: message.subscriber.name,
         vehicle_title: message.vehicle.to_s,
         vehicle_link: vehicle_url(message.vehicle),
-        subscribe_daily: change_plan_subscribers_url('daily', message.subscriber.token),
-        subscribe_weekly: change_plan_subscribers_url('weekly', message.subscriber.token)
+        vehicle_main_image: Rails.env.production? ? message.vehicle.featured_url : 'http://motor-car-export.s3.amazonaws.com/86/1.jpg',
       }, message.subscriber),
     })
     async = false

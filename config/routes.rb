@@ -16,9 +16,12 @@ MotorCarExport::Application.routes.draw do
   end
 
   resources :subscribers do
+    member do
+      get 'set_subscription_plan/:plan', to: 'subscribers#set_subscription_plan', as: 'change_plan'
+      get 'subscribe', to: 'subscribers#subscribe', as: 'subscribe'
+      get 'cancel', to: 'subscribers#cancel', as: 'cancel'
+    end
     collection do
-      get 'set_subscription_plan/:plan/:token', to: 'subscribers#set_subscription_plan', as: 'change_plan'
-      get 'cancel/:token', to: 'subscribers#cancel', as: 'cancel'
       get :search
     end
   end

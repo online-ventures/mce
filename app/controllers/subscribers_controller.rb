@@ -105,6 +105,34 @@ class SubscribersController < ApplicationController
   end
 
   # TODO: Merge these two methods gracefully
+  def set_subscription_plan
+    @subscriber = Subscriber.find_by_token params[:token]
+    if @subscriber
+      @subscriber.plan = params[:plan]
+      render 'changes_saved'
+    else
+      redirect_to root_path, notice: 'Could not locate your subscription.'
+    end
+  end
+
+  def subscribe
+    @subscriber = Subscriber.find_by_token params[:id]
+    if @subscriber
+      @subscriber.plan = 'weekly' unless @subscriber.subscription_plan == 'daily'
+      render 'changes_saved'
+    else
+      redirect_to root_path, notice: 'Could not locate your subscription.'
+    end
+  end
+
+  def cancel
+    if @subscriber = Subscriber.find_by_token(params[:id])
+      @subscriber.cancel!
+    else
+      redirect_to root_path, notice: 'Could not locate your subscription account.  Please email us if you continue to have trouble.'
+    end
+  end
+
   def confirm
     @subscriber = Subscriber.find_by_token(params[:code])
     if @subscriber
@@ -113,23 +141,6 @@ class SubscribersController < ApplicationController
       redirect_to add_to_subscriber_path(@subscriber)
     else
       redirect_to root_path, notice: 'That code is no longer valid.'
-    end
-  end
-
-  def set_subscription_plan
-    @subscriber = Subscriber.find_by_token params[:token]
-    if @subscriber and @subscriber.plan = params[:plan]
-      render 'changes_saved'
-    else
-      redirect_to root_path, notice: 'Could not locate your subscription.'
-    end
-  end
-
-  def cancel
-    if @subscriber = Subscriber.find_by_token(params[:token])
-      @subscriber.cancel!
-    else
-      redirect_to root_path, notice: 'Could not locate your subscription account.  Please email us if you continue to have trouble.'
     end
   end
 
