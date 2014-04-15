@@ -29,4 +29,4 @@ $body.children().not('script, .typekit-badge, #container').each ->
   content_height += $(this).outerHeight()
 $('body > #container').css('min-height', $(window).height() - content_height)
 
-$(document).foundation()
+$(document).foundation('orbit', variable_height: true).foundation()
