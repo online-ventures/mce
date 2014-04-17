@@ -108,6 +108,7 @@ class Vehicle < ActiveRecord::Base
       year: year,
       make: make.name,
       model: model.name,
+      bodytype: body_type.name,
       title: title.name,
       status: status.name,
       damage: damage.name,
