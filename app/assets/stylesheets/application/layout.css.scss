@@ -141,32 +141,11 @@ article#content {
 
 footer {
   color: #eee;
-  background: #2a2a2a;
+  background: #343534;
   padding: 1.5em;
 
   ul {
     list-style-type: none;
-  }
-  $sprite-scale-factor: 0.4;
-  @function calcSize($size) {
-    @return round($size * $sprite-scale-factor);
-  }
-  $canvas-height: calcSize(436);
-  $canvas-width: calcSize(300);
-  $motors-height: calcSize(146);
-  $motors-width: calcSize(243);
-  $seller-height: calcSize(137);
-  $seller-width: calcSize(300);
-  $paypal-height: calcSize(153);
-  $paypal-width: $paypal-height;
-
-  .logo {
-    @include background(url(asset-path('ebay-paypal-sprite.png', image)));
-    color: rgba(0,0,0,0);
-    display: inline-block;
-    vertical-align: top;
-    background-size: #{$canvas-width}px #{$canvas-height}px;
-    margin: 0.4em 0.8em;
   }
 }
 
