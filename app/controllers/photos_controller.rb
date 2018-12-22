@@ -27,7 +27,7 @@ class PhotosController < ApplicationController
     @start_time = Time.now
     @vehicle = Vehicle.find(params[:vehicle_id])
     unless @vehicle.nil?
-      @photo = @vehicle.photos.new(params[:photo])
+      @photo = @vehicle.photos.new(photo_params)
       if @photo.valid?
         @photo.save
         redirect_to vehicle_photos_path(@vehicle), notice: 'Successfully uploaded'
@@ -48,5 +48,11 @@ class PhotosController < ApplicationController
   def destroy_all
     @vehicle = Vehicle.find(params[:vehicle_id])
     @vehicle.photos.destroy_all
+  end
+
+  private
+
+  def photo_params
+    params.require(:photo).permit(:image, :vehicle_id, :vehicles_photo_id, :deleted_at, :featured)
   end
 end

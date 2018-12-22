@@ -1,6 +1,4 @@
-class Status < ActiveRecord::Base
-  attr_accessible :name
-
+class Status < ApplicationRecord
   def to_s(join=' ')
     name.downcase.split(' ').join(join)
   end

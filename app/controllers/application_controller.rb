@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
       end
       # Detect a subscriber from cookie
       if session[:mpsub]
-        @subscriber = Subscriber.find_by_token session[:mpsub]
+        @subscriber = Subscriber.find_by(token: session[:mpsub])
       end
     end
 

@@ -1,4 +1,4 @@
-class Inquiry < ActiveRecord::Base
+class Inquiry < ApplicationRecord
   attr_accessible :body, :subscriber_id, :vehicle_id, :error
 
   # Relationships

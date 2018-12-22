@@ -13,8 +13,8 @@ class InquiriesController < ApplicationController
   # POST /inquiries
   # POST /inquiries.json
   def create
-    @inquiry = Inquiry.new(params[:inquiry])
-    @subscriber = @inquiry.subscriber = Subscriber.find_or_initialize_by_params params[:subscriber]
+    @inquiry = Inquiry.new(inquiry_params)
+    @subscriber = @inquiry.subscriber = Subscriber.find_or_initialize_by subscriber_params
     @vehicle = Vehicle.find params[:vehicle_id]
 
     respond_to do |format|
@@ -32,5 +32,26 @@ class InquiriesController < ApplicationController
         end
       end
     end
+  end
+
+  private
+
+  def inquiry_params
+    params.require(:inquiry).permit(:body, :subscriber_id, :vehicle_id, :error)
+  end
+
+  def subscriber_params
+    params.require(:subscriber).permit(
+      :first_name,
+      :last_name,
+      :email,
+      :phone,
+      :token,
+      :confirmed?,
+      :subscription_plan,
+      :opted_in_at,
+      :source,
+      :profit
+    )
   end
 end

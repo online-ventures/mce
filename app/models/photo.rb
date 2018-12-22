@@ -1,7 +1,6 @@
 require 'zip'
-class Photo < ActiveRecord::Base
+class Photo < ApplicationRecord
   # populates deleted_at, and prevents deletion
-  attr_accessible :image, :vehicle_id, :vehicles_photo_id, :deleted_at, :featured?
   belongs_to :vehicle, touch: true
 
   has_attached_file :image
@@ -12,8 +11,8 @@ class Photo < ActiveRecord::Base
   before_save :detect_zipped_file
   after_save :remove_zipped_file
 
-  scope :active, where(deleted_at: nil)
-  scope :inactive, where('deleted_at IS NOT NULL')
+  scope :active, -> { where(deleted_at: nil) }
+  scope :inactive, -> { where('deleted_at IS NOT NULL') }
   scope :prioritize_id, ->(id) { order("id = '#{id || 0}' DESC, id ASC") } # put featured first, then normal sort
 
   def image?
@@ -34,6 +33,18 @@ class Photo < ActiveRecord::Base
     else
       false
     end
+  end
+
+  def self.purge_old_photos
+    unscoped.joins(:vehicle).where('"vehicles".deleted_at < ?', 6.months.ago).each do |photo|
+      photo.delete_image_and_record
+    end
+  end
+
+  def delete_image_and_record
+    self.image = nil
+    save
+    destroy
   end
 
   private

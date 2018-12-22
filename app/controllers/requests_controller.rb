@@ -39,7 +39,7 @@ class RequestsController < ApplicationController
 
   # POST /requests
   def create
-    @request = Request.new(params[:request])
+    @request = Request.new(request_params)
     if @request.valid?
       @request.is_duplicate? || @request.save # Prevent Duplicate Requests
       if @request.subscriber.new_record?
@@ -60,7 +60,7 @@ class RequestsController < ApplicationController
     @request = Request.find(params[:id])
 
     respond_to do |format|
-      if @request.update_attributes(params[:request])
+      if @request.update_attributes(request_params)
         format.html { redirect_to @request, notice: 'Request was successfully updated.' }
         format.json { head :no_content }
       else
@@ -80,5 +80,11 @@ class RequestsController < ApplicationController
       format.html { redirect_to requests_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def request_params
+    params.require(:request).permit(:body_type_id, :subscriber_id, :vehicle_id, :subscriber)
   end
 end

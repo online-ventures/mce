@@ -1,3 +1,2 @@
-class Engine < ActiveRecord::Base
-  attr_accessible :name
+class Engine < ApplicationRecord
 end

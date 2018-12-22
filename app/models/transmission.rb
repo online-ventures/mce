@@ -1,3 +1,2 @@
-class Transmission < ActiveRecord::Base
-  attr_accessible :name
+class Transmission < ApplicationRecord
 end

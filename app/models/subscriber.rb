@@ -1,8 +1,7 @@
 require 'digest/sha1'
 
-class Subscriber < ActiveRecord::Base
+class Subscriber < ApplicationRecord
   acts_as_paranoid
-  attr_accessible :first_name, :last_name, :email, :phone, :token, :confirmed?, :subscription_plan, :opted_in_at, :source, :profit
 
   has_and_belongs_to_many :vehicles, uniq: true
   has_many :inquiries
@@ -12,18 +11,18 @@ class Subscriber < ActiveRecord::Base
   before_create :default_plan!
   #after_save :send_confirmation
 
-  scope :confirmed, where(confirmed: true)
+  scope :confirmed, -> { where(confirmed: true) }
 
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, presence: true, format: { with: %r{.+@.+\..+} }, if: :require_email?
-  
+
   def require_email?
     source != 'buyer form'
   end
 
   def self.find_or_initialize_by_params(params)
-    s = (find_by_email(params[:email]) or self.new)
+    s = (find_by(email: params[:email]) or self.new)
     if params[:subscription_plan] and s.subscription_plan == 'daily'
       params.delete :subscription_plan
     end

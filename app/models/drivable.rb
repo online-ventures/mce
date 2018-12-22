@@ -1,6 +1,5 @@
-class Drivable < ActiveRecord::Base
+class Drivable < ApplicationRecord
   acts_as_paranoid
-  attr_accessible :name, :body
 
   def to_s(join=' ')
     name.downcase.split(' ').join(join)

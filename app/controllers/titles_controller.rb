@@ -43,7 +43,7 @@ class TitlesController < ApplicationController
   # POST /titles
   # POST /titles.json
   def create
-    @title = Title.new(params[:title])
+    @title = Title.new(title_params)
 
     respond_to do |format|
       if @title.save
@@ -62,7 +62,7 @@ class TitlesController < ApplicationController
     @title = Title.find(params[:id])
 
     respond_to do |format|
-      if @title.update_attributes(params[:title])
+      if @title.update_attributes(title_params)
         format.html { redirect_to @title, notice: 'Title was successfully updated.' }
         format.json { head :no_content }
       else
@@ -92,5 +92,11 @@ class TitlesController < ApplicationController
       format.html { redirect_to titles_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def title_params
+    params.require(:title).permit(:name, :body)
   end
 end

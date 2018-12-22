@@ -1,6 +1,4 @@
-class Purchase < ActiveRecord::Base
-  attr_accessible :price, :profit, :subscriber_id, :vehicle_id, :source
-
+class Purchase < ApplicationRecord
   belongs_to :subscriber
   belongs_to :vehicle
 

@@ -1,6 +1,5 @@
-class Request < ActiveRecord::Base
+class Request < ApplicationRecord
   acts_as_paranoid
-  attr_accessible :body_type_id, :subscriber_id, :vehicle_id, :subscriber
 
   belongs_to :body_type
   belongs_to :subscriber, touch: true
@@ -12,7 +11,7 @@ class Request < ActiveRecord::Base
   def initialize(request=nil)
     # properly assign subscriber
     if request && request[:subscriber] && request[:subscriber][:email]
-      request[:subscriber] = Subscriber.find_or_initialize_by_email(request[:subscriber][:email])
+      request[:subscriber] = Subscriber.find_or_initialize_by email: request[:subscriber][:email]
     end
     super(request)
   end

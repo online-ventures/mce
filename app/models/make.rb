@@ -1,5 +1,4 @@
-class Make < ActiveRecord::Base
-  attr_accessible :name
+class Make < ApplicationRecord
   has_many :models
 
   def to_s

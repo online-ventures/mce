@@ -42,7 +42,7 @@ class DrivablesController < ApplicationController
   # POST /drivables
   # POST /drivables.json
   def create
-    @drivable = Drivable.new(params[:drivable])
+    @drivable = Drivable.new(drivable_params)
 
     respond_to do |format|
       if @drivable.save
@@ -61,7 +61,7 @@ class DrivablesController < ApplicationController
     @drivable = Drivable.unscoped.find(params[:id])
 
     respond_to do |format|
-      if @drivable.update_attributes(params[:drivable])
+      if @drivable.update_attributes(drivable_params)
         format.html { redirect_to drivables_path, notice: 'Drivable was successfully updated.' }
         format.json { head :no_content }
       else
@@ -91,5 +91,11 @@ class DrivablesController < ApplicationController
       format.html { redirect_to drivables_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def drivable_params
+    params.require(:drivable).permit(:name, :body)
   end
 end

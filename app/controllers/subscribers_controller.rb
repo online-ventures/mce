@@ -41,7 +41,7 @@ class SubscribersController < ApplicationController
   # POST /subscribers
   # POST /subscribers.json
   def create
-    @subscriber = Subscriber.find_or_initialize_by_params params[:subscriber]
+    @subscriber = Subscriber.find_or_initialize_by subscriber_params
     @vehicle = Vehicle.where(params[:vehicle]).first
 
     respond_to do |format|
@@ -59,7 +59,7 @@ class SubscribersController < ApplicationController
 
   def search
     if params[:email]
-      @subscriber = Subscriber.find_by_email params[:email]
+      @subscriber = Subscriber.find_by email: params[:email]
     end
     respond_to do |format|
       format.js do
@@ -77,7 +77,7 @@ class SubscribersController < ApplicationController
   def update
     @subscriber = Subscriber.find(params[:id])
     respond_to do |format|
-      if @subscriber.update_attributes(params[:subscriber])
+      if @subscriber.update_attributes(subscriber_params)
         if session[:subscriber]
           session[:subscriber] = nil
           format.html { redirect_to root_path, notice: 'Thanks for adding more info! We\'ll get back to you soon.'}
@@ -106,7 +106,7 @@ class SubscribersController < ApplicationController
 
   # TODO: Merge these two methods gracefully
   def set_subscription_plan
-    @subscriber = Subscriber.find_by_token params[:token]
+    @subscriber = Subscriber.find_by token: params[:token]
     if @subscriber
       @subscriber.plan = params[:plan]
       render 'changes_saved'
@@ -116,7 +116,7 @@ class SubscribersController < ApplicationController
   end
 
   def subscribe
-    @subscriber = Subscriber.find_by_token params[:id]
+    @subscriber = Subscriber.find_by token: params[:id]
     if @subscriber
       @subscriber.plan = 'weekly' unless @subscriber.subscription_plan == 'daily'
       if params[:mps] and @subscriber.source.blank?
@@ -130,7 +130,7 @@ class SubscribersController < ApplicationController
   end
 
   def cancel
-    if @subscriber = Subscriber.find_by_token(params[:id])
+    if @subscriber = Subscriber.find_by token: params[:id]
       @subscriber.cancel!
     else
       redirect_to root_path, notice: 'Could not locate your subscription account.  Please email us if you continue to have trouble.'
@@ -138,7 +138,7 @@ class SubscribersController < ApplicationController
   end
 
   def confirm
-    @subscriber = Subscriber.find_by_token(params[:code])
+    @subscriber = Subscriber.find_by token: params[:code]
     if @subscriber
       @subscriber.confirm
       session[:subscriber] = @subscriber.token
@@ -155,5 +155,22 @@ class SubscribersController < ApplicationController
     else
       redirect_to root_path, notice: 'It doesn\'t look like you\'re the subscriber you\'re trying to update.'
     end
+  end
+
+  private
+
+  def subscriber_params
+    params.require(:subscriber).permit(
+      :first_name,
+      :last_name,
+      :email,
+      :phone,
+      :token,
+      :confirmed?,
+      :subscription_plan,
+      :opted_in_at,
+      :source,
+      :profit
+    )
   end
 end

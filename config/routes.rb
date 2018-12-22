@@ -10,7 +10,7 @@ MotorCarExport::Application.routes.draw do
     end
     resources :features
     get '/:name', on: :member, to: 'vehicles#show', as: 'seo', name: /\d{4}\-[^\.]*/
-    put '/restore', on: :member, to: 'vehicles#restore', as: 'restore'
+    patch '/restore', on: :member, to: 'vehicles#restore', as: 'restore'
     resources :purchases, except: [:show, :index]
     resources :inquiries, only: [:new, :create]
   end
@@ -36,7 +36,7 @@ MotorCarExport::Application.routes.draw do
   # Create these resources, and add custom restore option
   [:titles, :pages, :warranties, :drivables, :body_types, :disclosures].each do |resource|
     resources resource do
-      put '/restore', on: :member, to: :restore, as: 'restore'
+      patch '/restore', on: :member, to: :restore, as: 'restore'
     end
   end
 
@@ -59,5 +59,5 @@ MotorCarExport::Application.routes.draw do
 
   # CMS pages
   # Should be last rule because it's a catch-all
-  match '/:slug', to: 'pages#show', as: 'slug'
+  get '/:slug', to: 'pages#show', as: 'slug'
 end

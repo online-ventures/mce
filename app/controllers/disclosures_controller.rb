@@ -39,7 +39,7 @@ class DisclosuresController < ApplicationController
   # POST /disclosures
   # POST /disclosures.json
   def create
-    @disclosure = Disclosure.new(params[:disclosure])
+    @disclosure = Disclosure.new(disclosure_params)
 
     respond_to do |format|
       if @disclosure.save
@@ -58,7 +58,7 @@ class DisclosuresController < ApplicationController
     @disclosure = Disclosure.find(params[:id])
 
     respond_to do |format|
-      if @disclosure.update_attributes(params[:disclosure])
+      if @disclosure.update_attributes(disclosure_params)
         format.html { redirect_to disclosures_path, notice: 'Disclosure was successfully updated.' }
         format.json { head :no_content }
       else
@@ -88,5 +88,11 @@ class DisclosuresController < ApplicationController
       format.html { redirect_to disclosures_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def disclosure_params
+    params.require(:disclosure).permit(:name, :body, :deleted_at)
   end
 end

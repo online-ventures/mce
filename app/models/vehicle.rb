@@ -1,13 +1,9 @@
-class Vehicle < ActiveRecord::Base
+class Vehicle < ApplicationRecord
   # populates deleted_at, and prevents deletion
   acts_as_paranoid
-  scope :active, where(deleted_at: nil)
-  scope :inactive, where('deleted_at IS NOT NULL')
-  scope :random_featured, where(sold: false).order('featured DESC').order('RANDOM()').limit(1)
-
-  attr_accessible :burns, :body_type, :description, :ebay, :engine_type, :miles, :price, :photos, :stains, :stock_number, :subtitle, :tears, :vin, :year,
-    :make_id, :make, :model, :model_id, :warranty_id, :title_id, :engine_id, :transmission_id, :ext_color_id, :int_color_id, :status_id, :deleted_at,
-    :damage_id, :exterior_id, :interior_id, :drivable_id, :suspension_id, :featured_id, :featured, :sold, :body_type_id, :disclosures, :disclosure_ids
+  scope :active, -> { where(deleted_at: nil) }
+  scope :inactive, -> { where('deleted_at IS NOT NULL') }
+  scope :random_featured, -> { where(sold: false).order('featured DESC').order('RANDOM()').limit(1) }
 
   belongs_to :make
   belongs_to :model
@@ -120,10 +116,14 @@ class Vehicle < ActiveRecord::Base
     ActiveSupport::JSON.encode to_mixpanel_hash
   end
 
-	private
+  def self.delete_old_photos
+    where('created_at < ?', 6.months.ago)
+  end
 
-	def ensure_it_has_the_intro_disclosure
-		the_intro_disclosure = Disclosure.find(1)
+  private
+
+  def ensure_it_has_the_intro_disclosure
+    the_intro_disclosure = Disclosure.find(1)
 
     # Ensure it has the intro disclosure
     self.disclosures << the_intro_disclosure unless self.disclosures.include? the_intro_disclosure

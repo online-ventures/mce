@@ -1,5 +1,4 @@
-class Model < ActiveRecord::Base
-  attr_accessible :make_id, :name
+class Model < ApplicationRecord
   belongs_to :make
 
   def to_s

@@ -45,7 +45,7 @@ class WarrantiesController < ApplicationController
   # POST /warranties
   # POST /warranties.json
   def create
-    @warranty = Warranty.new(params[:warranty])
+    @warranty = Warranty.new(warranty_params)
 
     respond_to do |format|
       if @warranty.save
@@ -64,7 +64,7 @@ class WarrantiesController < ApplicationController
     @warranty = Warranty.find(params[:id])
 
     respond_to do |format|
-      if @warranty.update_attributes(params[:warranty])
+      if @warranty.update_attributes(warranty_params)
         format.html { redirect_to warranties_path, notice: 'Warranty was successfully updated.' }
         format.json { head :no_content }
       else
@@ -94,5 +94,11 @@ class WarrantiesController < ApplicationController
       format.html { redirect_to warranties_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def warranty_params
+    params.require(:warranty).permit(:name, :body)
   end
 end

@@ -52,7 +52,7 @@ class PagesController < ApplicationController
   # POST /pages
   # POST /pages.json
   def create
-    @page = Page.new(params[:page])
+    @page = Page.new(page_params)
 
     respond_to do |format|
       if @page.save
@@ -69,7 +69,7 @@ class PagesController < ApplicationController
   # PUT /pages/1.json
   def update
     respond_to do |format|
-      if @page.update_attributes(params[:page])
+      if @page.update_attributes(page_params)
         format.html { redirect_to slug_path(@page.slug), notice: 'Page was successfully updated.' }
         format.json { head :no_content }
       else
@@ -99,26 +99,30 @@ class PagesController < ApplicationController
   end
 
   private
-    def set_page
-      @page = !!!current_user ? Page.public : Page.unscoped
-      if params[:id]
-        @page = @page.where(id: params[:id].to_i).first
-      elsif params[:slug]
-        @page = @page.where(slug: params[:slug]).first
-      end
-      throw ActiveRecord::RecordNotFound if @page.nil? && !has_view?
+  def set_page
+    @page = !!!current_user ? Page.public : Page.unscoped
+    if params[:id]
+      @page = @page.where(id: params[:id].to_i).first
+    elsif params[:slug]
+      @page = @page.where(slug: params[:slug]).first
     end
+    throw ActiveRecord::RecordNotFound if @page.nil? && !has_view?
+  end
 
-    def has_view?
-      found = false
-      to_search = []
-      to_search << params[:slug] unless params[:slug].nil?
-      to_search << @page.slug if @page.is_a?(Page)
-      to_search.each do |name|
-        if File.exists? File.join(Rails.root, 'app/views/pages', "#{name}.html.erb")
-          found = true
-        end
+  def has_view?
+    found = false
+    to_search = []
+    to_search << params[:slug] unless params[:slug].nil?
+    to_search << @page.slug if @page.is_a?(Page)
+    to_search.each do |name|
+      if File.exists? File.join(Rails.root, 'app/views/pages', "#{name}.html.erb")
+        found = true
       end
-      found
     end
+    found
+  end
+
+  def page_params
+    params.require(:page).permit(:active, :body, :featured, :name, :slug)
+  end
 end

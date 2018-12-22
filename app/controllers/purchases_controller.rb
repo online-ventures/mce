@@ -8,7 +8,7 @@ class PurchasesController < ApplicationController
   # GET /purchases/new
   # GET /purchases/new.json
   def new
-    @subscriber = Subscriber.new params[:subscriber]
+    @subscriber = Subscriber.new subscriber_params
     @purchase = @subscriber.purchases.build vehicle_id: params[:vehicle_id]
 
     respond_to do |format|
@@ -20,7 +20,7 @@ class PurchasesController < ApplicationController
   # POST /purchases
   # POST /purchases.json
   def create
-    @subscriber = Subscriber.find_or_initialize_by_params params[:subscriber]
+    @subscriber = Subscriber.find_or_initialize_by params[:subscriber]
     @purchase = @subscriber.purchases.build params[:purchase]
 
     respond_to do |format|
@@ -62,5 +62,26 @@ class PurchasesController < ApplicationController
     @purchase = Purchase.find params[:id]
     @purchase.delete
     redirect_to edit_vehicle_path(@vehicle), notice: 'Purchase was successfully removed'
+  end
+
+  private
+
+  def purchase_params
+    params.require(:purchase).permit(:price, :profit, :subscriber_id, :vehicle_id, :source)
+  end
+
+  def subscriber_params
+    params.require(:subscriber).permit(
+      :first_name,
+      :last_name,
+      :email,
+      :phone,
+      :token,
+      :confirmed?,
+      :subscription_plan,
+      :opted_in_at,
+      :source,
+      :profit
+    )
   end
 end

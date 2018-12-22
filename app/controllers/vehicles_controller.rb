@@ -69,13 +69,13 @@ class VehiclesController < ApplicationController
   # POST /vehicles
   # POST /vehicles.json
   def create
-    @vehicle = Vehicle.new params[:vehicle]
-    @vehicle.make = Make.find_or_initialize_by_name params[:make][:name]
-    @vehicle.model = Model.find_or_initialize_by_name params[:model][:name]
+    @vehicle = Vehicle.new vehicle_params
+    @vehicle.make = Make.find_or_initialize_by name: params[:make][:name]
+    @vehicle.model = Model.find_or_initialize_by name: params[:model][:name]
     respond_to do |format|
       if @vehicle.valid? && @vehicle.make.valid? && @vehicle.model.valid?
         @vehicle.save
-        @vehicle.model.update_attributes({make_id: @vehicle.make_id })
+        @vehicle.model.update_attribute(:make_id, @vehicle.make_id)
         format.html { redirect_to vehicle_features_path(@vehicle), notice: 'Vehicle was successfully created.' }
         format.json { render json: @vehicle, status: :created, location: @vehicle }
       else
@@ -89,8 +89,8 @@ class VehiclesController < ApplicationController
   # PUT /vehicles/1.json
   def update
     @vehicle = Vehicle.unscoped.find(params[:id])
-    @vehicle.make = Make.find_or_initialize_by_name params[:make][:name] if params[:make]
-    @vehicle.model = Model.find_or_initialize_by_name params[:model][:name] if params[:make]
+    @vehicle.make = Make.find_or_initialize_by name: params[:make][:name] if params[:make]
+    @vehicle.model = Model.find_or_initialize_by name: params[:model][:name] if params[:make]
 
     params[:vehicle].each do |k,v|
       params[:vehicle][k] = true if v == 'true'
@@ -98,8 +98,8 @@ class VehiclesController < ApplicationController
     end
     respond_to do |format|
       if @vehicle.valid? && @vehicle.make.valid? && @vehicle.model.valid?
-        @vehicle.update_attributes(params[:vehicle])
-        @vehicle.model.update_attributes({make_id: @vehicle.make_id })
+        @vehicle.update_attributes(vehicle_params)
+        @vehicle.model.update_attribute(:make_id, @vehicle.make_id)
         format.html { redirect_to @vehicle, notice: 'Vehicle was successfully updated.' }
         format.json { head :no_content }
         format.js   {  }
@@ -132,5 +132,49 @@ class VehiclesController < ApplicationController
       format.html { redirect_to vehicles_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def vehicle_params
+    params.require(:vehicle).permit(
+      :burns,
+      :body_type,
+      :description,
+      :ebay,
+      :engine_type,
+      :miles,
+      :price,
+      :photos,
+      :stains,
+      :stock_number,
+      :subtitle,
+      :tears,
+      :vin,
+      :year,
+      :make_id,
+      :make,
+      :model,
+      :model_id,
+      :warranty_id,
+      :title_id,
+      :engine_id,
+      :transmission_id,
+      :ext_color_id,
+      :int_color_id,
+      :status_id,
+      :deleted_at,
+      :damage_id,
+      :exterior_id,
+      :interior_id,
+      :drivable_id,
+      :suspension_id,
+      :featured_id,
+      :featured,
+      :sold,
+      :body_type_id,
+      :disclosures,
+      :disclosure_ids
+    )
   end
 end

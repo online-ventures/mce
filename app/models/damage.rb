@@ -1,4 +1,3 @@
-class Damage < ActiveRecord::Base
-  attr_accessible :name
+class Damage < ApplicationRecord
   default_scope order(:id)
 end

@@ -21,7 +21,7 @@ class FeaturesController < ApplicationController
   # POST /features.json
   def create
     @feature = Feature.find_or_create_by_name(params[:feature][:name])
-    @feature.update_attributes({ deleted_at: nil })
+    @feature.update(deleted_at: nil)
     if params[:vehicle_id]
       @vehicle = Vehicle.find(params[:vehicle_id])
       @vehicle.features << @feature unless @feature.in? @vehicle.features
@@ -48,7 +48,7 @@ class FeaturesController < ApplicationController
     end
 
     respond_to do |format|
-      if @feature.update_attributes(params[:feature])
+      if @feature.update_attributes(feature_params)
         format.json { head :no_content }
         format.js
       else
@@ -82,5 +82,11 @@ class FeaturesController < ApplicationController
     respond_to do |format|
       format.json
     end
+  end
+
+  private
+
+  def feature_params
+    params.require(:feature).permit(:name, :order, :deleted_at)
   end
 end

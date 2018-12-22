@@ -1,3 +1,2 @@
-class Suspension < ActiveRecord::Base
-  attr_accessible :name
+class Suspension < ApplicationRecord
 end

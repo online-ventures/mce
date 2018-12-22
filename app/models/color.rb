@@ -1,3 +1,2 @@
-class Color < ActiveRecord::Base
-  attr_accessible :name
+class Color < ApplicationRecord
 end
