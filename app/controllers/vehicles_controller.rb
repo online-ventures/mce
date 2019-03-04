@@ -1,6 +1,6 @@
 class VehiclesController < ApplicationController
   require 'rdiscount'
-  before_filter :require_user, except: [:show, :inventory, :index]
+  before_action :require_user, except: [:show, :inventory, :index]
 
 
   # GET /vehicles

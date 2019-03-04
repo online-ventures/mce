@@ -10,12 +10,14 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'uglifier'
 gem 'bourbon'
-gem 'turbo-sprockets-rails3'
 gem 'responders'
+gem 'bootsnap'
 
 group :development do
   gem 'awesome_print'
   gem 'spring'
+  gem 'listen'
+  gem 'byebug'
 end
 
 gem 'zurb-foundation'

@@ -1,10 +1,7 @@
 #= require jquery
 #= require jquery_ujs
-#= require jquery.ui.all
+#= require jquery-ui
 #= require foundation
-#= require jquery.form
-#= require html5shiv
-#= require respond.min
 #= require_self
 #= require_directory ./application/
 #= require_tree .

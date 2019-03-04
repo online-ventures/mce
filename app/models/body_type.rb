@@ -1,7 +1,7 @@
 class BodyType < ApplicationRecord
   acts_as_paranoid
   has_many :vehicles
-  default_scope order(:id)
+  default_scope { order(:id) }
 
   def to_s
     name

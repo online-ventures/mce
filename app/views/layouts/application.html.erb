@@ -17,8 +17,7 @@
     <link rel="canonical" href="<%= request.protocol + request.host + yield(:canonical) %>"/>
   <% end %>
   <title><%= content_for?(:title) ? yield(:title) : 'Motor Car Export' %></title>
-  <link rel="icon" type="image/png" href="<%= Rails.env == 'production' ? 'http://motor-car-export.s3.amazonaws.com/favicon.ico' : image_path('favicon.ico') %>"/>
-  <%= javascript_include_tag 'vendor/custom.modernizr' %>
+  <link rel="shortcut icon" href="<%= Rails.env.production? ? 'http://motor-car-export.s3.amazonaws.com/favicon.ico' : asset_path('favicon.ico') %>"/>
   <%= stylesheet_link_tag "application", media: 'all' %>
   <% if Rails.env == 'production' %>
     <!-- start Google Analytics -->

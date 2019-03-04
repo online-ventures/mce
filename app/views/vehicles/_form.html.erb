@@ -1,183 +1,183 @@
 <%= form_for(@vehicle, html: {class: 'custom'}) do |f| %>
-	<% if @vehicle.errors.any? %>
-		<div id="error_explanation">
-		  	<h2><%= pluralize(@vehicle.errors.count, "error") %> prohibited this vehicle from being saved:</h2>
-		  	<ul>
-				<% @vehicle.errors.full_messages.each do |msg| %>
-					<li><%= msg %></li>
-				<% end %>
-		  	</ul>
-		</div>
-	<% end %>
+  <% if @vehicle.errors.any? %>
+    <div id="error_explanation">
+        <h2><%= pluralize(@vehicle.errors.count, "error") %> prohibited this vehicle from being saved:</h2>
+        <ul>
+        <% @vehicle.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+    </div>
+  <% end %>
 
-	<ul class="button-group actions">
-	  	<% if current_user and !@vehicle.new_record? %>
-			  <%= render 'vehicles/nav', f: f %>
-	  	<% end %>
-	</ul>
-	<br>
-	<br>
-	<div class="row block">
-	  	<h2 class="large-12 columns">Stock Information</h2>
+  <ul class="button-group actions">
+      <% if current_user and !@vehicle.new_record? %>
+        <%= render 'vehicles/nav', f: f %>
+      <% end %>
+  </ul>
+  <br>
+  <br>
+  <div class="row block">
+      <h2 class="large-12 columns">Stock Information</h2>
 
-	  	<div class="field large-4 small-4 columns">
-			<%= f.label :year %>
-			<%= f.select :year, (Time.now.year+2).downto(Time.now.year-50).to_a, selected: @vehicle.year || Time.now.year %>
-	  	</div>
-	  	<div class="field large-4 small-4 columns">
-			<%= f.label :make %>
-			<%= f.collection_select :make_id, Make.all, :id, :name, {include_blank: 'Create New Make'} %>
-			<%= f.sub_text_field :make %>
-	  	</div>
-	  	<div class="field large-4 small-4 columns">
-			<%= f.label :model %>
-			<% models = @vehicle.make_id ? @vehicle.make.models : Model.all %>
-			<%= f.collection_select :model_id, models, :id, :name, {include_blank: 'Create New Model', selected: @vehicle.model_id} %>
-			<%= f.sub_text_field :model %>
-	  	</div>
-	  	<div class="field large-4 small-4 columns">
-			<%= f.label :price %>
-			<%= f.text_field :price %>
-	  	</div>
-	  	<div class="field large-4 small-4 columns">
-			<%= f.label :status_id %>
-			<%= f.collection_select :status_id, Status.all, :id, :name %>
-	  	</div>
-	  	<div class="field large-4 small-4 columns">
-			<%= f.label :stock_number %>
-			<%= f.text_field :stock_number %>
-	  	</div>
-	  	<div class="field large-6 columns">
-			<%= f.label :subtitle, 'Subtitle / Featured Message' %>
-			<%= f.text_field :subtitle %>
-	  	</div>
-	  	<div class="field large-6 columns">
-			<%= f.label :ebay, 'Ebay link' %>
-			<%= f.text_field :ebay %>
-	  	</div>
-	</div>
-	<div class="row block">
-	  	<h2 class="large-12 columns">Vehicle Details</h2>
+      <div class="field large-4 small-4 columns">
+      <%= f.label :year %>
+      <%= f.select :year, (Time.now.year+2).downto(Time.now.year-50).to_a, selected: @vehicle.year || Time.now.year %>
+      </div>
+      <div class="field large-4 small-4 columns">
+      <%= f.label :make %>
+      <%= f.collection_select :make_id, Make.all, :id, :name, {include_blank: 'Create New Make'} %>
+      <%= f.sub_text_field :make %>
+      </div>
+      <div class="field large-4 small-4 columns">
+      <%= f.label :model %>
+      <% models = @vehicle.make_id ? @vehicle.make.models : Model.all %>
+      <%= f.collection_select :model_id, models, :id, :name, {include_blank: 'Create New Model', selected: @vehicle.model_id} %>
+      <%= f.sub_text_field :model %>
+      </div>
+      <div class="field large-4 small-4 columns">
+      <%= f.label :price %>
+      <%= f.text_field :price %>
+      </div>
+      <div class="field large-4 small-4 columns">
+      <%= f.label :status_id %>
+      <%= f.collection_select :status_id, Status.all, :id, :name %>
+      </div>
+      <div class="field large-4 small-4 columns">
+      <%= f.label :stock_number %>
+      <%= f.text_field :stock_number %>
+      </div>
+      <div class="field large-6 columns">
+      <%= f.label :subtitle, 'Subtitle / Featured Message' %>
+      <%= f.text_field :subtitle %>
+      </div>
+      <div class="field large-6 columns">
+      <%= f.label :ebay, 'Ebay link' %>
+      <%= f.text_field :ebay %>
+      </div>
+  </div>
+  <div class="row block">
+      <h2 class="large-12 columns">Vehicle Details</h2>
 
-	  	<div class="field large-4 columns">
-			<%= f.label :vin %>
-			<%= f.text_field :vin, maxlength: '17' %>
-	  	</div>
-	  	<div class="field large-4 columns">
-			<%= f.label :warranty_id %>
-			<%= f.collection_select :warranty_id, Warranty.all, :id, :name %>
-	  	</div>
-	  	<div class="field large-4 columns">
-			<%= f.label :title_id %>
-			<%= f.collection_select :title_id, Title.all, :id, :name %>
-	  	</div>
-	  	<div class="field large-4 columns">
-			<%= f.label :miles %>
-			<%= f.text_field :miles %>
-	  	</div>
-	  	<div class="field large-4 columns">
-			<%= f.label :transmission_id %>
-			<%= f.collection_select :transmission_id, Transmission.all, :id, :name %>
-	  	</div>
-	  	<div class="field large-4 columns">
-			<%= f.label :engine_type %>
-			<%= f.text_field :engine_type %>
-	  	</div>
-	  	<div class="field large-4 columns">
-			<%= f.label :body_type_id %>
-			<%= f.collection_select :body_type_id, BodyType.all, :id, :name %>
-	  	</div>
-	  	<div class="field large-4 columns">
-			<%= f.label :ext_color_id %>
-			<%= f.collection_select :ext_color_id, Color.all, :id, :name %>
-	  	</div>
-	  	<div class="field large-4 columns">
-			<%= f.label :int_color_id %>
-			<%= f.collection_select :int_color_id, Color.all, :id, :name %>
-	  	</div>
-	  	<div class="large-4 columns">
-			&nbsp;
-	  	</div>
-	  	<div class="field large-12 columns">
-			<%= f.label :description %>
-			<%= f.text_area :description, rows: '10' %>
-	  	</div>
-	</div>
+      <div class="field large-4 columns">
+      <%= f.label :vin %>
+      <%= f.text_field :vin, maxlength: '17' %>
+      </div>
+      <div class="field large-4 columns">
+      <%= f.label :warranty_id %>
+      <%= f.collection_select :warranty_id, Warranty.all, :id, :name %>
+      </div>
+      <div class="field large-4 columns">
+      <%= f.label :title_id %>
+      <%= f.collection_select :title_id, Title.all, :id, :name %>
+      </div>
+      <div class="field large-4 columns">
+      <%= f.label :miles %>
+      <%= f.text_field :miles %>
+      </div>
+      <div class="field large-4 columns">
+      <%= f.label :transmission_id %>
+      <%= f.collection_select :transmission_id, Transmission.all, :id, :name %>
+      </div>
+      <div class="field large-4 columns">
+      <%= f.label :engine_type %>
+      <%= f.text_field :engine_type %>
+      </div>
+      <div class="field large-4 columns">
+      <%= f.label :body_type_id %>
+      <%= f.collection_select :body_type_id, BodyType.all, :id, :name %>
+      </div>
+      <div class="field large-4 columns">
+      <%= f.label :ext_color_id %>
+      <%= f.collection_select :ext_color_id, Color.all, :id, :name %>
+      </div>
+      <div class="field large-4 columns">
+      <%= f.label :int_color_id %>
+      <%= f.collection_select :int_color_id, Color.all, :id, :name %>
+      </div>
+      <div class="large-4 columns">
+      &nbsp;
+      </div>
+      <div class="field large-12 columns">
+      <%= f.label :description %>
+      <%= f.text_area :description, rows: '10' %>
+      </div>
+  </div>
 
-	<div class="row block">
-	  	<h2 class="large-12 columns">Condition</h2>
+  <div class="row block">
+      <h2 class="large-12 columns">Condition</h2>
 
-	  	<div class="large-6 small-12 columns">
-			<div class="field">
-			  <%= f.label :damage_id %>
-			  <%= f.collection_select :damage_id, Damage.all, :id, :name %>
-			</div>
-			<div class="field">
-			  <%= f.label :drivable_id %>
-			  <%= f.collection_select :drivable_id, Drivable.all, :id, :name %>
-			</div>
-			<div class="field">
-			  <%= f.label :engine_id %>
-			  <%= f.collection_select :engine_id, Engine.all, :id, :name %>
-			</div>
-			<div class="field">
-			  <%= f.label :suspension_id %>
-			  <%= f.collection_select :suspension_id, Suspension.all, :id, :name %>
-			</div>
-	  	</div>
-	  	<div class="large-6 small-12 columns">
-			<div class="field">
-			  <%= f.label :exterior_id %>
-			  <%= f.collection_select :exterior_id, Condition.all, :id, :name %>
-			</div>
-			<div class="field">
-			  <%= f.label :interior_id %>
-			  <%= f.collection_select :interior_id, Condition.all, :id, :name %>
-			</div>
-			<div class="row">
-				<div class="field large-12 small-4 columns checkbox">
-				  <%= f.check_box :stains %>
-				  <%= f.label :stains, 'Stains?' %>
-				</div>
-				<div class="field large-12 small-4 columns checkbox">
-				  <%= f.check_box :burns %>
-				  <%= f.label :burns, 'Burns?' %>
-				</div>
-				<div class="field large-12 small-4 columns checkbox">
-				  <%= f.check_box :tears %>
-				  <%= f.label :tears, 'Tears?' %>
-				</div>
-			</div>
-	  	</div>
-	</div>
-	<div class="row block">
-	  	<h2 class="large-12 columns">Disclosures</h2>
+      <div class="large-6 small-12 columns">
+      <div class="field">
+        <%= f.label :damage_id %>
+        <%= f.collection_select :damage_id, Damage.all, :id, :name %>
+      </div>
+      <div class="field">
+        <%= f.label :drivable_id %>
+        <%= f.collection_select :drivable_id, Drivable.all, :id, :name %>
+      </div>
+      <div class="field">
+        <%= f.label :engine_id %>
+        <%= f.collection_select :engine_id, Engine.all, :id, :name %>
+      </div>
+      <div class="field">
+        <%= f.label :suspension_id %>
+        <%= f.collection_select :suspension_id, Suspension.all, :id, :name %>
+      </div>
+      </div>
+      <div class="large-6 small-12 columns">
+      <div class="field">
+        <%= f.label :exterior_id %>
+        <%= f.collection_select :exterior_id, Condition.all, :id, :name %>
+      </div>
+      <div class="field">
+        <%= f.label :interior_id %>
+        <%= f.collection_select :interior_id, Condition.all, :id, :name %>
+      </div>
+      <div class="row">
+        <div class="field large-12 small-4 columns checkbox">
+          <%= f.check_box :stains %>
+          <%= f.label :stains, 'Stains?' %>
+        </div>
+        <div class="field large-12 small-4 columns checkbox">
+          <%= f.check_box :burns %>
+          <%= f.label :burns, 'Burns?' %>
+        </div>
+        <div class="field large-12 small-4 columns checkbox">
+          <%= f.check_box :tears %>
+          <%= f.label :tears, 'Tears?' %>
+        </div>
+      </div>
+      </div>
+  </div>
+  <div class="row block">
+      <h2 class="large-12 columns">Disclosures</h2>
 
-	  	<div class="large-12 columns">
-			<input type="hidden" id="vehicle_disclosure_1" name="vehicle[disclosure_ids][]" value="1" checked="checked" class="hidden-field">
-			<%= f.check_box_collection :disclosures, Disclosure.where('id != 1'), @vehicle.disclosure_ids %>
-	  	</div>
-	</div>
-	<ul class="button-group actions">
-			<% if @vehicle.new_record? %>
-				<li><%= f.submit %></li>
-			<% end %>
-	  	<% if current_user and !@vehicle.new_record? %>
-			  <%= render 'vehicles/nav', f: f %>
-	  	<% end %>
-	</ul>
+      <div class="large-12 columns">
+      <input type="hidden" id="vehicle_disclosure_1" name="vehicle[disclosure_ids][]" value="1" checked="checked" class="hidden-field">
+      <%= f.check_box_collection :disclosures, Disclosure.where('id != 1'), @vehicle.disclosure_ids %>
+      </div>
+  </div>
+  <ul class="button-group actions">
+      <% if @vehicle.new_record? %>
+        <li><%= f.submit %></li>
+      <% end %>
+      <% if current_user and !@vehicle.new_record? %>
+        <%= render 'vehicles/nav', f: f %>
+      <% end %>
+  </ul>
 <% end %>
 
 
 <script type="text/javascript">
-	$makes = {
-		<% @makes ||= Make.all %>
-		<% @makes.each do |make| %>
-		<%= "#{make.id}: [" %>
-		<% make.models.each do |model| %>
-		<%= "[#{model.id}, '#{model.name}'],".html_safe %>
-		<% end %>
-		<%= "]," %>
-		<% end %>
-	}
+  $makes = {
+    <% @makes ||= Make.all %>
+    <% @makes.each do |make| %>
+    <%= "#{make.id}: [" %>
+    <% make.models.each do |model| %>
+    <%= "[#{model.id}, '#{model.name}'],".html_safe %>
+    <% end %>
+    <%= "]," %>
+    <% end %>
+  }
 </script>

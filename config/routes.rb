@@ -1,4 +1,4 @@
-MotorCarExport::Application.routes.draw do
+Rails.application.routes.draw do
   ensure_on production: '', staging: 'staging'
 
   root to: 'pages#show', slug: 'home'
@@ -36,7 +36,7 @@ MotorCarExport::Application.routes.draw do
   # Create these resources, and add custom restore option
   [:titles, :pages, :warranties, :drivables, :body_types, :disclosures].each do |resource|
     resources resource do
-      patch '/restore', on: :member, to: :restore, as: 'restore'
+      patch '/restore', on: :member, action: :restore, as: 'restore'
     end
   end
 

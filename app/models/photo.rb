@@ -3,14 +3,23 @@ class Photo < ApplicationRecord
   # populates deleted_at, and prevents deletion
   belongs_to :vehicle, touch: true
 
+  # Paperclip
   has_attached_file :image
+
+  # Active storage
+  has_one_attached :file
+
+  # Validation
   validates_attachment :image, presence: {message: 'must be chosen before saving'}
   validates_is_photo_or_zip :image
+
+  # Callbacks
   before_post_process :image?
   before_create :set_vehicles_photo_id
   before_save :detect_zipped_file
   after_save :remove_zipped_file
 
+  # scopes
   scope :active, -> { where(deleted_at: nil) }
   scope :inactive, -> { where('deleted_at IS NOT NULL') }
   scope :prioritize_id, ->(id) { order("id = '#{id || 0}' DESC, id ASC") } # put featured first, then normal sort

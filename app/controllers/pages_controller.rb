@@ -1,8 +1,8 @@
 class PagesController < ApplicationController
   require 'rdiscount'
-  before_filter :require_user, except: [:show, :home]
-  before_filter :require_user, if: Proc.new() { params[:slug].in? %w(members) }
-  before_filter :set_page, only: [:show, :edit, :update, :destroy, :restore]
+  before_action :require_user, except: [:show, :home]
+  before_action :require_user, if: Proc.new() { params[:slug].in? %w(members) }
+  before_action :set_page, only: [:show, :edit, :update, :destroy, :restore]
 
   # GET /pages
   # GET /pages.json
@@ -99,8 +99,9 @@ class PagesController < ApplicationController
   end
 
   private
+
   def set_page
-    @page = !!!current_user ? Page.public : Page.unscoped
+    @page = !!!current_user ? Page.active : Page.unscoped
     if params[:id]
       @page = @page.where(id: params[:id].to_i).first
     elsif params[:slug]

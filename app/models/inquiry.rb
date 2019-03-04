@@ -1,6 +1,4 @@
 class Inquiry < ApplicationRecord
-  attr_accessible :body, :subscriber_id, :vehicle_id, :error
-
   # Relationships
   belongs_to :subscriber
   belongs_to :vehicle

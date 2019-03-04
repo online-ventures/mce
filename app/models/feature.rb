@@ -6,7 +6,7 @@ class Feature < ApplicationRecord
 
   validates :name, length: {minimum: 3}
 
-  default_scope where('"order" > 0').order('"order" asc, "id" asc')
+  default_scope { where('"order" > 0').order('"order" asc, "id" asc') }
 
   def set_order
     self.order = (Feature.maximum(:order) || 0) + 1

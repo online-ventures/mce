@@ -1,5 +1,5 @@
 class TitlesController < ApplicationController
-  before_filter :require_user
+  before_action :require_user
   # GET /titles
   # GET /titles.json
   def index

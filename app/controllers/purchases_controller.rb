@@ -1,5 +1,5 @@
 class PurchasesController < ApplicationController
-  before_filter :load_vehicle
+  before_action :load_vehicle
 
   def load_vehicle
     @vehicle = Vehicle.find params[:vehicle_id]

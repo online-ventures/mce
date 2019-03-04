@@ -1,8 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :current_user_session, :current_user
-  before_filter :begin_profiling, :current_user, :set_action_mailer_defaults, :mixpanel_settings
-  after_filter :remember_subscriber
+  before_action :begin_profiling, :current_user, :set_action_mailer_defaults, :mixpanel_settings
+  after_action :remember_subscriber
 
   def render *args
     before_render

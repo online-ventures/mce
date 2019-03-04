@@ -1,3 +1,3 @@
 class Damage < ApplicationRecord
-  default_scope order(:id)
+  default_scope { order(:id) }
 end

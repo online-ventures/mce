@@ -6,18 +6,21 @@ services:
   app:
     build: .
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
-    volumes:
-      - .:/mce
     ports:
       - "3100:3000"
     depends_on:
       - db
     volumes:
+      - .:/mce
       - bundle-cache:/bundle
+    stdin_open: true
+    tty: true
   db:
     image: postgres
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5481:5432"
   # bundle:
   #   # 'image' will vary depending on your docker-compose
   #   # project name. You may need to run `docker-compose build web`

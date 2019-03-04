@@ -46,17 +46,17 @@
   #featured-content {
 
     .picture {
-      -ms-behavior: url(asset-path('backgroundsize.min.htc', stylesheet));
+      -ms-behavior: url(asset-path('backgroundsize.min.htc'));
     }
   }
   .inventory.vehicles {
     .image {
-      -ms-behavior: url(asset-path('backgroundsize.min.htc', stylesheet));
+      -ms-behavior: url(asset-path('backgroundsize.min.htc'));
     }
   }
   .show.vehicles {
     .photo-box .photo {
-      -ms-behavior: url(asset-path('backgroundsize.min.htc', stylesheet));
+      -ms-behavior: url(asset-path('backgroundsize.min.htc'));
     }
   }
 }

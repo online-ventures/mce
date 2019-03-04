@@ -1,5 +1,5 @@
 class PhotosController < ApplicationController
-  before_filter :require_user
+  before_action :require_user
   respond_to :js, only: [:destroy, :destroy_all]
 
   def index

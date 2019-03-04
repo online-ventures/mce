@@ -1,5 +1,5 @@
 class FeaturesController < ApplicationController
-  before_filter :require_user
+  before_action :require_user
   # GET /features
   # GET /features.json
   def index

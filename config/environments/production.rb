@@ -1,4 +1,4 @@
-MotorCarExport::Application.configure do
+Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests
@@ -17,6 +17,8 @@ MotorCarExport::Application.configure do
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = false
+
+  config.eager_load = true
 
   # Generate digests for assets URLs
   config.assets.digest = true
@@ -65,6 +67,9 @@ MotorCarExport::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+
+  # Store uploaded files on the local file system (see config/storage.yml for options)
+  config.active_storage.service = :local
 
   # paperclip
   config.paperclip_defaults = {

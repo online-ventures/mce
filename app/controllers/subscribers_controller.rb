@@ -1,5 +1,5 @@
 class SubscribersController < ApplicationController
-  before_filter :require_user, except: [:cancel, :confirm, :add_to, :set_subscription_plan, :create, :search]
+  before_action :require_user, except: [:cancel, :confirm, :add_to, :set_subscription_plan, :create, :search]
   # GET /subscribers
   # GET /subscribers.json
   def index
