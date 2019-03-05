@@ -21,6 +21,7 @@ group :development do
 end
 
 gem 'zurb-foundation'
+gem 'font-awesome-rails'
 
 # User Authentication
 gem 'authlogic'

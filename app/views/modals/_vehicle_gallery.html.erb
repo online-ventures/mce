@@ -4,15 +4,15 @@
     <div class="theme-light slider-wrapper large-10 small-12 columns small-centered">
         <div class="information-caption">
           <span class="caption">Use your left and right arrow keys to navigate.</span>
-          <div class="left nivo-arrow"><</div>
-          <div class="right nivo-arrow">></div>
+          <div class="left nivo-arrow"></div>
+          <div class="right nivo-arrow"></div>
         </div>
         <div id="slider" class="nivoSlider">
         <% cache [@vehicle, @vehicle.photos.count] do %>
           <% @vehicle.photos.find_each do |photo| %>
-            <%= image_tag photo.image.url(:original) %>
+            <%= image_tag url_for(photo.file) %>
           <% end %>
-	    <% end %>
+      <% end %>
         </div>
     </div>
   </div>

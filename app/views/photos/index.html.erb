@@ -12,11 +12,14 @@
     </div>
   <% end %>
   <div class="field">
-    <%= f.file_field :image %>
+    <label>Upload a single photo</label> <%= f.file_field :file %>
+  </div>
+  <div class="field">
+    <label>Upload a zipped file</label> <%= f.file_field :zip %>
   </div>
   <div class="actions button">
     <%= f.submit 'Upload Photo', class:'no-button invisible' %>
-    <i class="foundicon-up-arrow default"></i>&nbsp;&nbsp;<span id="upload-text">Nothing to Upload</span>
+    <%= fa_icon 'upload' %> &nbsp;&nbsp;<span id="upload-text">Nothing to Upload</span>
   </div>
 <% end %>
 
@@ -25,19 +28,21 @@
   <h4>Existing Photos</h4>
   <%= link_to 'Destroy All', destroy_all_vehicle_photos_path, method: :delete, remote: true, class: 'alert button' %>
   <br>
-  <div class="existing-photos row">
-    <% @photos.each do |photo| %>
-      <% cache ['v2',photo,"featured-#{photo.featured?}"] do %>
-      <div class="photo large-3 columns <%= 'featured' if photo.featured? %>" data-id="<%= photo.id %>">
-        <%= link_to image_tag(photo.image.url), '#', data: {
-        'active' => photo.deleted_at == nil,
-        'reveal-id' => 'view-image-modal',
-        'path' => vehicle_photo_path(vehicle_id: @vehicle.id, id: photo.id)
-        }, class: "#{'featured' if photo.featured? }" %>
-      </div>
+  <% @photos.each_slice(4).each do |photos| %>
+    <div class="existing-photos row">
+      <% photos.each do |photo| %>
+        <% cache ['v2',photo,"featured-#{photo.featured?}"] do %>
+          <div class="photo large-3 columns <%= 'featured' if photo.featured? %>" data-id="<%= photo.id %>">
+            <%= link_to image_tag(url_for(photo.file)), '#', data: {
+              'active' => photo.deleted_at == nil,
+              'reveal-id' => 'view-image-modal',
+              'path' => vehicle_photo_path(vehicle_id: @vehicle.id, id: photo.id)
+            }, class: "#{'featured' if photo.featured? }" %>
+          </div>
+        <% end %>
       <% end %>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 <% end %>
 
 <% content_for :modal, 'modals/view_image' %>

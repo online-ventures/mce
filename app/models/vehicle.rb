@@ -20,12 +20,12 @@ class Vehicle < ApplicationRecord
   belongs_to :title
   belongs_to :transmission
   belongs_to :warranty
-  has_many :photos
+  has_many :photos, -> { order(featured: :desc, name: :asc) }
   has_one :purchase
   has_one :subscriber, through: :purchase
   has_many :inquiries
   accepts_nested_attributes_for :photos
-  has_and_belongs_to_many :features, join_table: 'vehicles_features', after_add: :touch, after_remove: :touch
+  has_and_belongs_to_many :features, join_table: 'vehicles_features', touch: true
   has_and_belongs_to_many :disclosures, join_table: 'vehicles_disclosures', before_add: :validates_unique_disclosure
 
   after_create :ensure_it_has_the_intro_disclosure
@@ -36,10 +36,6 @@ class Vehicle < ApplicationRecord
 
   def is_new?
     created_at > 5.days.ago
-  end
-
-  def photos
-    super.prioritize_id featured_id
   end
 
   def toggle_feature(feature)
@@ -80,11 +76,6 @@ class Vehicle < ApplicationRecord
   def restore
     self.deleted_at = nil
     self.photos.update_all(deleted_at: nil)
-    save!
-  end
-
-  def touch(object = nil)
-    self.updated_at = Time.now
     save!
   end
 

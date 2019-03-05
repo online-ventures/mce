@@ -3,42 +3,42 @@
 <% content_for :itemtype, "http://schema.org/Product" %>
 
 <% cache [@vehicle, !!current_user] do %>
-	<% if current_user %>
-		<%= link_to 'Edit Vehicle', edit_vehicle_path(@vehicle), class: 'primary button' %>
-	<% end %>
+  <% if current_user %>
+    <%= link_to 'Edit Vehicle', edit_vehicle_path(@vehicle), class: 'primary button' %>
+  <% end %>
 <% end %>
 
 <% cache ["v15", @vehicle] do %>
 
   <%= tag :div, id: 'vehicle-data', data: {vehicle: @vehicle.to_mixpanel_json} %>
 
-	<% unless @vehicle.photos.empty? %>
-		<ul class="loading" data-orbit data-options="timer_speed:2500; animation_speed:50; bullets: false;">
-			<% @vehicle.photos.each do |photo| %>
-				<li>
-					<img src="<%= photo.image.url %>" <%= 'itemprop="image"'.html_safe if photo == @vehicle.photos.first %>/>
-				</li>
-			<% end %>
-		</ul>
-	<% end %>
+  <% unless @vehicle.photos.empty? %>
+    <ul class="loading" data-orbit data-options="timer_speed:2500; animation_speed:50; bullets: false;">
+      <% @vehicle.photos.each do |photo| %>
+        <li>
+          <img src="<%= url_for photo.file %>" <%= 'itemprop="image"'.html_safe if photo == @vehicle.photos.first %>/>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
 
-	<header>
-	  <h1 itemprop="name"><%= @vehicle.to_s %></h1>
+  <header>
+    <h1 itemprop="name"><%= @vehicle.to_s %></h1>
 
-	  <h2 itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="subtitle">
-		<%= show_if '<span itemprop="price">$1</span>', price %>
-		<%= show_if " &mdash; ", '', !!(price && !@vehicle.ebay.blank?) %>
-		<%= show_if "$1", link_to('Bid on eBay', @vehicle.ebay), !@vehicle.ebay.blank? %>
-		<%= show_if " &mdash; ", '', !!(!@vehicle.subtitle.blank? and (price or !@vehicle.ebay.blank?)) %>
-		<%= show_if "$1", @vehicle.subtitle %>
-		<%= show_if '<br>Inactive — Not Publicly Visible', @vehicle.deleted_at %>
-	  </h2>
-	</header>
+    <h2 itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="subtitle">
+    <%= show_if '<span itemprop="price">$1</span>', price %>
+    <%= show_if " &mdash; ", '', !!(price && !@vehicle.ebay.blank?) %>
+    <%= show_if "$1", link_to('Bid on eBay', @vehicle.ebay), !@vehicle.ebay.blank? %>
+    <%= show_if " &mdash; ", '', !!(!@vehicle.subtitle.blank? and (price or !@vehicle.ebay.blank?)) %>
+    <%= show_if "$1", @vehicle.subtitle %>
+    <%= show_if '<br>Inactive — Not Publicly Visible', @vehicle.deleted_at %>
+    </h2>
+  </header>
 
 
-	<div class="description" itemprop="description">
-	  <%= raw RDiscount.new(@vehicle.description).to_html %>
-	</div>
+  <div class="description" itemprop="description">
+    <%= raw RDiscount.new(@vehicle.description).to_html %>
+  </div>
 
   <h4 class="centered">Find Out More</h4>
   <div class="vehicle-order-info">
@@ -63,167 +63,167 @@
     </div>
   </div>
 
-	<div class="row info">
-	  <div class="general large-6 columns block">
-		<h4 class="centered">Information</h4>
-		<table class="heading-right full-width">
-		  <tr>
-			<th>Year</th>
-			<td><%= @vehicle.year %></td>
-		  </tr>
-		  <tr itemprop="brand" itemscope itemtype="http://schema.org/Brand">
-			<th>Make</th>
-			<td itemprop="name"><%= @vehicle.make.name %></td>
-		  </tr>
-		  <tr>
-			<th>Model</th>
-			<td><%= @vehicle.model.name %></td>
-		  </tr>
-		  <tr>
-			<th>Stock Number</th>
-			<td><%= @vehicle.stock_number %></td>
-		  </tr>
-		  <tr>
-			<th>Vehicle ID Number</th>
-			<td><%= @vehicle.vin %></td>
-		  </tr>
-		  <tr>
-			<th>Miles</th>
-			<td><%= number_with_delimiter(@vehicle.miles) %></td>
-		  </tr>
-		  <tr>
-			<th>Title</th>
-			<td><%= @vehicle.title.name %></td>
-		  </tr>
-		  <tr>
-			<th>Warranty</th>
-			<td><%= @vehicle.warranty.name %></td>
-		  </tr>
-		  <tr>
-			<th>Transmission</th>
-			<td><%= @vehicle.transmission.name %></td>
-		  </tr>
-		  <tr>
-			<th>Engine</th>
-			<td><%= @vehicle.engine_type %></td>
-		  </tr>
-		  <tr>
-			<th>Interior Color</th>
-			<td><%= @vehicle.int_color.name %></td>
-		  </tr>
-		  <tr>
-			<th>Exterior Color</th>
-			<td><%= @vehicle.ext_color.name %></td>
-		  </tr>
-		</table>
-	  </div>
-	  <div class="condition large-6 columns block">
-		<h4 class="centered">Condition</h4>
-		<table class="heading-right full-width">
-		  <tr>
-			<th>Status</th>
-			<td><%= @vehicle.status.name %></td>
-		  </tr>
-		  <% if @vehicle.damage.name != 'None' %>
-			  <tr>
-				<th>Damage</th>
-				<td><%= @vehicle.damage.name %></td>
-			  </tr>
-		  <% end %>
-		  <tr>
-			<th>Drivability</th>
-			<td><%= @vehicle.drivable.name %></td>
-		  </tr>
-		  <tr>
-			<th>Engine</th>
-			<td><%= @vehicle.engine.name %></td>
-		  </tr>
-		  <tr>
-			<th>Suspension</th>
-			<td><%= @vehicle.suspension.name %></td>
-		  </tr>
-		  <tr>
-			<th>Exterior</th>
-			<td><%= @vehicle.exterior.name %></td>
-		  </tr>
-		  <tr>
-			<th>Interior</th>
-			<td><%= @vehicle.interior.name %></td>
-		  </tr>
-		  <tr>
-			<th>Stains</th>
-			<td><%= @vehicle.stains? ? 'Yes' : 'No' %></td>
-		  </tr>
-		  <tr>
-			<th>Tears</th>
-			<td><%= @vehicle.tears? ? 'Yes' : 'No' %></td>
-		  </tr>
-		  <tr>
-			<th>Burns</th>
-			<td><%= @vehicle.burns? ? 'Yes' : 'No' %></td>
-		  </tr>
-		  <tr>
-			<th>&nbsp;</th>
-			<td>&nbsp;</td>
-		  </tr>
-		  <tr>
-			<th>&nbsp;</th>
-			<td>&nbsp;</td>
-		  </tr>
-		  <% if @vehicle.damage.name == 'None' %>
-			  <tr>
-				<th>&nbsp;</th>
-				<td>&nbsp;</td>
-			  </tr>
-		  <% end %>
-		</table>
-	  </div>
-	  <% if @vehicle.features.any? %>
-		  <div class="features large-12 columns block">
-			<h4 class="centered">Features</h4>
+  <div class="row info">
+    <div class="general large-6 columns block">
+    <h4 class="centered">Information</h4>
+    <table class="heading-right full-width">
+      <tr>
+      <th>Year</th>
+      <td><%= @vehicle.year %></td>
+      </tr>
+      <tr itemprop="brand" itemscope itemtype="http://schema.org/Brand">
+      <th>Make</th>
+      <td itemprop="name"><%= @vehicle.make.name %></td>
+      </tr>
+      <tr>
+      <th>Model</th>
+      <td><%= @vehicle.model.name %></td>
+      </tr>
+      <tr>
+      <th>Stock Number</th>
+      <td><%= @vehicle.stock_number %></td>
+      </tr>
+      <tr>
+      <th>Vehicle ID Number</th>
+      <td><%= @vehicle.vin %></td>
+      </tr>
+      <tr>
+      <th>Miles</th>
+      <td><%= number_with_delimiter(@vehicle.miles) %></td>
+      </tr>
+      <tr>
+      <th>Title</th>
+      <td><%= @vehicle.title.name %></td>
+      </tr>
+      <tr>
+      <th>Warranty</th>
+      <td><%= @vehicle.warranty.name %></td>
+      </tr>
+      <tr>
+      <th>Transmission</th>
+      <td><%= @vehicle.transmission.name %></td>
+      </tr>
+      <tr>
+      <th>Engine</th>
+      <td><%= @vehicle.engine_type %></td>
+      </tr>
+      <tr>
+      <th>Interior Color</th>
+      <td><%= @vehicle.int_color.name %></td>
+      </tr>
+      <tr>
+      <th>Exterior Color</th>
+      <td><%= @vehicle.ext_color.name %></td>
+      </tr>
+    </table>
+    </div>
+    <div class="condition large-6 columns block">
+    <h4 class="centered">Condition</h4>
+    <table class="heading-right full-width">
+      <tr>
+      <th>Status</th>
+      <td><%= @vehicle.status.name %></td>
+      </tr>
+      <% if @vehicle.damage.name != 'None' %>
+        <tr>
+        <th>Damage</th>
+        <td><%= @vehicle.damage.name %></td>
+        </tr>
+      <% end %>
+      <tr>
+      <th>Drivability</th>
+      <td><%= @vehicle.drivable.name %></td>
+      </tr>
+      <tr>
+      <th>Engine</th>
+      <td><%= @vehicle.engine.name %></td>
+      </tr>
+      <tr>
+      <th>Suspension</th>
+      <td><%= @vehicle.suspension.name %></td>
+      </tr>
+      <tr>
+      <th>Exterior</th>
+      <td><%= @vehicle.exterior.name %></td>
+      </tr>
+      <tr>
+      <th>Interior</th>
+      <td><%= @vehicle.interior.name %></td>
+      </tr>
+      <tr>
+      <th>Stains</th>
+      <td><%= @vehicle.stains? ? 'Yes' : 'No' %></td>
+      </tr>
+      <tr>
+      <th>Tears</th>
+      <td><%= @vehicle.tears? ? 'Yes' : 'No' %></td>
+      </tr>
+      <tr>
+      <th>Burns</th>
+      <td><%= @vehicle.burns? ? 'Yes' : 'No' %></td>
+      </tr>
+      <tr>
+      <th>&nbsp;</th>
+      <td>&nbsp;</td>
+      </tr>
+      <tr>
+      <th>&nbsp;</th>
+      <td>&nbsp;</td>
+      </tr>
+      <% if @vehicle.damage.name == 'None' %>
+        <tr>
+        <th>&nbsp;</th>
+        <td>&nbsp;</td>
+        </tr>
+      <% end %>
+    </table>
+    </div>
+    <% if @vehicle.features.any? %>
+      <div class="features large-12 columns block">
+      <h4 class="centered">Features</h4>
 
-			<div class="panel list row">
-			  <% @vehicle.features.find_each do |feature| %>
-				  <%= content_tag :div, feature.name, class: 'large-4 small-6 columns feature' %>
+      <div class="panel list row">
+        <% @vehicle.features.find_each do |feature| %>
+          <%= content_tag :div, feature.name, class: 'large-4 small-6 columns feature' %>
 
-			  <% end %>
-			</div>
-		  </div>
-	<% end %>
+        <% end %>
+      </div>
+      </div>
+  <% end %>
 
 <% end # end of cache block %>
-	
-	
-	<%= all_the_disclosures! %>
 
-	<%= warranty_disclosure %>
 
-	<%= title_disclosure %>
+  <%= all_the_disclosures! %>
 
-	<%= drivable_disclosure %>
+  <%= warranty_disclosure %>
 
-	<%= vehicle_type_disclosure %>
-	</div>
+  <%= title_disclosure %>
 
-	<!--
+  <%= drivable_disclosure %>
+
+  <%= vehicle_type_disclosure %>
+  </div>
+
+  <!--
 <div class="panel large-8 columns large-centered">
   <h3>Want More Info on this <%= "#{@vehicle.make} #{@vehicle.model}" %>?</h3>
   <%= form_for(Request.new, html: {class: 'custom'}) do |r| %>
 
-	  <div class="row">
-		<%= r.hidden_field :vehicle_id, value: @vehicle.id %>
-		<%= r.fields_for(Subscriber.new) do |s| %>
-		<div class="large-12 columns">
-		  <%= s.label :email, 'All we need is your email' %>
-			<%= s.text_field :email %>
-		</div>
+    <div class="row">
+    <%= r.hidden_field :vehicle_id, value: @vehicle.id %>
+    <%= r.fields_for(Subscriber.new) do |s| %>
+    <div class="large-12 columns">
+      <%= s.label :email, 'All we need is your email' %>
+      <%= s.text_field :email %>
+    </div>
 
 
-		<% end %>
-	  </div>
+    <% end %>
+    </div>
 
-	<%= r.submit 'Let\'s Go! »', class: 'expand round' %>
-	<% end %>
+  <%= r.submit 'Let\'s Go! »', class: 'expand round' %>
+  <% end %>
 </div>
 -->
 
@@ -233,13 +233,13 @@
 
 
 <% unless @vehicle.photos.empty? %>
-	<div class="row image-wrap">
-	<% @vehicle.photos.each do |photo| %>
-		<a name="photo-<%= photo.vehicles_photo_id %>" href="#photo-<%= photo.vehicles_photo_id + ( photo == @vehicle.photos.last ? 0 : 1 ) %>">
-		<img src="<%= photo.image.url %>" />
-		</a>
-	<% end %>
-	</div>
+  <div class="row image-wrap">
+  <% @vehicle.photos.each do |photo| %>
+    <a name="photo-<%= photo.vehicles_photo_id %>" href="#photo-<%= photo.vehicles_photo_id + ( photo == @vehicle.photos.last ? 0 : 1 ) %>">
+    <img src="<%= url_for photo.file %>" />
+    </a>
+  <% end %>
+  </div>
 <% end %>
 
 <div id="email-form" class="reveal-modal medium">
