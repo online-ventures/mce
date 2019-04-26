@@ -1,0 +1,115 @@
+# Variables
+substitutions:
+  _APP_NAME: guides
+# Decrypt the file containing the key
+steps:
+# Get ssh key
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - kms
+  - decrypt
+  - --ciphertext-file=config/cloudbuild/github.enc
+  - --plaintext-file=/root/.ssh/id_rsa
+  - --location=global
+  - --keyring=cloud-build
+  - --key=github-nick-key
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
+
+# Set up git with key and domain.
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    chmod 600 /root/.ssh/id_rsa
+    cat <<EOF >/root/.ssh/config
+    Hostname github.com
+    IdentityFile /root/.ssh/id_rsa
+    EOF
+    mv config/cloudbuild/known_hosts /root/.ssh/known_hosts
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
+
+# Use git clone.
+- name: 'gcr.io/cloud-builders/git'
+  args:
+  - clone
+  - git@github.com:wellopp/$_APP_NAME.git
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
+
+# Pull our simple jekyll builder image
+- name: gcr.io/cloud-builders/docker
+  args:
+  - pull
+  - 'gcr.io/$PROJECT_ID/$_APP_NAME:build'
+
+# Build the jekyll builder image to get the latest file changes
+- name: gcr.io/cloud-builders/docker
+  dir: $_APP_NAME
+  args: [
+    'build',
+    '-t', 'gcr.io/$PROJECT_ID/$_APP_NAME:build',
+    '-f', 'config/docker/build/Dockerfile',
+    '--cache-from', 'gcr.io/$PROJECT_ID/$_APP_NAME:build',
+    '.']
+
+# Push it to gcr.io
+- name: gcr.io/cloud-builders/docker
+  args:
+  - push
+  - 'gcr.io/$PROJECT_ID/$_APP_NAME:build'
+
+# Build the jekyll static site files
+- name: gcr.io/cloud-builders/docker
+  dir: $_APP_NAME
+  args: [
+    'run',
+    '-v', '/workspace/$_APP_NAME:/app',
+    'gcr.io/$PROJECT_ID/$_APP_NAME:build'
+    ]
+
+# Pull our latest nginx web server image
+- name: gcr.io/cloud-builders/docker
+  args:
+  - pull
+  - 'gcr.io/$PROJECT_ID/$_APP_NAME:latest'
+
+# Build the new docker image
+- name: gcr.io/cloud-builders/docker
+  dir: $_APP_NAME
+  args: [
+    'build',
+    '-t', 'gcr.io/$PROJECT_ID/$_APP_NAME:latest',
+    '-t', 'gcr.io/$PROJECT_ID/$_APP_NAME:$COMMIT_SHA',
+    '-f', 'config/docker/web/Dockerfile',
+    '--cache-from', 'gcr.io/$PROJECT_ID/$_APP_NAME:latest',
+    '.']
+  timeout: 600s
+
+# Push it to gcr.io as latest
+- name: gcr.io/cloud-builders/docker
+  args:
+  - push
+  - 'gcr.io/$PROJECT_ID/$_APP_NAME:latest'
+
+# Update cluster pods
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+    - 'set'
+    - 'image'
+    - 'deploy/$_APP_NAME'
+    - 'guides=gcr.io/$PROJECT_ID/$_APP_NAME:$COMMIT_SHA'
+    - '--namespace=default'
+  env:
+    - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=production'
+
+# Save this build as well according to commit sha
+images:
+- 'gcr.io/$PROJECT_ID/$_APP_NAME:$COMMIT_SHA'
+

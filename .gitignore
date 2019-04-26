@@ -36,3 +36,6 @@ storage
 
 # Ignore pow
 .powrc
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key

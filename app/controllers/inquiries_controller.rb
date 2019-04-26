@@ -21,7 +21,6 @@ class InquiriesController < ApplicationController
       if [@inquiry.valid?, @subscriber.valid?].all?
         @inquiry.save
         @subscriber.likes @vehicle
-        mixpanel.track @subscriber.id, 'Vehicle inquiry', mixpanel_data
         format.html { redirect_to @inquiry, notice: 'Inquiry was successfully created.' }
         format.js { render nothing: true, status: :created }
       else

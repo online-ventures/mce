@@ -10,8 +10,6 @@
 
 <% cache ["v15", @vehicle] do %>
 
-  <%= tag :div, id: 'vehicle-data', data: {vehicle: @vehicle.to_mixpanel_json} %>
-
   <% unless @vehicle.photos.empty? %>
     <ul class="loading" data-orbit data-options="timer_speed:2500; animation_speed:50; bullets: false;">
       <% @vehicle.photos.each do |photo| %>

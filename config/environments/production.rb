@@ -7,7 +7,7 @@ Rails.application.configure do
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-  config.cache_store = :dalli_store
+  config.cache_store = :redis_cache_store
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
@@ -69,17 +69,7 @@ Rails.application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   # Store uploaded files on the local file system (see config/storage.yml for options)
-  config.active_storage.service = :local
-
-  # paperclip
-  config.paperclip_defaults = {
-    :storage => :s3,
-    :s3_credentials => {
-      :bucket => ENV['S3_BUCKET_NAME'],
-      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
-    }
-  }
+  config.active_storage.service = :amazon
 
   # Smtp settings
   config.action_mailer.smtp_settings = {
@@ -92,4 +82,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = {
     host: 'motorcarexport.com'
   }
+
+  # Raven for sentry
+  config.dsn = Rails.application.credentials.sentry[:dns]
 end

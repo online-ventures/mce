@@ -1,5 +1,4 @@
 <div id="subscriber-form">
-  <%= tag :div, id: 'vehicle-data', data: {vehicle: @vehicle.to_mixpanel_json} %>
   <div class="loading"><%= image_tag 'loading.gif' %></div>
   <%= form_for([@vehicle, @purchase], html: {class: 'custom'}) do |f| %>
   <% if @subscriber.errors.any? or @purchase.errors.any? %>

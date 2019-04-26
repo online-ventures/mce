@@ -114,7 +114,7 @@
             <h1><a href="tel:2484468289">248.446.8289</a></h1>
           </div>
           <% @vehicle.photos.find_each do |photo| %>
-          <%= image_tag photo.image.url %>
+          <%= image_tag url_for(photo.file) %>
           <% end %>
         </div>
       </div>

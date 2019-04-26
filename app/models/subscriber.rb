@@ -99,18 +99,6 @@ class Subscriber < ApplicationRecord
     vehicles.delete vehicle
   end
 
-  def mixpanel_fields
-    [:first_name,:last_name,:email,:phone,:source,:subscription_plan]
-  end
-
-  def to_mixpanel_hash
-    serializable_hash only: mixpanel_fields
-  end
-
-  def to_mixpanel_json
-    to_json only: mixpanel_fields
-  end
-
   private
 
     def to_hash(methods)

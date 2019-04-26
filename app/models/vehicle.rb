@@ -64,7 +64,8 @@ class Vehicle < ApplicationRecord
   end
 
   def featured_url(size = :original)
-    featured_photo.present? ? featured_photo.image.url(size) : false
+    helpers = Rails.application.routes.url_helpers
+    featured_photo&.file&.attached? ? helpers.url_for(featured_photo.file) : false
   end
 
   def destroy
@@ -87,24 +88,6 @@ class Vehicle < ApplicationRecord
 
   def status_text
     sold ? 'Sold' : status.name.titleize
-  end
-
-  def to_mixpanel_hash
-    {
-      stock: stock_number,
-      year: year,
-      make: make.name,
-      model: model.name,
-      bodytype: body_type.name,
-      title: title.name,
-      status: status.name,
-      damage: damage.name,
-      price: price
-    }
-  end
-
-  def to_mixpanel_json
-    ActiveSupport::JSON.encode to_mixpanel_hash
   end
 
   def self.delete_old_photos

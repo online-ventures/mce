@@ -47,7 +47,6 @@ class SubscribersController < ApplicationController
     respond_to do |format|
       if @subscriber.save
         @subscriber.likes @vehicle
-        mixpanel.track @subscriber.id, 'Vehicle subscriber', mixpanel_data
         format.html { redirect_to @subscriber, notice: 'Subscriber was successfully created.' }
         format.js { render nothing: true, status: :created }
       else

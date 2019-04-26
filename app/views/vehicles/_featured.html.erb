@@ -4,7 +4,7 @@
   <div id="featured-content">
     <div class="large-12 columns featured-column">
       <div class="row">
-        <%= content_tag 'div', id: 'featured-car', class: 'car small-12 large-centered columns', data: {vehicle: vehicle.to_mixpanel_json} do %>
+        <%= content_tag 'div', id: 'featured-car', class: 'car small-12 large-centered columns' do %>
           <div class="row">
             <div class="picture large-3 columns" style="background-image: url(<%= featured_image_url(vehicle) %>)"></div>
             <div class="info large-9 columns">

@@ -13,6 +13,10 @@ gem 'bourbon'
 gem 'responders'
 gem 'bootsnap'
 
+gem 'sidekiq'
+gem 'redis-namespace'
+gem 'sentry-raven'
+
 group :development do
   gem 'awesome_print'
   gem 'spring'
@@ -27,25 +31,14 @@ gem 'font-awesome-rails'
 gem 'authlogic'
 
 # File Uploads
-gem 'paperclip'
-gem 'aws-sdk'
+gem 'aws-sdk-s3'
 gem 'rubyzip'
-
-# Mixpanel
-gem 'mixpanel-ruby'
-
-# Application Monitoring
-gem 'newrelic_rpm'
 
 # File permanence
 gem 'paranoia'
 
 # Profiling / Benchmarking
 #gem 'rack-mini-profiler'
-
-# Memcache clients
-gem 'dalli'
-gem 'memcachier'
 
 # Markdown
 gem 'rdiscount'

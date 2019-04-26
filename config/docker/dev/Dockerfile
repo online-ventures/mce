@@ -1,4 +1,4 @@
-FROM ruby:2.5.3
+FROM ruby:2.6.1
 
 RUN apt-get update -qq && apt-get install -y build-essential
 
@@ -9,13 +9,15 @@ RUN apt-get install -y libpq-dev
 RUN apt-get install -y libxml2-dev libxslt1-dev
 
 # for a JS runtime
-RUN apt-get install -y nodejs
+# https://github.com/nodesource/distributions#installation-instructions
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+        && apt-get install -y nodejs
 
 # an editor
 RUN apt-get install -y vim
 
 # app directory
-ENV APP_HOME /mce
+ENV APP_HOME /app
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
@@ -26,18 +28,13 @@ ENV BUNDLE_GEMFILE=$APP_HOME/Gemfile
 ENV BUNDLE_JOBS=2
 ENV BUNDLE_PATH=/bundle
 ENV BUNDLE_BIN=/bundle/bin
-
-# setup rails
 ENV PATH="${BUNDLE_BIN}:${PATH}"
-ENV RAILS_ENV=development
 
-# for rails updates
-ENV THOR_MERGE=vim
-
-# app files
-COPY . $APP_HOME
+# Document what port should be exposed
+EXPOSE 3000
 
 # Entrypoint
-COPY scripts/docker-entrypoint.sh /
-RUN chmod +x /docker-entrypoint.sh
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/app/config/docker/dev/entrypoint.sh"]
+
+# App files
+COPY . $APP_HOME
