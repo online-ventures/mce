@@ -59,21 +59,19 @@ class PhotosController < ApplicationController
   end
 
   def create_single_photo
-    @photo = @vehicle.photos.new(photo_params)
-    @photo.save
+    @photo = @vehicle.photos.create
+    file = params[:photo][:file]
+    @photo.attach_file(file.path, name: file.original_filename)
   end
 
   def process_zipped_file
     file = params[:photo][:zip]
     Zip::File.open(file.to_io).each do |entry|
-      next unless entry.name.match? /\.(png|gif|jpe?g)$/i
-      name = File.basename(entry.name, '.*')
-      photo = @vehicle.photos.new(name: name)
-      type = 'image/jpg' # TODO: properly extract the type from name
-      tempfile = create_temp_file(entry, name)
-      io = tempfile.open
-      photo.file.attach(io: io, filename: entry.name, content_type: type)
-      photo.save
+      next unless entry.name.match?(/\.(png|gif|jpe?g)$/i)
+      photo = @vehicle.photos.create
+      filename = File.basename(entry.name)
+      tempfile = create_temp_file(entry, filename).open
+      photo.attach_file(tempfile.path, name: filename)
     end
   end
 
@@ -81,6 +79,7 @@ class PhotosController < ApplicationController
     tempfile = Tempfile.new(name, '/tmp')
     tempfile.binmode
     tempfile.write zip_entry.get_input_stream.read
+    tempfile.rewind
     tempfile
   end
 

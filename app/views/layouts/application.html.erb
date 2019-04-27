@@ -42,11 +42,9 @@
 <body class="<%= "#{params[:controller]} #{params[:action]}" %>">
   <div class="topbar">
     <%= link_to "/", title: 'Motor Car Export' do %>
-      <%= image_tag('logo.svg', alt: 'Motor Car Export', class: 'logo svg') %>
-      <%= image_tag('logo.png', alt: 'Motor Car Export', class: 'logo no-svg') %>
+      <%= image_tag('logo.svg', alt: 'Motor Car Export', class: 'logo') %>
       <%= content_tag :h1 do %>
         <%= image_tag('motor-car-export.svg', alt: 'Motor Car Export', class: 'title svg') %>
-        <%= image_tag('motor-car-export.png', alt: 'Motor Car Export', class: 'title no-svg') %>
       <% end %>
     <% end %>
   </div>

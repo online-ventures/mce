@@ -28,11 +28,8 @@ if $('article#content').hasClass('index','photos')
     $delete.attr('href', $(this).attr('data-path'))
     $reactivate.attr('href', $(this).attr('data-path')+'?activate=true')
 
-  $featured_div = $('.existing-photos div.photo.featured').detach()
-  $('.existing-photos').prepend($featured_div)
-
   $form.find('input[type=submit]').click ->
-    if $file.val() == ''
+    if $file.val() == '' and $zip.val() == ''
       return false
     exttext = ''
     if $object == 'Zip'

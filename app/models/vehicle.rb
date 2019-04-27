@@ -51,21 +51,14 @@ class Vehicle < ApplicationRecord
   end
 
   def feature(photo)
-    if photo.is_a? Integer
-      self.featured_id = photo
-    elsif photo.is_a? Photo
-      self.featured_id = photo.id
-    end
+    self.featured_id = photo.id
+    photos.where(featured: true).update_all featured: false
+    photo.update featured: true
     save
   end
 
   def featured_photo
-    photos.limit(1).first
-  end
-
-  def featured_url(size = :original)
-    helpers = Rails.application.routes.url_helpers
-    featured_photo&.file&.attached? ? helpers.url_for(featured_photo.file) : false
+    photos.featured.first
   end
 
   def destroy

@@ -11,7 +11,8 @@ amazon:
   service: S3
   region: sfo2
   bucket: mce
-  endpoint: https://cdn.motorcarexport.com
+  endpoint: https://sfo2.digitaloceanspaces.com
+  # endpoint: https://cdn.motorcarexport.com TODO: Switch to cdn after we get dns switched
   access_key_id: <%= Rails.application.credentials.dig(:aws, :spaces_key) %>
   secret_access_key: <%= Rails.application.credentials.dig(:aws, :spaces_secret) %>
 

@@ -3,20 +3,11 @@ class Photo < ApplicationRecord
   # populates deleted_at, and prevents deletion
   belongs_to :vehicle, touch: true
 
-  # Active storage
-  has_one_attached :file
-
-  # Validation
-  validates :file, presence: {message: 'must be chosen before saving'}
-
   # Callbacks
   before_create :set_vehicles_photo_id
   before_destroy :delete_file
 
-  # scopes
-  scope :active, -> { where(deleted_at: nil) }
-  scope :inactive, -> { where('deleted_at IS NOT NULL') }
-  # smart sort, putting featured first:
+  scope :featured, -> { where(featured: true) }
 
   def vehicle
     Vehicle.unscoped{ super }
@@ -33,6 +24,16 @@ class Photo < ApplicationRecord
       .each { |photo| photo.destroy }
   end
 
+  def file_path
+    "vehicles/#{vehicle_id}/photos/#{id}"
+  end
+
+  def attach_file(file, name: '')
+    self.name = name || File.basename(file.path)
+    self.uploaded = AmazonService.upload_photo(self, file)
+    save
+  end
+
   private
 
   def set_vehicles_photo_id
@@ -40,6 +41,6 @@ class Photo < ApplicationRecord
   end
 
   def delete_file
-    file.purge
+    AmazonService.delete_photo self
   end
 end

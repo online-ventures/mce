@@ -10,7 +10,7 @@
         <div id="slider" class="nivoSlider">
         <% cache [@vehicle, @vehicle.photos.count] do %>
           <% @vehicle.photos.find_each do |photo| %>
-            <%= image_tag url_for(photo.file) %>
+            <%= image_tag photo_url(photo) %>
           <% end %>
       <% end %>
         </div>

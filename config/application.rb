@@ -69,6 +69,7 @@ module MotorCarExport
 
     # Autoload core extensions
     config.autoload_paths += Dir[File.join(Rails.root, "lib", "core_ext", "**", "*.rb")].each {|l| require l }
+    config.autoload_paths += %W(#{config.root}/app/services)
 
     # Don't initialize just to compile assets
     config.assets.initialize_on_precompile = false

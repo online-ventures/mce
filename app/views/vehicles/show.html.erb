@@ -14,7 +14,7 @@
     <ul class="loading" data-orbit data-options="timer_speed:2500; animation_speed:50; bullets: false;">
       <% @vehicle.photos.each do |photo| %>
         <li>
-          <img src="<%= url_for photo.file %>" <%= 'itemprop="image"'.html_safe if photo == @vehicle.photos.first %>/>
+          <img src="<%= photo_url photo %>" <%= 'itemprop="image"'.html_safe if photo == @vehicle.photos.first %>/>
         </li>
       <% end %>
     </ul>
@@ -234,7 +234,7 @@
   <div class="row image-wrap">
   <% @vehicle.photos.each do |photo| %>
     <a name="photo-<%= photo.vehicles_photo_id %>" href="#photo-<%= photo.vehicles_photo_id + ( photo == @vehicle.photos.last ? 0 : 1 ) %>">
-    <img src="<%= url_for photo.file %>" />
+    <img src="<%= photo_url photo %>" />
     </a>
   <% end %>
   </div>

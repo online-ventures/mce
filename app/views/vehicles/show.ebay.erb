@@ -16,7 +16,7 @@
       </div>
       <div class="featured">
         <h1 class="name"><%= @vehicle %></h1>
-        <img src="<%= @vehicle.featured_url %>"/>
+        <img src="<%= featured_image_url @vehicle %>"/>
         <% if @vehicle.subtitle.present? %>
         <h1 class="subtitle"><%= @vehicle.subtitle %></h1>
         <% end %>
@@ -114,7 +114,7 @@
             <h1><a href="tel:2484468289">248.446.8289</a></h1>
           </div>
           <% @vehicle.photos.find_each do |photo| %>
-          <%= image_tag url_for(photo.file) %>
+          <%= image_tag photo_url(photo) %>
           <% end %>
         </div>
       </div>
