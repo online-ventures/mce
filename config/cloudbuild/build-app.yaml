@@ -57,7 +57,7 @@ steps:
     path: /root
 
 # Set up kubectl
-- name: 'gcr.io/cloud-builders/curl'
+- name: 'gcr.io/web-online-ventures/curl'
   args: ['bash', 'config/cloudbuild/curl-config']
   volumes:
   - name: 'home'
