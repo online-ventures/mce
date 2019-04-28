@@ -3,10 +3,44 @@ substitutions:
   _APP_NAME: mce
 
 steps:
+# Get ssh key
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - kms
+  - decrypt
+  - --ciphertext-file=config/cloudbuild/github.enc
+  - --plaintext-file=/root/.ssh/id_rsa
+  - --location=global
+  - --keyring=cloud-build
+  - --key=github-nick-key
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
+
+# Set up git with key and domain.
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    chmod 600 /root/.ssh/id_rsa
+    cat <<EOF >/root/.ssh/config
+    Hostname github.com
+    IdentityFile /root/.ssh/id_rsa
+    EOF
+    mv config/cloudbuild/known_hosts /root/.ssh/known_hosts
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
+
+# Use git clone.
 - name: 'gcr.io/cloud-builders/git'
   args:
   - clone
   - git@github.com:online-ventures/$_APP_NAME.git
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
 
 # Get access key
 - name: 'gcr.io/cloud-builders/gcloud'
