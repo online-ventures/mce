@@ -3,7 +3,6 @@ substitutions:
   _APP_NAME: mce
 
 steps:
-# Get ssh key
 - name: 'gcr.io/cloud-builders/gcloud'
   args:
   - kms
@@ -17,7 +16,6 @@ steps:
   - name: 'ssh'
     path: /root/.ssh
 
-# Set up git with key and domain.
 - name: 'gcr.io/cloud-builders/git'
   entrypoint: 'bash'
   args:
@@ -33,7 +31,6 @@ steps:
   - name: 'ssh'
     path: /root/.ssh
 
-# Use git clone.
 - name: 'gcr.io/cloud-builders/git'
   args:
   - clone
@@ -41,6 +38,25 @@ steps:
   volumes:
   - name: 'ssh'
     path: /root/.ssh
+
+- name: gcr.io/cloud-builders/docker
+  args:
+  - pull
+  - 'gcr.io/$PROJECT_ID/$_APP_NAME:latest'
+
+- name: gcr.io/cloud-builders/docker
+  dir: $_APP_NAME
+  args: [
+    'build',
+    '-t', 'gcr.io/$PROJECT_ID/$_APP_NAME:latest',
+    '-f', 'config/docker/app/Dockerfile',
+    '--cache-from', 'gcr.io/$PROJECT_ID/$_APP_NAME:latest',
+    '.']
+
+- name: gcr.io/cloud-builders/docker
+  args:
+  - push
+  - 'gcr.io/$PROJECT_ID/$_APP_NAME:latest'
 
 # Get access key
 - name: 'gcr.io/cloud-builders/gcloud'
@@ -79,26 +95,6 @@ steps:
   - name: '1001'
     path: /home/1001
 
-- name: gcr.io/cloud-builders/docker
-  args:
-  - pull
-  - 'gcr.io/$PROJECT_ID/$_APP_NAME:latest'
-
-- name: gcr.io/cloud-builders/docker
-  dir: $_APP_NAME
-  args: [
-    'build',
-    '-t', 'gcr.io/$PROJECT_ID/$_APP_NAME:latest',
-    '-f', 'config/docker/app/Dockerfile',
-    '--cache-from', 'gcr.io/$PROJECT_ID/$_APP_NAME:latest',
-    '.']
-
-- name: gcr.io/cloud-builders/docker
-  args:
-  - push
-  - 'gcr.io/$PROJECT_ID/$_APP_NAME:latest'
-
 # Save this build as well according to commit sha
 images:
 - 'gcr.io/$PROJECT_ID/$_APP_NAME:$COMMIT_SHA'
-
