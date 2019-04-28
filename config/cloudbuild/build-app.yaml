@@ -62,20 +62,22 @@ steps:
   volumes:
   - name: 'home'
     path: /root
+  - name: '1001'
+    path: /home/1001
 
 # Update cluster pods
 - name: 'bitnami/kubectl'
   args:
     - '--kubeconfig'
-    - '/root/kube'
+    - '/home/1001/kube'
     - 'set'
     - 'image'
     - 'deploy/$_APP_NAME'
     - 'rails=gcr.io/$PROJECT_ID/$_APP_NAME:$COMMIT_SHA'
     - '--namespace=default'
   volumes:
-  - name: 'home'
-    path: /root
+  - name: '1001'
+    path: /home/1001
 
 - name: gcr.io/cloud-builders/docker
   args:
