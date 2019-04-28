@@ -1,15 +1,20 @@
 # Variables
 substitutions:
   _APP_NAME: mce
-# Decrypt the file containing the key
+
 steps:
+- name: 'gcr.io/cloud-builders/git'
+  args:
+  - clone
+  - git@github.com:online-ventures/$_APP_NAME.git
+
 # Get access key
 - name: 'gcr.io/cloud-builders/gcloud'
   args:
   - kms
   - decrypt
   - --ciphertext-file=config/cloudbuild/token.enc
-  - --plaintext-file=/root/.profile
+  - --plaintext-file=/root/env
   - --location=global
   - --keyring=cloud-build
   - --key=digital-ocean-access-key
@@ -19,11 +24,7 @@ steps:
 
 # Set up kubectl
 - name: 'gcr.io/cloud-builders/curl'
-  args: [
-    '-X', 'GET',
-    'http://api.digitalocean.com/v2/clusters/$CLUSTER_ID/kubeconfig',
-    '-H', 'Authorization: Bearer $TOKEN',
-    '>', '/root/.kube/config']
+  args: ['bash', 'config/cloudbuild/curl-config']
   volumes:
   - name: 'home'
     path: /root
@@ -41,11 +42,6 @@ steps:
   volumes:
   - name: 'kube'
     path: /root/.kube
-
-- name: 'gcr.io/cloud-builders/git'
-  args:
-  - clone
-  - git@github.com:wellopp/$_APP_NAME.git
 
 - name: gcr.io/cloud-builders/docker
   args:
