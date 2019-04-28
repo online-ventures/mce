@@ -68,6 +68,8 @@ steps:
 # Update cluster pods
 - name: 'bitnami/kubectl'
   args:
+    - '--kubeconfig'
+    - '/root/.kube/config'
     - 'set'
     - 'image'
     - 'deploy/$_APP_NAME'
