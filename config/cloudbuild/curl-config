@@ -2,6 +2,9 @@
 
 source /root/env
 
+echo "curl -X GET http://api.digitalocean.com/v2/clusters/$CLUSTER_ID/kubeconfig \
+  -H 'Authorization: Bearer $TOKEN' > /home/1001/kube"
+
 curl -X GET http://api.digitalocean.com/v2/clusters/$CLUSTER_ID/kubeconfig \
   -H "Authorization: Bearer $TOKEN" > /home/1001/kube
 
@@ -9,3 +12,4 @@ chown -R 1001 /home/1001
 
 echo "Contents of 1001:"
 ls -al /home/1001
+cat /home/1001/kube
