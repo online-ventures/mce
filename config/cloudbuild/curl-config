@@ -9,3 +9,4 @@ chown -R 1001 /home/1001
 
 echo "Contents of 1001:"
 ls -al /home/1001
+cat /home/1001/kube
