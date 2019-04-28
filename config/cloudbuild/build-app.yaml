@@ -66,7 +66,7 @@ steps:
     path: /root/.kube
 
 # Update cluster pods
-- name: 'gcr.io/cloud-builders/kubectl'
+- name: 'bitnami/kubectl'
   args:
     - 'set'
     - 'image'
