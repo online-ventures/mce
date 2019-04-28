@@ -2,7 +2,7 @@
 
 source /root/env
 
-curl -X GET https://api.digitalocean.com/v2/clusters/$CLUSTER_ID/kubeconfig \
+curl -X GET https://api.digitalocean.com/v2/kubernetes/clusters/$CLUSTER_ID/kubeconfig \
   -H "Authorization: Bearer $TOKEN" -o /home/1001/kube
 
 chown -R 1001 /home/1001
