@@ -3,4 +3,4 @@
 source /root/env
 
 curl -X GET http://api.digitalocean.com/v2/clusters/$CLUSTER_ID/kubeconfig \
-  -H Authorization: Bearer $TOKEN > /root/.kube/config
+  -H "Authorization: Bearer $TOKEN" > /root/.kube/config
