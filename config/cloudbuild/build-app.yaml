@@ -91,7 +91,7 @@ steps:
     - 'set'
     - 'image'
     - 'deploy/$_APP_NAME'
-    - 'rails=gcr.io/$PROJECT_ID/$_APP_NAME:$COMMIT_SHA'
+    - 'rails=gcr.io/$PROJECT_ID/$_GCR_NAME:$COMMIT_SHA'
     - '--namespace=default'
   volumes:
   - name: '1001'
