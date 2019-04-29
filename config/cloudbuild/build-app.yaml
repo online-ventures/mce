@@ -50,6 +50,7 @@ steps:
   args: [
     'build',
     '-t', 'gcr.io/$PROJECT_ID/$_GCR_NAME:latest',
+    '-t', 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA',
     '-f', 'config/docker/app/Dockerfile',
     '--cache-from', 'gcr.io/$PROJECT_ID/$_GCR_NAME:latest',
     '.']
