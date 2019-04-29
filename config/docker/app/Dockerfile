@@ -33,7 +33,7 @@ RUN bundle install --jobs 10 --retry 5 --without development test
 EXPOSE 3000
 
 # Entrypoint
-COPY ./docker/app/entrypoint.sh /usr/local/bin
+COPY ./config/docker/app/entrypoint.sh /usr/local/bin
 ENTRYPOINT ["entrypoint.sh"]
 
 # App files

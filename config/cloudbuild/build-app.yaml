@@ -1,6 +1,7 @@
 # Variables
 substitutions:
   _APP_NAME: mce
+  _GCR_NAME: mce-app
 
 steps:
 - name: 'gcr.io/cloud-builders/gcloud'
@@ -42,21 +43,21 @@ steps:
 - name: gcr.io/cloud-builders/docker
   args:
   - pull
-  - 'gcr.io/$PROJECT_ID/$_APP_NAME:latest'
+  - 'gcr.io/$PROJECT_ID/$_GCR_NAME:latest'
 
 - name: gcr.io/cloud-builders/docker
   dir: $_APP_NAME
   args: [
     'build',
-    '-t', 'gcr.io/$PROJECT_ID/$_APP_NAME:latest',
+    '-t', 'gcr.io/$PROJECT_ID/$_GCR_NAME:latest',
     '-f', 'config/docker/app/Dockerfile',
-    '--cache-from', 'gcr.io/$PROJECT_ID/$_APP_NAME:latest',
+    '--cache-from', 'gcr.io/$PROJECT_ID/$_GCR_NAME:latest',
     '.']
 
 - name: gcr.io/cloud-builders/docker
   args:
   - push
-  - 'gcr.io/$PROJECT_ID/$_APP_NAME:latest'
+  - 'gcr.io/$PROJECT_ID/$_GCR_NAME:latest'
 
 # Get access key
 - name: 'gcr.io/cloud-builders/gcloud'
@@ -97,4 +98,4 @@ steps:
 
 # Save this build as well according to commit sha
 images:
-- 'gcr.io/$PROJECT_ID/$_APP_NAME:$COMMIT_SHA'
+- 'gcr.io/$PROJECT_ID/$_GCR_NAME:$COMMIT_SHA'

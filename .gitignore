@@ -21,11 +21,7 @@ config/database.yml
 /log/*.log
 /tmp
 
-# Also ignore JetBrains garbage
-/.idea/*
-
 # Ignore extra, uploaded and compiled files
-/files
 public/uploads
 public/assets
 storage
@@ -34,8 +30,8 @@ storage
 *.swp
 *.swo
 
-# Ignore pow
-.powrc
-
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Kubernetes configuration
+config/kubernetes

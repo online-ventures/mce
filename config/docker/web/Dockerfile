@@ -10,7 +10,7 @@ ENV RAILS_ROOT /var/www/html
 WORKDIR $RAILS_ROOT
 
 # Copy Nginx config template
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY config/docker/web/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Pipe logging to stdout
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
