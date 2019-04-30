@@ -8,7 +8,7 @@ class PurchasesController < ApplicationController
   # GET /purchases/new
   # GET /purchases/new.json
   def new
-    @subscriber = Subscriber.new subscriber_params
+    @subscriber = Subscriber.new
     @purchase = @subscriber.purchases.build vehicle_id: params[:vehicle_id]
 
     respond_to do |format|
@@ -20,8 +20,8 @@ class PurchasesController < ApplicationController
   # POST /purchases
   # POST /purchases.json
   def create
-    @subscriber = Subscriber.find_or_initialize_by params[:subscriber]
-    @purchase = @subscriber.purchases.build params[:purchase]
+    @subscriber = Subscriber.find_or_initialize_by subscriber_params
+    @purchase = @subscriber.purchases.build purchase_params
 
     respond_to do |format|
       if @subscriber.save

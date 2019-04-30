@@ -174,7 +174,7 @@ class VehiclesController < ApplicationController
       :sold,
       :body_type_id,
       :disclosures,
-      :disclosure_ids
+      disclosure_ids: []
     )
   end
 end
