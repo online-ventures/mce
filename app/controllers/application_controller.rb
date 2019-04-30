@@ -52,8 +52,4 @@ class ApplicationController < ActionController::Base
   def set_action_mailer_defaults
     ActionMailer::Base.default_url_options[:host] = request.host_with_port
   end
-
-  def default_url_options
-    { host: "localhost:3020" }
-  end
 end
