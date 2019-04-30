@@ -129,7 +129,7 @@ class SubscribersController < ApplicationController
   end
 
   def cancel
-    if @subscriber = Subscriber.find_by token: params[:id]
+    if @subscriber = Subscriber.find_by(token: params[:id])
       @subscriber.cancel!
     else
       redirect_to root_path, notice: 'Could not locate your subscription account.  Please email us if you continue to have trouble.'
