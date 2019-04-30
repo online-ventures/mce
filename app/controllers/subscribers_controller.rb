@@ -42,13 +42,13 @@ class SubscribersController < ApplicationController
   # POST /subscribers.json
   def create
     @subscriber = Subscriber.find_or_initialize_by subscriber_params
-    @vehicle = Vehicle.where(params[:vehicle]).first
+    @vehicle = Vehicle.where(vehicle_params).first
 
     respond_to do |format|
       if @subscriber.save
         @subscriber.likes @vehicle
         format.html { redirect_to @subscriber, notice: 'Subscriber was successfully created.' }
-        format.js { render nothing: true, status: :created }
+        format.js { head :created }
       else
         format.html { render action: "new" }
         format.js { render json: {subscriber: @subscriber.errors}, status: :unprocessable_entity }
@@ -65,7 +65,7 @@ class SubscribersController < ApplicationController
         if @subscriber
           render json: @subscriber.search_results
         else
-          render nothing: true, status: :unprocessable_entity
+          head :unprocessable_entity
         end
       end
     end
@@ -171,5 +171,9 @@ class SubscribersController < ApplicationController
       :source,
       :profit
     )
+  end
+
+  def vehicle_params
+    params.require(:vehicle).permit(:id)
   end
 end
