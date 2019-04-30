@@ -16,7 +16,7 @@ Rails.application.configure do
     namespace: conf[:namespace]
   }
   redis[:password] = conf[:password] if conf[:password]
-  config.cache_store = :redis_cache_store, *redis
+  config.cache_store = :redis_cache_store, redis
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
