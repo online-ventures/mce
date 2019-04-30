@@ -1,6 +1,5 @@
 env = Rails.env.to_sym
-conf = {host: 'redis', port: 6379, namespace: ''}
-# conf = Rails.application.credentials.redis[env]
+conf = Rails.application.credentials.redis[env]
 
 redis = {
   url: "redis://#{conf[:host]}:#{conf[:port]}",
