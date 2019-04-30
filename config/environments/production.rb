@@ -92,9 +92,6 @@ Rails.application.configure do
     host: 'motorcarexport.com'
   }
 
-  # Raven for sentry
-  config.dsn = Rails.application.credentials.sentry[:dns]
-
   # Logger configuration
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger                  = ActiveSupport::Logger.new(STDOUT)
