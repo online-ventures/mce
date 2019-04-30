@@ -7,7 +7,16 @@ Rails.application.configure do
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-  config.cache_store = :redis_cache_store
+
+  env = Rails.env.to_sym
+  conf = Rails.application.credentials.redis[env]
+
+  redis = {
+    url: "redis://#{conf[:host]}:#{conf[:port]}",
+    namespace: conf[:namespace]
+  }
+  redis[:password] = conf[:password] if conf[:password]
+  config.cache_store = :redis_cache_store, *redis
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
@@ -85,4 +94,12 @@ Rails.application.configure do
 
   # Raven for sentry
   config.dsn = Rails.application.credentials.sentry[:dns]
+
+  # Logger configuration
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
+    logger                  = ActiveSupport::Logger.new(STDOUT)
+    logger.formatter        = config.log_formatter
+    config.logger           = ActiveSupport::TaggedLogging.new(logger)
+    config.colorize_logging = false
+  end
 end
