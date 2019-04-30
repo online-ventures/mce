@@ -2,8 +2,6 @@ require 'sidekiq/web'
 require 'admin_constraint'
 
 Rails.application.routes.draw do
-  ensure_on production: '', staging: 'staging'
-
   # Sidekiq UI
   mount Sidekiq::Web => '/sidekiq', :constraints => AdminConstraint.new
 

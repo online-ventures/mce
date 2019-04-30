@@ -46,5 +46,3 @@ gem 'rdiscount'
 
 # Emails
 gem 'mandrill-api'
-
-gem 'ensure_subdomain'
