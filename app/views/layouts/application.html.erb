@@ -17,7 +17,7 @@
     <link rel="canonical" href="<%= request.protocol + request.host + yield(:canonical) %>"/>
   <% end %>
   <title><%= content_for?(:title) ? yield(:title) : 'Motor Car Export' %></title>
-  <link rel="shortcut icon" href="<%= Rails.env.production? ? 'http://motor-car-export.s3.amazonaws.com/favicon.ico' : asset_path('favicon.ico') %>"/>
+  <link rel="shortcut icon" href="<%= Rails.env.production? ? 'https://motor-car-export.s3.amazonaws.com/favicon.ico' : asset_path('favicon.ico') %>"/>
   <%= stylesheet_link_tag "application", media: 'all' %>
   <% if Rails.env == 'production' %>
     <!-- start Google Analytics -->
