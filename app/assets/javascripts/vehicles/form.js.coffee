@@ -5,8 +5,9 @@ textboxes = $('#make_name, #model_name')
 
 textboxes.hide()
 
+i = 0
 for select in selects
-  $(select).change {textbox: textboxes[_i]}, (event)->
+  $(select).change {textbox: textboxes[i]}, (event)->
     textbox = event.data.textbox
     if $(this).val() == '' and $(textbox).is(':hidden')
       $(textbox).slideDown(100).val('')
@@ -15,6 +16,7 @@ for select in selects
       if $(textbox).is(':visible')
         $(textbox).slideUp(100)
   .change()
+  i += 1
 
 
 put_into_select = (select, options, preface=[])->
