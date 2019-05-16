@@ -20,7 +20,7 @@ class FeaturesController < ApplicationController
   # POST /features
   # POST /features.json
   def create
-    @feature = Feature.find_or_create_by_name(params[:feature][:name])
+    @feature = Feature.find_or_create_by(name: params[:feature][:name])
     @feature.update(deleted_at: nil)
     if params[:vehicle_id]
       @vehicle = Vehicle.find(params[:vehicle_id])
