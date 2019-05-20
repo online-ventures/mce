@@ -52,4 +52,8 @@ class ApplicationController < ActionController::Base
   def set_action_mailer_defaults
     ActionMailer::Base.default_url_options[:host] = request.host_with_port
   end
+
+  def not_found
+    raise ActionController::RoutingError.new('Not Found')
+  end
 end
