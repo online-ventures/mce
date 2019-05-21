@@ -107,7 +107,20 @@ class PagesController < ApplicationController
     elsif params[:slug]
       @page = @page.where(slug: params[:slug]).first
     end
-    not_found if @page.blank?
+    not_found if @page.blank? && !has_view?
+  end
+
+  def has_view?
+    found = false
+    to_search = []
+    to_search << params[:slug] unless params[:slug].nil?
+    to_search << @page.slug if @page.is_a?(Page)
+    to_search.each do |name|
+      if File.exists? File.join(Rails.root, 'app/views/pages', "#{name}.html.erb")
+        found = true
+      end
+    end
+    found
   end
 
   def page_params
