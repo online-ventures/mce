@@ -90,14 +90,6 @@
       <td><%= number_with_delimiter(@vehicle.miles) %></td>
       </tr>
       <tr>
-      <th>Title</th>
-      <td><%= @vehicle.title.name %></td>
-      </tr>
-      <tr>
-      <th>Warranty</th>
-      <td><%= @vehicle.warranty.name %></td>
-      </tr>
-      <tr>
       <th>Transmission</th>
       <td><%= @vehicle.transmission.name %></td>
       </tr>
@@ -119,6 +111,10 @@
     <h4 class="centered">Condition</h4>
     <table class="heading-right full-width">
       <tr>
+      <th>Title</th>
+      <td><%= @vehicle.title.name %></td>
+      </tr>
+      <tr>
       <th>Status</th>
       <td><%= @vehicle.status.name %></td>
       </tr>
@@ -131,14 +127,6 @@
       <tr>
       <th>Drivability</th>
       <td><%= @vehicle.drivable.name %></td>
-      </tr>
-      <tr>
-      <th>Engine</th>
-      <td><%= @vehicle.engine.name %></td>
-      </tr>
-      <tr>
-      <th>Suspension</th>
-      <td><%= @vehicle.suspension.name %></td>
       </tr>
       <tr>
       <th>Exterior</th>
@@ -161,12 +149,8 @@
       <td><%= @vehicle.burns? ? 'Yes' : 'No' %></td>
       </tr>
       <tr>
-      <th>&nbsp;</th>
-      <td>&nbsp;</td>
-      </tr>
-      <tr>
-      <th>&nbsp;</th>
-      <td>&nbsp;</td>
+      <th>Warranty</th>
+      <td><%= @vehicle.warranty.name %></td>
       </tr>
       <% if @vehicle.damage.name == 'None' %>
         <tr>
