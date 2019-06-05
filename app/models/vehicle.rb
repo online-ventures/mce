@@ -1,5 +1,5 @@
 class Vehicle < ApplicationRecord
-  DAYS_TO_REMAIN_NEW = 15.freeze
+  DAYS_TO_REMAIN_NEW = 30.freeze
 
   include Destroyable
 
