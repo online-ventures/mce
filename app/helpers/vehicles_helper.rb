@@ -130,6 +130,7 @@ module VehiclesHelper
   end
 
   def featured_image_url(vehicle=nil)
+    vehicle ||= @vehicle
     return photo_url(vehicle.featured_photo) if vehicle.featured_photo.present?
     asset_path('placeholder.jpg')
   end
