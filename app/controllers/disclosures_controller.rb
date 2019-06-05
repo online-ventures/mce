@@ -71,7 +71,7 @@ class DisclosuresController < ApplicationController
   # DELETE /disclosures/1
   # DELETE /disclosures/1.json
   def destroy
-    @disclosure = Disclosure.unscoped.find(params[:id])
+    @disclosure = Disclosure.find(params[:id])
     @disclosure.destroy
 
     respond_to do |format|
@@ -81,7 +81,7 @@ class DisclosuresController < ApplicationController
   end
 
   def restore
-    @disclosure = Disclosure.unscoped.find(params[:id])
+    @disclosure = Disclosure.find(params[:id])
     @disclosure.restore
 
     respond_to do |format|

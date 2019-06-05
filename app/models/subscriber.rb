@@ -1,7 +1,7 @@
 require 'digest/sha1'
 
 class Subscriber < ApplicationRecord
-  acts_as_paranoid
+  include Destroyable
 
   has_and_belongs_to_many :vehicles, uniq: true
   has_many :inquiries

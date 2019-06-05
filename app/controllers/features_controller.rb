@@ -9,7 +9,7 @@ class FeaturesController < ApplicationController
     end
     @feature = Feature.new
     @features = Feature.all
-    @all_features = Feature.unscoped.all
+    @all_features = Feature.all
 
     respond_to do |format|
       format.html # index.html.erb

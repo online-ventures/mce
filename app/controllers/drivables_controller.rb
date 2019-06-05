@@ -3,7 +3,7 @@ class DrivablesController < ApplicationController
   # GET /drivables.json
   def index
     if params[:deleted] and params[:deleted] == 'true'
-      @drivables = Drivable.unscoped.order(:id).where('deleted_at IS NOT NULL')
+      @drivables = Drivable.order(:id).where('deleted_at IS NOT NULL')
     else
       @drivables = Drivable.order(:id).all
     end
@@ -36,7 +36,7 @@ class DrivablesController < ApplicationController
 
   # GET /drivables/1/edit
   def edit
-    @drivable = Drivable.unscoped.find(params[:id])
+    @drivable = Drivable.find(params[:id])
   end
 
   # POST /drivables
@@ -58,7 +58,7 @@ class DrivablesController < ApplicationController
   # PUT /drivables/1
   # PUT /drivables/1.json
   def update
-    @drivable = Drivable.unscoped.find(params[:id])
+    @drivable = Drivable.find(params[:id])
 
     respond_to do |format|
       if @drivable.update_attributes(drivable_params)
@@ -74,7 +74,7 @@ class DrivablesController < ApplicationController
   # DELETE /drivables/1
   # DELETE /drivables/1.json
   def destroy
-    @drivable = Drivable.unscoped.find(params[:id])
+    @drivable = Drivable.find(params[:id])
     @drivable.destroy
 
     respond_to do |format|
@@ -84,7 +84,7 @@ class DrivablesController < ApplicationController
   end
 
   def restore
-    @drivable = Drivable.unscoped.find(params[:id])
+    @drivable = Drivable.find(params[:id])
     @drivable.restore
 
     respond_to do |format|

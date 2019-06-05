@@ -1,5 +1,5 @@
 class Feature < ApplicationRecord
-  acts_as_paranoid
+  include Destroyable
   has_and_belongs_to_many :vehicles, join_table: 'vehicles_features'
   before_create :set_order
   before_destroy :shift_up_orders, :destroyed_order

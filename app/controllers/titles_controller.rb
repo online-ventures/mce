@@ -4,9 +4,9 @@ class TitlesController < ApplicationController
   # GET /titles.json
   def index
     if params[:deleted] and params[:deleted] == 'true'
-      @titles = Title.unscoped.order(:id).where('deleted_at IS NOT NULL')
+      @titles = Title.deleted.order(:id)
     else
-      @titles = Title.order(:id).all
+      @titles = Title.alive.order(:id).all
     end
 
     respond_to do |format|
@@ -75,7 +75,7 @@ class TitlesController < ApplicationController
   # DELETE /titles/1
   # DELETE /titles/1.json
   def destroy
-    @title = Title.unscoped.find(params[:id])
+    @title = Title.find(params[:id])
     @title.destroy
 
     respond_to do |format|
@@ -85,7 +85,7 @@ class TitlesController < ApplicationController
   end
 
   def restore
-    @title = Title.unscoped.find(params[:id])
+    @title = Title.find(params[:id])
     @title.restore
 
     respond_to do |format|

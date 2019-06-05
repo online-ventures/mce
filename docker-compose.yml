@@ -4,7 +4,7 @@ volumes:
   redis-data:
   bundle-cache:
 services:
-  rails:
+  web:
     container_name: mce_rails
     image: mce/rails
     environment:

@@ -58,7 +58,7 @@ module ApplicationHelper
   end
 
   def toggle_deleted_view_button(klass)
-    if klass.unscoped.where('deleted_at IS NOT NULL').count > 0
+    if klass.deleted.count > 0
       if params[:deleted] and params[:deleted] == 'true'
         link_to "Show Active #{klass.to_s.pluralize}", eval("#{klass.to_s.tableize}_path"), class: 'button right'
       else

@@ -9,10 +9,6 @@ class Inquiry < ApplicationRecord
   # Callbacks
   after_create :send_emails
 
-  def vehicle
-    Vehicle.unscoped { super }
-  end
-
   def no_error?
     error == ''
   end

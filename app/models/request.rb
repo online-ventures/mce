@@ -1,5 +1,5 @@
 class Request < ApplicationRecord
-  acts_as_paranoid
+  include Destroyable
 
   belongs_to :body_type
   belongs_to :subscriber, touch: true
@@ -17,7 +17,7 @@ class Request < ApplicationRecord
   end
 
   def vehicle
-    Vehicle.unscoped.find(vehicle_id)
+    Vehicle.find(vehicle_id)
   end
 
   def is_duplicate?
@@ -25,6 +25,6 @@ class Request < ApplicationRecord
     params[:subscriber_id] = subscriber_id if subscriber_id
     params[:vehicle_id] = vehicle_id if vehicle_id
     params[:body_type_id] = body_type_id if body_type_id
-    Request.unscoped.where(params).any?
+    Request.where(params).any?
   end
 end

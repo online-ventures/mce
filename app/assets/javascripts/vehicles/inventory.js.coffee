@@ -10,8 +10,8 @@ if $list.length > 0
     $(this).parent().addClass('active')
     if $alert.is(':visible')
       $alert.hide()
-    value = $(this).html().toLowerCase()
-    if value == 'all'
+    value = $(this).html()
+    if value == 'All'
       $vehicles.show()
       if $vehicles.length <= 0
         $alert.find('span').html('')

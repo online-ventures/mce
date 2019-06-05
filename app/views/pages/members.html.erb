@@ -10,7 +10,7 @@
     <table class="full-width">
       <tr>
         <th>Vehicles</th>
-        <td><%= Vehicle.unscoped.count %></td>
+        <td><%= Vehicle.count %></td>
       </tr>
       <tr>
         <th>Active</th>
@@ -22,9 +22,9 @@
       </tr>
       <tr>
         <th>Avg Photo Count</th>
-        <td><%= (Photo.unscoped.count.to_f / Vehicle.unscoped.count.to_f).round(2) %></td>
+        <td><%= (Photo.count.to_f / Vehicle.count.to_f).round(2) %></td>
       </tr>
-      <% turnaround = Vehicle.unscoped.average('extract(\'epoch\' from deleted_at) - extract(\'epoch\' from created_at)') %>
+      <% turnaround = Vehicle.average('extract(\'epoch\' from deleted_at) - extract(\'epoch\' from created_at)') %>
       <% if turnaround %>
       <tr>
         <th>Avg Turnaround</th>

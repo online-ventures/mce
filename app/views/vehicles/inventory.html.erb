@@ -5,13 +5,13 @@
   <dt>Filter:</dt>
   <dd class="active"><a href="#">All</a></dd>
   <dd><a href="#">New</a></dd>
-  <% Status.all.each do |status| %>
-  <dd><a href="#"><%= status.name.capitalize %></a></dd>
+  <% VehicleType.all.each do |type| %>
+  <dd><a href="#"><%= type.name %></a></dd>
   <% end %>
 </dl>
 
 <% if @vehicles.any? %>
-	<%= render @vehicles %>
+  <%= render @vehicles %>
 <% end %>
 
 <p class="alert-box" style="display: none;">There aren't currently any <span></span> vehicles on our lot.</p>

@@ -1,9 +1,21 @@
 class Vehicle < ApplicationRecord
-  # populates deleted_at, and prevents deletion
-  acts_as_paranoid
+  DAYS_TO_REMAIN_NEW = 15.freeze
+
+  include Destroyable
+
+  scope :recent, -> do
+    where('created_at > ?', DAYS_TO_REMAIN_NEW.days.ago)
+      .order(created_at: :desc)
+      .limit(5)
+  end
   scope :active, -> { where(deleted_at: nil) }
   scope :inactive, -> { where('deleted_at IS NOT NULL') }
-  scope :random_featured, -> { where(sold: false).order('featured DESC').order('RANDOM()').limit(1) }
+  scope :random_featured, -> do
+    alive
+      .where(sold: false, featured: true)
+      .order('RANDOM()')
+      .limit(1)
+  end
 
   belongs_to :make
   belongs_to :model
@@ -34,8 +46,8 @@ class Vehicle < ApplicationRecord
     "#{year} #{make.name} #{model.name}".gsub(' ', join)
   end
 
-  def is_new?
-    created_at > 5.days.ago
+  def type
+    body_type&.vehicle_type
   end
 
   def toggle_feature(feature)
@@ -70,7 +82,7 @@ class Vehicle < ApplicationRecord
   def restore
     self.deleted_at = nil
     self.photos.update_all(deleted_at: nil)
-    save!
+    save(validate: false)
   end
 
   def edit_purchase_path

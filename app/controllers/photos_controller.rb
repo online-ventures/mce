@@ -3,13 +3,13 @@ class PhotosController < ApplicationController
   respond_to :js, only: [:destroy, :destroy_all]
 
   def index
-    @vehicle = Vehicle.unscoped.find(params[:vehicle_id])
+    @vehicle = Vehicle.find(params[:vehicle_id])
     @photo = Photo.new
     @photos = @vehicle.photos
   end
 
   def update
-    @photo = Photo.unscoped.find(params[:id])
+    @photo = Photo.find(params[:id])
     if params[:featured] == 'true'
       Vehicle.find(params[:vehicle_id]).feature @photo
     end

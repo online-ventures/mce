@@ -8,9 +8,9 @@ class VehiclesController < ApplicationController
   def index
     redirect_to inventory_vehicles_path and return unless current_user
     if params[:deleted] and params[:deleted] == 'true'
-      @vehicles = Vehicle.unscoped.inactive.order(:stock_number).all
+      @vehicles = Vehicle.inactive.order(:stock_number).all
     else
-      @vehicles = Vehicle.unscoped.active.order(:stock_number).all
+      @vehicles = Vehicle.active.order(:stock_number).all
     end
     respond_to do |format|
       format.html # index.html.erb
@@ -19,13 +19,14 @@ class VehiclesController < ApplicationController
   end
 
   def inventory
-    @vehicles = Vehicle.order("featured DESC, ebay DESC, id DESC").all
+    @vehicles = Vehicle.alive.order("featured DESC, ebay DESC, id DESC").all
+    @recent = Vehicle.recent.pluck(:id)
   end
 
   # GET /vehicles/1
   # GET /vehicles/1.json
   def show
-    @vehicle = Vehicle.unscoped.find(params[:id])
+    @vehicle = Vehicle.find(params[:id])
     @subscriber = Subscriber.new
     @inquiry = @subscriber.inquiries.build vehicle_id: @vehicle.id
 
@@ -62,7 +63,7 @@ class VehiclesController < ApplicationController
 
   # GET /vehicles/1/edit
   def edit
-    @vehicle = Vehicle.unscoped.find(params[:id])
+    @vehicle = Vehicle.find(params[:id])
     @makes = Make.all
   end
 
@@ -88,7 +89,7 @@ class VehiclesController < ApplicationController
   # PUT /vehicles/1
   # PUT /vehicles/1.json
   def update
-    @vehicle = Vehicle.unscoped.find(params[:id])
+    @vehicle = Vehicle.find(params[:id])
     @vehicle.make = Make.find_or_initialize_by name: params[:make][:name] if params[:make]
     @vehicle.model = Model.find_or_initialize_by name: params[:model][:name] if params[:make]
 
@@ -114,7 +115,7 @@ class VehiclesController < ApplicationController
   # DELETE /vehicles/1
   # DELETE /vehicles/1.json
   def destroy
-    @vehicle = Vehicle.unscoped.find(params[:id])
+    @vehicle = Vehicle.find(params[:id])
     @vehicle.destroy
 
     respond_to do |format|
@@ -125,7 +126,7 @@ class VehiclesController < ApplicationController
   end
 
   def restore
-    @vehicle = Vehicle.unscoped.find(params[:id])
+    @vehicle = Vehicle.find(params[:id])
     @vehicle.restore
 
     respond_to do |format|

@@ -1,7 +1,14 @@
 module VehiclesHelper
-  def status(vehicle=nil)
-    vehicle ||= @vehicle
-    "#{'new' if vehicle.is_new?} #{vehicle.status}"
+  def row_classes(vehicle)
+    classes = []
+    classes << 'New' if is_new?(vehicle)
+    classes << 'featured' if vehicle.featured?
+    classes << vehicle.type
+    classes.join ' '
+  end
+
+  def is_new?(vehicle)
+    @recent && vehicle.id.in?(@recent)
   end
 
   def miles(vehicle=nil)
@@ -99,11 +106,11 @@ module VehiclesHelper
 
   def new_banner(vehicle=nil)
     vehicle ||= @vehicle
-    if vehicle.is_new?
+    if @recent && vehicle.id.in?(@recent)
       content_tag :span,
         fa_icon('smile', text: 'New'),
         { class: 'new banner',
-          data: { expires: (vehicle.created_at + 5.days).to_i } }
+          data: { expires: (vehicle.created_at + Vehicle::DAYS_TO_REMAIN_NEW.days).to_i } }
     end
   end
 

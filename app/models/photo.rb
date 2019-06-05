@@ -9,17 +9,12 @@ class Photo < ApplicationRecord
 
   scope :featured, -> { where(featured: true) }
 
-  def vehicle
-    Vehicle.unscoped{ super }
-  end
-
   def featured?
     featured
   end
 
   def self.purge_old_photos
-    unscoped
-      .joins(:vehicle)
+    joins(:vehicle)
       .where('"vehicles".deleted_at < ?', 6.months.ago)
       .each { |photo| photo.destroy }
   end

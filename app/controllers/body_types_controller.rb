@@ -3,9 +3,9 @@ class BodyTypesController < ApplicationController
   # GET /body_types.json
   def index
     if params[:deleted] and params[:deleted] == 'true'
-      @body_types = BodyType.unscoped.where('deleted_at IS NOT NULL').order(:id).all
+      @body_types = BodyType.deleted.order(:id).all
     else
-      @body_types = BodyType.order(:id).all
+      @body_types = BodyType.alive.order(:id).all
     end
 
     respond_to do |format|
@@ -74,7 +74,7 @@ class BodyTypesController < ApplicationController
   # DELETE /body_types/1
   # DELETE /body_types/1.json
   def destroy
-    @body_type = BodyType.unscoped.find(params[:id])
+    @body_type = BodyType.find(params[:id])
     @body_type.destroy
 
     respond_to do |format|
@@ -84,7 +84,7 @@ class BodyTypesController < ApplicationController
   end
 
   def restore
-    @body_type = BodyType.unscoped.find(params[:id])
+    @body_type = BodyType.find(params[:id])
     @body_type.restore
 
     respond_to do |format|

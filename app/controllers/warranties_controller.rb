@@ -5,9 +5,9 @@ class WarrantiesController < ApplicationController
   # GET /warranties.json
   def index
     if params[:deleted]
-      @warranties = Warranty.unscoped.where('deleted_at IS NOT NULL')
+      @warranties = Warranty.deleted
     else
-      @warranties = Warranty.order(:id).all
+      @warranties = Warranty.alive.order(:id).all
     end
 
 
@@ -77,7 +77,7 @@ class WarrantiesController < ApplicationController
   # DELETE /warranties/1
   # DELETE /warranties/1.json
   def destroy
-    @warranty = Warranty.unscoped.find(params[:id])
+    @warranty = Warranty.find(params[:id])
     @warranty.destroy
 
     respond_to do |format|
@@ -87,7 +87,7 @@ class WarrantiesController < ApplicationController
   end
 
   def restore
-    @warranty = Warranty.unscoped.find(params[:id])
+    @warranty = Warranty.find(params[:id])
     @warranty.restore
 
     respond_to do |format|

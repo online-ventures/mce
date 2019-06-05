@@ -8,9 +8,9 @@ class PagesController < ApplicationController
   # GET /pages.json
   def index
     if params[:deleted] and params[:deleted] == 'true'
-      @pages = Page.unscoped.where('deleted_at IS NOT NULL')
+      @pages = Page.deleted
     else
-      @pages = Page.order('active DESC, id').all
+      @pages = Page.alive.order('active DESC, id').all
     end
 
     respond_to do |format|
@@ -101,7 +101,7 @@ class PagesController < ApplicationController
   private
 
   def set_page
-    @page = !!!current_user ? Page.active : Page.unscoped
+    @page = !!!current_user ? Page.active : Page
     if params[:id]
       @page = @page.where(id: params[:id].to_i).first
     elsif params[:slug]
