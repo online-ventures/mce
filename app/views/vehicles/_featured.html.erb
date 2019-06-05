@@ -1,24 +1,26 @@
 <% vehicle = Vehicle.random_featured.first %>
 
-<% cache ["v4", vehicle, "featured"] do %>
-  <div id="featured-content">
-    <div class="large-12 columns featured-column">
-      <div class="row">
-        <%= content_tag 'div', id: 'featured-car', class: 'car small-12 large-centered columns' do %>
-          <div class="row">
-            <div class="picture large-3 columns" style="background-image: url(<%= featured_image_url(vehicle) %>)"></div>
-            <div class="info large-9 columns">
-              <h2 small-text="<%= vehicle %>"><%= vehicle %><%= show_if "  <span class='small-0 no-wrap'>&mdash; $1</span>", price(vehicle) %></h2>
-              <%= show_if '<h4>$1</h4>', vehicle.subtitle %>
-              <h4>Only <%= miles(vehicle) %> Miles!</h4>
-              <div class="links">
-                <%= link_to 'View Details »', seo_vehicle_path(vehicle, name: vehicle.to_s('-'), mps: 'featured-vehicle-details-link'), {class: 'small more-info radius button', :"small-text"=>'More Info'} %>
-                <%= link_to 'Full Inventory »', inventory_vehicles_path, { id: 'featured-inventory-link', class: 'success small radius button', :'small-text' => 'Inventory' } %>
+<% if vehicle %>
+  <% cache ["v4", vehicle, "featured"] do %>
+    <div id="featured-content">
+      <div class="large-12 columns featured-column">
+        <div class="row">
+          <%= content_tag 'div', id: 'featured-car', class: 'car small-12 large-centered columns' do %>
+            <div class="row">
+              <div class="picture large-3 columns" style="background-image: url(<%= featured_image_url(vehicle) %>)"></div>
+              <div class="info large-9 columns">
+                <h2 small-text="<%= vehicle %>"><%= vehicle %><%= show_if "  <span class='small-0 no-wrap'>&mdash; $1</span>", price(vehicle) %></h2>
+                <%= show_if '<h4>$1</h4>', vehicle.subtitle %>
+                <h4>Only <%= miles(vehicle) %> Miles!</h4>
+                <div class="links">
+                  <%= link_to 'View Details »', seo_vehicle_path(vehicle, name: vehicle.to_s('-'), mps: 'featured-vehicle-details-link'), {class: 'small more-info radius button', :"small-text"=>'More Info'} %>
+                  <%= link_to 'Full Inventory »', inventory_vehicles_path, { id: 'featured-inventory-link', class: 'success small radius button', :'small-text' => 'Inventory' } %>
+                </div>
               </div>
             </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
 <% end %>
