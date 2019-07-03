@@ -104,6 +104,18 @@ module VehiclesHelper
     end
   end
 
+  def financing
+    klass = params[:format] == 'ebay' ? 'title-box' : 'title large-12 columns block'
+    button = link_to('Learn more', '/financing', class: 'button')
+    text = "#{button}<br>Financing options are available".html_safe
+    content_tag :div, class: klass do
+      [
+        content_tag(:h3, 'Financing', class: 'centered title'),
+        content_tag(:p, text, class: 'panel list row centered')
+      ].join.html_safe
+    end
+  end
+
   def new_banner(vehicle=nil)
     vehicle ||= @vehicle
     if @recent && vehicle.id.in?(@recent)
