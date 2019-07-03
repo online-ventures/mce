@@ -10,12 +10,18 @@ module Destroyable
     scope :deleted,   -> { where.not(deleted_at: nil) }
     scope :alive,     -> { where(deleted_at: nil) }
 
-    # Store a list of callbacks to be run when a model is destroyed.
+    # Store a list of callbacks to be run when a model is destroyed/restored
     cattr_accessor :destroyed_callbacks
+    cattr_accessor :restored_callbacks
     self.destroyed_callbacks = []
+    self.restored_callbacks = []
 
-    def self.after_destroyed(&block)
+    def self.after_destroy(&block)
       destroyed_callbacks.push(block)
+    end
+
+    def self.after_restore(&block)
+      restored_callbacks.push(block)
     end
 
     def deleted?
@@ -33,6 +39,9 @@ module Destroyable
     def restore
       self.deleted_at = nil
       save(validate: false)
+      self.class.restored_callbacks.each do |proc|
+        proc.call(self)
+      end
     end
   end
 end

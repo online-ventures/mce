@@ -73,18 +73,6 @@ class Vehicle < ApplicationRecord
     photos.featured.first
   end
 
-  def destroy
-    self.updated_at = Time.now
-    save!
-    super
-  end
-
-  def restore
-    self.deleted_at = nil
-    self.photos.update_all(deleted_at: nil)
-    save(validate: false)
-  end
-
   def edit_purchase_path
     routes = Rails.application.routes.url_helpers
     return routes.edit_vehicle_purchase_path(self, purchase) if purchase
