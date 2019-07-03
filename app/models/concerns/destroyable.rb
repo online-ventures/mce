@@ -16,7 +16,7 @@ module Destroyable
     self.destroyed_callbacks = []
     self.restored_callbacks = []
 
-    def self.after_destroy(&block)
+    def self.after_destroyed(&block)
       destroyed_callbacks.push(block)
     end
 
