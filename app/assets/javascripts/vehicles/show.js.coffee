@@ -34,6 +34,7 @@ $(document).ready ->
   contactForm = new AjaxifyModal 'email-form', 'new_inquiry'
   subscribeForm = new AjaxifyModal 'subscribe-form', 'new_subscriber'
   $('#email-form #subscriber_email').blur ->
+    return if $(this).val() == ''
     contactForm.show_loading()
     $.ajax(
       url: "/subscribers/search"
@@ -48,6 +49,7 @@ $(document).ready ->
         $('#email-form #subscriber_first_name').focus()
     )
   $('#subscribe-form #subscriber_email').blur ->
+    return if $(this).val() == ''
     subscribeForm.show_loading()
     $.ajax(
       url: "/subscribers/search"
