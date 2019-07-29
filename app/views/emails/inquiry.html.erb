@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h2>New message received from Motor Car Export</h2>
+    <% if @vehicle.present? %>
+      <p><b>Vehicle:</b> <%= @vehicle.to_s %></p>
+    <% end %>
+    <p style="font-weight: bold; color: #888; font-size: 1.1em"><%= @inquirer.name %> says:</p>
+    <p><%= @body %></p>
+    <p style="font-style: italic; color: #444">You can reply to this email to respond to <%= @inquirer.name %>.</p>
+  </body>
+</html>

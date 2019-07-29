@@ -1,14 +1,10 @@
-require 'mandrill'
 require 'rdiscount'
+
 class SubscriberMailer < ActionMailer::Base
   include Rails.application.routes.url_helpers
 
   default from: '"Motor Car Export" <mce@motorcarexport.com>'
   default to: '"Motor Car Export" <mce@motorcarexport.com>'
-
-  def mandrill
-    Mandrill::API.new Rails.configuration.mandrill[:api_key]
-  end
 
   def prepare_template_vars(data, subscriber)
     data[:CANCEL_LINK] = cancel_subscriber_url(subscriber.token)
@@ -33,12 +29,10 @@ class SubscriberMailer < ActionMailer::Base
   end
 
   def send_inquiry(message)
-    template = 'mce-general-inquiry'
-    data = prepare_api_data({
-      subject: "Vehicle lead for #{message.vehicle.to_s}",  
-      from_name: message.subscriber.name,
-      from_email: message.subscriber.email,
-      to: [{
+    subject = "Vehicle lead for #{message.vehicle.to_s}"
+    from_name = message.subscriber.name
+    from_email = message.subscriber.email
+    to = Rails.application.credentials.recipient[Rails.env.to_sym]
           email: Rails.env.production? ? 'mce@motorcarexport.com' : 'nick@gronows.com',
           name: Rails.env.production? ? 'Motor Car Export' : 'Nick Gronow'
       }],

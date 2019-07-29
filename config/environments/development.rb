@@ -26,6 +26,11 @@ Rails.application.configure do
   }
 
   # Email Settings
+  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.mailgun_settings = {
+    api_key: Rails.application.credentials.mailgun[:production][:key],
+    domain: Rails.application.credentials.mailgun[:production][:domain]
+  }
   config.action_mailer.smtp_settings = {
     address: 'localhost',
     port: 1025

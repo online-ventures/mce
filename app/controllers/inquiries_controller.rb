@@ -21,8 +21,9 @@ class InquiriesController < ApplicationController
       if [@inquiry.valid?, @subscriber.valid?].all?
         @inquiry.save
         @subscriber.likes @vehicle
+        InquiryWorker.perform_async @inquiry.id
         format.html { redirect_to @inquiry, notice: 'Inquiry was successfully created.' }
-        format.js { render nothing: true, status: :created }
+        format.js { head :created }
       else
         format.html { render action: "new" }
         format.js do

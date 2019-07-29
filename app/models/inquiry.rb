@@ -6,15 +6,7 @@ class Inquiry < ApplicationRecord
   # Validations
   validates :body, presence: true
 
-  # Callbacks
-  after_create :send_emails
-
   def no_error?
     error == ''
-  end
-
-  def send_emails
-    SubscriberMailer.send_inquiry self
-    SubscriberMailer.send_inquiry_confirmation self
   end
 end

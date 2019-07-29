@@ -45,4 +45,4 @@ gem 'paranoia'
 gem 'rdiscount'
 
 # Emails
-gem 'mandrill-api'
+gem 'mailgun-ruby'
