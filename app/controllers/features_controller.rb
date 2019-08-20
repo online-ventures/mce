@@ -8,8 +8,8 @@ class FeaturesController < ApplicationController
       @vehicle_features = @vehicle.features
     end
     @feature = Feature.new
-    @features = Feature.all
-    @all_features = Feature.all
+    @features = Feature.alive.order(:name).all
+    @all_features = Feature.alive.order(:name).all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -73,7 +73,7 @@ class FeaturesController < ApplicationController
 
   def manage
     @feature = Feature.new
-    @features = Feature.all
+    @features = Feature.alive.order(:order).all
   end
 
   def move
