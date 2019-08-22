@@ -92,6 +92,7 @@ class VehiclesController < ApplicationController
     @vehicle = Vehicle.find(params[:id])
     @vehicle.make = Make.find_or_initialize_by name: params[:make][:name] if params[:make]
     @vehicle.model = Model.find_or_initialize_by name: params[:model][:name] if params[:make]
+    @vehicle.model.make = @vehicle.make unless @vehicle.model.make
 
     params[:vehicle].each do |k,v|
       params[:vehicle][k] = true if v == 'true'
@@ -100,7 +101,6 @@ class VehiclesController < ApplicationController
     respond_to do |format|
       if @vehicle.valid? && @vehicle.make.valid? && @vehicle.model.valid?
         @vehicle.update_attributes(vehicle_params)
-        @vehicle.model.update_attribute(:make_id, @vehicle.make_id)
         format.html { redirect_to @vehicle, notice: 'Vehicle was successfully updated.' }
         format.json { head :no_content }
         format.js   {  }
