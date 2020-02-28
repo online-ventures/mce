@@ -1,10 +1,13 @@
-version: '3.2'
+version: '3.7'
 volumes:
   postgres-data:
+    name: mce-postgres-data
   redis-data:
+    name: mce-redis-data
   bundle-cache:
+    name: mce-bundle-cache
 services:
-  web:
+  app:
     container_name: mce_rails
     image: mce/rails
     environment:
@@ -17,7 +20,6 @@ services:
     depends_on:
     - db
     - redis
-    - sidekiq
     volumes:
     - .:/app
     - bundle-cache:/bundle

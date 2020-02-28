@@ -89,7 +89,7 @@ Rails.application.configure do
     password: ENV['MANDRILL_PASSWORD']
   }
   config.action_mailer.default_url_options = {
-    host: 'motorcarexport.com'
+    host: 'admin.motorcarexport.com'
   }
 
   # Logger configuration
