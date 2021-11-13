@@ -15,7 +15,7 @@ class DisclosuresController < ApplicationController
   # GET /disclosures/1.json
   def show
     respond_to do |format|
-      format.html { redirect_to :index}
+      format.html { redirect_to :index }
       format.json { render json: Disclosure.find(params[:id]) }
     end
   end
@@ -46,7 +46,7 @@ class DisclosuresController < ApplicationController
         format.html { redirect_to disclosures_path, notice: 'Disclosure was successfully created.' }
         format.json { render json: @disclosure, status: :created, location: @disclosure }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @disclosure.errors, status: :unprocessable_entity }
       end
     end
@@ -58,11 +58,11 @@ class DisclosuresController < ApplicationController
     @disclosure = Disclosure.find(params[:id])
 
     respond_to do |format|
-      if @disclosure.update_attributes(disclosure_params)
+      if @disclosure.update(disclosure_params)
         format.html { redirect_to disclosures_path, notice: 'Disclosure was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @disclosure.errors, status: :unprocessable_entity }
       end
     end

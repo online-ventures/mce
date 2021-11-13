@@ -1,17 +1,17 @@
 class VehiclesController < ApplicationController
   require 'rdiscount'
-  before_action :require_user, except: [:show, :inventory, :index]
-
+  before_action :require_user, except: %i[show inventory index]
 
   # GET /vehicles
   # GET /vehicles.json
   def index
     redirect_to inventory_vehicles_path and return unless current_user
-    if params[:deleted] and params[:deleted] == 'true'
-      @vehicles = Vehicle.inactive.order(:stock_number).all
-    else
-      @vehicles = Vehicle.active.order(:stock_number).all
-    end
+
+    @vehicles = if params[:deleted] && (params[:deleted] == 'true')
+                  Vehicle.inactive.order(:stock_number).all
+                else
+                  Vehicle.active.order(:stock_number).all
+                end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @vehicles }
@@ -19,7 +19,7 @@ class VehiclesController < ApplicationController
   end
 
   def inventory
-    @vehicles = Vehicle.alive.order("featured DESC, ebay DESC, id DESC").all
+    @vehicles = Vehicle.alive.order('featured DESC, ebay DESC, id DESC').all
     @recent = Vehicle.recent.pluck(:id)
   end
 
@@ -30,20 +30,27 @@ class VehiclesController < ApplicationController
     @subscriber = Subscriber.new
     @inquiry = @subscriber.inquiries.build vehicle_id: @vehicle.id
 
-    if @vehicle.deleted_at and !current_user
+    if @vehicle.deleted_at && !current_user
       redirect_to '/vehicles/inventory', notice: 'That vehicle cannot be found'
       return
     end
 
     unless params[:name]
       redirect_to seo_vehicle_path(id: @vehicle.id, name: @vehicle.to_s('-')), status: 301
-      return
+      nil
     end
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @vehicle }
-      format.ebay # show.ebay.erb
+    end
+  end
+
+  # GET /vehicles/1/ebay
+  def ebay
+    @vehicle = Vehicle.find(params[:id] || params[:vehicle_id])
+    respond_to do |format|
+      format.html { render layout: false }
     end
   end
 
@@ -76,11 +83,11 @@ class VehiclesController < ApplicationController
     respond_to do |format|
       if @vehicle.valid? && @vehicle.make.valid? && @vehicle.model.valid?
         @vehicle.save
-        @vehicle.model.update_attribute(:make_id, @vehicle.make_id)
+        @vehicle.model.update(:make_id, @vehicle.make_id)
         format.html { redirect_to vehicle_features_path(@vehicle), notice: 'Vehicle was successfully created.' }
         format.json { render json: @vehicle, status: :created, location: @vehicle }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @vehicle.errors, status: :unprocessable_entity }
       end
     end
@@ -94,18 +101,18 @@ class VehiclesController < ApplicationController
     @vehicle.model = Model.find_or_initialize_by name: params[:model][:name] if params[:make]
     @vehicle.model.make = @vehicle.make unless @vehicle.model.make
 
-    params[:vehicle].each do |k,v|
+    params[:vehicle].each do |k, v|
       params[:vehicle][k] = true if v == 'true'
       params[:vehicle][k] = false if v == 'false'
     end
     respond_to do |format|
       if @vehicle.valid? && @vehicle.make.valid? && @vehicle.model.valid?
-        @vehicle.update_attributes(vehicle_params)
+        @vehicle.update(vehicle_params)
         format.html { redirect_to @vehicle, notice: 'Vehicle was successfully updated.' }
         format.json { head :no_content }
-        format.js   {  }
+        format.js   {}
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @vehicle.errors, status: :unprocessable_entity }
         format.js   { render json: @vehicle.errors }
       end
@@ -121,7 +128,7 @@ class VehiclesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to vehicles_url }
       format.json { head :no_content }
-      format.js   { }
+      format.js   {}
     end
   end
 

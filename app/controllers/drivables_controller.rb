@@ -2,11 +2,11 @@ class DrivablesController < ApplicationController
   # GET /drivables
   # GET /drivables.json
   def index
-    if params[:deleted] and params[:deleted] == 'true'
-      @drivables = Drivable.order(:id).where('deleted_at IS NOT NULL')
-    else
-      @drivables = Drivable.order(:id).all
-    end
+    @drivables = if params[:deleted] && (params[:deleted] == 'true')
+                   Drivable.order(:id).where('deleted_at IS NOT NULL')
+                 else
+                   Drivable.order(:id).all
+                 end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -49,7 +49,7 @@ class DrivablesController < ApplicationController
         format.html { redirect_to drivables_path, notice: 'Drivable was successfully created.' }
         format.json { render json: @drivable, status: :created, location: @drivable }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @drivable.errors, status: :unprocessable_entity }
       end
     end
@@ -61,11 +61,11 @@ class DrivablesController < ApplicationController
     @drivable = Drivable.find(params[:id])
 
     respond_to do |format|
-      if @drivable.update_attributes(drivable_params)
+      if @drivable.update(drivable_params)
         format.html { redirect_to drivables_path, notice: 'Drivable was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @drivable.errors, status: :unprocessable_entity }
       end
     end

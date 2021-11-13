@@ -21,11 +21,11 @@ class InquiriesController < ApplicationController
       if [@inquiry.valid?, @subscriber.valid?].all?
         @inquiry.save
         @subscriber.likes @vehicle
-        InquiryWorker.perform_async @inquiry.id
+        MailgunService.send_inquiry_email inquiry_id
         format.html { redirect_to @inquiry, notice: 'Inquiry was successfully created.' }
         format.js { head :created }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.js do
           errors = { inquiry: @inquiry.errors, subscriber: @subscriber.errors }
           render json: errors, status: :unprocessable_entity

@@ -4,12 +4,11 @@ class WarrantiesController < ApplicationController
   # GET /warranties
   # GET /warranties.json
   def index
-    if params[:deleted]
-      @warranties = Warranty.deleted
-    else
-      @warranties = Warranty.alive.order(:id).all
-    end
-
+    @warranties = if params[:deleted]
+                    Warranty.deleted
+                  else
+                    Warranty.alive.order(:id).all
+                  end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -52,7 +51,7 @@ class WarrantiesController < ApplicationController
         format.html { redirect_to warranties_path, notice: 'Warranty was successfully created.' }
         format.json { render json: @warranty, status: :created, location: @warranty }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @warranty.errors, status: :unprocessable_entity }
       end
     end
@@ -64,11 +63,11 @@ class WarrantiesController < ApplicationController
     @warranty = Warranty.find(params[:id])
 
     respond_to do |format|
-      if @warranty.update_attributes(warranty_params)
+      if @warranty.update(warranty_params)
         format.html { redirect_to warranties_path, notice: 'Warranty was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @warranty.errors, status: :unprocessable_entity }
       end
     end

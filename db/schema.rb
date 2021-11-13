@@ -2,11 +2,11 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
@@ -87,9 +87,14 @@ ActiveRecord::Schema.define(version: 2019_06_03_214304) do
     t.integer "subscriber_id"
     t.integer "vehicle_id"
     t.text "body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string "error", limit: 255
+    t.integer "user_id"
+    t.text "confirmation_status"
+    t.text "inquiry_status"
+    t.datetime "created", default: -> { "now()" }
+    t.datetime "updated", default: -> { "now()" }
   end
 
   create_table "makes", id: :serial, force: :cascade do |t|
@@ -146,6 +151,11 @@ ActiveRecord::Schema.define(version: 2019_06_03_214304) do
     t.index ["vehicle_id"], name: "index_requests_on_vehicle_id"
   end
 
+  create_table "roles", primary_key: ["user_id", "name"], force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.text "name", null: false
+  end
+
   create_table "statuses", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
   end
@@ -188,12 +198,12 @@ ActiveRecord::Schema.define(version: 2019_06_03_214304) do
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
-    t.string "login", limit: 255, null: false
+    t.string "login"
     t.string "email", limit: 255, null: false
-    t.string "crypted_password", limit: 255, null: false
-    t.string "password_salt", limit: 255, null: false
-    t.string "persistence_token", limit: 255, null: false
-    t.string "perishable_token", limit: 255, null: false
+    t.string "crypted_password"
+    t.string "password_salt"
+    t.string "persistence_token"
+    t.string "perishable_token"
     t.integer "login_count", default: 0, null: false
     t.integer "failed_login_count", default: 0, null: false
     t.datetime "last_request_at"
@@ -201,9 +211,20 @@ ActiveRecord::Schema.define(version: 2019_06_03_214304) do
     t.datetime "last_login_at"
     t.string "current_login_ip", limit: 255
     t.string "last_login_ip", limit: 255
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.text "nickname"
+    t.text "name"
+    t.text "picture"
+    t.text "auth_id"
+    t.datetime "last_login"
+    t.text "roles"
+    t.text "first_name"
+    t.text "last_name"
+    t.datetime "created", default: -> { "now()" }
+    t.datetime "updated", default: -> { "now()" }
+    t.index ["auth_id"], name: "users_auth_id_key", unique: true
   end
 
   create_table "vehicle_types", force: :cascade do |t|
@@ -246,6 +267,11 @@ ActiveRecord::Schema.define(version: 2019_06_03_214304) do
     t.boolean "featured", default: false
     t.boolean "sold", default: false
     t.integer "body_type_id"
+    t.text "make"
+    t.text "model"
+    t.integer "featured_photo"
+    t.integer "retail_price"
+    t.integer "has_price", default: 0, null: false
     t.index ["body_type_id"], name: "index_vehicles_on_body_type_id"
     t.index ["damage_id"], name: "index_vehicles_on_damage_id"
     t.index ["drivable_id"], name: "index_vehicles_on_drivable_id"
@@ -282,4 +308,36 @@ ActiveRecord::Schema.define(version: 2019_06_03_214304) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "body_types", "vehicle_types", name: "body_types_vehicle_type_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "inquiries", "subscribers", name: "inquiries_subscriber_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "inquiries", "users", name: "inquiries_user_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "inquiries", "vehicles", name: "inquiries_vehicle_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "photos", "vehicles", name: "photos_vehicle_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "purchases", "subscribers", name: "purchases_subscriber_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "purchases", "vehicles", name: "purchases_vehicle_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "requests", "body_types", name: "requests_body_type_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "requests", "subscribers", name: "requests_subscriber_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "requests", "vehicles", name: "requests_vehicle_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "roles", "users", name: "roles_user_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "subscribers_vehicles", "subscribers", name: "subscribers_vehicles_subscriber_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "subscribers_vehicles", "vehicles", name: "subscribers_vehicles_vehicle_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "vehicles", "body_types", name: "vehicles_body_type_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "vehicles", "colors", column: "ext_color_id", name: "vehicles_ext_color_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "vehicles", "colors", column: "int_color_id", name: "vehicles_int_color_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "vehicles", "conditions", column: "exterior_id", name: "vehicles_exterior_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "vehicles", "conditions", column: "interior_id", name: "vehicles_interior_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "vehicles", "damages", name: "vehicles_damage_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "vehicles", "drivables", name: "vehicles_drivable_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "vehicles", "engines", name: "vehicles_engine_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "vehicles", "makes", name: "vehicles_make_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "vehicles", "models", name: "vehicles_model_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "vehicles", "statuses", name: "vehicles_status_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "vehicles", "suspensions", name: "vehicles_suspension_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "vehicles", "titles", name: "vehicles_title_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "vehicles", "transmissions", name: "vehicles_transmission_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "vehicles", "warranties", name: "vehicles_warranty_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "vehicles_disclosures", "disclosures", name: "vehicles_disclosures_disclosure_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "vehicles_disclosures", "vehicles", name: "vehicles_disclosures_vehicle_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "vehicles_features", "features", name: "vehicles_features_feature_id_fkey", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "vehicles_features", "vehicles", name: "vehicles_features_vehicle_id_fkey", on_update: :restrict, on_delete: :restrict
 end

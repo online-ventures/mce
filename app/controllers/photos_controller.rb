@@ -1,6 +1,6 @@
 class PhotosController < ApplicationController
   before_action :require_user
-  respond_to :js, only: [:destroy, :destroy_all]
+  respond_to :js, only: %i[destroy destroy_all]
 
   def index
     @vehicle = Vehicle.find(params[:vehicle_id])
@@ -10,12 +10,8 @@ class PhotosController < ApplicationController
 
   def update
     @photo = Photo.find(params[:id])
-    if params[:featured] == 'true'
-      Vehicle.find(params[:vehicle_id]).feature @photo
-    end
-    if params[:activate] == 'true'
-      @photo.activate
-    end
+    Vehicle.find(params[:vehicle_id]).feature @photo if params[:featured] == 'true'
+    @photo.activate if params[:activate] == 'true'
     if @photo.save
       respond_to do |format|
         format.js
@@ -37,9 +33,7 @@ class PhotosController < ApplicationController
 
   def destroy
     @photo = Photo.find(params[:id])
-    if @photo.featured?
-      @photo.vehicle.update_attribute(:featured_id, nil)
-    end
+    @photo.vehicle.update(:featured_id, nil) if @photo.featured?
     @photo.destroy
   end
 
@@ -68,6 +62,7 @@ class PhotosController < ApplicationController
     file = params[:photo][:zip]
     Zip::File.open(file.to_io).each do |entry|
       next unless entry.name.match?(/\.(png|gif|jpe?g)$/i)
+
       photo = @vehicle.photos.create
       filename = File.basename(entry.name)
       tempfile = create_temp_file(entry, filename).open

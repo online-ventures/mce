@@ -4,7 +4,7 @@ class Feature < ApplicationRecord
   before_create :set_order
   before_destroy :shift_up_orders, :destroyed_order
 
-  validates :name, length: {minimum: 3}
+  validates :name, length: { minimum: 3 }
 
   default_scope { where('"order" > 0').order('"order" asc, "id" asc') }
 
@@ -22,15 +22,15 @@ class Feature < ApplicationRecord
   # Move the order of existing rows down (++) to make room for moved row
   def shift_down_orders(place)
     order ||= place
-    Feature.update_all('"order" = "order" + 1', '"order" >= '+order.to_s)
+    Feature.update_all('"order" = "order" + 1', '"order" >= ' + order.to_s)
   end
 
   # Move the order of existing rows up (--) to cover the gap of moved row
-  def shift_up_orders()
-    Feature.update_all('"order" = "order" - 1', '"order" > '+order.to_s)
+  def shift_up_orders
+    Feature.update_all('"order" = "order" - 1', '"order" > ' + order.to_s)
   end
 
   def destroyed_order
-    update_attributes({ order: self.id - 1000 })
+    update({ order: id - 1000 })
   end
 end

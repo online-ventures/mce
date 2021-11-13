@@ -32,7 +32,7 @@
     <td><%= vehicle.status.name %></td>
     <td><%= price(vehicle) %></td>
     <td><%= link_to vehicle.photos.count, vehicle_photos_path(vehicle) %></td>
-    <td><%= link_to 'Ebay', seo_vehicle_path(id:vehicle.id, name: vehicle.to_s('-'), format: :ebay), class: 'small secondary button', title: 'Ebay View' %></td>
+    <td><%= link_to 'Ebay', vehicle_ebay_path(vehicle_id:vehicle.id), class: 'small secondary button', title: 'Ebay View' %></td>
 
     <td><%= link_to '$', vehicle_path(vehicle, vehicle: {sold: !vehicle.sold }), class: 'sold small button '+(vehicle.sold ? 'success' : 'secondary'), title: (vehicle.sold ? 'Vehicle Sold' : 'Mark Sold'), data: { remote: true, method: :put }%>
         <%= link_to fa_icon('star').html_safe, vehicle_path(vehicle, vehicle: {featured: !vehicle.featured }), class: 'featured small button '+(vehicle.featured ? 'success' : 'secondary'), title: (vehicle.featured ? 'Vehicle Featured' : 'Mark Featured'), data: {remote:true, method: :put }%></td>

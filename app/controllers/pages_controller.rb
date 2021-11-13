@@ -1,17 +1,17 @@
 class PagesController < ApplicationController
   require 'rdiscount'
-  before_action :require_user, except: [:show, :home]
-  before_action :require_user, if: Proc.new() { params[:slug].in? %w(members) }
-  before_action :set_page, only: [:show, :edit, :update, :destroy, :restore]
+  before_action :require_user, except: %i[show home]
+  before_action :require_user, if: proc { params[:slug].in? %w[members] }
+  before_action :set_page, only: %i[show edit update destroy restore]
 
   # GET /pages
   # GET /pages.json
   def index
-    if params[:deleted] and params[:deleted] == 'true'
-      @pages = Page.deleted
-    else
-      @pages = Page.alive.order('active DESC, id').all
-    end
+    @pages = if params[:deleted] && (params[:deleted] == 'true')
+               Page.deleted
+             else
+               Page.alive.order('active DESC, id').all
+             end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -24,12 +24,11 @@ class PagesController < ApplicationController
   def show
     respond_to do |format|
       # Try to render view, and if that fails, render generic version
-      format.html {
-        begin
-          render "pages/#{params[:slug] || @page.slug}"
-        rescue ActionView::MissingTemplate
-          render "pages/show"
-        end }
+      format.html do
+        render "pages/#{params[:slug] || @page.slug}"
+      rescue ActionView::MissingTemplate
+        render 'pages/show'
+      end
       format.json { render json: @page }
     end
   end
@@ -46,8 +45,7 @@ class PagesController < ApplicationController
   end
 
   # GET /pages/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /pages
   # POST /pages.json
@@ -59,7 +57,7 @@ class PagesController < ApplicationController
         format.html { redirect_to slug_path(@page.slug), notice: 'Page was successfully created.' }
         format.json { render json: @page, status: :created, location: @page }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @page.errors, status: :unprocessable_entity }
       end
     end
@@ -69,11 +67,11 @@ class PagesController < ApplicationController
   # PUT /pages/1.json
   def update
     respond_to do |format|
-      if @page.update_attributes(page_params)
+      if @page.update(page_params)
         format.html { redirect_to slug_path(@page.slug), notice: 'Page was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @page.errors, status: :unprocessable_entity }
       end
     end
@@ -116,9 +114,7 @@ class PagesController < ApplicationController
     to_search << params[:slug] unless params[:slug].nil?
     to_search << @page.slug if @page.is_a?(Page)
     to_search.each do |name|
-      if File.exists? File.join(Rails.root, 'app/views/pages', "#{name}.html.erb")
-        found = true
-      end
+      found = true if File.exist? File.join(Rails.root, 'app/views/pages', "#{name}.html.erb")
     end
     found
   end

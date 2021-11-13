@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_user, :only => [:show, :edit, :update]
+  before_action :require_user, only: %i[show edit update]
 
   def index
     @users = User.all
@@ -12,10 +12,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      flash[:notice] = "Account registered!"
+      flash[:notice] = 'Account registered!'
       redirect_to users_path
     else
-      render :action => :new
+      render action: :new
     end
   end
 
@@ -31,10 +31,10 @@ class UsersController < ApplicationController
 
   def update
     @user = @current_user # makes our views "cleaner" and more consistent
-    if @user.update_attributes(user_params)
-      redirect_to user_path, notice: "Account updated!"
+    if @user.update(user_params)
+      redirect_to user_path, notice: 'Account updated!'
     else
-      render :action => :edit
+      render action: :edit
     end
   end
 

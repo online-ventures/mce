@@ -3,11 +3,11 @@ class TitlesController < ApplicationController
   # GET /titles
   # GET /titles.json
   def index
-    if params[:deleted] and params[:deleted] == 'true'
-      @titles = Title.deleted.order(:id)
-    else
-      @titles = Title.alive.order(:id).all
-    end
+    @titles = if params[:deleted] && (params[:deleted] == 'true')
+                Title.deleted.order(:id)
+              else
+                Title.alive.order(:id).all
+              end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -50,7 +50,7 @@ class TitlesController < ApplicationController
         format.html { redirect_to @title, notice: 'Title was successfully created.' }
         format.json { render json: @title, status: :created, location: @title }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @title.errors, status: :unprocessable_entity }
       end
     end
@@ -62,11 +62,11 @@ class TitlesController < ApplicationController
     @title = Title.find(params[:id])
 
     respond_to do |format|
-      if @title.update_attributes(title_params)
+      if @title.update(title_params)
         format.html { redirect_to @title, notice: 'Title was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @title.errors, status: :unprocessable_entity }
       end
     end

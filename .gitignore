@@ -19,6 +19,7 @@ config/database.yml
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
+/log/*_history
 /tmp
 
 # Ignore extra, uploaded and compiled files
@@ -35,3 +36,10 @@ storage
 
 # Kubernetes configuration
 config/kubernetes
+
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity

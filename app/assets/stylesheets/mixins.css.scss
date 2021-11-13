@@ -16,7 +16,7 @@
   }
 }
 
-@include keyframes(pulse-font-size) {
+@keyframes pulse-font-size {
   0% {
     font-size: 100%;
     line-height: 1em;

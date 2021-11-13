@@ -32,7 +32,7 @@ class FeaturesController < ApplicationController
         format.json { render json: @feature, status: :created, location: @feature }
         format.js   { render 'features/create' }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @feature.errors, status: :unprocessable_entity }
         format.js
       end
@@ -43,18 +43,11 @@ class FeaturesController < ApplicationController
   # PUT /features/1.json
   def update
     @feature = Feature.find(params[:id])
-    if params[:vehicle_id]
-      @method = Vehicle.find(params[:vehicle_id]).toggle_feature(@feature)
-    end
+    @method = Vehicle.find(params[:vehicle_id]).toggle_feature(@feature) if params[:vehicle_id]
 
     respond_to do |format|
-      if @feature.update_attributes(feature_params)
-        format.json { head :no_content }
-        format.js
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @feature.errors, status: :unprocessable_entity }
-      end
+      format.json { head :no_content }
+      format.js
     end
   end
 

@@ -42,11 +42,11 @@ class RequestsController < ApplicationController
     @request = Request.new(request_params)
     if @request.valid?
       @request.is_duplicate? || @request.save # Prevent Duplicate Requests
-      if @request.subscriber.new_record?
-        notice = 'Thanks for signing up! Check your inbox to confirm your request.'
-      else
-        notice = 'We got your request! You\'ve previously subscribed, so we\'ll keep in touch.'
-      end
+      notice = if @request.subscriber.new_record?
+                 'Thanks for signing up! Check your inbox to confirm your request.'
+               else
+                 'We got your request! You\'ve previously subscribed, so we\'ll keep in touch.'
+               end
       @request.subscriber.save
     else
       notice = 'There was a problem with your request. Please try again.'
@@ -60,11 +60,11 @@ class RequestsController < ApplicationController
     @request = Request.find(params[:id])
 
     respond_to do |format|
-      if @request.update_attributes(request_params)
+      if @request.update(request_params)
         format.html { redirect_to @request, notice: 'Request was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @request.errors, status: :unprocessable_entity }
       end
     end

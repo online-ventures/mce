@@ -55,7 +55,7 @@ article.show.pages {
 	}
 }
 
-@media #{$screen} and (max-width: #{$small-screen}) {
+@media only screen and (max-width: 767px) {
   .show.pages {
     img.content {
     	width: 100%;

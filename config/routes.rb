@@ -1,22 +1,19 @@
-require 'sidekiq/web'
 require 'admin_constraint'
 
 Rails.application.routes.draw do
-  # Sidekiq UI
-  mount Sidekiq::Web => '/sidekiq', :constraints => AdminConstraint.new
-
   root to: 'pages#show', slug: 'home'
 
   resources :vehicles do
+    get 'ebay'
     get '/inventory', on: :collection, to: 'vehicles#inventory', as: 'inventory'
     resources :photos do
       delete '/', on: :collection, to: 'photos#destroy_all', as: 'destroy_all'
     end
     resources :features
-    get '/:name', on: :member, to: 'vehicles#show', as: 'seo', name: /\d{4}\-[^\.]*/
+    get '/:name', on: :member, to: 'vehicles#show', as: 'seo', name: /\d{4}-[^.]*/
     patch '/restore', on: :member, to: 'vehicles#restore', as: 'restore'
-    resources :purchases, except: [:show, :index]
-    resources :inquiries, only: [:new, :create]
+    resources :purchases, except: %i[show index]
+    resources :inquiries, only: %i[new create]
   end
 
   resources :subscribers do
@@ -38,7 +35,7 @@ Rails.application.routes.draw do
   resources :requests, :users, :user_sessions
 
   # Create these resources, and add custom restore option
-  [:titles, :pages, :warranties, :drivables, :body_types, :disclosures].each do |resource|
+  %i[titles pages warranties drivables body_types disclosures].each do |resource|
     resources resource do
       patch '/restore', on: :member, action: :restore, as: 'restore'
     end
@@ -46,7 +43,9 @@ Rails.application.routes.draw do
 
   # HACKERY!
   get '/cpanel', to: redirect('http://old.motorcarexport.com/cpanel')
-  get '/carPictures/*path', to: redirect {|params, request| "http://old.motorcarexport.com/carPictures/#{params[:path]}.jpg" }
+  get '/carPictures/*path', to: redirect { |params, _request|
+                                  "http://old.motorcarexport.com/carPictures/#{params[:path]}.jpg"
+                                }
   get '/repairables/vehicleList.php', to: redirect('/vehicles/inventory')
   get '/contactUs/:anything', to: redirect('/contact')
   get '/images/vehicle/mainPicFrame.gif', to: redirect('http://old.motorcarexport.com/images/vehicle/mainPicFrame.gif')

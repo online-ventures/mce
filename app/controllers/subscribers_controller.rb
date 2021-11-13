@@ -1,5 +1,5 @@
 class SubscribersController < ApplicationController
-  before_action :require_user, except: [:cancel, :confirm, :add_to, :set_subscription_plan, :create, :search]
+  before_action :require_user, except: %i[cancel confirm add_to set_subscription_plan create search]
   # GET /subscribers
   # GET /subscribers.json
   def index
@@ -50,16 +50,14 @@ class SubscribersController < ApplicationController
         format.html { redirect_to @subscriber, notice: 'Subscriber was successfully created.' }
         format.js { head :created }
       else
-        format.html { render action: "new" }
-        format.js { render json: {subscriber: @subscriber.errors}, status: :unprocessable_entity }
+        format.html { render action: 'new' }
+        format.js { render json: { subscriber: @subscriber.errors }, status: :unprocessable_entity }
       end
     end
   end
 
   def search
-    if params[:email]
-      @subscriber = Subscriber.find_by email: params[:email]
-    end
+    @subscriber = Subscriber.find_by email: params[:email] if params[:email]
     respond_to do |format|
       format.js do
         if @subscriber
@@ -76,16 +74,16 @@ class SubscribersController < ApplicationController
   def update
     @subscriber = Subscriber.find(params[:id])
     respond_to do |format|
-      if @subscriber.update_attributes(subscriber_params)
+      if @subscriber.update(subscriber_params)
         if session[:subscriber]
           session[:subscriber] = nil
-          format.html { redirect_to root_path, notice: 'Thanks for adding more info! We\'ll get back to you soon.'}
+          format.html { redirect_to root_path, notice: 'Thanks for adding more info! We\'ll get back to you soon.' }
         else
           format.html { redirect_to @subscriber, notice: 'Subscriber was successfully updated.' }
         end
         format.json { head :no_content }
       else
-        format.html { render action: (session[:subscriber] ? :add_to : :edit ) }
+        format.html { render action: (session[:subscriber] ? :add_to : :edit) }
         format.json { render json: @subscriber.errors, status: :unprocessable_entity }
       end
     end
@@ -118,7 +116,7 @@ class SubscribersController < ApplicationController
     @subscriber = Subscriber.find_by token: params[:id]
     if @subscriber
       @subscriber.plan = 'weekly' unless @subscriber.subscription_plan == 'daily'
-      if params[:mps] and @subscriber.source.blank?
+      if params[:mps] && @subscriber.source.blank?
         @subscriber.source = params[:mps]
         @subscriber.save
       end
@@ -132,7 +130,8 @@ class SubscribersController < ApplicationController
     if @subscriber = Subscriber.find_by(token: params[:id])
       @subscriber.cancel!
     else
-      redirect_to root_path, notice: 'Could not locate your subscription account.  Please email us if you continue to have trouble.'
+      redirect_to root_path,
+                  notice: 'Could not locate your subscription account.  Please email us if you continue to have trouble.'
     end
   end
 
@@ -149,7 +148,7 @@ class SubscribersController < ApplicationController
 
   def add_to
     @subscriber = Subscriber.find(params[:id])
-    if session[:subscriber] and session[:subscriber] == @subscriber.token
+    if session[:subscriber] && (session[:subscriber] == @subscriber.token)
       @page = Page.find(16) # tell-us-more as defined by seeds.rb
     else
       redirect_to root_path, notice: 'It doesn\'t look like you\'re the subscriber you\'re trying to update.'
