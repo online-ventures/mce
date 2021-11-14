@@ -8,10 +8,6 @@ echo "Rails environment: $RAILS_ENV"
 echo "Running db:migrate"
 rails db:migrate
 
-# Rails
-echo "Precompile assets"
-rails assets:precompile
-
 # Copy public assets to nginx
 if [ -d "/mnt/html" ]; then
   cp -r public/* /mnt/html/
