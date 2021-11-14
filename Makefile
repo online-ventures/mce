@@ -1,13 +1,17 @@
-all: build push
+deploy:
+	echo 'deploying...'
+
+sha = $(git rev-parse HEAD)
+image = gcr.io/web-online-ventures/mce:$(sha)
 
 build:
-	docker build \
-		-t gcr.io/web-online-ventures/johns-app:latest \
-		--build-arg master_key=3ebb0cf1619a9ab0999316f43ab60c65 \
-		-f config/docker/app/Dockerfile .
+	docker build -t $(image) -f config/docker/app/Dockerfile .
 
 push:
-	docker push gcr.io/web-online-ventures/mce:latest
+	docker push $(image)
+
+restart:
+	kubectl set image deploy/mce app=$(image)
 
 backup:
 	pg_dump -h localhost -p 4000 -U mce --no-owner --no-privileges --schema=public --clean --if-exists mce > tmp/db/prod.sql
