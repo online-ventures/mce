@@ -24,7 +24,7 @@ services:
     environment:
       APP_NAME: mce
       NODE_ENV: ${NODE_ENV:-development}
-      RAILS_ENV: ${RAILS_ENV:-development}
+      RAILS_ENV: ${RAILS_ENV:-production}
       YARN_CACHE_FOLDER: /app/node_modules/.yarn-cache
       BOOTSNAP_CACHE_DIR: /usr/local/bundle/_bootsnap
       HISTFILE: /app/log/.bash_history

@@ -1,17 +1,16 @@
-deploy:
-	echo 'deploying...'
+deploy: build push restart
 
-sha = $(git rev-parse HEAD)
+sha = $(shell git rev-parse HEAD)
 image = gcr.io/web-online-ventures/mce:$(sha)
 
 build:
-	docker build -t $(image) -f config/docker/app/Dockerfile .
+	docker build --platform linux/amd64 -t $(image) -f config/docker/app/Dockerfile .
 
 push:
 	docker push $(image)
 
 restart:
-	kubectl set image deploy/mce app=$(image)
+	kubectl set image deploy/mce rails=$(image)
 
 backup:
 	pg_dump -h localhost -p 4000 -U mce --no-owner --no-privileges --schema=public --clean --if-exists mce > tmp/db/prod.sql

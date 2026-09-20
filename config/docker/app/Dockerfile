@@ -17,5 +17,5 @@ COPY . $APP_HOME
 
 RUN rails assets:precompile
 
-COPY ./config/docker/app/entrypoint.sh /usr/local/bin
+COPY config/docker/app/entrypoint.sh /usr/local/bin
 ENTRYPOINT ["entrypoint.sh"]
