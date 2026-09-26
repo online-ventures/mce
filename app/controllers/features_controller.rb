@@ -20,19 +20,26 @@ class FeaturesController < ApplicationController
   # POST /features
   # POST /features.json
   def create
-    @feature = Feature.find_or_create_by(name: params[:feature][:name])
-    @feature.update(deleted_at: nil)
-    if params[:vehicle_id]
-      @vehicle = Vehicle.find(params[:vehicle_id])
-      @vehicle.features << @feature unless @feature.in? @vehicle.features
-    end
-    respond_to do |format|
-      if @feature.save
-        format.html
+    @feature = Feature.find_or_initialize_by(name: params[:feature][:name])
+    @feature.deleted_at = nil
+
+    if @feature.save
+      if params[:vehicle_id]
+        @vehicle = Vehicle.find(params[:vehicle_id])
+        @vehicle.features << @feature unless @feature.in? @vehicle.features
+      end
+
+      respond_to do |format|
+        format.html { redirect_to features_path, notice: "\"#{@feature.name}\" was added." }
         format.json { render json: @feature, status: :created, location: @feature }
         format.js   { render 'features/create' }
-      else
-        format.html { render action: 'new' }
+      end
+    else
+      respond_to do |format|
+        format.html do
+          @features = Feature.alive.order(:order).all
+          render action: 'manage'
+        end
         format.json { render json: @feature.errors, status: :unprocessable_entity }
         format.js
       end
@@ -43,11 +50,23 @@ class FeaturesController < ApplicationController
   # PUT /features/1.json
   def update
     @feature = Feature.find(params[:id])
-    @method = Vehicle.find(params[:vehicle_id]).toggle_feature(@feature) if params[:vehicle_id]
 
-    respond_to do |format|
-      format.json { head :no_content }
-      format.js
+    if params[:vehicle_id]
+      @method = Vehicle.find(params[:vehicle_id]).toggle_feature(@feature)
+      respond_to do |format|
+        format.json { head :no_content }
+        format.js
+      end
+    elsif @feature.update(feature_params)
+      respond_to do |format|
+        format.html { redirect_to features_path, notice: "\"#{@feature.name}\" was updated." }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { render action: 'edit' }
+        format.json { render json: @feature.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -58,7 +77,7 @@ class FeaturesController < ApplicationController
     @feature.destroy
 
     respond_to do |format|
-      format.html { redirect_to features_url }
+      format.html { redirect_to features_url, notice: "\"#{@feature.name}\" was deleted." }
       format.json { head :no_content }
       format.js
     end
@@ -67,14 +86,6 @@ class FeaturesController < ApplicationController
   def manage
     @feature = Feature.new
     @features = Feature.alive.order(:order).all
-  end
-
-  def move
-    @feature = Feature.find(params[:id])
-    @success = @feature.move_to_order(params[:to])
-    respond_to do |format|
-      format.json
-    end
   end
 
   private

@@ -1,12 +1,11 @@
-<h1>Manage Features<br/>
-<small>Drag to Reorder</small></h1>
+<h1>Features</h1>
 
-<%= render partial: 'features/form' %>
-
-<p class="message centered"></p>
+<%= render partial: 'form' %>
 
 <div class="row">
-  <ol class="features list large-6 large-centered columns">
-    <%= render @features %>
-  </ol>
+  <ul class="features list large-6 large-centered columns">
+    <% @features.each do |feature| %>
+      <%= render partial: 'feature', locals: { feature: feature } %>
+    <% end %>
+  </ul>
 </div>

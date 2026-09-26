@@ -29,7 +29,6 @@ Rails.application.routes.draw do
 
   resources :features do
     get '', on: :collection, to: 'features#manage'
-    post '/to/:to', on: :member, to: 'features#move'
   end
 
   resources :requests, :users, :user_sessions

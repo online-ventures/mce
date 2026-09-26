@@ -1,12 +1,17 @@
 <div class="row">
 
-<%= form_for(@feature, remote: true, html: { class: 'large-6 columns large-centered'}) do |f| %>
+<%= form_for(@feature, html: { class: 'large-6 columns large-centered'}) do |f| %>
+  <% if @feature.errors.any? %>
+    <div class="alert-box alert radius">
+      <%= @feature.errors.full_messages.to_sentence %>
+    </div>
+  <% end %>
   <div class="row collapse">
     <div class="field large-11 columns">
       <%= f.text_field :name %>
     </div>
     <div class="actions large-1 columns">
-      <%= f.submit '+', class:'button prefix' %>
+      <%= f.submit (@feature.persisted? ? 'Save' : '+'), class:'button prefix' %>
     </div>
   </div>
 <% end %>

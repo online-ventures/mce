@@ -30,7 +30,7 @@ module Destroyable
 
     def destroy
       self.deleted_at = DateTime.now
-      save unless new_record?
+      save(validate: false) unless new_record?
       self.class.destroyed_callbacks.each do |proc|
         proc.call(self)
       end
