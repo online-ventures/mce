@@ -1,25 +1,72 @@
 .manage.features {
   ul.features.list {
     position: relative;
+    list-style: none;
+
     li.feature {
-      display: list-item;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: default;
       font-size: 0.9em;
-      padding: 0.5em 1em 0.6em;
+      line-height: 1.4;
+      padding: 0.5em 1em;
       margin-bottom: 0.5em;
       position: relative;
       text-align: left;
 
-      a {
-        color: $alert-color;
-        position: relative;
-        top: -0.25em;
+      .name {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
 
-        &:hover i:before {
+      .actions {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        margin-left: 1em;
+
+        > * {
+          margin-left: 0.9em;
+        }
+
+        > :first-child {
+          margin-left: 0;
+        }
+
+        a {
+          color: $alert-color;
+        }
+
+        .move {
+          color: inherit;
+          opacity: 0.6;
+          padding: 0 0.1em;
+
+          &.disabled {
+            opacity: 0.15;
+          }
+        }
+
+        a.move:hover {
+          opacity: 1;
+        }
+
+        a.edit {
+          color: inherit;
+          font-size: 0.85em;
+          text-decoration: underline;
+          margin-left: 1.5em;
+        }
+
+        a.delete:hover i:before {
           content: "\f003";
           display: inline-block;
           @include transform(rotate(45deg));
         }
-
       }
     }
   }

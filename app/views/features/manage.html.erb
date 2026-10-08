@@ -4,8 +4,8 @@
 
 <div class="row">
   <ul class="features list large-6 large-centered columns">
-    <% @features.each do |feature| %>
-      <%= render partial: 'feature', locals: { feature: feature } %>
+    <% @features.each_with_index do |feature, i| %>
+      <%= render partial: 'feature', locals: { feature: feature, first: i.zero?, last: i == @features.size - 1 } %>
     <% end %>
   </ul>
 </div>

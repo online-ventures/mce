@@ -1,5 +1,21 @@
-<h1>Editing feature</h1>
+<div class="row feature-edit">
+  <div class="large-6 large-centered columns">
+    <h1>Edit feature</h1>
 
-<%= render 'form' %>
+    <%= form_for(@feature) do |f| %>
+      <% if @feature.errors.any? %>
+        <div class="alert-box alert radius">
+          <%= @feature.errors.full_messages.to_sentence %>
+        </div>
+      <% end %>
 
-<%= link_to 'Back', features_path %>
+      <%= f.label :name %>
+      <%= f.text_field :name, autofocus: true %>
+
+      <div class="form-actions">
+        <%= f.submit 'Save', class: 'button' %>
+        <%= link_to 'Cancel', features_path, class: 'cancel' %>
+      </div>
+    <% end %>
+  </div>
+</div>

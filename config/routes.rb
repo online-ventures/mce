@@ -29,6 +29,7 @@ Rails.application.routes.draw do
 
   resources :features do
     get '', on: :collection, to: 'features#manage'
+    patch :move, on: :member
   end
 
   resources :requests, :users, :user_sessions

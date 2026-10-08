@@ -1,9 +1,23 @@
 <li class="feature secondary button" data-id="<%= feature.id %>">
-  <%= link_to fa_icon('trash').html_safe, feature_path(feature),
-        data: {
-          method: :delete,
-          confirm: "Delete this feature? It won't be removed from existing vehicles."
-        }, class: 'right' %>
-  <%= link_to 'Edit', edit_feature_path(feature), class: 'right' %>
-  <%= feature.name %>
+  <span class="name"><%= feature.name %></span>
+  <span class="actions">
+    <% if local_assigns[:first] %>
+      <span class="move disabled"><%= fa_icon('chevron-up') %></span>
+    <% else %>
+      <%= link_to fa_icon('chevron-up').html_safe, move_feature_path(feature, direction: 'up'),
+            method: :patch, class: 'move', title: 'Move up' %>
+    <% end %>
+    <% if local_assigns[:last] %>
+      <span class="move disabled"><%= fa_icon('chevron-down') %></span>
+    <% else %>
+      <%= link_to fa_icon('chevron-down').html_safe, move_feature_path(feature, direction: 'down'),
+            method: :patch, class: 'move', title: 'Move down' %>
+    <% end %>
+    <%= link_to 'Edit', edit_feature_path(feature), class: 'edit' %>
+    <%= link_to fa_icon('trash').html_safe, feature_path(feature),
+          data: {
+            method: :delete,
+            confirm: "Delete this feature? It won't be removed from existing vehicles."
+          }, class: 'delete', title: 'Delete' %>
+  </span>
 </li>

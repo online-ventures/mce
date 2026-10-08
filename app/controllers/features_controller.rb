@@ -88,6 +88,31 @@ class FeaturesController < ApplicationController
     @features = Feature.alive.order(:order).all
   end
 
+  # PATCH /features/1/move?direction=up|down
+  def move
+    @feature = Feature.find(params[:id])
+    direction = params[:direction].to_s
+
+    if %w[up down].include?(direction)
+      @feature.move(direction)
+      redirect_to features_path
+    else
+      redirect_to features_path, alert: 'Invalid direction.'
+    end
+  end
+
+  def new
+    @feature = Feature.new
+  end
+
+  def edit
+    @feature = Feature.find(params[:id])
+  end
+
+  def show
+    @feature = Feature.find(params[:id])
+  end
+
   private
 
   def feature_params
