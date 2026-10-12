@@ -23,7 +23,7 @@ services:
     environment:
       APP_NAME: mce
       NODE_ENV: ${NODE_ENV:-development}
-      RAILS_ENV: ${RAILS_ENV:-production}
+      RAILS_ENV: ${RAILS_ENV:-development}
       YARN_CACHE_FOLDER: /app/node_modules/.yarn-cache
       BOOTSNAP_CACHE_DIR: /usr/local/bundle/_bootsnap
       HISTFILE: /app/log/.bash_history
@@ -36,7 +36,7 @@ services:
       - redis
 
   db:
-    image: postgres:13.0
+    image: postgres:17.11
     volumes:
       - postgres:/var/lib/postgresql/data
       - .docker/.psqlrc:/root/.psqlrc:ro
@@ -55,7 +55,7 @@ services:
 
 volumes:
   postgres:
-    name: mce-postgres-data
+    name: mce-postgres17-data
   redis:
     name: mce-redis-data
   bundle:

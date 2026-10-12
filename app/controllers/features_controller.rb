@@ -8,8 +8,8 @@ class FeaturesController < ApplicationController
       @vehicle_features = @vehicle.features
     end
     @feature = Feature.new
-    @features = Feature.all
-    @all_features = Feature.all
+    @features = Feature.alive
+    @all_features = Feature.alive
 
     respond_to do |format|
       format.html # index.html.erb
@@ -20,7 +20,9 @@ class FeaturesController < ApplicationController
   # POST /features
   # POST /features.json
   def create
-    @feature = Feature.find_or_initialize_by(name: params[:feature][:name])
+    # Prefer a live feature with this name; otherwise revive a deleted one (or start a new one).
+    name = params[:feature][:name]
+    @feature = Feature.alive.find_by(name: name) || Feature.find_or_initialize_by(name: name)
     @feature.deleted_at = nil
 
     if @feature.save
